@@ -8,22 +8,23 @@ stack.
 == Stack Component Versions
 
 [Postgres]
-    No minimum
+  No minimum
 [Ruby]
-    >= 2.1.2
+  >= 2.1.2
 [Rails]
-    >= 4.2.0.beta1
+  >= 4.2.0.beta1
 [Angular]
-    >= 1.2
+  >= 1.2
 
 == Coding Style Conventions
 
 === General
 
-1. Lines are kept within 80 characters.
+1. Lines are kept within 80 characters
+1. 2 spaces are used as tabs, with 4 spaces for continuation
 
 === Comments
-1. Comments are compatible with RDoc.
+1. Comments are compatible with RDoc
     See http://docs.seattlerb.org/rdoc/RDoc/Markup.html for markup reference.
 
 1. General Rules
@@ -37,6 +38,6 @@ stack.
 === Gotchas
 
 [pg gem]
-    This can be a pain to install.
+  This can be a pain to install
     See http://stackoverflow.com/questions/19262312/installing-pg-gem-failure-to-build-native-extension
-    for help
+    for help.
