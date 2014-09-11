@@ -35,9 +35,11 @@ stack.
 
 == Setting Up the Project
 
-=== Gotchas
+=== Gotchas and Steps
 
-[pg gem]
-  This can be a pain to install
+1. Install pg gem - this can be a pain
     See http://stackoverflow.com/questions/19262312/installing-pg-gem-failure-to-build-native-extension
     for help.
+
+1. Create a rails-app-starter-kit_development database
+    Or edit config/database.yml to suit your needs.
