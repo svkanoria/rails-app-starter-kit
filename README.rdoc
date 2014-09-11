@@ -1,0 +1,32 @@
+= README
+
+== About This Project
+
+A starter kit for creating applications using the Postgres, Rails and Angular
+stack.
+
+== Stack Component Versions
+
+[Postgres]
+    No minimum
+[Ruby]
+    >= 2.1.2
+[Rails]
+    >= 4.2.0.beta1
+[Angular]
+    >= 1.2
+
+== Coding Style Conventions
+
+[Comments]
+    Using RDoc.
+    See http://docs.seattlerb.org/rdoc/RDoc/Markup.html for markup reference
+
+== Setting Up the Project
+
+=== Gotchas
+
+[pg gem]
+    This can be a pain to install.
+    See http://stackoverflow.com/questions/19262312/installing-pg-gem-failure-to-build-native-extension
+    for help
