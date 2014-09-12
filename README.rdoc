@@ -21,12 +21,12 @@ stack.
 
 === Comments
 1. Comments are compatible with RDoc. See
-  http://docs.seattlerb.org/rdoc/RDoc/Markup.html for markup reference.
+   http://docs.seattlerb.org/rdoc/RDoc/Markup.html for markup reference.
 
 1. General Rules
-    1. Single-line, single-sentence comments do not end with a full-stop
-    1. Multiple-line, or multiple-sentence comments end with a full-stop
-    1. All comments are in sentence case
+   1. Single-line, single-sentence comments do not end with a full-stop
+   1. Multiple-line, or multiple-sentence comments end with a full-stop
+   1. All comments are in sentence case
 
 
 == Setting Up the Project
