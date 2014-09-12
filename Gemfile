@@ -27,8 +27,15 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Rails Html Sanitizer for HTML sanitization
 gem 'rails-html-sanitizer', '~> 1.0'
 
-# For authentication
-gem 'devise'
+# For authentication.
+# For now, we use a special branch for Rails 4.2 compatibility. However, devise
+# is sure to make a compatible release soon.
+# TODO Use official 4.2 compatible release of devise when available
+gem 'devise', git: 'https://github.com/plataformatec/devise.git',
+    branch: 'lm-rails-4-2'
+
+# For using respond_with
+gem 'responders'
 
 # Use Unicorn as the app server
 # gem 'unicorn'

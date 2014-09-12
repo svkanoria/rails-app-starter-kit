@@ -43,3 +43,10 @@ stack.
 
 1. Create a rails-app-starter-kit_development database
     Or edit config/database.yml to suit your needs.
+
+== Out-of-the-box Functionality
+
+=== Authentication
+
+Authentication is done via devise (see https://github.com/plataformatec/devise).
+Users are managed via the User model.
