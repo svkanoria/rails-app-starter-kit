@@ -34,11 +34,11 @@ stack.
 === Gotchas and Steps
 
 1. Install pg gem - this can be a pain. See
-  http://stackoverflow.com/questions/19262312/installing-pg-gem-failure-to-build-native-extension
-  for help.
+   http://stackoverflow.com/questions/19262312/installing-pg-gem-failure-to-build-native-extension
+   for help.
 
 1. Create a rails-app-starter-kit_development database, er edit
-  config/database.yml to suit your needs.
+   config/database.yml to suit your needs.
 
 == App Structure
 
