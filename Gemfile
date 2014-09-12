@@ -49,6 +49,13 @@ gem 'responders'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Gems required for deploying on Heroku
+group :production, :staging do
+  gem 'rails_12factor'
+  gem 'rails_stdout_logging'
+  gem 'rails_serve_static_assets'
+end
+
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger
   # console

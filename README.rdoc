@@ -14,13 +14,13 @@ stack, with the following features built-in:
 1. Ready-to-deploy on Heroku
 
 Several ideas have been taken from:
-* http://angular-rails.com/
+* http://angular-rails.com
 
 == Setting Up
 
 Pre-requisites: You must have Node, Bower and Ruby installed.
 
-1. Download or clone this repo,
+1. Download or clone this repo
 1. Run the following commands in the application's root directory:
 
     $ bundle install
