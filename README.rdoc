@@ -44,6 +44,10 @@ stack.
 1. Create a rails-app-starter-kit_development database
     Or edit config/database.yml to suit your needs.
 
+== Testing
+
+We use RSpec instead of TestUnit.
+
 == Out-of-the-box Functionality
 
 === Authentication
