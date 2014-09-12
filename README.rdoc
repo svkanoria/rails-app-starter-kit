@@ -69,10 +69,16 @@ following additions:
        |- javascripts
            |- angular (contains all Angular code)
                |- app.js (the 'entry point' for Angular)
+               |- routes.js.erb
                |- controllers
-               |- directives
+               |- templates (contains all Angular templates, i.e. views)
                    :
                    :
+   |- controllers
+       |- home_controller.rb
+   |- views
+       |- home
+           |- index.html
 
   specs (contains all tests)
    :
@@ -84,13 +90,10 @@ following additions:
            :
            :
 
-We have also created some 'Hello World' code, which you can modify/remove to
-suit your needs. This code can be found in:
-
-* config/routes.rb (look for "root 'home#index'")
-* app/controllers/home_controller.rb
-* app/views/home/index.html.erb
-* app/javascripts/angular/controllers/home_ctrl.js
+Note the 'erb' in 'routes.js.erb'. This is so that we can use the 'asset_path'
+helper to refer to the templates. Without this, we would have had to place the
+templates in the /public folder, and would have lost the advantage of caching,
+or of using HAML or Slim or any other pre-processor (if desired in future).
 
 == Dev Tools
 

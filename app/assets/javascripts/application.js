@@ -17,5 +17,8 @@
 //
 // From vendor/bower_components:
 //= require angular/angular
+//= require angular-route/angular-route
 //
-//= require_tree .
+//= require_tree ./angular
+//= require angular/app
+//= require angular/routes

@@ -2,6 +2,7 @@
   "name": "app",
   "private": true,
   "dependencies": {
-    "angular": "~1.2"
+    "angular": "~1.2.x",
+    "angular-route": "~1.2.x"
   }
 }

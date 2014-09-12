@@ -1,6 +1,8 @@
 // Angular entry point.
 // Include all other modules here.
-angular.module('App', [
+var app = angular.module('App', [
+    'ngRoute',
+
     // Controllers
     'HomeCtrl'
 ]);
