@@ -44,13 +44,27 @@ stack.
 1. Create a rails-app-starter-kit_development database
     Or edit config/database.yml to suit your needs.
 
-== Testing
+== Dev Tools
 
-We use RSpec instead of TestUnit.
+=== Testing
+
+We use RSpec (instead of the default TestUnit).
+See the following for more information:
+* https://github.com/rspec/rspec-rails
+* http://rspec.info/
+
+=== Model Annotation
+
+We use the 'annotate' gem to add column information to models. Without this, it
+is difficult to know at a glance the columns within a model table. Run this gem
+generally after you run a migration, as follows:
+
+  $ annotate --position before
 
 == Out-of-the-box Functionality
 
 === Authentication
 
-Authentication is done via devise (see https://github.com/plataformatec/devise).
+Authentication is done via the 'devise' gem (see
+https://github.com/plataformatec/devise).
 Users are managed via the User model.

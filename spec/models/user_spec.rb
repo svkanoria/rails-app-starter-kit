@@ -24,14 +24,8 @@
 #  updated_at             :datetime
 #
 
-class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :lockable, :omniauthable and :timeoutable
-  devise :confirmable,
-         :database_authenticatable,
-         :registerable,
-         :recoverable,
-         :rememberable,
-         :trackable,
-         :validatable
+require 'spec_helper'
+
+describe User do
+  pending "add some examples to (or delete) #{__FILE__}"
 end
