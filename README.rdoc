@@ -3,14 +3,44 @@
 == About This Project
 
 A starter kit for creating applications using the Postgres, Rails and Angular
-stack.
+stack, with the following features built-in:
 
-== Stack Component Versions
+1. Ruby 2.1.2, Rails ~4.2, Angular ~1.2
+1. Postgres support
+1. Complete user management
+1. Front-end asset management using Bower
+1. Routing using Angular
+1. Back-end testing using RSpec
+1. Ready-to-deploy on Heroku
 
-* Postgres: No minimum
-* Ruby: 2.1.2
-* Rails: ~4.2
-* Angular ~1.2
+Several ideas have been taken from:
+* http://angular-rails.com/
+
+== Setting Up
+
+Pre-requisites: You must have Node, Bower and Ruby installed.
+
+1. Download or clone this repo,
+1. Run the following commands in the application's root directory:
+
+    $ bundle install
+
+   This should set up all the gems required. Note: Installing the pg gem can be a
+   pain. See http://stackoverflow.com/questions/19262312/installing-pg-gem-failure-to-build-native-extension
+   for help.
+
+    $ rake bower:install
+
+   This should set up all the front-end assets required.
+
+1. Create a database named 'rails-app-starter-kit_development', er edit
+   /config/database.yml to suit your needs.
+
+1. run the following command:
+
+    $ rake db:migrate
+
+   This will set up the required tables in the database.
 
 == Coding Style Conventions
 
@@ -20,43 +50,47 @@ stack.
 1. 2 spaces are used as tabs, with 4 spaces for continuation
 
 === Comments
+
 1. Comments are compatible with RDoc. See
    http://docs.seattlerb.org/rdoc/RDoc/Markup.html for markup reference.
 
 1. General Rules
-   1. Single-line, single-sentence comments do not end with a full-stop
-   1. Multiple-line, or multiple-sentence comments end with a full-stop
+   1. Single-line-single-sentence comments do not end with a full-stop
+   1. Multiple-line or multiple-sentence comments end with a full-stop
    1. All comments are in sentence case
-
-
-== Setting Up the Project
-
-=== Gotchas and Steps
-
-1. Install pg gem - this can be a pain. See
-   http://stackoverflow.com/questions/19262312/installing-pg-gem-failure-to-build-native-extension
-   for help.
-
-1. Create a rails-app-starter-kit_development database, er edit
-   config/database.yml to suit your needs.
 
 == App Structure
 
-The application structure is similar to a standard Rails app. The only
-difference is that the main MVC layer is mostly handled by Angular, not Rails,
-so we need no Rails views, except the 'entry point' view.
+The application structure is similar to a standard Rails app, with just the
+following additions:
 
-All Angular code resides in assets/javascripts/angular.
+  app
+   |- assets
+       |- javascripts
+           |- angular (contains all Angular code)
+               |- app.js (the 'entry point' for Angular)
+               |- controllers
+               |- directives
+                   :
+                   :
 
-We have created some simple 'Hello World' code, which you can modify/remove to
+  specs (contains all tests)
+   :
+   :
+
+  vendor
+   |- assets
+       |- bower_components (all front-end components mananged by Bower)
+           :
+           :
+
+We have also created some 'Hello World' code, which you can modify/remove to
 suit your needs. This code can be found in:
 
 * config/routes.rb (look for "root 'home#index'")
 * app/controllers/home_controller.rb
 * app/views/home/index.html.erb
 * app/javascripts/angular/controllers/home_ctrl.js
-
-All tests reside in the /spec folder.
 
 == Dev Tools
 
@@ -85,9 +119,6 @@ gem for this purpose. See the following for more information:
 
 To add front-end libraries, edit the /bower.json file with the required library
 and also remember to reference them in application.js and/or application.css.
-
-This idea and its implementation is based on:
-* http://angular-rails.com/
 
 === Testing
 
