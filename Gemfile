@@ -27,7 +27,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Rails Html Sanitizer for HTML sanitization
 gem 'rails-html-sanitizer', '~> 1.0'
 
+# For annotating models with database column information
 gem 'annotate'
+
+# For managing front-end assets via Bower
+gem 'bower-rails'
 
 # For authentication.
 # For now, we use a special branch for Rails 4.2 compatibility. However, devise

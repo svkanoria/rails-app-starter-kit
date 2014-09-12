@@ -7,14 +7,10 @@ stack.
 
 == Stack Component Versions
 
-[Postgres]
-  No minimum
-[Ruby]
-  >= 2.1.2
-[Rails]
-  >= 4.2.0.beta1
-[Angular]
-  >= 1.2
+* Postgres: No minimum
+* Ruby: 2.1.2
+* Rails: ~4.2
+* Angular ~1.2
 
 == Coding Style Conventions
 
@@ -24,8 +20,8 @@ stack.
 1. 2 spaces are used as tabs, with 4 spaces for continuation
 
 === Comments
-1. Comments are compatible with RDoc
-    See http://docs.seattlerb.org/rdoc/RDoc/Markup.html for markup reference.
+1. Comments are compatible with RDoc. See
+  http://docs.seattlerb.org/rdoc/RDoc/Markup.html for markup reference.
 
 1. General Rules
     1. Single-line, single-sentence comments do not end with a full-stop
@@ -37,21 +33,38 @@ stack.
 
 === Gotchas and Steps
 
-1. Install pg gem - this can be a pain
-    See http://stackoverflow.com/questions/19262312/installing-pg-gem-failure-to-build-native-extension
-    for help.
+1. Install pg gem - this can be a pain. See
+  http://stackoverflow.com/questions/19262312/installing-pg-gem-failure-to-build-native-extension
+  for help.
 
-1. Create a rails-app-starter-kit_development database
-    Or edit config/database.yml to suit your needs.
+1. Create a rails-app-starter-kit_development database, er edit
+  config/database.yml to suit your needs.
+
+== App Structure
+
+The application structure is similar to a standard Rails app. The only
+difference is that the main MVC layer is mostly handled by Angular, not Rails,
+so we need no Rails views, except the 'entry point' view.
+
+All Angular code resides in assets/javascripts/angular.
+
+We have created some simple 'Hello World' code, which you can modify/remove to
+suit your needs. This code can be found in:
+
+* config/routes.rb (look for "root 'home#index'")
+* app/controllers/home_controller.rb
+* app/views/home/index.html.erb
+* app/javascripts/angular/controllers/home_ctrl.js
+
+All tests reside in the /spec folder.
 
 == Dev Tools
 
-=== Testing
+=== Rails Generators
 
-We use RSpec (instead of the default TestUnit).
-See the following for more information:
-* https://github.com/rspec/rspec-rails
-* http://rspec.info/
+Rails generators have been configured not to generate non-useful files such as
+assets, helpers, views, or view specs. This is because we are using Angular as
+our main MVC framework and not Rails.
 
 === Model Annotation
 
@@ -60,6 +73,28 @@ is difficult to know at a glance the columns within a model table. Run this gem
 generally after you run a migration, as follows:
 
   $ annotate --position before
+
+=== Front-end Asset Management
+
+Normally, Rails does asset management from within the (app/lib/vender)/assets
+folders. However, because we are supporting very 'front-end heavy' applications,
+we use Bower, which is the most widely used such tool. We use the 'bower-rails'
+gem for this purpose. See the following for more information:
+* http://bower.io/
+* https://github.com/42dev/bower-rails
+
+To add front-end libraries, edit the /bower.json file with the required library
+and also remember to reference them in application.js and/or application.css.
+
+This idea and its implementation is based on:
+* http://angular-rails.com/
+
+=== Testing
+
+We use RSpec (instead of the default TestUnit).
+See the following for more information:
+* https://github.com/rspec/rspec-rails
+* http://rspec.info/
 
 == Out-of-the-box Functionality
 

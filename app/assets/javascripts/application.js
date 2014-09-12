@@ -14,4 +14,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//
+// From vendor/bower_components:
+//= require angular/angular
+//
 //= require_tree .

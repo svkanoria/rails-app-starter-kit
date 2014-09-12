@@ -32,5 +32,19 @@ module RailsAppStarterKit
 
     # For not swallow errors in after_commit/after_rollback callbacks
     config.active_record.raise_in_transactional_callbacks = true
+
+    # MY NOTE: bower-rails installs Bower components in the
+    # vendor/assets/bower_components folder. Since this folder is not in the
+    # Rails standard, we need to add it manually.
+    config.assets.paths << Rails.root.join('vendor', 'assets',
+                                           'bower_components')
+
+    # MY NOTE: Stop generators from generating non-useful files
+    config.generators do |g|
+      g.assets = false
+      g.helper = false
+      g.template_engine = nil # Don't create views, since we're using Angular
+      g.view_specs = false
+    end
   end
 end
