@@ -7,6 +7,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body ng-app="App">
+<%= render 'layouts/flash_messages' %>
+
 <%= yield %>
+
 </body>
 </html>

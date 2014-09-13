@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
   # Works in conjunction with the 'authLinks' directive.
   def set_sign_in_redirect
     if (hash = params[:x_return_to]).present?
-      session[:user_return_to] = "#{request.fullpath}/##{hash}"
+      session[:user_return_to] =
+          "#{request.protocol}#{request.host_with_port}/##{hash}"
     end
   end
 end

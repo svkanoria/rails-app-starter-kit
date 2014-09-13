@@ -1,0 +1,9 @@
+<%# Displays flash messages. Really only required during the devise workflow,
+    since it is the only server-generated UI. %>
+<% flash.each do |key, value| %>
+  <%# We need to ignore this key, as devise uses it for maintaining internal
+      state. See https://github.com/plataformatec/devise/issues/1777. %>
+  <% if key != :timedout %>
+    <div><%= value %></div>
+  <% end %>
+<% end %>
