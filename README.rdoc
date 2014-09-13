@@ -71,6 +71,7 @@ following additions:
                |- app.js (the 'entry point' for Angular)
                |- routes.js.erb
                |- controllers
+               |- directives
                |- templates (contains all Angular templates, i.e. views)
                    :
                    :
@@ -89,11 +90,6 @@ following additions:
        |- bower_components (all front-end components mananged by Bower)
            :
            :
-
-Note the 'erb' in 'routes.js.erb'. This is so that we can use the 'asset_path'
-helper to refer to the templates. Without this, we would have had to place the
-templates in the /public folder, and would have lost the advantage of caching,
-or of using HAML or Slim or any other pre-processor (if desired in future).
 
 == Dev Tools
 
@@ -135,5 +131,13 @@ See the following for more information:
 === Authentication
 
 Authentication is done via the 'devise' gem (see
-https://github.com/plataformatec/devise).
-Users are managed via the User model.
+https://github.com/plataformatec/devise). Users are stored in the 'User' model.
+
+The entire devise workflow is, after weighing the pros and cons, deliberately
+kept outside of the Angular. See
+https://medium.com/opinionated-angularjs/techniques-for-authentication-in-angularjs-applications-7bbf0346acec
+for a detailed discussion; note however that our implementation is different.
+Relevant files in our implementation are:
+* app/assets/javascripts/angular/directives/auth_links.js
+* controllers/application_controller (the 'set_sign_in_redirect' method)
+* All devise related files, of course

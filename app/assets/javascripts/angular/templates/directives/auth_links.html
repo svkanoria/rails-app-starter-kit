@@ -1,0 +1,14 @@
+<div class="auth-links">
+  <a ng-if="!currentUser"
+     href="/users/sign_in?x_return_to={{signInRedirectUrl}}">
+    Sign in
+  </a>
+  <a ng-if="currentUser"
+     href="">
+    {{currentUser.email}}
+  </a>
+  <a ng-if="currentUser"
+     href="/users/sign_out" data-method="delete">
+    Sign out
+  </a>
+</div>

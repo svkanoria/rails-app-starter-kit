@@ -1,0 +1,16 @@
+<auth-links></auth-links>
+
+<div ng-view>
+  <%# Placeholder for Angular templates %>
+</div>
+
+<%# Set currently logged in user information, if any %>
+<script type="application/javascript">
+  <% if current_user %>
+    var CurrentUser = {
+      email: '<%= current_user.email %>'
+    };
+  <% else %>
+    var CurrentUser = null;
+  <% end %>
+</script>

@@ -47,6 +47,10 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    angular-rails-templates (0.1.3)
+      railties (>= 3.1)
+      sprockets
+      tilt
     annotate (2.6.5)
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
@@ -180,6 +184,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  angular-rails-templates
   annotate
   bower-rails
   byebug

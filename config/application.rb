@@ -39,6 +39,11 @@ module RailsAppStarterKit
     config.assets.paths << Rails.root.join('vendor', 'assets',
                                            'bower_components')
 
+    # MY NOTE: We keep our Angular templates in
+    # app/assets/javascripts/angular/templates, hence this customization is
+    # required for angular-rails-templates to work correctly.
+    config.angular_templates.ignore_prefix = %w(angular/templates/)
+
     # MY NOTE: Stop generators from generating non-useful files
     config.generators do |g|
       g.assets = false
