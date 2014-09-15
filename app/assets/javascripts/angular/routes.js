@@ -6,5 +6,9 @@ app.config(['$routeProvider', function ($routeProvider) {
     when('/', {
       templateUrl: 'index.html',
       controller: 'HomeCtrl'
+    }).
+    when('/posts', {
+      templateUrl: 'controllers/posts/index.html',
+      controller: 'PostsCtrl'
     });
 }]);

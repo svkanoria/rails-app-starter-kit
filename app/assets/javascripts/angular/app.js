@@ -6,6 +6,7 @@ var app = angular.module('App', [
 
   // Controllers
   'HomeCtrl',
+  'PostsCtrl',
 
   // Directives
   'AuthLinks'
