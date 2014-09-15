@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  resources :posts
+
   root 'home#index'
 
   # Priority is based on order of creation: first created => highest priority.

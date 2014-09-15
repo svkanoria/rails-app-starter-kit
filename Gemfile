@@ -43,6 +43,12 @@ gem 'angular-rails-templates'
 gem 'devise', git: 'https://github.com/plataformatec/devise.git',
     branch: 'lm-rails-4-2'
 
+# For assigning roles to users
+gem 'rolify'
+
+# For role-based authorization
+gem 'pundit'
+
 # For using respond_with
 gem 'responders'
 
