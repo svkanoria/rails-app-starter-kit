@@ -1,5 +1,9 @@
-<ul>
-  <li ng-repeat="post in posts">
-    {{post.message}}
-  </li>
-</ul>
+<div ng-init="find()">
+  <ul class="posts">
+    <li ng-repeat="post in posts">
+      {{post.message}}
+    </li>
+  </ul>
+
+  <a href="#/posts/new">New post</a>
+</div>

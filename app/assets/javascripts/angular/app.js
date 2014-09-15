@@ -4,6 +4,9 @@ var app = angular.module('App', [
   'templates', // Used by angular-rails-templates
   'ngRoute',
 
+  // Services
+  'Post',
+
   // Controllers
   'HomeCtrl',
   'PostsCtrl',

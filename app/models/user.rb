@@ -36,4 +36,6 @@ class User < ActiveRecord::Base
          :validatable
 
   rolify
+
+  has_many :posts
 end

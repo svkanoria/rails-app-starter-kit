@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "angular": "~1.2.x",
-    "angular-route": "~1.2.x"
+    "angular-route": "~1.2.x",
+    "angular-resource": "~1.2.x"
   }
 }

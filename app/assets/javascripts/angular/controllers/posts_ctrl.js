@@ -1,13 +1,9 @@
-angular.module('PostsCtrl', []).
-  controller('PostsCtrl', ['$scope', function($scope) {
-    $scope.posts = [
-      {
-        id: 1,
-        message: 'Post 1'
-      },
-      {
-        id: 2,
-        message: 'Post 2'
-      }
-    ];
+angular.module('PostsCtrl', ['Post']).
+  controller('PostsCtrl', ['$scope', 'Post', function($scope, Post) {
+    /**
+     * Returns a list of posts.
+     */
+    $scope.find = function () {
+      $scope.posts = Post.query();
+    }
   }]);

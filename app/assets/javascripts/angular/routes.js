@@ -3,12 +3,19 @@
 // app.js.
 app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.
+    // Home routes
     when('/', {
-      templateUrl: 'index.html',
+      templateUrl: 'controllers/home/index.html',
       controller: 'HomeCtrl'
     }).
+
+    // Post routes
     when('/posts', {
       templateUrl: 'controllers/posts/index.html',
+      controller: 'PostsCtrl'
+    }).
+    when('/posts/new', {
+      templateUrl: 'controllers/posts/new.html',
       controller: 'PostsCtrl'
     });
 }]);
