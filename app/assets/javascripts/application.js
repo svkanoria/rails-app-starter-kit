@@ -21,7 +21,12 @@
 //= require angular-resource/angular-resource
 //= require angular-rails-templates
 //= require ng-rails-csrf
+//= require underscore/underscore
+//= require underscore.string/lib/underscore.string
 //
 //= require_tree ./angular
 //= require angular/app
 //= require angular/routes
+
+// Mixin Underscore.string functions with Underscore
+_.mixin(_.str.exports());

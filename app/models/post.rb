@@ -10,7 +10,7 @@
 #
 
 class Post < ActiveRecord::Base
-  validates :message, presence: true, length: { maximum: 140 }
+  validates :message, presence: true, length: { minimum: 10, maximum: 140 }
   validates :user_id, presence: true
 
   belongs_to :user

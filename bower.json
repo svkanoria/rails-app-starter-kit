@@ -4,6 +4,8 @@
   "dependencies": {
     "angular": "~1.2.x",
     "angular-route": "~1.2.x",
-    "angular-resource": "~1.2.x"
+    "angular-resource": "~1.2.x",
+    "underscore": "~1.7.x",
+    "underscore.string": "~2.3.x"
   }
 }
