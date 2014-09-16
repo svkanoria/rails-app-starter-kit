@@ -89,6 +89,7 @@ GEM
     mini_portile (0.6.0)
     minitest (5.4.1)
     multi_json (1.10.1)
+    ng-rails-csrf (0.1.0)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     orm_adapter (0.5.0)
@@ -194,6 +195,7 @@ DEPENDENCIES
   devise!
   jbuilder (~> 2.0)
   jquery-rails
+  ng-rails-csrf
   pg
   pundit
   rails (= 4.2.0.beta1)

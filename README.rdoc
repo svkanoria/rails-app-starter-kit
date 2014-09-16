@@ -9,7 +9,8 @@ stack, with the following features built-in:
 1. Postgres support
 1. Complete user management, with authentication and role-based authorization
 1. Front-end asset management using Bower
-1. Routing using Angular
+1. Angular-based routing
+1. Integration of Angular with server CSRF protection
 1. Back-end testing using RSpec
 1. Ready-to-deploy on Heroku
 

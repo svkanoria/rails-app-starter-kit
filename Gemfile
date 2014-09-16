@@ -36,6 +36,9 @@ gem 'bower-rails'
 # For serving Angular templates through the Rails asset pipeline
 gem 'angular-rails-templates'
 
+# For Angular to work with CSRF protection
+gem 'ng-rails-csrf'
+
 # For authentication.
 # For now, we use a special branch for Rails 4.2 compatibility. However, devise
 # is sure to make a compatible release soon.

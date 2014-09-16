@@ -1,9 +1,13 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :set_sign_in_redirect
+  before_action :set_sign_in_redirect
+
+  protected
 
   # Sets where Devise should redirect on sign-in.
   # Works in conjunction with the 'authLinks' directive.
