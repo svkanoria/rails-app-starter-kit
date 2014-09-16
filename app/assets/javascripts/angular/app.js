@@ -13,5 +13,6 @@ var app = angular.module('App', [
   'PostsCtrl',
 
   // Directives
-  'AuthLinks'
+  'AuthLinks',
+  'FormErrors'
 ]);

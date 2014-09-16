@@ -150,3 +150,13 @@ Authorization is done via two gems:
   users
 * pundit[https://github.com/elabs/pundit]: For authorizing actions based on
   roles
+
+=== Form Submission
+
+Form validation should generally take place at the Angular end. However, this
+may not always be possible, and you may choose to leave some validation
+exclusively on the server-side.
+
+We provide a clean integration between Angular form validation and server-side
+form validation via the 'formErrors' directive. See
+app/assets/javascripts/angular/directives/form_errors.js.

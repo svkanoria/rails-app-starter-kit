@@ -26,11 +26,14 @@ class PostsController < ApplicationController
 
     # respond_with cleanly handles error conditions.
     # If @post has errors, then the response is of the form:
-    #   {errors: [
-    #     {field1: ['error message 1', 'error message 2', ...]},
-    #     {field2: [...]},
-    #       :
-    #   ]}
+    #   {
+    #     <other stuff>,
+    #     errors: {
+    #       field1: ['error msg 1', 'error msg 2', ...],
+    #       field2: [...],
+    #        :
+    #     }
+    #   }
     respond_with @post
   end
 

@@ -1,4 +1,9 @@
-// Sign-up/in/out links.
+/*
+ * Sign-up/in/out links.
+ *
+ * Usage:
+ *   <auth-links></auth-links>
+ */
 angular.module('AuthLinks', []).
   directive('authLinks', ['$location', function ($location) {
     return {
@@ -13,5 +18,5 @@ angular.module('AuthLinks', []).
           scope.signInRedirectUrl = $location.url();
         });
       }
-    }
+    };
   }]);
