@@ -10,12 +10,11 @@ stack, with the following features built-in:
 1. Complete user management, with authentication and role-based authorization
 1. Front-end asset management using Bower
 1. Angular-based routing
-1. Integration of Angular with server CSRF protection
+1. Angular interfacing with server CSRF protection and server form validation
 1. Back-end testing using RSpec and other best practices
 1. Ready-to-deploy on Heroku
 
-Several ideas have been taken from:
-* http://angular-rails.com
+Several ideas have been taken from http://angular-rails.com.
 
 See Gemfile.lock for each gem's version. We recommend using these versions, or
 newer, for best results.
@@ -47,23 +46,6 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
     $ rake db:migrate
 
    This will set up the required tables in the database.
-
-== Coding Style Conventions
-
-=== General
-
-1. Lines are kept within 80 characters
-1. 2 spaces are used as tabs, with 4 spaces for continuation
-
-=== Comments
-
-1. Comments are compatible with RDoc. See
-   http://docs.seattlerb.org/rdoc/RDoc/Markup.html for markup reference.
-
-1. General Rules
-   1. Single-line-single-sentence comments do not end with a full-stop
-   1. Multiple-line or multiple-sentence comments end with a full-stop
-   1. All comments are in sentence case
 
 == App Structure
 
@@ -116,8 +98,13 @@ gem for this purpose. See the following for more information:
 * http://bower.io
 * https://github.com/42dev/bower-rails
 
-To add front-end libraries, edit the /bower.json file with the required library
-and also remember to reference them in application.js and/or application.css.
+To add/remove front-end libraries, add-to/remove-from the /bower.json file the
+required library/libraries. Then run:
+
+  $ rake bower:install
+
+Also remember to reference/de-reference the relevant files in application.js,
+and/or application.css.
 
 === Testing
 
@@ -157,6 +144,8 @@ Authorization is done via two gems:
 * pundit[https://github.com/elabs/pundit]: For authorizing actions based on
   roles
 
+Authorization policies are placed in app/policies.
+
 === Form Submission
 
 Form validation should generally take place at the Angular end. However, this
@@ -192,7 +181,27 @@ See the following for more information:
 === Authorization Policy Testing
 
 We provide an easy way to test authorization policies generated using pundit.
-See spec/support/pundit_matcher.rb.
+See spec/support/pundit_matcher.rb for relevant RSpec matchers.
+
+Authorization policy tests are placed in spec/policies.
+
+== Contributing/Using
+
+=== Coding Style Conventions
+
+==== General
+
+1. Lines are kept within 80 characters
+1. 2 spaces are used as tabs, with 4 spaces for continuation
+
+==== Comments
+
+1. Comments are compatible with RDoc.
+
+1. General Rules
+   1. Single-line-single-sentence comments do not end with a full-stop
+   1. Multiple-line or multiple-sentence comments end with a full-stop
+   1. All comments are in sentence case
 
 == Appendix
 
@@ -201,5 +210,4 @@ Contains everything that didn't fit in anywhere else on this README.
 === Useful Links
 
 1. {RDoc Markup reference}[http://docs.seattlerb.org/rdoc/RDoc/Markup.html]
-1. {HTTP codes and their Rails symbols}
-   [https://github.com/rack/rack/blob/1.5.2/lib/rack/utils.rb#L544]
+1. {HTTP codes and their Rails symbols}[https://github.com/rack/rack/blob/1.5.2/lib/rack/utils.rb#L544]
