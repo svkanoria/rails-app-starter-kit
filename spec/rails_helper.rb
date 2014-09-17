@@ -18,7 +18,8 @@ require 'rspec/rails'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-# Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+# MY NOTE: Uncommented this line to require all files in spec/support.
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
@@ -47,4 +48,11 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  # MY NOTE: This integrates devise with RSpec, to enable user sign-in for
+  # controller tests.
+  config.include Devise::TestHelpers, type: :controller
+
+  # MY NOTE: This provides utility methods for controller tests
+  config.include ControllerMacros, type: :controller
 end

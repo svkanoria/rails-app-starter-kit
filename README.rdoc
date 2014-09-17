@@ -5,17 +5,20 @@
 A starter kit for creating applications using the Postgres, Rails and Angular
 stack, with the following features built-in:
 
-1. Ruby 2.1.2, Rails ~4.2, Angular ~1.2
+1. Rails ~4.2, Angular ~1.2 (and we recommend Ruby >=2.1.2)
 1. Postgres support
 1. Complete user management, with authentication and role-based authorization
 1. Front-end asset management using Bower
 1. Angular-based routing
 1. Integration of Angular with server CSRF protection
-1. Back-end testing using RSpec
+1. Back-end testing using RSpec and other best practices
 1. Ready-to-deploy on Heroku
 
 Several ideas have been taken from:
 * http://angular-rails.com
+
+See Gemfile.lock for each gem's version. We recommend using these versions, or
+newer, for best results.
 
 == Setting Up
 
@@ -34,8 +37,10 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
 
    This should set up all the front-end assets required.
 
-1. Create a database named 'rails-app-starter-kit_development', er edit
-   /config/database.yml to suit your needs.
+1. Create two databases named as follows, or edit /config/database.yml to suit
+   your needs, and then create the appropriate databases:
+   * 'rails-app-starter-kit_development' (for developing)
+   * 'rails-app-starter-kit_test' (for testing)
 
 1. run the following command:
 
@@ -114,7 +119,7 @@ Normally, Rails does asset management from within the (app/lib/vender)/assets
 folders. However, because we are supporting very 'front-end heavy' applications,
 we use Bower, which is the most widely used such tool. We use the 'bower-rails'
 gem for this purpose. See the following for more information:
-* http://bower.io/
+* http://bower.io
 * https://github.com/42dev/bower-rails
 
 To add front-end libraries, edit the /bower.json file with the required library
@@ -122,10 +127,17 @@ and also remember to reference them in application.js and/or application.css.
 
 === Testing
 
-We use RSpec (instead of the default TestUnit).
+We use RSpec (instead of the default TestUnit) for back-end testing.
 See the following for more information:
 * https://github.com/rspec/rspec-rails
-* http://rspec.info/
+* http://rspec.info
+
+We use FactoryGirl for creating real or mock objects required for testing.
+See the following for more information:
+* https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md
+* https://github.com/thoughtbot/factory_girl_rails
+
+For a detailed discussion, see the Testing section later on.
 
 == Out-of-the-box Functionality
 
@@ -160,3 +172,25 @@ exclusively on the server-side.
 We provide a clean integration between Angular form validation and server-side
 form validation via the 'formErrors' directive. See
 app/assets/javascripts/angular/directives/form_errors.js.
+
+== Testing
+
+Testing is a vast subject, best learnt from hands-on experience.
+See the following for ideas on how to get started:
+* https://github.com/howaboutwe/rspec-style-guide
+* http://dhartweg.roon.io/rspec-testing-for-a-json-api
+
+=== Mock Objects
+
+Most tests require the use of real or mock objects against which tests can be
+run. We use FactoryGirl and rspec-mocks for creating such objects. Each has its
+advantages, and when to choose which is beautifully explained here:
+http://www.agileventures.org/articles/testing-with-rspec-stubs-mocks-factories-what-to-choose.
+
+=== User Authentication
+
+Many controller tests require a user (possibly having certain roles) to be
+signed in. We have provided integration with devise for easy authentication.
+See the following for more information:
+* spec/factories/user.rb
+* spec/support/controller_macros.rb

@@ -83,4 +83,7 @@ group :development, :test do
   # For testing
   gem 'rspec'
   gem 'rspec-rails'
+
+  # For creating mock objects while testing
+  gem 'factory_girl_rails'
 end
