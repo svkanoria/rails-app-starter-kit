@@ -4,11 +4,11 @@ class PostPolicy < ApplicationPolicy
   end
 
   def create?
-    @user.id
+    @user && @user.id
   end
 
   def update?
-    @user.id == @record.id
+    @user && @user.id == @record.user_id
   end
 
   def destroy?

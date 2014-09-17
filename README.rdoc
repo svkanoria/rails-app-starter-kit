@@ -67,8 +67,8 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
 
 == App Structure
 
-The application structure is similar to a standard Rails app, with just the
-following additions:
+The application structure is similar to a standard Rails app, with certain
+additions, a sampling of which is shown below:
 
   app
    |- assets
@@ -79,23 +79,17 @@ following additions:
                |- controllers
                |- directives
                |- templates (contains all Angular templates, i.e. views)
-                   :
-                   :
    |- controllers
-       |- home_controller.rb
+       |- home_controller.rb (the 'entry point' controller)
+   |- policies (user authorization policies)
    |- views
        |- home
-           |- index.html
-
+           |- index.html (the 'entry point' view)
   specs (contains all tests)
-   :
-   :
-
+   |- support (utility stuff for testing)
   vendor
    |- assets
        |- bower_components (all front-end components mananged by Bower)
-           :
-           :
 
 == Dev Tools
 
@@ -194,3 +188,18 @@ signed in. We have provided integration with devise for easy authentication.
 See the following for more information:
 * spec/factories/user.rb
 * spec/support/controller_macros.rb
+
+=== Authorization Policy Testing
+
+We provide an easy way to test authorization policies generated using pundit.
+See spec/support/pundit_matcher.rb.
+
+== Appendix
+
+Contains everything that didn't fit in anywhere else on this README.
+
+=== Useful Links
+
+1. {RDoc Markup reference}[http://docs.seattlerb.org/rdoc/RDoc/Markup.html]
+1. {HTTP codes and their Rails symbols}
+   [https://github.com/rack/rack/blob/1.5.2/lib/rack/utils.rb#L544]
