@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   after_action :verify_authorized, except: [:index, :show, :new]
 
   def index
-    @posts = Post.all
+    @posts = Post.includes(:user).all
 
     respond_with @posts
   end

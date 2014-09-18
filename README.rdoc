@@ -156,7 +156,7 @@ We provide a clean integration between Angular form validation and server-side
 form validation via the 'formErrors' directive. See
 app/assets/javascripts/angular/directives/form_errors.js.
 
-== Testing
+== Testing in Detail
 
 Testing is a vast subject, best learnt from hands-on experience.
 See the following for ideas on how to get started:
@@ -186,6 +186,41 @@ See spec/support/pundit_matcher.rb for relevant RSpec matchers.
 Authorization policy tests are placed in spec/policies.
 
 == Contributing/Using
+
+=== Creating a CRUD Resource
+
+1. Run:
+
+    rails g resource Widget (substitute Widget with resource name)
+
+   - or -
+
+    rails g model Widget
+    rails g controller Widgets
+
+1. Edit the config/routes.rb file.
+1. Write some model unit tests. For reference see:
+   * spec/models/post_spec.rb
+   * spec/factories/post.rb
+1. Write some model functionality.
+1. Create an authorization policy.For reference see
+   app/policies/post_policy.rb.
+1. Write some controller unit tests. For reference see
+   spec/controllers/posts_controller_spec.rb.
+1. Write some authorization polict tests. For reference see
+   spec/policies/post_policy_spec.rb
+1. Write some controller functionality.
+1. Write the server views (which basically render out responses as JSON). For
+   reference, see app/views/posts/index.json.jbuilder. JBuilder
+   (https://github.com/rails/jbuilder) comes bundles with Rails, and is a much
+   better way to create JSON, than using the 'as_json' method.
+1. Create an Angular resource to communicate with the controller. See
+   app/assets/javascripts/angular/services/post.js.
+1. Create an Angular controller that uses the resource. For reference see
+   app/assets/javascripts/angular/controllers/posts_ctrl.js.
+1. Create an Angular view (template). For reference see
+   app/assets/javascripts/angular/templates/controllers/posts/index.html.
+1. Update the app/assets/javascripts/angular/routes.js file.
 
 === Coding Style Conventions
 

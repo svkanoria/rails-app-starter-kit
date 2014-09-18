@@ -49,7 +49,16 @@ module RailsAppStarterKit
       g.assets = false
       g.helper = false
       g.template_engine = nil # Don't create views, since we're using Angular
-      g.view_specs = false
-    end
+
+      g.test_framework :rspec,
+                       fixtures: true,
+                       view_specs: false,
+                       helper_specs: false,
+                       routing_specs: false,
+                       controller_specs: true,
+                       request_specs: false
+
+      g.fixture_replacement :factory_girl, dir: 'spec/factories'
+    10 end
   end
 end
