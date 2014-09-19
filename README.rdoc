@@ -11,7 +11,8 @@ stack, with the following features built-in:
 1. Front-end asset management using Bower
 1. Angular-based routing
 1. Angular interfacing with server CSRF protection and server form validation
-1. Back-end testing using RSpec and other best practices
+1. Rails code testing using RSpec and other best practices
+1. Angular and JS code testing using Teaspoon
 1. Ready-to-deploy on Heroku
 
 Several ideas have been taken from http://angular-rails.com.
@@ -69,6 +70,7 @@ additions, a sampling of which is shown below:
            |- index.html (the 'entry point' view)
   specs (contains all tests)
    |- support (utility stuff for testing)
+   |- javascripts (contains all JS and Angular tests)
   vendor
    |- assets
        |- bower_components (all front-end components mananged by Bower)
@@ -108,7 +110,7 @@ and/or application.css.
 
 === Testing
 
-We use RSpec (instead of the default TestUnit) for back-end testing.
+We use RSpec (instead of the default TestUnit) for Rails code testing.
 See the following for more information:
 * https://github.com/rspec/rspec-rails
 * http://rspec.info
@@ -118,7 +120,11 @@ See the following for more information:
 * https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md
 * https://github.com/thoughtbot/factory_girl_rails
 
-For a detailed discussion, see the Testing section later on.
+We use Teaspoon (which supports several test frameworks - Jasmine, Mocha and
+QUnit) for JS and Angular code testing. See
+https://github.com/modeset/teaspoon for more information.
+
+For a detailed discussion on testing, see the Testing section later on.
 
 == Out-of-the-box Functionality
 
@@ -158,19 +164,21 @@ app/assets/javascripts/angular/directives/form_errors.js.
 
 == Testing in Detail
 
+=== Testing Rails Code
+
 Testing is a vast subject, best learnt from hands-on experience.
 See the following for ideas on how to get started:
 * https://github.com/howaboutwe/rspec-style-guide
 * http://dhartweg.roon.io/rspec-testing-for-a-json-api
 
-=== Mock Objects
+==== Mock Objects
 
 Most tests require the use of real or mock objects against which tests can be
 run. We use FactoryGirl and rspec-mocks for creating such objects. Each has its
 advantages, and when to choose which is beautifully explained here:
 http://www.agileventures.org/articles/testing-with-rspec-stubs-mocks-factories-what-to-choose.
 
-=== User Authentication
+==== User Authentication
 
 Many controller tests require a user (possibly having certain roles) to be
 signed in. We have provided integration with devise for easy authentication.
@@ -178,12 +186,16 @@ See the following for more information:
 * spec/factories/user.rb
 * spec/support/controller_macros.rb
 
-=== Authorization Policy Testing
+==== Authorization Policy Testing
 
 We provide an easy way to test authorization policies generated using pundit.
 See spec/support/pundit_matcher.rb for relevant RSpec matchers.
 
 Authorization policy tests are placed in spec/policies.
+
+=== Testing JS and Angular Code
+
+Coming soon.
 
 == Contributing/Using
 
@@ -218,9 +230,13 @@ Authorization policy tests are placed in spec/policies.
    app/assets/javascripts/angular/services/post.js.
 1. Create an Angular controller that uses the resource. For reference see
    app/assets/javascripts/angular/controllers/posts_ctrl.js.
+1. Write some Angular controller unit tests. For reference see
+   app/spec/javascripts/controllers/home_ctrl_spec.js.
 1. Create an Angular view (template). For reference see
    app/assets/javascripts/angular/templates/controllers/posts/index.html.
 1. Update the app/assets/javascripts/angular/routes.js file.
+1. Create any directives that may be required for the view.
+1. Write some directive unit tests.
 
 === Coding Style Conventions
 

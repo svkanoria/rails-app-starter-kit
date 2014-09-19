@@ -80,10 +80,13 @@ group :development, :test do
   # background. Read more: https://github.com/rails/spring.
   gem 'spring'
 
-  # For testing
+  # For Rails code testing
   gem 'rspec'
   gem 'rspec-rails'
 
   # For creating mock objects while testing
   gem 'factory_girl_rails'
+
+  # For Angular and JS code testing
+  gem 'teaspoon'
 end
