@@ -141,7 +141,7 @@ Authentication is done via the 'devise' gem (see
 https://github.com/plataformatec/devise). Users are stored in the 'User' model.
 
 The entire devise workflow is, after weighing the pros and cons, deliberately
-kept outside of the Angular. See
+kept outside of Angular. See
 https://medium.com/opinionated-angularjs/techniques-for-authentication-in-angularjs-applications-7bbf0346acec
 for a detailed discussion; note however that our implementation is different.
 Relevant files in our implementation are:

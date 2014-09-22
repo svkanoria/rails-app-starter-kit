@@ -5,18 +5,20 @@
  *   <auth-links></auth-links>
  */
 angular.module('AuthLinks', []).
-  directive('authLinks', ['$location', function ($location) {
-    return {
-      restrict: 'EA',
-      templateUrl: "directives/auth_links.html",
-      replace: true,
+  directive('authLinks', [
+    '$location', 'AuthSvc',
+    function ($location, AuthSvc) {
+      return {
+        restrict: 'EA',
+        templateUrl: "directives/auth_links.html",
+        replace: true,
 
-      link: function (scope, element, attrs) {
-        scope.currentUser = CurrentUser;
+        link: function (scope, element, attrs) {
+          scope.currentUser = AuthSvc.currentUser();
 
-        scope.$on('$locationChangeSuccess', function () {
-          scope.signInRedirectUrl = $location.url();
-        });
-      }
-    };
-  }]);
+          scope.$on('$locationChangeSuccess', function () {
+            scope.signInRedirectUrl = $location.url();
+          });
+        }
+      };
+    }]);

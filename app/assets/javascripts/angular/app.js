@@ -6,6 +6,7 @@ var app = angular.module('App', [
   'ng-rails-csrf',
 
   // Services
+  'AuthSvc',
   'Post',
 
   // Controllers
