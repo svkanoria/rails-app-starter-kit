@@ -42,11 +42,18 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
    * 'rails-app-starter-kit_development' (for developing)
    * 'rails-app-starter-kit_test' (for testing)
 
-1. run the following command:
+   Also change the production database details, either now, or before you wish
+   to push your app to production. If you use Heroku, these details will be
+   overridden anyway, but its still a good idea to change them.
+
+1. Run the following command:
 
     $ rake db:migrate
 
    This will set up the required tables in the database.
+
+1. Change the session key in config/initializers/session_store.rb to suit your
+   application.
 
 == App Structure
 
