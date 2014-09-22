@@ -2,15 +2,15 @@
  * Sign-up/in/out links.
  *
  * Usage:
- *   <auth-links></auth-links>
+ *   <authentication-links></authentication-links>
  */
-angular.module('AuthLinks', []).
-  directive('authLinks', [
+angular.module('AuthenticationLinks', []).
+  directive('authenticationLinks', [
     '$location', 'AuthSvc',
     function ($location, AuthSvc) {
       return {
         restrict: 'EA',
-        templateUrl: "directives/auth_links.html",
+        templateUrl: "directives/authentication_links.html",
         replace: true,
 
         link: function (scope, element, attrs) {

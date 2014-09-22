@@ -145,7 +145,7 @@ kept outside of Angular. See
 https://medium.com/opinionated-angularjs/techniques-for-authentication-in-angularjs-applications-7bbf0346acec
 for a detailed discussion; note however that our implementation is different.
 Relevant files in our implementation are:
-* app/assets/javascripts/angular/directives/auth_links.js
+* app/assets/javascripts/angular/directives/authentication_links.js
 * controllers/application_controller (the 'set_sign_in_redirect' method)
 * All devise related files, of course
 
