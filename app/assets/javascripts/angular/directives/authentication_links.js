@@ -10,8 +10,9 @@ angular.module('AuthenticationLinks', []).
     function ($location, AuthSvc) {
       return {
         restrict: 'EA',
-        templateUrl: "directives/authentication_links.html",
+        templateUrl: 'directives/authentication_links.html',
         replace: true,
+        scope: {},
 
         link: function (scope, element, attrs) {
           scope.currentUser = AuthSvc.currentUser();

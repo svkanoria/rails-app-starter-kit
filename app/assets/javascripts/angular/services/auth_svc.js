@@ -11,16 +11,46 @@
  * based on your requirements.
  */
 angular.module('AuthSvc', []).
-  factory('AuthSvc', [function () {
+  factory('AuthSvc', ['$q', function ($q) {
+    var svc = {};
+
     /**
      * Gets the currently logged in user's details, if any.
      * @returns {*} Logged in user details, or null.
      */
-    var currentUser = function () {
+    svc.currentUser = function () {
       return CurrentUser;
     };
 
-    return {
-      currentUser: currentUser
+    /**
+     * Helper method to be used in routes, to require a user to sign in before
+     * accessing certain routes.
+     *
+     * Usage:
+     *   In your routes file:
+     *
+     *   $routeProvider.when('/some-route', {
+     *      :
+     *     resolve: {
+     *       requireSignIn: ['AuthSvc', function (AuthSvc) {
+     *         return AuthSvc.requireSignIn();
+     *       }]
+     *     }
+     *   });
+     *
+     * @returns {promise} A promise that resolves only if a user is signed-in.
+     */
+    svc.requireSignIn = function () {
+      var deferred = $q.defer();
+
+      if (!svc.currentUser()) {
+        deferred.reject('NOT_SIGNED_IN');
+      } else {
+        deferred.resolve();
+      }
+
+      return deferred.promise;
     };
+
+    return svc;
   }]);
