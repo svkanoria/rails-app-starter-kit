@@ -20,7 +20,7 @@ RSpec.describe PostsController, type: :controller do
     end
   end
 
-  context 'for a signed-in user' do
+  context 'for a signed in user' do
     before :each do
       sign_in_user # Sign in a user
     end

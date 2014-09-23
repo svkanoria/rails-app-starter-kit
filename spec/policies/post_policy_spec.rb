@@ -16,7 +16,7 @@ describe PostPolicy do
     it { should_not permit(:destroy) }
   end
 
-  context 'for a signed-in user' do
+  context 'for a signed in user' do
     let(:user) { FactoryGirl.create(:user) }
     let(:post) { FactoryGirl.create(:post) }
 

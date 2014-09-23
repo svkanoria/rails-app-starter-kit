@@ -149,7 +149,7 @@ Relevant files in our implementation are:
 * controllers/application_controller (the 'set_sign_in_redirect' method)
 * All devise related files, of course
 
-In the JS and Angular code, the currently signed-in user details are available
+In the JS and Angular code, the currently signed in user details are available
 through the 'AuthSvc' service. We have also provided helper methods to control
 access to certain routes based on whether a user is signed in, and optionally
 has certain roles. See the following for more details:

@@ -1,20 +1,20 @@
 /*
  * Angular application routes.
- * Uses the 'app' variable defined in app.js, so must be loaded later than
- * app.js.
+ * Uses the 'app' variable defined in app.js, so must be loaded after it.
  */
 app.config(['$routeProvider', function ($routeProvider) {
   /*
-   * Use within the 'resolve' property of a route, to require signed-in access
-   * to the route.
+   * Use within the 'resolve' property of a route.
+   * Requires a user to be signed in, and to possibly have one of the given
+   * role(s), in order to access the route.
    *
    * Usage:
    *   when('/some-route', {
    *      :
-   *     resolve: { requireSignIn: requireSignIn(optionalRoles) }
+   *     resolve: { requireSignIn: requireSignIn(optionalRoleOrRoles) }
    *   })
    *
-   * @param [roles] {string[]} - The roles to restrict access to, if any.
+   * @param [role] {string|string[]} - The role(s) to allow, if any.
    */
   var requireSignIn = function (roles) {
     return ['AuthSvc', function(AuthSvc) {
@@ -37,7 +37,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     when('/posts/new', {
       templateUrl: 'controllers/posts/new.html',
       controller: 'PostsCtrl',
-      resolve: { requireSignIn: requireSignIn(['admin']) }
+      resolve: { requireSignIn: requireSignIn('admin') }
     });
 }]);
 
