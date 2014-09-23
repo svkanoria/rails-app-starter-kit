@@ -12,19 +12,18 @@
  */
 angular.module('AuthSvc', []).
   factory('AuthSvc', ['$q', function ($q) {
-    var svc = {};
-
     /**
      * Gets the currently logged in user's details, if any.
      * @returns {*} Logged in user details, or null.
      */
-    svc.currentUser = function () {
+    var currentUser = function () {
       return CurrentUser;
     };
 
     /**
-     * Helper method to be used in routes, to require a user to sign in before
-     * accessing certain routes.
+     * Helper method to be used in routing.
+     * Requires a user to be signed in, and to possibly have one of the given
+     * roles, in order to access certain routes.
      *
      * Usage:
      *   In your routes file:
@@ -33,18 +32,24 @@ angular.module('AuthSvc', []).
      *      :
      *     resolve: {
      *       requireSignIn: ['AuthSvc', function (AuthSvc) {
-     *         return AuthSvc.requireSignIn();
+     *         return AuthSvc.requireSignIn(optionalRoles);
      *       }]
      *     }
      *   });
      *
-     * @returns {promise} A promise that resolves only if a user is signed-in.
+     * @param [roles] {string[]} - The roles to restrict access to, if any.
+     * @returns {promise} A promise that resolves only if a user is signed-in
+     * and, in case 'roles' in non-empty, has one of the given roles.
      */
-    svc.requireSignIn = function () {
+    var requireSignIn = function (roles) {
       var deferred = $q.defer();
 
-      if (!svc.currentUser()) {
+      if (!currentUser()) {
         deferred.reject('NOT_SIGNED_IN');
+      } else if (!_.isEmpty(roles) &&
+          _.intersection(currentUser().roles, roles).length == 0) {
+
+        deferred.reject('ROLE_NOT_AUTHORIZED');
       } else {
         deferred.resolve();
       }
@@ -52,5 +57,9 @@ angular.module('AuthSvc', []).
       return deferred.promise;
     };
 
-    return svc;
+    // Return the service object
+    return {
+      currentUser: currentUser,
+      requireSignIn: requireSignIn
+    };
   }]);

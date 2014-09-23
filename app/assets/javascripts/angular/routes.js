@@ -11,12 +11,16 @@ app.config(['$routeProvider', function ($routeProvider) {
    * Usage:
    *   when('/some-route', {
    *      :
-   *     resolve: { requireSignIn: requireSignIn }
+   *     resolve: { requireSignIn: requireSignIn(optionalRoles) }
    *   })
+   *
+   * @param [roles] {string[]} - The roles to restrict access to, if any.
    */
-  var requireSignIn = ['AuthSvc', function(AuthSvc) {
-    return AuthSvc.requireSignIn();
-  }];
+  var requireSignIn = function (roles) {
+    return ['AuthSvc', function(AuthSvc) {
+      return AuthSvc.requireSignIn(roles);
+    }];
+  };
 
   $routeProvider.
     // Home routes
@@ -33,7 +37,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     when('/posts/new', {
       templateUrl: 'controllers/posts/new.html',
       controller: 'PostsCtrl',
-      resolve: { requireSignIn: requireSignIn }
+      resolve: { requireSignIn: requireSignIn(['admin']) }
     });
 }]);
 

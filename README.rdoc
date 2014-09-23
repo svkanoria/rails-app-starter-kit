@@ -149,15 +149,25 @@ Relevant files in our implementation are:
 * controllers/application_controller (the 'set_sign_in_redirect' method)
 * All devise related files, of course
 
+In the JS and Angular code, the currently signed-in user details are available
+through the 'AuthSvc' service. We have also provided helper methods to control
+access to certain routes based on whether a user is signed in, and optionally
+has certain roles. See the following for more details:
+* app/assets/javascripts/angular/routes.js
+* app/assets/javascripts/angular/services/auth_svc.js
+
 === Authorization
 
-Authorization is done via two gems:
+Authorization in the Ruby code is done via two gems:
 * rolify[https://github.com/RolifyCommunity/rolify]: For assigning roles to
   users
 * pundit[https://github.com/elabs/pundit]: For authorizing actions based on
   roles
 
 Authorization policies are placed in app/policies.
+
+In JS and Angular code, role-based authorization has been implemented to the
+extent of route access. See the Authentication section above.
 
 === Form Submission
 

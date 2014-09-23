@@ -6,13 +6,10 @@
   <%# Placeholder for Angular templates %>
 </div>
 
-<%# Set currently logged in user information, if any %>
+<%# Set currently signed in user details, if any %>
 <script type="application/javascript">
-  <% if current_user %>
-    var CurrentUser = {
-      id: <%= current_user.id %>,
-      email: '<%= current_user.email %>'
-    };
+  <% if @current_user_json %>
+    var CurrentUser = <%= raw @current_user_json %>;
   <% else %>
     var CurrentUser = null;
   <% end %>
