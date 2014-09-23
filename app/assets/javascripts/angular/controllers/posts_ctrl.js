@@ -2,6 +2,11 @@ angular.module('PostsCtrl', ['Post']).
   controller('PostsCtrl', [
     '$scope', '$location', 'Post',
     function($scope, $location, Post) {
+      /**
+       * Creates a post from form data.
+       * If there are validation errors on the server side, then populates the
+       * 'createPostErrors' scope variable with these errors.
+       */
       $scope.create = function () {
         var post = new Post({
           message: this.message

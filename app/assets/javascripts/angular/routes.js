@@ -38,6 +38,12 @@ app.config(['$routeProvider', function ($routeProvider) {
       templateUrl: 'controllers/posts/new.html',
       controller: 'PostsCtrl',
       resolve: { requireSignIn: requireSignIn('admin') }
+    }).
+    when('/unauthorized', {
+      templateUrl: '401.html'
+    }).
+    otherwise({
+      templateUrl: '404.html'
     });
 }]);
 
@@ -50,9 +56,16 @@ app.run([
   '$rootScope', '$window', '$location',
   function($rootScope, $window, $location) {
     $rootScope.$on('$routeChangeError', function(e, curr, prev, rejection) {
-      if (rejection == 'NOT_SIGNED_IN') {
-        $window.location.href = '/users/sign_in?x_return_to=' +
-          $location.path();
+      switch (rejection) {
+        case 'NOT_SIGNED_IN':
+          $window.location.href = '/users/sign_in?x_return_to=' +
+            $location.path();
+
+          break;
+        case 'ROLE_NOT_AUTHORIZED':
+          $location.path('/unauthorized').replace();
+
+          break;
       }
     });
   }]);
