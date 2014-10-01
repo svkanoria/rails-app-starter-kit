@@ -89,4 +89,11 @@ group :development, :test do
 
   # For Angular and JS code testing
   gem 'teaspoon'
+
+  # For running background tasks
+  gem 'delayed_job_active_record'
+
+  # An EventMachine based application server for better speed in general, and
+  # em-twitter in particular.
+  gem 'thin'
 end
