@@ -1,12 +1,13 @@
 require File.expand_path('../boot', __FILE__)
 
 # Pick the frameworks you want:
-require "active_model/railtie"
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_view/railtie"
-require "sprockets/railtie"
+require 'active_model/railtie'
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'action_view/railtie'
+require 'sprockets/railtie'
+require 'active_job/railtie' # MY NOTE: Added this to enable ActiveJob
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems you've limited to
@@ -60,5 +61,8 @@ module RailsAppStarterKit
 
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     10 end
+
+    # MY NOTE: Tell ActiveJob to use DelayedJob as the background task queue
+    config.active_job.queue_adapter = :delayed_job
   end
 end
