@@ -1,6 +1,25 @@
 = README
 
-== About This Project
+== About Municipal2
+
+An application for recording city complaints via Twitter.
+
+Based on the Rails App Starter Kit.
+
+== Background Jobs
+
+We use ActiveJob "facade" (newly introduced in Rails 4.2), with DelayedJob as
+the actual task runner. For information see:
+* http://edgeguides.rubyonrails.org/active_job_basics.html
+* https://github.com/collectiveidea/delayed_job
+
+The TweetFetcher job (which listens for tweets from the Twitter Streaming API
+and stores them in the database) must be started manually, if not already
+running, from the rails console as follows:
+
+  $ TweetFetcherJob.enqueue
+
+== About Rails App Starter Kit
 
 A starter kit for creating applications using the Postgres, Rails and Angular
 stack, with the following features built-in:

@@ -6,6 +6,9 @@ gem 'rails', '4.2.0.beta1'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+# Use SCSS for stylesheets
+gem 'sass-rails'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
@@ -61,6 +64,13 @@ gem 'responders'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# For running background tasks
+gem 'delayed_job_active_record'
+
+# An EventMachine based application server for better speed in general, and
+# em-twitter in particular.
+gem 'thin'
+
 # Gems required for deploying on Heroku
 group :production, :staging do
   gem 'rails_12factor'
@@ -89,11 +99,4 @@ group :development, :test do
 
   # For Angular and JS code testing
   gem 'teaspoon'
-
-  # For running background tasks
-  gem 'delayed_job_active_record'
-
-  # An EventMachine based application server for better speed in general, and
-  # em-twitter in particular.
-  gem 'thin'
 end
