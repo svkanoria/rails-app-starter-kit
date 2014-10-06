@@ -249,7 +249,7 @@ Coming soon.
 1. Edit the config/routes.rb file.
 1. Write some model unit tests. For reference see:
    * spec/models/post_spec.rb
-   * spec/factories/post.rb
+   * spec/factories/posts.rb
 1. Write some model functionality.
 1. Create an authorization policy.For reference see
    app/policies/post_policy.rb.

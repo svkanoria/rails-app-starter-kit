@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   # This is good practice, as it provides a check that 'authorize' calls have
   # not been inadvertantly skipped.
-  after_action :verify_authorized, except: [:index, :show, :new]
+  after_action :verify_authorized, except: [:index, :show]
 
   def index
     @posts = Post.includes(:user).all

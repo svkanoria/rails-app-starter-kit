@@ -28,7 +28,12 @@ app.config(['$routeProvider', function ($routeProvider) {
       templateUrl: 'controllers/home/index.html',
       controller: 'HomeCtrl'
     }).
-
+    // Location routes
+    when('/locations', {
+      templateUrl: 'controllers/locations/index.html',
+      controller: 'LocationsCtrl',
+      resolve: { requireSignIn: requireSignIn('admin') }
+    }).
     // Post routes
     when('/posts', {
       templateUrl: 'controllers/posts/index.html',
@@ -37,7 +42,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     when('/posts/new', {
       templateUrl: 'controllers/posts/new.html',
       controller: 'PostsCtrl',
-      resolve: { requireSignIn: requireSignIn('admin') }
+      resolve: { requireSignIn: requireSignIn() }
     }).
     when('/unauthorized', {
       templateUrl: '401.html'
