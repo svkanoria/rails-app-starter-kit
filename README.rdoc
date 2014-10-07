@@ -237,18 +237,18 @@ Coming soon.
     rails g model Widget
     rails g controller Widgets
 
-1. Edit the config/routes.rb file.
+1. Edit the config/routes.rb file
 1. Write some model unit tests. For reference see:
    * spec/models/post_spec.rb
    * spec/factories/posts.rb
-1. Write some model functionality.
-1. Create an authorization policy.For reference see
+1. Write some model functionality
+1. Create an authorization policy. For reference see
    app/policies/post_policy.rb.
 1. Write some controller unit tests. For reference see
    spec/controllers/posts_controller_spec.rb.
 1. Write some authorization polict tests. For reference see
    spec/policies/post_policy_spec.rb
-1. Write some controller functionality.
+1. Write some controller functionality
 1. Write the server views (which basically render out responses as JSON). For
    reference, see app/views/posts/index.json.jbuilder. JBuilder
    (https://github.com/rails/jbuilder) comes bundles with Rails, and is a much
@@ -261,9 +261,9 @@ Coming soon.
    app/spec/javascripts/controllers/home_ctrl_spec.js.
 1. Create an Angular view (template). For reference see
    app/assets/javascripts/angular/templates/controllers/posts/index.html.
-1. Update the app/assets/javascripts/angular/routes.js file.
-1. Create any directives that may be required for the view.
-1. Write some directive unit tests.
+1. Update the app/assets/javascripts/angular/routes.js file
+1. Create any directives that may be required for the view
+1. Write some directive unit tests
 
 === Coding Style Conventions
 

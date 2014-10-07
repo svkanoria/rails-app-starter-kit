@@ -63,7 +63,7 @@ gem 'responders'
 # For running background tasks
 gem 'delayed_job_active_record'
 
-# An popular EventMachine based application server
+# A popular EventMachine based application server
 gem 'thin'
 
 # Use Unicorn as the app server
