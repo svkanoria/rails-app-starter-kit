@@ -6,6 +6,21 @@ An application for recording city complaints via Twitter.
 
 Based on the Rails App Starter Kit.
 
+== Running on Heroku
+
+If you're hosting both the master branch and this branch on Heroku, it is best
+to create a different application for this branch, as follows:
+
+1. Go to the Heroku dashboard and create a new app
+1. Note down its Git URL
+1. Go to your local repo and add the above URL as a new remote:
+
+    $ git remote add heroku-municipal2 the-Git-URL
+
+1. Push this branch to the master branch of the newly created remote:
+
+    $ git push heroku-municipal2 municipal2:master
+
 == Background Jobs
 
 The TweetFetcher job (which listens for tweets from the Twitter Streaming API
