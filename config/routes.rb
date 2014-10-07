@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :locations
   resources :posts
+  resources :locations
 
   root 'home#index'
 
