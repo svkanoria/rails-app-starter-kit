@@ -8,11 +8,6 @@ Based on the Rails App Starter Kit.
 
 == Background Jobs
 
-We use ActiveJob "facade" (newly introduced in Rails 4.2), with DelayedJob as
-the actual task runner. For information see:
-* http://edgeguides.rubyonrails.org/active_job_basics.html
-* https://github.com/collectiveidea/delayed_job
-
 The TweetFetcher job (which listens for tweets from the Twitter Streaming API
 and stores them in the database) must be started manually, if not already
 running, from the rails console as follows:
@@ -90,6 +85,7 @@ additions, a sampling of which is shown below:
                |- templates (contains all Angular templates, i.e. views)
    |- controllers
        |- home_controller.rb (the 'entry point' controller)
+   |- jobs (contains all background jobs)
    |- policies (user authorization policies)
    |- views
        |- home
@@ -198,6 +194,15 @@ We provide a clean integration between Angular form validation and server-side
 form validation via the 'formErrors' directive. See
 app/assets/javascripts/angular/directives/form_errors.js.
 
+=== Background Jobs
+
+We provide DelayedJob for running background jobs. For most apps, this is
+sufficient. However, switching to Resque, Sidekiq etc. is very easy, since the
+actual jobs can be written using the Rails 4.2 ActiveJob "facade". For more
+information see:
+* http://edgeguides.rubyonrails.org/active_job_basics.html
+* https://github.com/collectiveidea/delayed_job
+
 == Testing in Detail
 
 === Testing Rails Code
@@ -219,7 +224,7 @@ http://www.agileventures.org/articles/testing-with-rspec-stubs-mocks-factories-w
 Many controller tests require a user (possibly having certain roles) to be
 signed in. We have provided integration with devise for easy authentication.
 See the following for more information:
-* spec/factories/user.rb
+* spec/factories/users.rb
 * spec/support/controller_macros.rb
 
 ==== Authorization Policy Testing
@@ -246,18 +251,18 @@ Coming soon.
     rails g model Widget
     rails g controller Widgets
 
-1. Edit the config/routes.rb file.
+1. Edit the config/routes.rb file
 1. Write some model unit tests. For reference see:
    * spec/models/post_spec.rb
    * spec/factories/posts.rb
-1. Write some model functionality.
-1. Create an authorization policy.For reference see
+1. Write some model functionality
+1. Create an authorization policy. For reference see
    app/policies/post_policy.rb.
 1. Write some controller unit tests. For reference see
    spec/controllers/posts_controller_spec.rb.
 1. Write some authorization polict tests. For reference see
-   spec/policies/post_policy_spec.rb
-1. Write some controller functionality.
+   spec/policies/post_policy_spec.rb.
+1. Write some controller functionality
 1. Write the server views (which basically render out responses as JSON). For
    reference, see app/views/posts/index.json.jbuilder. JBuilder
    (https://github.com/rails/jbuilder) comes bundles with Rails, and is a much
@@ -270,9 +275,9 @@ Coming soon.
    app/spec/javascripts/controllers/home_ctrl_spec.js.
 1. Create an Angular view (template). For reference see
    app/assets/javascripts/angular/templates/controllers/posts/index.html.
-1. Update the app/assets/javascripts/angular/routes.js file.
-1. Create any directives that may be required for the view.
-1. Write some directive unit tests.
+1. Update the app/assets/javascripts/angular/routes.js file
+1. Create any directives that may be required for the view
+1. Write some directive unit tests
 
 === Coding Style Conventions
 
@@ -289,6 +294,8 @@ Coming soon.
    1. Single-line-single-sentence comments do not end with a full-stop
    1. Multiple-line or multiple-sentence comments end with a full-stop
    1. All comments are in sentence case
+   1. Multiple-line comments can be written using the /*..*/ style, in which
+      case, the opening /* must be an empty line
 
 == Appendix
 

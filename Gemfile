@@ -6,7 +6,9 @@ gem 'rails', '4.2.0.beta1'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
-# Use SCSS for stylesheets
+# Use Sass for stylesheets.
+# If you would like to use another CSS preprocessor, remove this.
+# However, people do tend to favor Sass with Rails.
 gem 'sass-rails'
 
 # Use Uglifier as compressor for JavaScript assets
@@ -58,18 +60,17 @@ gem 'pundit'
 # For using respond_with
 gem 'responders'
 
+# For running background tasks
+gem 'delayed_job_active_record'
+
+# A popular EventMachine based application server. Required for em-twitter.
+gem 'thin'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
-# For running background tasks
-gem 'delayed_job_active_record'
-
-# An EventMachine based application server for better speed in general, and
-# em-twitter in particular.
-gem 'thin'
 
 # Gems required for deploying on Heroku
 group :production, :staging do
