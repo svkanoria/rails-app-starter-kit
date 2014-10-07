@@ -3,26 +3,32 @@ angular.module('PostsCtrl', ['Post']).
     '$scope', '$location', 'Post',
     function($scope, $location, Post) {
       /**
-       * Creates a post from form data.
-       * If there are validation errors on the server side, then populates the
-       * 'createPostErrors' scope variable with these errors.
+       * The 'index' action.
        */
-      $scope.create = function () {
-        var post = new Post({
-          message: this.message
-        });
+      $scope.actionIndex = function () {
+        $scope.posts = Post.query();
+      };
 
-        post.$save(function (response) {
-          $location.path('posts');
-        }, function (failureResponse) {
-          $scope.createPostErrors = failureResponse.data.errors;
+      /**
+       * The 'new' action.
+       * Builds an empty post for the form.
+       */
+      $scope.actionNew = function () {
+        $scope.post = new Post({
+          message: null
         });
       };
 
       /**
-       * Populates scope.posts with a list of posts retrieved from the server.
+       * The 'create' action.
+       * If there are validation errors on the server side, then populates the
+       * 'postErrors' scope variable with these errors.
        */
-      $scope.find = function () {
-        $scope.posts = Post.query();
+      $scope.actionCreate = function () {
+        $scope.post.$save(function (response) {
+          $location.path('posts');
+        }, function (failureResponse) {
+          $scope.postErrors = failureResponse.data.errors;
+        });
       };
     }]);

@@ -1,0 +1,10 @@
+<!-- Common form for creating/updating a post -->
+<form novalidate form-errors="postErrors">
+  <label for="message">Message</label>
+  <input type="text" name="message" ng-model="post.message"/>
+  <span ng-show="postErrors['message']">
+    {{postErrors['message'][0]}}
+  </span>
+
+  <button ng-click="actionCreate()">Create</button>
+</form>

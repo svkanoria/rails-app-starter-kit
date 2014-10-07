@@ -1,30 +1,37 @@
 angular.module('LocationsCtrl', ['Location']).
   controller('LocationsCtrl', [
-    '$scope', '$location', 'Location',
-    function($scope, $location, Location) {
-      /**
-       * Creates a location from form data.
-       * If there are validation errors on the server side, then populates the
-       * 'createLocationErrors' scope variable with these errors.
-       */
-      $scope.create = function () {
-        var location = new Location({
-          slug: this.slug,
-          name: this.name
-        });
+    '$scope', '$location', '$routeParams', 'Location',
+    function($scope, $location, $routeParams, Location) {
+      $scope.actionIndex = function () {
+        $scope.locations = Location.query();
+      };
 
-        location.$save(function (response) {
-          $location.path('locations');
-        }, function (failureResponse) {
-          $scope.createLocationErrors = failureResponse.data.errors;
+      $scope.actionShow = function () {
+        $scope.location = Location.get({
+          locationId: $routeParams.id
         });
       };
 
-      /**
-       * Populates scope.locations with a list of locations retrieved from the
-       * server.
-       */
-      $scope.find = function () {
-        $scope.locations = Location.query();
+      $scope.actionNew = function () {
+        $scope.location = new Location({
+          slug: null,
+          name: null
+        });
+      };
+
+      $scope.actionCreate = function () {
+        $scope.location.$save(function (response) {
+          $location.path('locations');
+        }, function (failureResponse) {
+          $scope.locationErrors = failureResponse.data.errors;
+        });
+      };
+
+      $scope.actionUpdate = function () {
+        $scope.location.$update(function (response) {
+          $location.path('locations');
+        }, function (failureResponse) {
+          $scope.locationErrors = failureResponse.data.errors;
+        });
       };
     }]);

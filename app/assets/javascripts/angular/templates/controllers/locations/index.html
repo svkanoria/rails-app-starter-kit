@@ -1,7 +1,22 @@
-<div ng-init="find()">
-  <ul class="locations">
-    <li ng-repeat="location in locations">
-      {{location.slug}} - {{location.name}}
-    </li>
-  </ul>
+<div ng-init="actionIndex()">
+  <table class="pure-table" id="locations-table">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Slug</th>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="location in locations">
+      <td>{{location.id}}</td>
+      <td>{{location.slug}}</td>
+      <td>{{location.name}}</td>
+      <td>
+        <a href="#/locations/{{location.id}}/edit">Edit</a>
+      </td>
+    </tr>
+  </table>
+
+  <a href="#/locations/new">New location</a>
 </div>

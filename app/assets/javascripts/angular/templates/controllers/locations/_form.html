@@ -1,0 +1,21 @@
+<!-- Common form for creating/updating a location -->
+<form class="pure-form" novalidate form-errors="locationErrors">
+  <label for="slug">Slug</label>
+  <input type="text" name="slug" ng-model="location.slug"/>
+  <span ng-show="locationErrors['slug']">
+    {{locationErrors['slug'][0]}}
+  </span>
+
+  <label for="name">Name</label>
+  <input type="text" name="name" ng-model="location.name"/>
+  <span ng-show="locationErrors['name']">
+    {{locationErrors['name'][0]}}
+  </span>
+
+  <button class="pure-button" ng-click="actionCreate()" ng-if="!location.id">
+    Create
+  </button>
+  <button class="pure-button" ng-click="actionUpdate()" ng-if="location.id">
+    Update
+  </button>
+</form>

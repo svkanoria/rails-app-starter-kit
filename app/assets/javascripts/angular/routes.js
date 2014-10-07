@@ -23,16 +23,14 @@ app.config(['$routeProvider', function ($routeProvider) {
   };
 
   $routeProvider.
+    /////////////////
+    // Main routes //
+    /////////////////
+
     // Home routes
     when('/', {
       templateUrl: 'controllers/home/index.html',
       controller: 'HomeCtrl'
-    }).
-    // Location routes
-    when('/locations', {
-      templateUrl: 'controllers/locations/index.html',
-      controller: 'LocationsCtrl',
-      resolve: { requireSignIn: requireSignIn('admin') }
     }).
     // Post routes
     when('/posts', {
@@ -44,6 +42,31 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller: 'PostsCtrl',
       resolve: { requireSignIn: requireSignIn() }
     }).
+
+    //////////////////
+    // Admin routes //
+    //////////////////
+
+    // Location routes
+    when('/locations', {
+      templateUrl: 'controllers/locations/index.html',
+      controller: 'LocationsCtrl',
+      resolve: { requireSignIn: requireSignIn('admin') }
+    }).
+    when('/locations/new', {
+      templateUrl: 'controllers/locations/new.html',
+      controller: 'LocationsCtrl',
+      resolve: { requireSignIn: requireSignIn('admin') }
+    }).
+    when('/locations/:id/edit', {
+      templateUrl: 'controllers/locations/edit.html',
+      controller: 'LocationsCtrl',
+      resolve: { requireSignIn: requireSignIn('admin') }
+    }).
+
+    ///////////////////
+    // Shared routes //
+    ///////////////////
     when('/unauthorized', {
       templateUrl: '401.html'
     }).
