@@ -37,7 +37,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     when('/posts/new', {
       templateUrl: 'controllers/posts/new.html',
       controller: 'PostsCtrl',
-      resolve: { requireSignIn: requireSignIn('admin') }
+      resolve: { requireSignIn: requireSignIn() }
     }).
     when('/unauthorized', {
       templateUrl: '401.html'

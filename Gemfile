@@ -6,6 +6,11 @@ gem 'rails', '4.2.0.beta1'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+# Use Sass for stylesheets.
+# If you would like to use another CSS preprocessor, remove this.
+# However, people do tend to favor Sass with Rails.
+gem 'sass-rails'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
@@ -54,6 +59,12 @@ gem 'pundit'
 
 # For using respond_with
 gem 'responders'
+
+# For running background tasks
+gem 'delayed_job_active_record'
+
+# An popular EventMachine based application server
+gem 'thin'
 
 # Use Unicorn as the app server
 # gem 'unicorn'

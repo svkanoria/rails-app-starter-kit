@@ -71,6 +71,7 @@ additions, a sampling of which is shown below:
                |- templates (contains all Angular templates, i.e. views)
    |- controllers
        |- home_controller.rb (the 'entry point' controller)
+   |- jobs (contains all background jobs)
    |- policies (user authorization policies)
    |- views
        |- home
@@ -179,6 +180,15 @@ We provide a clean integration between Angular form validation and server-side
 form validation via the 'formErrors' directive. See
 app/assets/javascripts/angular/directives/form_errors.js.
 
+=== Background Jobs
+
+We provide DelayedJob for running background jobs. For most apps, this is
+sufficient. However, switching to Resque, Sidekiq etc. is very easy, since the
+actual jobs can be written using the Rails 4.2 ActiveJob "facade". For more
+information see:
++* http://edgeguides.rubyonrails.org/active_job_basics.html
++* https://github.com/collectiveidea/delayed_job
+
 == Testing in Detail
 
 === Testing Rails Code
@@ -200,7 +210,7 @@ http://www.agileventures.org/articles/testing-with-rspec-stubs-mocks-factories-w
 Many controller tests require a user (possibly having certain roles) to be
 signed in. We have provided integration with devise for easy authentication.
 See the following for more information:
-* spec/factories/user.rb
+* spec/factories/users.rb
 * spec/support/controller_macros.rb
 
 ==== Authorization Policy Testing
@@ -230,7 +240,7 @@ Coming soon.
 1. Edit the config/routes.rb file.
 1. Write some model unit tests. For reference see:
    * spec/models/post_spec.rb
-   * spec/factories/post.rb
+   * spec/factories/posts.rb
 1. Write some model functionality.
 1. Create an authorization policy.For reference see
    app/policies/post_policy.rb.
