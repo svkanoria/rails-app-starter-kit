@@ -280,6 +280,8 @@ Coming soon.
    1. Single-line-single-sentence comments do not end with a full-stop
    1. Multiple-line or multiple-sentence comments end with a full-stop
    1. All comments are in sentence case
+   1. Multiple-line comments can be written using the /*..*/ style, in which
+      case, the opening /* must be an empty line
 
 == Appendix
 

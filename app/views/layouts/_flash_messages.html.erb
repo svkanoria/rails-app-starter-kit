@@ -1,9 +1,13 @@
-<%# Displays flash messages. Really only used for the devise workflow, because
-    it is the only server-generated UI. %>
+<%#
+  # Displays flash messages. Really only used for the devise workflow, because
+  # it is the only server-generated UI.
+  #%>
 <div class="flash-messages">
   <% flash.each do |key, value| %>
-    <%# We must ignore this key, as devise uses it for keeping internal state.
-        See https://github.com/plataformatec/devise/issues/1777. %>
+    <%#
+      # We must ignore this key, as devise uses it for keeping internal state.
+      # See https://github.com/plataformatec/devise/issues/1777.
+      #%>
     <% if key != :timedout %>
       <div><%= value %></div>
     <% end %>
