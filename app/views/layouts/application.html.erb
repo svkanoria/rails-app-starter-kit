@@ -12,9 +12,22 @@
   <%= csrf_meta_tags %>
 </head>
 <body ng-app="App">
-<%= render 'layouts/flash_messages' %>
+  <%= render 'layouts/nav_bar' %>
+  <%= render 'layouts/flash_messages' %>
 
-<%= yield %>
+  <div ng-view>
+    <%# Placeholder for Angular templates %>
+  </div>
 
+  <%= render 'layouts/footer' %>
+
+  <%# Set currently signed in user details, if any %>
+  <script type="application/javascript">
+    <% if @current_user_json %>
+    var CurrentUser = <%= raw @current_user_json %>;
+    <% else %>
+    var CurrentUser = null;
+    <% end %>
+  </script>
 </body>
 </html>

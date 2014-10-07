@@ -1,17 +1,4 @@
-<%# TODO Add Twitter authentication in due course %>
-<%# <authentication-links></authentication-links> %>
-
-<%= render 'home/nav_bar' %>
-
-<div ng-view>
-  <%# Placeholder for Angular templates %>
-</div>
-
-<%# Set currently signed in user details, if any %>
-<script type="application/javascript">
-  <% if @current_user_json %>
-    var CurrentUser = <%= raw @current_user_json %>;
-  <% else %>
-    var CurrentUser = null;
-  <% end %>
-</script>
+<%#
+  # The application 'entry point' view, i.e. the landing page.
+  # The actual HTML is rendered using Angular, so this file is empty.
+  # %>
