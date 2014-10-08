@@ -261,7 +261,7 @@ Coming soon.
 
     rails g resource Widget (substitute Widget with resource name)
 
-   - or -
+   OR
 
     rails g model Widget
     rails g controller Widgets
@@ -303,7 +303,10 @@ Coming soon.
 
 ==== Comments
 
-1. Comments are compatible with RDoc.
+1. Ruby comments are compatible with Yard.
+   For more information, see:
+   * http://yardoc.org/index.html
+   * http://tech.pro/tutorial/1363/documenting-your-ruby-code-with-yard
 
 1. General Rules
    1. Single-line-single-sentence comments do not end with a full-stop
@@ -315,6 +318,10 @@ Coming soon.
 == Appendix
 
 Contains everything that didn't fit in anywhere else on this README.
+
+=== This README
+
+This README is compatible with RDoc.
 
 === Useful Links
 

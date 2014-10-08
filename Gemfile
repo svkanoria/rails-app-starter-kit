@@ -68,6 +68,9 @@ gem 'delayed_job_active_record'
 # A popular EventMachine based application server. Required for em-twitter.
 gem 'thin'
 
+# For fuzzy string matching
+gem 'fuzzy_match'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -102,4 +105,9 @@ group :development, :test do
 
   # For Angular and JS code testing
   gem 'teaspoon'
+end
+
+group :development do
+  # For documentation
+  gem 'yard'
 end
