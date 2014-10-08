@@ -18,4 +18,5 @@
 
 # Igmore all documentation files. They can be generated using YARD locally if
 # desired.
-/.doc
+/doc
+/.yardoc
