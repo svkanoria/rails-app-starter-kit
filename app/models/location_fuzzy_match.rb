@@ -11,7 +11,7 @@
 class LocationFuzzyMatch
   # The constructor.
   # @param search_space [ActiveRecord::Relation] The set of locations to search
-  # amongst.
+  #   amongst.
   def initialize (search_space = nil)
     @search_space = search_space || Location
   end
