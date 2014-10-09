@@ -2,34 +2,38 @@
 <form class="pure-form pure-form-stacked" novalidate
       form-errors="locationErrors">
 
-  <label for="slug">Slug</label>
-  <input type="text" name="slug" ng-model="location.slug"/>
-  <div ng-show="locationErrors['slug']">
-    {{locationErrors['slug'][0]}}
+  <div class="form-inputs section">
+    <label for="slug">Slug</label>
+    <input type="text" name="slug" ng-model="location.slug"/>
+    <div ng-show="locationErrors['slug']">
+      {{locationErrors['slug'][0]}}
+    </div>
+
+    <label for="name">Name</label>
+    <input type="text" name="name" ng-model="location.name"/>
+    <div ng-show="locationErrors['name']">
+      {{locationErrors['name'][0]}}
+    </div>
+
+    <label for="zip">Zip</label>
+    <input type="text" name="zip" ng-model="location.zip"/>
+    <div ng-show="locationErrors['zip']">
+      {{locationErrors['zip'][0]}}
+    </div>
+
+    <label for="abbrs">Abbreviations</label>
+    <input type="text" name="abbrs" ng-model="location.abbrs"/>
+    <div ng-show="locationErrors['abbrs']">
+      {{locationErrors['abbrs'][0]}}
+    </div>
   </div>
 
-  <label for="name">Name</label>
-  <input type="text" name="name" ng-model="location.name"/>
-  <div ng-show="locationErrors['name']">
-    {{locationErrors['name'][0]}}
+  <div class="form-actions">
+    <button class="pure-button" ng-click="actionCreate()" ng-if="!location.id">
+      Create
+    </button>
+    <button class="pure-button" ng-click="actionUpdate()" ng-if="location.id">
+      Update
+    </button>
   </div>
-
-  <label for="zip">Zip</label>
-  <input type="text" name="zip" ng-model="location.zip"/>
-  <div ng-show="locationErrors['zip']">
-    {{locationErrors['zip'][0]}}
-  </div>
-
-  <label for="abbrs">Abbreviations</label>
-  <input type="text" name="abbrs" ng-model="location.abbrs"/>
-  <div ng-show="locationErrors['abbrs']">
-    {{locationErrors['abbrs'][0]}}
-  </div>
-
-  <button class="pure-button" ng-click="actionCreate()" ng-if="!location.id">
-    Create
-  </button>
-  <button class="pure-button" ng-click="actionUpdate()" ng-if="location.id">
-    Update
-  </button>
 </form>
