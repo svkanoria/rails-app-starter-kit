@@ -11,10 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001073343) do
+ActiveRecord::Schema.define(version: 20141001103521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "complaints", force: true do |t|
+    t.string   "text"
+    t.integer  "likes"
+    t.integer  "tweet_id"
+    t.datetime "tweeted_at"
+    t.string   "twitter_user_name"
+    t.integer  "twitter_tweet_id",  limit: 8
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "complaints", ["tweet_id"], name: "index_complaints_on_tweet_id", using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -51,6 +64,21 @@ ActiveRecord::Schema.define(version: 20141001073343) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+
+  create_table "tweet_checkpoints", force: true do |t|
+    t.integer  "tweet_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "tweet_checkpoints", ["tweet_id"], name: "index_tweet_checkpoints_on_tweet_id", using: :btree
+
+  create_table "tweets", force: true do |t|
+    t.string   "raw_data"
+    t.integer  "error"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

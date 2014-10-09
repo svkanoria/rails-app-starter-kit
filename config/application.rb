@@ -7,6 +7,7 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
 require "sprockets/railtie"
+require "active_job/railtie"
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems you've limited to
@@ -38,6 +39,13 @@ module RailsAppStarterKit
     # Rails standard, we need to add it manually.
     config.assets.paths << Rails.root.join('vendor', 'assets',
                                            'bower_components')
+    # For local env variables
+    config.before_configuration do
+      env_file = File.join(Rails.root, 'config', 'local_env.yml')
+      YAML.load(File.open(env_file)).each do |key, value|
+        ENV[key.to_s] = value
+      end if File.exists?(env_file)
+    end
 
     # MY NOTE: We keep our Angular templates in
     # app/assets/javascripts/angular/templates, hence this customization is

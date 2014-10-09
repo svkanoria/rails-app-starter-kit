@@ -15,3 +15,6 @@
 # Ignore all RubyMine specific files.
 # MY NOTE: Feel free to remove this if you are not using RubyMine as your IDE.
 /.idea
+
+/script
+/config/local_env.yml

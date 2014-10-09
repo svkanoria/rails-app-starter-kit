@@ -55,6 +55,16 @@ gem 'pundit'
 # For using respond_with
 gem 'responders'
 
+# For fetching twitter data
+gem 'em-twitter'
+
+# For running background tasks
+gem 'delayed_job_active_record'
+
+# An EventMachine based application server for better speed in general, and
+# em-twitter in particular.
+gem 'thin'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -89,11 +99,4 @@ group :development, :test do
 
   # For Angular and JS code testing
   gem 'teaspoon'
-
-  # For running background tasks
-  gem 'delayed_job_active_record'
-
-  # An EventMachine based application server for better speed in general, and
-  # em-twitter in particular.
-  gem 'thin'
 end
