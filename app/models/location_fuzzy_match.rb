@@ -16,7 +16,7 @@ class LocationFuzzyMatch
     @search_space = search_space || Location
   end
 
-  # Returns a 'best match' location, given a search string.
+  # Returns the most likely location, given a search string.
   # For search strings of 5 or less characters, looks only for an exact match,
   # to reduce the possibility of false positives.
   # @param str [String] The search string (can be nil).
@@ -25,26 +25,39 @@ class LocationFuzzyMatch
     return nil if str.blank?
 
     if str.length <= 5
-      find_exact(str)
+      location = find_exact_by_name(str)
     else
-      find_fuzzy(str)
+      location = find_fuzzy_by_name(str)
     end
+
+    unless location
+      location = find_exact_by_abbr(str)
+    end
+
+    location
   end
 
   private
 
-  # Returns an *exact* match location, given a search string. Does *not* do a
-  # fuzzy search!
+  # Returns a location whose name *exactly* matches a search string.
   # @param str [String] The search string.
   # @return A Location object, or nil if none found.
-  def find_exact (str)
-    @search_space.where('lower(name) = ?', str.downcase).first
+  def find_exact_by_name (str)
+    @search_space.where('upper(name) = ?', str.upcase).first
   end
 
-  # Returns a 'best fuzzy match' location, given a search string.
+  # Returns a location whose name *fuzzily* matches a search string.
   # @param str [String] The search string.
   # @return A Location object, or nil if none found.
-  def find_fuzzy (str)
+  def find_fuzzy_by_name (str)
     FuzzyMatch.new(@search_space.all, read: :slug).find(str)
+  end
+
+  # Returns a location whose some abbreviation *exactly* matches a search
+  # string.
+  # @param str [String] The search string.
+  # @return A Location object, or nil if none found.
+  def find_exact_by_abbr (str)
+    @search_space.where('? = any(abbrs)', str.upcase).first
   end
 end
