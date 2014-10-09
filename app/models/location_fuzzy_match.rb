@@ -4,6 +4,7 @@
 #
 #   # Simple
 #   l = LocationFuzzySearch.new().find('connplace')
+#   l = LocationFuzzySearch.new().find('110001')
 #
 #   # More complex
 #   l = LocationFuzzySearch.new(Location.where(verified: true))
@@ -24,10 +25,14 @@ class LocationFuzzyMatch
   def find (str)
     return nil if str.blank?
 
-    if str.length <= 5
-      location = find_exact_by_name(str)
-    else
-      location = find_fuzzy_by_name(str)
+    location = find_exact_by_zip(str)
+
+    unless location
+      if str.length <= 5
+        location = find_exact_by_name(str)
+      else
+        location = find_fuzzy_by_name(str)
+      end
     end
 
     unless location
@@ -38,6 +43,13 @@ class LocationFuzzyMatch
   end
 
   private
+
+  # Returns a location whose zip *exactly* matches a search string.
+  # @param str [String] The search string.
+  # @return A Location object, or nil if none found.
+  def find_exact_by_zip (str)
+    @search_space.where('upper(zip) = ?', str.upcase).first
+  end
 
   # Returns a location whose name *exactly* matches a search string.
   # @param str [String] The search string.

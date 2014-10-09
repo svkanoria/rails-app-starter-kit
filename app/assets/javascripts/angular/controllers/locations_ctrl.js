@@ -13,10 +13,7 @@ angular.module('LocationsCtrl', ['Location']).
       };
 
       $scope.actionNew = function () {
-        $scope.location = new Location({
-          slug: null,
-          name: null
-        });
+        $scope.location = new Location();
       };
 
       $scope.actionCreate = function () {

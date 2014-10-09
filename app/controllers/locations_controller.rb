@@ -42,7 +42,7 @@ class LocationsController < ApplicationController
   private
 
   def location_params
-    params.required(:location).permit(:slug, :name, :abbrs)
+    params.required(:location).permit(:slug, :name, :zip, :abbrs)
   end
 
   def load_basics

@@ -8,6 +8,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  abbrs      :text             default("{}"), is an Array
+#  zip        :string
 #
 
 require 'rails_helper'

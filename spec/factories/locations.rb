@@ -8,6 +8,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  abbrs      :text             default("{}"), is an Array
+#  zip        :string
 #
 
 FactoryGirl.define do
@@ -15,5 +16,7 @@ FactoryGirl.define do
   factory :location do
     slug 'ConnaughtPlace'
     name 'Connaught Place'
+    zip '110057'
+    abbrs %w(CP ConnPl)
   end
 end
