@@ -71,6 +71,12 @@ gem 'thin'
 # For fuzzy string matching
 gem 'fuzzy_match'
 
+# For connecting to the Twitter Streaming API.
+# Note that we need to restrict 'simple_oauth' to less than 0.3, otherwise an
+# exception is raised while connecting to Twitter.
+gem 'em-twitter'
+gem 'simple_oauth', '~> 0.2.0'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
