@@ -16,5 +16,11 @@
 # MY NOTE: Feel free to remove this if you are not using RubyMine as your IDE.
 /.idea
 
+# local env files
 /script
 /config/local_env.yml
+
+# Igmore all documentation files. They can be generated using YARD locally if
+# desired.
+/doc
+/.yardoc

@@ -1,6 +1,35 @@
 = README
 
-== About This Project
+== About Municipal2
+
+An application for recording city complaints via Twitter.
+
+Based on the Rails App Starter Kit.
+
+== Running on Heroku
+
+If you're hosting both the master branch and this branch on Heroku, it is best
+to create a different application for this branch, as follows:
+
+1. Go to the Heroku dashboard and create a new app
+1. Note down its Git URL
+1. Go to your local repo and add the above URL as a new remote:
+
+    $ git remote add heroku-municipal2 the-Git-URL
+
+1. Push this branch to the master branch of the newly created remote:
+
+    $ git push heroku-municipal2 municipal2:master
+
+== Background Jobs
+
+The TweetFetcher job (which listens for tweets from the Twitter Streaming API
+and stores them in the database) must be started manually, if not already
+running, from the rails console as follows:
+
+  $ TweetFetcherJob.enqueue
+
+== About Rails App Starter Kit
 
 A starter kit for creating applications using the Postgres, Rails and Angular
 stack, with the following features built-in:
@@ -71,6 +100,7 @@ additions, a sampling of which is shown below:
                |- templates (contains all Angular templates, i.e. views)
    |- controllers
        |- home_controller.rb (the 'entry point' controller)
+   |- jobs (contains all background jobs)
    |- policies (user authorization policies)
    |- views
        |- home
@@ -179,6 +209,15 @@ We provide a clean integration between Angular form validation and server-side
 form validation via the 'formErrors' directive. See
 app/assets/javascripts/angular/directives/form_errors.js.
 
+=== Background Jobs
+
+We provide DelayedJob for running background jobs. For most apps, this is
+sufficient. However, switching to Resque, Sidekiq etc. is very easy, since the
+actual jobs can be written using the Rails 4.2 ActiveJob "facade". For more
+information see:
+* http://edgeguides.rubyonrails.org/active_job_basics.html
+* https://github.com/collectiveidea/delayed_job
+
 == Testing in Detail
 
 === Testing Rails Code
@@ -200,7 +239,7 @@ http://www.agileventures.org/articles/testing-with-rspec-stubs-mocks-factories-w
 Many controller tests require a user (possibly having certain roles) to be
 signed in. We have provided integration with devise for easy authentication.
 See the following for more information:
-* spec/factories/user.rb
+* spec/factories/users.rb
 * spec/support/controller_macros.rb
 
 ==== Authorization Policy Testing
@@ -222,23 +261,23 @@ Coming soon.
 
     rails g resource Widget (substitute Widget with resource name)
 
-   - or -
+   OR
 
     rails g model Widget
     rails g controller Widgets
 
-1. Edit the config/routes.rb file.
+1. Edit the config/routes.rb file
 1. Write some model unit tests. For reference see:
    * spec/models/post_spec.rb
-   * spec/factories/post.rb
-1. Write some model functionality.
-1. Create an authorization policy.For reference see
+   * spec/factories/posts.rb
+1. Write some model functionality
+1. Create an authorization policy. For reference see
    app/policies/post_policy.rb.
 1. Write some controller unit tests. For reference see
    spec/controllers/posts_controller_spec.rb.
 1. Write some authorization polict tests. For reference see
-   spec/policies/post_policy_spec.rb
-1. Write some controller functionality.
+   spec/policies/post_policy_spec.rb.
+1. Write some controller functionality
 1. Write the server views (which basically render out responses as JSON). For
    reference, see app/views/posts/index.json.jbuilder. JBuilder
    (https://github.com/rails/jbuilder) comes bundles with Rails, and is a much
@@ -251,9 +290,9 @@ Coming soon.
    app/spec/javascripts/controllers/home_ctrl_spec.js.
 1. Create an Angular view (template). For reference see
    app/assets/javascripts/angular/templates/controllers/posts/index.html.
-1. Update the app/assets/javascripts/angular/routes.js file.
-1. Create any directives that may be required for the view.
-1. Write some directive unit tests.
+1. Update the app/assets/javascripts/angular/routes.js file
+1. Create any directives that may be required for the view
+1. Write some directive unit tests
 
 === Coding Style Conventions
 
@@ -264,16 +303,25 @@ Coming soon.
 
 ==== Comments
 
-1. Comments are compatible with RDoc.
+1. Ruby comments are compatible with Yard.
+   For more information, see:
+   * http://yardoc.org/index.html
+   * http://tech.pro/tutorial/1363/documenting-your-ruby-code-with-yard
 
 1. General Rules
    1. Single-line-single-sentence comments do not end with a full-stop
    1. Multiple-line or multiple-sentence comments end with a full-stop
    1. All comments are in sentence case
+   1. Multiple-line comments can be written using the /*..*/ style, in which
+      case, the opening /* must be an empty line
 
 == Appendix
 
 Contains everything that didn't fit in anywhere else on this README.
+
+=== This README
+
+This README is compatible with RDoc.
 
 === Useful Links
 

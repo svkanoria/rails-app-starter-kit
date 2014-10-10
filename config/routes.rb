@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :posts
+  resources :locations
 
   root 'home#index'
 

@@ -7,10 +7,12 @@ var app = angular.module('App', [
 
   // Services
   'AuthSvc',
+  'Location',
   'Post',
 
   // Controllers
   'HomeCtrl',
+  'LocationsCtrl',
   'PostsCtrl',
 
   // Directives

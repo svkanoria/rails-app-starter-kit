@@ -1,13 +1,13 @@
 require File.expand_path('../boot', __FILE__)
 
 # Pick the frameworks you want:
-require "active_model/railtie"
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_view/railtie"
-require "sprockets/railtie"
-require "active_job/railtie"
+require 'active_model/railtie'
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'action_view/railtie'
+require 'sprockets/railtie'
+require 'active_job/railtie' # MY NOTE: Added this to enable ActiveJob
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems you've limited to
@@ -39,7 +39,7 @@ module RailsAppStarterKit
     # Rails standard, we need to add it manually.
     config.assets.paths << Rails.root.join('vendor', 'assets',
                                            'bower_components')
-    # For local env variables
+    # To add local env variables for TWITTER
     config.before_configuration do
       env_file = File.join(Rails.root, 'config', 'local_env.yml')
       YAML.load(File.open(env_file)).each do |key, value|
@@ -68,5 +68,8 @@ module RailsAppStarterKit
 
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     10 end
+
+    # MY NOTE: Tell ActiveJob to use DelayedJob as the background task queue
+    config.active_job.queue_adapter = :delayed_job
   end
 end

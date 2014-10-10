@@ -83,12 +83,18 @@ class TweetProcessorJob < ActiveJob::Base
     tweeted_at = tweet_data["created_at"].to_datetime
     likes = tweet_data["retweet_count"]
 
+    location_array = tweet_data["entities"]["hashtags"].collect do |ht|
+      LocationFuzzyMatch.new().find(ht["text"])
+    end
+    location = location_array.first
+
     Complaint.create(text: text,
                     likes: likes,
                     tweet: tweet,
                     tweeted_at: tweeted_at,
                     twitter_user_name: twitter_user_name,
-                    twitter_tweet_id: twitter_tweet_id)
+                    twitter_tweet_id: twitter_tweet_id,
+                    location: location)
 
   end
 end

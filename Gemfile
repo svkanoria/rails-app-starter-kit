@@ -1,10 +1,17 @@
 source 'https://rubygems.org'
 
+ruby '2.1.2'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0.beta1'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
+
+# Use Sass for stylesheets.
+# If you would like to use another CSS preprocessor, remove this.
+# However, people do tend to favor Sass with Rails.
+gem 'sass-rails'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -61,9 +68,11 @@ gem 'em-twitter'
 # For running background tasks
 gem 'delayed_job_active_record'
 
-# An EventMachine based application server for better speed in general, and
-# em-twitter in particular.
+# A popular EventMachine based application server. Required for em-twitter.
 gem 'thin'
+
+# For fuzzy string matching
+gem 'fuzzy_match'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
@@ -99,4 +108,9 @@ group :development, :test do
 
   # For Angular and JS code testing
   gem 'teaspoon'
+end
+
+group :development do
+  # For documentation
+  gem 'yard'
 end

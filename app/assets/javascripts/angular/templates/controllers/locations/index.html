@@ -1,0 +1,26 @@
+<div ng-init="actionIndex()">
+  <table class="pure-table section" id="locations-table">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Slug</th>
+      <th>Name</th>
+      <th>Zip</th>
+      <th>Abbrs</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="location in locations">
+      <td>{{location.id}}</td>
+      <td>{{location.slug}}</td>
+      <td>{{location.name}}</td>
+      <td>{{location.zip}}</td>
+      <td>{{location.abbrs}}</td>
+      <td>
+        <a href="#/locations/{{location.id}}/edit">Edit</a>
+      </td>
+    </tr>
+  </table>
+
+  <a href="#/locations/new">New location</a>
+</div>
