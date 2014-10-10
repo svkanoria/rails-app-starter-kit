@@ -9,11 +9,15 @@ $spacing: 8px;
 
 // Colors
 $border-color: #EEEEEE;
-$shadow-color: #CCCCCC;
+$shadow-color: #E5E5E5;
+$gray-color: #999999;
 
 ////////////////
 // Components //
 ////////////////
+
+// Footer
+$footer-text-color: $gray-color;
 
 // Section
 $section-margin-bottom: $spacing * 2;

@@ -247,6 +247,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails
   sdoc (~> 0.4.0)
+  simple_oauth (~> 0.2.0)
   spring
   teaspoon
   thin

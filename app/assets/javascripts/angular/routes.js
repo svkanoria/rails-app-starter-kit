@@ -32,6 +32,10 @@ app.config(['$routeProvider', function ($routeProvider) {
       templateUrl: 'controllers/home/index.html',
       controller: 'HomeCtrl'
     }).
+    when('/about_us', {
+      templateUrl: 'controllers/home/about_us.html',
+      controller: 'HomeCtrl'
+    }).
     // Post routes
     when('/posts', {
       templateUrl: 'controllers/posts/index.html',
