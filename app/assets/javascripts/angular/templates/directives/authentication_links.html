@@ -1,14 +1,9 @@
-<div class="authentication-links">
-  <a ng-if="!currentUser"
-     href="/users/sign_in?x_return_to={{signInRedirectUrl}}">
-    Sign in
-  </a>
-  <a ng-if="currentUser"
-     href="">
-    {{currentUser.email}}
-  </a>
-  <a ng-if="currentUser"
-     href="/users/sign_out" data-method="delete">
-    Sign out
-  </a>
-</div>
+<span class="authentication-links">
+  <a href="/users/sign_in?x_return_to={{signInRedirectUrl}}"
+     ng-if="!currentUser">Sign in</a>
+
+  <span ng-if="currentUser">
+    <a href="">{{currentUser.email}}</a>
+    <a href="/users/sign_out" data-method="delete">(Sign out)</a>
+  </span>
+</span>
