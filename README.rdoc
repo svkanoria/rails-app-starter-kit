@@ -13,12 +13,16 @@ stack, with the following features built-in:
 1. Angular interfacing with server CSRF protection and server form validation
 1. Rails code testing using RSpec and other best practices
 1. Angular and JS code testing using Teaspoon
+1. Some basic CSS structure and styles
 1. Ready-to-deploy on Heroku
 
 Several ideas have been taken from http://angular-rails.com.
 
 See Gemfile.lock for each gem's version. We recommend using these versions, or
 newer, for best results.
+
+If you with to change the Ruby version, remember to also do so in the Gemfile
+(near the top).
 
 == Setting Up
 
@@ -29,8 +33,8 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
 
     $ bundle install
 
-   This should set up all the gems required. Note: Installing the pg gem can be a
-   pain. See http://stackoverflow.com/questions/19262312/installing-pg-gem-failure-to-build-native-extension
+   This should set up all the gems required. Note: Installing the pg gem can be
+   a pain. See http://stackoverflow.com/questions/19262312/installing-pg-gem-failure-to-build-native-extension
    for help.
 
     $ rake bower:install
@@ -69,6 +73,7 @@ additions, a sampling of which is shown below:
                |- controllers
                |- directives
                |- templates (contains all Angular templates, i.e. views)
+       |- stylesheets (contains all CSS styles)
    |- controllers
        |- home_controller.rb (the 'entry point' controller)
    |- jobs (contains all background jobs)
@@ -186,8 +191,16 @@ We provide DelayedJob for running background jobs. For most apps, this is
 sufficient. However, switching to Resque, Sidekiq etc. is very easy, since the
 actual jobs can be written using the Rails 4.2 ActiveJob "facade". For more
 information see:
-+* http://edgeguides.rubyonrails.org/active_job_basics.html
-+* https://github.com/collectiveidea/delayed_job
+* http://edgeguides.rubyonrails.org/active_job_basics.html
+* https://github.com/collectiveidea/delayed_job
+
+== Basic CSS Structure and Styling
+
+We provide some very basic CSS structure, and some styles using Yahoo's 'Pure'
+CSS framework. All styles can be found in the app/assets/stylesheets directory.
+
+The Pure framework is included simply via its CDN, so there is no dependency on
+Bower and the asset pipeline.
 
 == Testing in Detail
 
@@ -232,7 +245,7 @@ Coming soon.
 
     rails g resource Widget (substitute Widget with resource name)
 
-   - or -
+   OR
 
     rails g model Widget
     rails g controller Widgets
@@ -246,12 +259,12 @@ Coming soon.
    app/policies/post_policy.rb.
 1. Write some controller unit tests. For reference see
    spec/controllers/posts_controller_spec.rb.
-1. Write some authorization polict tests. For reference see
-   spec/policies/post_policy_spec.rb
+1. Write some authorization policy tests. For reference see
+   spec/policies/post_policy_spec.rb.
 1. Write some controller functionality
 1. Write the server views (which basically render out responses as JSON). For
    reference, see app/views/posts/index.json.jbuilder. JBuilder
-   (https://github.com/rails/jbuilder) comes bundles with Rails, and is a much
+   (https://github.com/rails/jbuilder) comes bundled with Rails, and is a much
    better way to create JSON, than using the 'as_json' method.
 1. Create an Angular resource to communicate with the controller. See
    app/assets/javascripts/angular/services/post.js.
@@ -274,7 +287,10 @@ Coming soon.
 
 ==== Comments
 
-1. Comments are compatible with RDoc.
+1. Ruby comments are compatible with Yard.
+   For more information, see:
+   * http://yardoc.org/index.html
+   * http://tech.pro/tutorial/1363/documenting-your-ruby-code-with-yard
 
 1. General Rules
    1. Single-line-single-sentence comments do not end with a full-stop
@@ -286,6 +302,10 @@ Coming soon.
 == Appendix
 
 Contains everything that didn't fit in anywhere else on this README.
+
+=== This README
+
+This README is compatible with RDoc.
 
 === Useful Links
 

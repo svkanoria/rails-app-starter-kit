@@ -1,16 +1,18 @@
-<authentication-links></authentication-links>
+<%# The application 'entry point' view, i.e. the landing page %>
 
-<%= render 'home/nav_bar' %>
+<%= render 'home/top_bar' %>
 
-<div ng-view>
+<div id="container" ng-view>
   <%# Placeholder for Angular templates %>
 </div>
+
+<%= render 'home/footer' %>
 
 <%# Set currently signed in user details, if any %>
 <script type="application/javascript">
   <% if @current_user_json %>
-    var CurrentUser = <%= raw @current_user_json %>;
+  var CurrentUser = <%= raw @current_user_json %>;
   <% else %>
-    var CurrentUser = null;
+  var CurrentUser = null;
   <% end %>
 </script>

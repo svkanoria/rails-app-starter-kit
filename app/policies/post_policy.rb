@@ -1,3 +1,4 @@
+# Authorization policy for posts controller actions.
 class PostPolicy < ApplicationPolicy
   def index?
     true

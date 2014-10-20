@@ -1,4 +1,7 @@
-/*
- * This is a replacement for the stock application.css file.
- * Import, in the appropriate order, any styling files you need here.
- */
+// Import all required styling files here
+
+@import 'variables';
+@import 'top_bar';
+@import 'footer';
+@import 'layout';
+

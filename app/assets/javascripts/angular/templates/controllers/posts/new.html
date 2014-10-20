@@ -1,9 +1,2 @@
-<form novalidate form-errors="createPostErrors">
-  <label for="message">Message</label>
-  <input type="text" name="message" ng-model="message"/>
-  <span ng-show="createPostErrors['message']">
-    {{createPostErrors['message'][0]}}
-  </span>
-
-  <button ng-click="create()">Create</button>
-</form>
+<div ng-include="'controllers/posts/_form.html'" ng-init="actionNew()">
+</div>

@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #
 
+# A twitter-like post.
 class Post < ActiveRecord::Base
   validates :message, presence: true, length: { minimum: 10, maximum: 140 }
   validates :user_id, presence: true

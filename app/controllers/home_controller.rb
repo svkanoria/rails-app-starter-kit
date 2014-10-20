@@ -1,3 +1,4 @@
+# The application 'entry point' controller.
 class HomeController < ApplicationController
   def index
     # Currently signed in user details (if any) to be passed on to the

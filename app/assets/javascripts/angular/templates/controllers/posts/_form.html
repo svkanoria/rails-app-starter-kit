@@ -1,0 +1,14 @@
+<!-- Common form for creating/updating a post -->
+<form class="pure-form pure-form-stacked" novalidate form-errors="postErrors">
+  <div class="form-inputs section">
+    <label for="message">Message</label>
+    <input type="text" name="message" ng-model="post.message"/>
+    <div ng-show="postErrors['message']">
+      {{postErrors['message'][0]}}
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button class="pure-button" ng-click="actionCreate()">Create</button>
+  </div>
+</form>

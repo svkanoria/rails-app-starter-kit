@@ -15,3 +15,8 @@
 # Ignore all RubyMine specific files.
 # MY NOTE: Feel free to remove this if you are not using RubyMine as your IDE.
 /.idea
+
+# Ignore all documentation files. They can be generated using YARD locally if
+# desired.
+/doc
+/.yardoc

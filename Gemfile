@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# For Heroku to be able to use the desired Ruby version
+ruby '2.1.2'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0.beta1'
 
@@ -100,4 +103,9 @@ group :development, :test do
 
   # For Angular and JS code testing
   gem 'teaspoon'
+end
+
+group :development do
+  # For documentation
+  gem 'yard'
 end

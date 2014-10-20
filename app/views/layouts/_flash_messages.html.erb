@@ -1,8 +1,8 @@
 <%#
-  # Displays flash messages. Really only used for the devise workflow, because
-  # it is the only server-generated UI.
+  # Flash messages. Really only used for the devise workflow, because that is
+  # the only server-generated UI.
   #%>
-<div class="flash-messages">
+<div id="flash-messages">
   <% flash.each do |key, value| %>
     <%#
       # We must ignore this key, as devise uses it for keeping internal state.
