@@ -157,8 +157,7 @@ Relevant files in our implementation are:
 
 In the JS and Angular code, the currently signed in user details are available
 through the 'AuthSvc' service. We have also provided helper methods to control
-access to certain routes based on whether a user is signed in, and optionally
-has certain roles. See the following for more details:
+access to certain routes. See the following for more details:
 * app/assets/javascripts/angular/routes.js
 * app/assets/javascripts/angular/services/auth_svc.js
 

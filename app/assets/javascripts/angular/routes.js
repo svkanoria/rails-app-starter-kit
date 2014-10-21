@@ -5,20 +5,37 @@
 app.config(['$routeProvider', function ($routeProvider) {
   /*
    * Use within the 'resolve' property of a route.
-   * Requires a user to be signed in, and to possibly have one of the given
-   * role(s), in order to access the route.
+   * See comments for namesake in AuthSvc service.
    *
    * Usage:
    *   when('/some-route', {
    *      :
-   *     resolve: { requireSignIn: requireSignIn(optionalRoleOrRoles) }
+   *     resolve: { someVariable: requireSignIn(optionalRoleOrRoles) }
    *   })
    *
    * @param [role] {string|string[]} - The role(s) to allow, if any.
    */
   var requireSignIn = function (roles) {
-    return ['AuthSvc', function(AuthSvc) {
+    return ['AuthSvc', function (AuthSvc) {
       return AuthSvc.requireSignIn(roles);
+    }];
+  };
+
+  /*
+   * Use within the 'resolve' property of a route.
+   * See comments for namesake in AuthSvc service.
+   *
+   * Usage:
+   *   when('/some-route', {
+   *      :
+   *     resolve: { someVariable: requireServerAuth(serverRoute) }
+   *   })
+   *
+   * @param serverRoute {string} - The server route to hit.
+   */
+  var requireServerAuth = function (serverRoute) {
+    return ['$route', 'AuthSvc', function ($route, AuthSvc) {
+      return AuthSvc.requireServerAuth(serverRoute);
     }];
   };
 
@@ -42,10 +59,13 @@ app.config(['$routeProvider', function ($routeProvider) {
     when('/posts/:id/edit', {
       templateUrl: 'controllers/posts/edit.html',
       controller: 'PostsCtrl',
-      resolve: { requireSignIn: requireSignIn() }
+      resolve: { requireServerAuth: requireServerAuth('/posts/11/edit') }
     }).
     when('/unauthorized', {
       templateUrl: '401.html'
+    }).
+    when('/server_error', {
+      templateUrl: '500.html'
     }).
     otherwise({
       templateUrl: '404.html'
@@ -53,8 +73,8 @@ app.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 /*
- * Works in conjunction with 'requireSignIn' above.
- * If requireSignIn does not resolve, we catch the resulting $routeChangeError
+ * Works in conjunction with 'requireSignIn' and 'requireServerAuth'.
+ * If their promises do not resolve, we catch the resulting $routeChangeError
  * and redirect to the sign-in page.
  */
 app.run([
@@ -68,7 +88,12 @@ app.run([
 
           break;
         case 'ROLE_NOT_AUTHORIZED':
+        case 'SERVER_DID_NOT_AUTH':
           $location.path('/unauthorized').replace();
+
+          break;
+        default:
+          $location.path('/server_error').replace();
 
           break;
       }

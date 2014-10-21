@@ -14,7 +14,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+    authorize @post
 
     respond_with @post
   end
@@ -36,6 +36,12 @@ class PostsController < ApplicationController
     #        :
     #     }
     #   }
+    respond_with @post
+  end
+
+  def edit
+    authorize @post
+
     respond_with @post
   end
 
