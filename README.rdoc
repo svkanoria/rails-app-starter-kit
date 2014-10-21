@@ -194,7 +194,7 @@ information see:
 * http://edgeguides.rubyonrails.org/active_job_basics.html
 * https://github.com/collectiveidea/delayed_job
 
-== Basic CSS Structure and Styling
+=== Basic CSS Structure and Styling
 
 We provide some very basic CSS structure, and some styles using Yahoo's 'Pure'
 CSS framework. All styles can be found in the app/assets/stylesheets directory.
