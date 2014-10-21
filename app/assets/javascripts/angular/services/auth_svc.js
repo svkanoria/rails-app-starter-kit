@@ -116,7 +116,7 @@ angular.module('AuthSvc', []).
         error(function (data, status) {
           // Some schools of thought advocate the use of 404. See
           // http://www.bennadel.com/blog/2400-handling-forbidden-restful-requests-401-vs-403-vs-404.htm
-          if (status == 403) {
+          if (status == 401) {
             deferred.reject('SERVER_DID_NOT_AUTH');
           } else {
             deferred.reject('SERVER_ERROR');
