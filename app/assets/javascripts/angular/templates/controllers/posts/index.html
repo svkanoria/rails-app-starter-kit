@@ -2,6 +2,8 @@
   <ul class="posts">
     <li ng-repeat="post in posts">
       {{post.message}}
+
+      <a ng-href="#/posts/{{post.id}}/edit">Edit</a>
     </li>
   </ul>
 

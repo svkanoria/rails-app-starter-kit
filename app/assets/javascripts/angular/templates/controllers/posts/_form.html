@@ -9,6 +9,11 @@
   </div>
 
   <div class="form-actions">
-    <button class="pure-button" ng-click="actionCreate()">Create</button>
+    <button class="pure-button" ng-click="actionCreate()" ng-if="!post.id">
+      Create
+    </button>
+    <button class="pure-button" ng-click="actionUpdate()" ng-if="post.id">
+      Update
+    </button>
   </div>
 </form>

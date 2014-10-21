@@ -39,6 +39,11 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller: 'PostsCtrl',
       resolve: { requireSignIn: requireSignIn() }
     }).
+    when('/posts/:id/edit', {
+      templateUrl: 'controllers/posts/edit.html',
+      controller: 'PostsCtrl',
+      resolve: { requireSignIn: requireSignIn() }
+    }).
     when('/unauthorized', {
       templateUrl: '401.html'
     }).
