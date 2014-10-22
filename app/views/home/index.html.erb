@@ -13,8 +13,8 @@
 <%# Set currently signed in user details, if any %>
 <script type="application/javascript">
   <% if @current_user_json %>
-  var CurrentUser = <%= raw @current_user_json %>;
+    var CurrentUser = <%= raw @current_user_json %>;
   <% else %>
-  var CurrentUser = null;
+    var CurrentUser = null;
   <% end %>
 </script>

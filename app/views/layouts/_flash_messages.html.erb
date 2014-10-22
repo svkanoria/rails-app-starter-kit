@@ -1,15 +1,9 @@
 <%#
   # Flash messages. Really only used for the devise workflow, because that is
-  # the only server-generated UI.
+  # the only server-generated UI. We must ignore the :timedout key, as devise
+  # uses it for keeping internal state. See
+  # https://github.com/plataformatec/devise/issues/1777.
   #%>
-<div id="flash-messages">
-  <% flash.each do |key, value| %>
-    <%#
-      # We must ignore this key, as devise uses it for keeping internal state.
-      # See https://github.com/plataformatec/devise/issues/1777.
-      #%>
-    <% if key != :timedout %>
-      <div><%= value %></div>
-    <% end %>
-  <% end %>
-</div>
+<script type="text/javascript">
+  var ServerFlash = <%= raw flash.to_hash.except(:timedout).to_json %>;
+</script>
