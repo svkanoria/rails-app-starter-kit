@@ -12,9 +12,9 @@
  */
 angular.module('AuthSvc', []).
   factory('AuthSvc', ['$q', '$http', function ($q, $http) {
-    ////////////
-    // Public //
-    ////////////
+    ////////////////////
+    // Public Methods //
+    ////////////////////
 
     /**
      * Gets the currently signed in user's details, if any.
@@ -141,9 +141,9 @@ angular.module('AuthSvc', []).
       return deferred.promise;
     };
 
-    /////////////
-    // Private //
-    /////////////
+    /////////////////////
+    // Private Methods //
+    /////////////////////
 
     /*
      * Concretizes a route by replacing any named groups with real values as
