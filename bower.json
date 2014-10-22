@@ -7,6 +7,7 @@
     "angular-resource": "~1.2.x",
     "angular-mocks": "~1.2.x",
     "underscore": "~1.7.x",
-    "underscore.string": "~2.3.x"
+    "underscore.string": "~2.3.x",
+    "flashular": "~1.0.x"
   }
 }

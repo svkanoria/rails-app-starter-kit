@@ -10,14 +10,26 @@ $spacing: 8px;
 // Colors
 $border-color: #EEEEEE;
 $shadow-color: #E5E5E5;
-$gray-color: #999999;
+$gray-text-color: #999999;
+$gray-background-color: #f0f0f0;
+
+// Others
+$radius: 3px;
 
 ////////////////
 // Components //
 ////////////////
 
 // Footer
-$footer-text-color: $gray-color;
+$footer-text-color: $gray-text-color;
 
 // Section
 $section-margin-bottom: $spacing * 2;
+
+////////////////
+// Directives //
+////////////////
+
+// flash-alerts
+$alert-background-color: $gray-background-color;
+$alert-close-text-color: $gray-text-color;

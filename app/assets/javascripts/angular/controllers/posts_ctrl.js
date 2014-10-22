@@ -1,7 +1,7 @@
 angular.module('PostsCtrl', ['Post']).
   controller('PostsCtrl', [
-    '$scope', '$location', '$routeParams', 'Post',
-    function($scope, $location, $routeParams, Post) {
+    '$scope', '$location', '$routeParams', 'flash', 'Post',
+    function ($scope, $location, $routeParams, flash, Post) {
       /**
        * The 'index' action.
        */
@@ -33,9 +33,20 @@ angular.module('PostsCtrl', ['Post']).
        */
       $scope.actionCreate = function () {
         $scope.post.$save(function (response) {
+          flash.set('success', 'Post created.');
+
           $location.path('posts');
         }, function (failureResponse) {
           $scope.postErrors = failureResponse.data.errors;
+        });
+      };
+
+      /**
+       * The 'edit' action.
+       */
+      $scope.actionEdit = function () {
+        $scope.post = Post.get({
+          postId: $routeParams.id
         });
       };
 
@@ -44,11 +55,26 @@ angular.module('PostsCtrl', ['Post']).
        * If there are validation errors on the server side, then populates the
        * 'postErrors' scope variable with these errors.
        */
-      $scope.actionUpdate= function () {
+      $scope.actionUpdate = function () {
         $scope.post.$update(function (response) {
+          flash.set('success', 'Post updated.');
+
           $location.path('posts');
         }, function (failureResponse) {
           $scope.postErrors = failureResponse.data.errors;
+        });
+      };
+
+      /**
+       * The 'destroy' action.
+       */
+      $scope.actionDestroy = function () {
+        $scope.post.$delete(function (response) {
+          flash.set('success', 'Post deleted.');
+
+          $location.path('posts');
+        }, function (failureResponse) {
+          flash.set('success', 'Error deleting post.')
         });
       };
     }]);

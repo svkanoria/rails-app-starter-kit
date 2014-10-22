@@ -51,6 +51,10 @@ app.config(['$routeProvider', function ($routeProvider) {
       templateUrl: 'controllers/posts/index.html',
       controller: 'PostsCtrl'
     }).
+    when('/posts/:id', {
+      templateUrl: 'controllers/posts/show.html',
+      controller: 'PostsCtrl'
+    }).
     when('/posts/new', {
       templateUrl: 'controllers/posts/new.html',
       controller: 'PostsCtrl',

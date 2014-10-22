@@ -4,6 +4,7 @@ var app = angular.module('App', [
   'templates', // Used by angular-rails-templates
   'ngRoute',
   'ng-rails-csrf',
+  'flashular',
 
   // Services
   'AuthSvc',

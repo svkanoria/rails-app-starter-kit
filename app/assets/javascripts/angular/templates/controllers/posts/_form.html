@@ -8,12 +8,18 @@
     </div>
   </div>
 
-  <div class="form-actions">
-    <button class="pure-button" ng-click="actionCreate()" ng-if="!post.id">
+  <div class="form-actions" ng-if="!post.id">
+    <button class="pure-button" ng-click="actionCreate()">
       Create
     </button>
-    <button class="pure-button" ng-click="actionUpdate()" ng-if="post.id">
+  </div>
+
+  <div class="form-actions" ng-if="post.id">
+    <button class="pure-button" ng-click="actionUpdate()">
       Update
+    </button>
+    <button class="pure-button" ng-click="actionDestroy()">
+      Delete
     </button>
   </div>
 </form>

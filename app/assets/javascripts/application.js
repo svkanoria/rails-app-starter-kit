@@ -23,6 +23,7 @@
 //= require ng-rails-csrf
 //= require underscore/underscore
 //= require underscore.string/lib/underscore.string
+//= require flashular/dist/flashular.js
 //
 //= require_tree ./angular
 //= require angular/app
