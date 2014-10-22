@@ -10,7 +10,7 @@ app.config(['$routeProvider', function ($routeProvider) {
    * Usage:
    *   when('/some-route', {
    *      :
-   *     resolve: { someVariable: requireSignIn(optionalRoleOrRoles) }
+   *     resolve: { someProperty: requireSignIn(optionalRoleOrRoles) }
    *   })
    *
    * @param [role] {string|string[]} - The role(s) to allow, if any.
@@ -21,6 +21,8 @@ app.config(['$routeProvider', function ($routeProvider) {
     }];
   };
 
+  console.log(requireSignIn());
+
   /*
    * Use within the 'resolve' property of a route.
    * See comments for namesake in AuthSvc service.
@@ -28,14 +30,14 @@ app.config(['$routeProvider', function ($routeProvider) {
    * Usage:
    *   when('/some-route', {
    *      :
-   *     resolve: { someVariable: requireServerAuth(serverRoute) }
+   *     resolve: { someProperty: requireServerAuth(serverRoute) }
    *   })
    *
    * @param serverRoute {string} - The server route to hit.
    */
   var requireServerAuth = function (serverRoute) {
     return ['$route', 'AuthSvc', function ($route, AuthSvc) {
-      return AuthSvc.requireServerAuth(serverRoute);
+      return AuthSvc.requireServerAuth(serverRoute, $route.current.params);
     }];
   };
 
@@ -54,12 +56,15 @@ app.config(['$routeProvider', function ($routeProvider) {
     when('/posts/new', {
       templateUrl: 'controllers/posts/new.html',
       controller: 'PostsCtrl',
-      resolve: { requireSignIn: requireSignIn() }
+      resolve: { auth: requireSignIn() }
     }).
     when('/posts/:id/edit', {
       templateUrl: 'controllers/posts/edit.html',
       controller: 'PostsCtrl',
-      resolve: { requireServerAuth: requireServerAuth('/posts/11/edit') }
+      resolve: {
+        auth1: requireSignIn(),
+        auth2: requireServerAuth('/posts/:id/edit')
+      }
     }).
     when('/unauthorized', {
       templateUrl: '401.html'

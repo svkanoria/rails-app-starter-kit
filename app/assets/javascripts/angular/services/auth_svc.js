@@ -12,9 +12,13 @@
  */
 angular.module('AuthSvc', []).
   factory('AuthSvc', ['$q', '$http', function ($q, $http) {
+    ////////////
+    // Public //
+    ////////////
+
     /**
      * Gets the currently signed in user's details, if any.
-     * @returns {*} Signed in user details, or null.
+     * @returns {?Object} Signed in user details, or null.
      */
     var currentUser = function () {
       return CurrentUser;
@@ -47,20 +51,24 @@ angular.module('AuthSvc', []).
      * Requires no server round-trip, so prefer this over 'requireServerAuth',
      * whenever possible.
      *
+     * Can be used in conjunction with 'requireServerAuth' to redirect to the
+     * sign in page if required. Left to itself, 'requireServerAuth' does not
+     * do so.
+     *
      * Usage:
      *   In your routes file:
      *
      *   $routeProvider.when('/some-route', {
      *      :
      *     resolve: {
-     *       someVariable: ['AuthSvc', function (AuthSvc) {
+     *       someProperty: ['AuthSvc', function (AuthSvc) {
      *         return AuthSvc.requireSignIn(optionalRoleOrRoles);
      *       }]
      *     }
      *   });
      *
      * @param [role] {string|string[]} - The role(s) to allow, if any.
-     * @returns {promise} A promise that resolves only if a user is signed in
+     * @returns {Object} A promise that resolves only if a user is signed in
      * and, in case 'role' is non-empty, has one of the given role(s).
      */
     var requireSignIn = function (role) {
@@ -94,20 +102,27 @@ angular.module('AuthSvc', []).
      *   $routeProvider.when('/some-route', {
      *      :
      *     resolve: {
-     *       someVariable: ['AuthSvc', function (AuthSvc) {
+     *       someProperty: ['AuthSvc', function (AuthSvc) {
      *         return AuthSvc.requireServerAuth(serverRoute);
      *       }]
      *     }
      *   });
      *
-     * @param serverRoute {string} - The server route to hit.
-     * @returns {promise} A promise that resolves only if the server responds
+     * @param serverRoute {string} - The server route to hit, in a format
+     * compatible with $routeProvider.
+     * @param [routeParams] {Object} - A hash of parameters to concretize the
+     * route, by replacing named groups with real values.
+     * @returns {Object} A promise that resolves only if the server responds
      * with a non-error status code. Resolves with the response returned from
-     * the server; this may obviate the need for a second request to fetch the
+     * the server; this may obviate the need for another request to fetch the
      * data.
      */
-    var requireServerAuth = function (serverRoute) {
+    var requireServerAuth = function (serverRoute, routeParams) {
       var deferred = $q.defer();
+
+      if (routeParams) {
+        serverRoute = concretizeRoute(serverRoute, routeParams);
+      }
 
       $http.get(serverRoute).
         success(function (data) {
@@ -124,6 +139,33 @@ angular.module('AuthSvc', []).
         });
 
       return deferred.promise;
+    };
+
+    /////////////
+    // Private //
+    /////////////
+
+    /*
+     * Concretizes a route by replacing any named groups with real values as
+     * found in 'routeParams'.
+     *
+     * @param route {string} - The route, in a format compatible with
+     * $routeProvider.
+     * @param routeParams {Object} - A hash of parameters.
+     * @returns {string} The concretized route.
+     */
+    var concretizeRoute = function (route, routeParams) {
+      var result = route;
+
+      for (paramName in routeParams) {
+        if (routeParams.hasOwnProperty(paramName)) {
+          var regexp = new RegExp(':' + paramName + '(\\*|\\?)?', 'g');
+          result = result.replace(regexp, routeParams[paramName]);
+        }
+      }
+
+      console.log(result);
+      return result;
     };
 
     // Return the service object
