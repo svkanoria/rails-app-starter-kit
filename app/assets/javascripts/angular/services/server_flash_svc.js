@@ -1,4 +1,4 @@
-/* Service to convert server flash messages to flashular flash messages. */
+// Service to convert server flash messages to flashular flash messages.
 angular.module('ServerFlashSvc', []).
   factory('ServerFlashSvc', ['flash', function (flash) {
     /**
@@ -16,7 +16,10 @@ angular.module('ServerFlashSvc', []).
      */
     var convert = function () {
       for (prop in ServerFlash) {
-        flash.now.set(propMap[prop] || prop, ServerFlash[prop]);
+        // We set flash instead of flash.now, since the router will trigger a
+        // route change and cause flashular to purge flash.now and replace it
+        // with the contents of flash anyway.
+        flash.set(propMap[prop] || prop, ServerFlash[prop]);
       }
 
       ServerFlash = {}; // Clear the server flash

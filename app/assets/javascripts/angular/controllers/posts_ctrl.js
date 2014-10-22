@@ -23,7 +23,9 @@ angular.module('PostsCtrl', ['Post']).
        * Builds an empty post for the form.
        */
       $scope.actionNew = function () {
-        $scope.post = new Post();
+        $scope.post = new Post({
+          message: '' // It is good practice to initialize to non-null values
+        });
       };
 
       /**
