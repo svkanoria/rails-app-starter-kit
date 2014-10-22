@@ -164,7 +164,6 @@ angular.module('AuthSvc', []).
         }
       }
 
-      console.log(result);
       return result;
     };
 

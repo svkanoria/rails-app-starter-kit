@@ -21,8 +21,6 @@ app.config(['$routeProvider', function ($routeProvider) {
     }];
   };
 
-  console.log(requireSignIn());
-
   /*
    * Use within the 'resolve' property of a route.
    * See comments for namesake in AuthSvc service.
