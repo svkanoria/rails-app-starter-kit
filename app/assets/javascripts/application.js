@@ -23,7 +23,8 @@
 //= require ng-rails-csrf
 //= require underscore/underscore
 //= require underscore.string/lib/underscore.string
-//= require flashular/dist/flashular.js
+// Note the 'min'. This is needed since flashular.js does not minify correctly.
+//= require flashular/dist/flashular.min.js
 //
 //= require_tree ./angular
 //= require angular/app
