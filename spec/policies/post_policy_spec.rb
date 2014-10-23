@@ -32,7 +32,7 @@ describe PostPolicy do
     end
 
     context 'for a post created by the user' do
-      # Create a post belonging to the sign-in user
+      # Create a post belonging to the signed-in user
       let(:post) { FactoryGirl.create(:post, user: user) }
 
       it { should permit(:update) }
