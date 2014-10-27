@@ -3,7 +3,7 @@
      ng-if="!currentUser">Sign in</a>
 
   <span ng-if="currentUser">
-    <a href="">{{currentUser.email}}</a>
+    <a href="/users/edit">{{currentUser.email}}</a>
     <a href="/users/sign_out" data-method="delete">(Sign out)</a>
   </span>
 </span>
