@@ -200,6 +200,11 @@ We include Bootstrap as the styling library of choice. Unlike other front-end
 assets, we include it as a gem, rather than through Bower, as this allows for
 much easier integration and customization.
 
+To reduce the application size, comment out the modules you don't require in
+these two files:
+* assets/stylesheets/bootstrap-custom.scss
+* assets/javascripts/bootstrap-custom.js
+
 We also provide some guidelines on how to structure CSS/SCSS files. For more
 information see:
 * http://getbootstrap.com

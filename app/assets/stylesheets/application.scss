@@ -2,7 +2,8 @@
 
 // Bootstrap
 @import "bootstrap-sprockets";
-@import "bootstrap";
+// See comments in assets/stylesheets/bootstrap-custom.scss
+@import "bootstrap-custom";
 
 // All styling variables.
 // Imported first, so that variables can be used in any other styling file.

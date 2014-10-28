@@ -14,7 +14,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap-sprockets
+// See comments in assets/javascripts/bootstrap-custom.js
+//= require bootstrap-custom
 //
 // From vendor/bower_components:
 //= require angular/angular
