@@ -1,8 +1,15 @@
-// Import all required styling files here
+// Imports all required styling files
 
+// Bootstrap
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+// All styling variables.
+// Imported first, so that variables can be used in any other styling file.
 @import 'variables';
-@import 'top_bar';
-@import 'footer';
-@import 'layout';
 
-@import 'directives/flash_alerts';
+// General styles (layout, header, footer, components etc.)
+// Import here
+
+// Styles for Angular directives
+// import here

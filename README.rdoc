@@ -14,7 +14,7 @@ stack, with the following features built-in:
 1. Angular interfacing with server CSRF protection and server form validation
 1. Rails code testing using RSpec and other best practices
 1. Angular and JS code testing using Teaspoon
-1. Some basic CSS structure and styles
+1. Integration with the Bootstrap styling framework
 1. Ready-to-deploy on Heroku
 
 Several ideas have been taken from http://angular-rails.com.
@@ -194,13 +194,16 @@ information see:
 * http://edgeguides.rubyonrails.org/active_job_basics.html
 * https://github.com/collectiveidea/delayed_job
 
-=== Basic CSS Structure and Styling
+=== Bootstrap Styling
 
-We provide some very basic CSS structure, and some styles using Yahoo's 'Pure'
-CSS framework. All styles can be found in the app/assets/stylesheets directory.
+We include Bootstrap as the styling library of choice. Unlike other front-end
+assets, we include it as a gem, rather than through Bower, as this allows for
+much easier integration and customization.
 
-The Pure framework is included simply via its CDN, so there is no dependency on
-Bower and the asset pipeline.
+We also provide some guidelines on how to structure CSS/SCSS files. For more
+information see:
+* http://getbootstrap.com
+* https://github.com/twbs/bootstrap-sass
 
 == Testing in Detail
 

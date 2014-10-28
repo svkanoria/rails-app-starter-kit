@@ -1,9 +1,14 @@
-<span class="authentication-links">
+<li ng-class="{dropdown: currentUser}">
   <a href="/users/sign_in?x_return_to={{signInRedirectUrl}}"
-     ng-if="!currentUser">Sign in</a>
+     ng-if="!currentUser">Sign In</a>
 
-  <span ng-if="currentUser">
-    <a href="/users/edit">{{currentUser.email}}</a>
-    <a href="/users/sign_out" data-method="delete">(Sign out)</a>
-  </span>
-</span>
+  <a href="" class="dropdown-toggle" data-toggle="dropdown"
+     ng-if="currentUser">
+    {{currentUser.email}}
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu" ng-if="currentUser">
+    <li><a href="/users/edit">My Account</a></li>
+    <li><a href="/users/sign_out" data-method="delete">Sign Out</a></li>
+  </ul>
+</li>

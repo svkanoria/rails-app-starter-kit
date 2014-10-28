@@ -2,10 +2,12 @@
 
 <%= render 'home/top_bar' %>
 
-<flash-alerts closeable="true"></flash-alerts>
+<div class="container" id="main-container">
+  <flash-alerts closeable="true"></flash-alerts>
 
-<div id="container" ng-view>
-  <%# Placeholder for Angular templates %>
+  <div ng-view>
+    <%# Placeholder for Angular templates %>
+  </div>
 </div>
 
 <%= render 'home/footer' %>

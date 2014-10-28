@@ -69,6 +69,11 @@ gem 'delayed_job_active_record'
 # A popular EventMachine based application server
 gem 'thin'
 
+# Bootstrap front-end framework.
+# We use the gem, rather than Bower, for the ease of integration as compared to
+# using Bower.
+gem 'bootstrap-sass', '~> 3.2.0'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
