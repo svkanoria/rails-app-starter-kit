@@ -20,14 +20,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Sets where Devise should redirect on sign-out.
-  # Required to prevent Angular's $routeChangeSuccess event from being fired
-  # multiple times, thus causing Angular flash messages relying on the event,
-  # not to work correctly.
-  def after_sign_out_path_for(resource_or_scope)
-    "#{request.protocol}#{request.host_with_port}/#/"
-  end
-
   # Responds with a 401 (:unauthorized) HTTP status code.
   def deny_access
     respond_to do |format|

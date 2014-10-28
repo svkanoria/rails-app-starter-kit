@@ -56,10 +56,12 @@
     }
     flash = new Flash;
     flash.now = new Flash;
-    $rootScope.$on(eventName, function() {
-      flash.now.clear();
-      angular.extend(flash.now.data, flash.data);
-      return flash.clear();
+    $rootScope.$on(eventName, function(event, args) {
+      if (args.redirectTo == null) {
+        flash.now.clear();
+        angular.extend(flash.now.data, flash.data);
+        return flash.clear();
+      }
     });
     return flash;
   }).directive("flashAlerts", function(flash, $interpolate) {

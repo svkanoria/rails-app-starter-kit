@@ -26,10 +26,11 @@ angular.module "flashular", []
   # Every route change, make the "next" flash become the "now" flash.
   flash = new Flash
   flash.now = new Flash
-  $rootScope.$on eventName, ->
-    flash.now.clear()
-    angular.extend flash.now.data, flash.data
-    flash.clear()
+  $rootScope.$on eventName, (event, args) ->
+    unless args.redirectTo? # To preserve flash across redirects
+      flash.now.clear()
+      angular.extend flash.now.data, flash.data
+      flash.clear()
 
   return flash
 

@@ -1,6 +1,5 @@
 {
   "name": "flashular",
-  "version": "1.0.0",
   "homepage": "https://github.com/lukehorvat/flashular",
   "authors": [
     "Luke Horvat <lukehorvat@gmail.com>"
@@ -29,13 +28,13 @@
     "test",
     "tests"
   ],
-  "_release": "1.0.0",
+  "_release": "da67542e3f",
   "_resolution": {
-    "type": "version",
-    "tag": "v1.0.0",
-    "commit": "97b3e730270eedac5db70145d877b211aed85fb4"
+    "type": "branch",
+    "branch": "master",
+    "commit": "da67542e3f516b04b5f5ef85c54d3a0fe25e387c"
   },
-  "_source": "git://github.com/lukehorvat/flashular.git",
-  "_target": "~1.0.x",
-  "_originalSource": "flashular"
+  "_source": "git://github.com/svkanoria/flashular.git",
+  "_target": "master",
+  "_originalSource": "svkanoria/flashular"
 }
