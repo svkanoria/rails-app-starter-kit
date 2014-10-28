@@ -1,25 +1,30 @@
 <!-- Common form for creating/updating a post -->
-<form class="pure-form pure-form-stacked" novalidate form-errors="postErrors">
-  <div class="form-inputs section">
-    <label for="message">Message</label>
-    <input type="text" name="message" ng-model="post.message"/>
-    <div ng-show="postErrors['message']">
-      {{postErrors['message'][0]}}
+<form role="form" novalidate form-errors="postErrors">
+  <div class="form-inputs">
+    <div class="form-group" ng-class="{'has-error': postErrors['message']}">
+      <label for="message" class="control-label" >Message</label>
+      <input type="text" name="message" class="form-control"
+             ng-model="post.message"/>
+
+      <p class="help-block" ng-show="postErrors['message']">
+        {{postErrors['message'][0]}}
+      </p>
     </div>
   </div>
 
   <div class="form-actions" ng-if="!post.id">
-    <button class="pure-button" ng-click="actionCreate()">
+    <button class="btn btn-primary" ng-click="actionCreate()">
       Create
     </button>
   </div>
 
   <div class="form-actions" ng-if="post.id">
-    <button class="pure-button" ng-click="actionUpdate()">
+    <button class="btn btn-primary" ng-click="actionUpdate()">
       Update
     </button>
-    <button class="pure-button" ng-click="actionDestroy()">
+    <button class="btn btn-danger" ng-click="actionDestroy()">
       Delete
     </button>
+  </div>
   </div>
 </form>
