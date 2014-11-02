@@ -1,23 +1,26 @@
-<h2>Sign In</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <h2>Sign In</h2>
 
-<%= form_for resource, as: resource_name,
-             url: session_path(resource_name) do |f| %>
+      <%= bootstrap_form_for resource, as: resource_name,
+                             url: session_path(resource_name) do |f| %>
 
-  <div>
-    <%= f.label :email %><br/>
-    <%= f.email_field :email, autofocus: true %>
+        <div class="form-inputs">
+          <%= f.email_field :email, autofocus: true %>
+          <%= f.password_field :password, autocomplete: 'off' %>
+
+          <% if devise_mapping.rememberable? %>
+            <%= f.check_box :remember_me %>
+          <% end %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit 'Sign In', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+
+      <%= render 'devise/shared/links' %>
+    </div>
   </div>
-
-  <div>
-    <%= f.label :password %><br/>
-    <%= f.password_field :password, autocomplete: 'off' %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit 'Sign In' %></div>
-<% end %>
-
-<%= render 'devise/shared/links' %>
+</div>

@@ -5,6 +5,8 @@
 // See comments in assets/stylesheets/bootstrap-custom.scss
 @import "bootstrap-custom";
 
+@import "rails_bootstrap_forms";
+
 // All styling variables.
 // Imported first, so that variables can be used in any other styling file.
 @import 'variables';
