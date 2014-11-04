@@ -20,12 +20,11 @@
           <% end %>
 
           <%= f.password_field :password, autocomplete: 'off',
-                               help: "Leave blank if you don't want to change it" %>
+                               help: t('activerecord.help.user.password_update') %>
 
           <%= f.password_field :password_confirmation, autocomplete: 'off' %>
 
-          <%= f.password_field :current_password, autocomplete: 'off',
-                               help: 'We need your current password to confirm your changes' %>
+          <%= f.password_field :current_password, autocomplete: 'off' %>
         </div>
 
         <div class="form-actions">

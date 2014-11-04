@@ -11,7 +11,8 @@
 
           <% if @validatable %>
             <%= f.password_field :password, autocomplete: 'off',
-                                 help: "#{@minimum_password_length} characters minimum" %>
+                                 help: t('activerecord.help.user.password',
+                                         minimum_password_length: @minimum_password_length) %>
           <% else %>
             <%= f.password_field :password, autocomplete: 'off' %>
           <% end %>
