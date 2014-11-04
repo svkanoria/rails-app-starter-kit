@@ -1,6 +1,13 @@
 // Contains all styling variables
 
-// General variables
+// Variables for animations
+$anim-duration: 1s;
+$anim-easing: linear;
+
+$anim-fade-duration: $anim-duration;
+$anim-fade-easing: $anim-easing;
+
+// General variables (layout, header, footer, components etc.)
 // Add here
 
 // Variables for Angular directives

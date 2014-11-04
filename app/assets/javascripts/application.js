@@ -21,6 +21,7 @@
 //= require angular/angular
 //= require angular-route/angular-route
 //= require angular-resource/angular-resource
+//= require angular-animate/angular-animate
 //= require angular-rails-templates
 //= require ng-rails-csrf
 //= require underscore/underscore

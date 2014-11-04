@@ -11,8 +11,11 @@
 // Imported first, so that variables can be used in any other styling file.
 @import 'variables';
 
+// Canned animations for Angular
+@import 'animations';
+
 // General styles (layout, header, footer, components etc.)
-// Import here
+@import 'layout';
 
 // Styles for Angular directives
 // import here
