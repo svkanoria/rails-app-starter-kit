@@ -24,9 +24,9 @@ en:
    # rails-bootstrap-forms help messages
     help:
       user:
-        password: '%{minimum_password_length} characters minimum'
-        # To differentiate between the the password field in the sign up form
-        # and the one in the user edit form
+        # For the sign up form
+        password_new: '%{minimum_password_length} characters minimum'
+        # For the user edit form
         password_update: "Leave blank if you don't want to change it"
 
         current_password: 'We need your current password to confirm your
