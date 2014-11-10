@@ -54,6 +54,9 @@ gem 'ng-rails-csrf'
 gem 'devise', git: 'https://github.com/plataformatec/devise.git',
     branch: 'lm-rails-4-2'
 
+# For authentication via Facebook
+gem 'omniauth-facebook'
+
 # For assigning roles to users
 gem 'rolify'
 

@@ -11,7 +11,9 @@ module ApplicationHelper
 
   # Map for adapting Rails flash messages to Bootstrap alerts. Contains only
   # those entries that do not map unchanged.
-  FLASH_TYPE_MAP = { notice: 'success', alert: 'error' }
+  FLASH_TYPE_MAP = { notice: 'success',
+                     alert: 'danger',
+                     error: 'danger' }
 
   # Server-side flash messages rendered as HTML.
   # Created as a helper (rather than a view partial) for better performance.
