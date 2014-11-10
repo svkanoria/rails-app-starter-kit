@@ -11,7 +11,6 @@ var app = angular.module('App', [
 
   // Services
   'AuthSvc',
-  'ServerFlashSvc',
   'Post',
 
   // Controllers
@@ -22,8 +21,3 @@ var app = angular.module('App', [
   'AuthenticationLinks',
   'FormErrors'
 ]);
-
-// Convert any server flash messages to flashular flash messages
-app.run(['ServerFlashSvc', function(ServerFlashService) {
-  ServerFlashService.convert();
-}]);

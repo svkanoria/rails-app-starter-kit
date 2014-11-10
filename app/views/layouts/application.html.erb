@@ -10,11 +10,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body ng-app="App">
-  <%= render 'layouts/hidden_flash' %>
-
   <%= render 'layouts/top_nav' %>
 
   <div class="container" id="flash-container">
+    <%# Server-side flash messages %>
+    <%= server_flash_alerts %>
+
+    <%# Client-side flash messages %>
     <flash-alerts closeable="true"></flash-alerts>
   </div>
 
