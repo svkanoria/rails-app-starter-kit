@@ -1,22 +1,6 @@
 <%# The application 'entry point' view, i.e. the landing page %>
-
-<%= render 'home/top_bar' %>
-
 <div class="container" id="main-container">
-  <flash-alerts closeable="true"></flash-alerts>
-
   <div ng-view class="angular-view">
     <%# Placeholder for Angular templates %>
   </div>
 </div>
-
-<%= render 'home/footer' %>
-
-<%# Set currently signed in user details, if any %>
-<script type="application/javascript">
-  <% if @current_user_json %>
-    var CurrentUser = <%= raw @current_user_json %>;
-  <% else %>
-    var CurrentUser = null;
-  <% end %>
-</script>
