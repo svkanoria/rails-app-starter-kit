@@ -11,9 +11,7 @@ module ApplicationHelper
 
   # Map for adapting Rails flash messages to Bootstrap alerts. Contains only
   # those entries that do not map unchanged.
-  FLASH_TYPE_MAP = { notice: 'success',
-                     alert: 'danger',
-                     error: 'danger' }
+  FLASH_TYPE_MAP = { notice: 'success', alert: 'danger', error: 'danger' }
 
   # Server-side flash messages rendered as HTML.
   # Created as a helper (rather than a view partial) for better performance.
@@ -21,6 +19,8 @@ module ApplicationHelper
   # Take care to maintain similarity with client-side flash messages created
   # via the 'flash-alerts' directive included in the flashular library.
   def server_flash_alerts
+    return nil unless flash.any?
+
     content_tag :div, class: 'alerts' do
       flash.each do |type, message|
         unless type == :timedout # Devise uses :timedout for its internal use

@@ -40,4 +40,59 @@ class User < ActiveRecord::Base
 
   has_many :authentications, dependent: :destroy
   has_many :posts, dependent: :destroy
+
+  # Returns a user matching the given Omniauth authentication data.
+  # If no such user exists, attempts to create one.
+  def self.from_omniauth (omniauth)
+    authentication = Authentication.find_by(omniauth.slice(:provider, :uid))
+
+    if authentication
+      authentication.user
+    else
+      user = User.new
+      user.apply_omniauth(omniauth)
+      user.save
+
+      user # return
+    end
+  end
+
+  # When creating a new user, pre-populates its fields (if possible) with data
+  # made available by OmniAuth.
+  def self.new_with_session (params, session)
+    if (omniauth = session['devise.omniauth'])
+      user = User.new
+      user.apply_omniauth(omniauth)
+      user.valid?
+      user
+    else
+      super
+    end
+  end
+
+  # Skips password requirement when signing in via an external provider using
+  # OmniAuth.
+  def password_required?
+    super && authentications.empty?
+  end
+
+  # Skips password requirement when updating a user that has signed in via an
+  # external provider using Omniauth.
+  def update_with_password(params, *options)
+    if encrypted_password.blank?
+      update_attributes(params, *options)
+    else
+      super
+    end
+  end
+
+  public
+
+  # Pre-populates this user's fields (to the extent possible), with data made
+  # available by OmniAuth.
+  def apply_omniauth (omniauth)
+    self.skip_confirmation!
+    self.email = omniauth['info']['email']
+    authentications.build provider: omniauth['provider'], uid: omniauth['uid']
+  end
 end

@@ -14,7 +14,8 @@
 class Authentication < ActiveRecord::Base
   validates :provider, presence: true
   validates :uid, presence: true
-  validates :user_id, presence: true
+  # Cannot validate this, since it interferes with new user creation
+  #validates :user_id, presence: true
 
   belongs_to :user
 end
