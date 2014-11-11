@@ -24,7 +24,9 @@
 
           <%= f.password_field :password_confirmation, autocomplete: 'off' %>
 
-          <%= f.password_field :current_password, autocomplete: 'off' %>
+          <% if f.object.encrypted_password.present? %>
+            <%= f.password_field :current_password, autocomplete: 'off' %>
+          <% end %>
         </div>
 
         <div class="form-actions">
