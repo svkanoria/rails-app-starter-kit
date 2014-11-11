@@ -40,6 +40,14 @@ app.config(['$routeProvider', function ($routeProvider) {
   };
 
   $routeProvider.
+    // To handle the weird case of OmniAuth Facebook authentication sometimes
+    // adding '#_=_' to the URL being redirected to after successful (or even
+    // failed) sign in.
+    // TODO Find better workaround for OmniAuth Facebook '#_=_' problem
+    when('/_=_', {
+      redirectTo: '/'
+    }).
+
     // Home routes
     when('/', {
       templateUrl: 'controllers/home/index.html',
