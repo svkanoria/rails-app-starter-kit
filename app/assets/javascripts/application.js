@@ -39,7 +39,7 @@ _.mixin(_.str.exports());
 // OmniAuth Facebook authentication can add junk like '#_=_', to the URL being
 // redirected to. Angular interprets this as a route, which causes mayhem.
 // This is a workaround.
-// TODO Find a better solution to the OmniAuth Facebook '#_=_' problem
+// TODO Find a better solution to the OmniAuth Facebook junk chars problem
 if (window.location.hash.search('#_') >= 0) {
   window.location.hash = '';
 }

@@ -1,17 +1,6 @@
-<li class="dropdown">
-  <a href="" class="dropdown-toggle" data-toggle="dropdown"
-     ng-if="!currentUser">
-    Sign In
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu" ng-if="!currentUser">
-    <li>
-      <a href="/users/sign_in?x_return_to={{signInRedirectUrl}}">With Email</a>
-      <a href="/users/auth/facebook?x_return_to={{signInRedirectUrl}}">
-        With Facebook
-      </a>
-    </li>
-  </ul>
+<li ng-class="{dropdown: currentUser}">
+  <a href="/users/sign_in?x_return_to={{signInRedirectUrl}}"
+     ng-if="!currentUser">Sign In</a>
 
   <a href="" class="dropdown-toggle" data-toggle="dropdown"
      ng-if="currentUser">
