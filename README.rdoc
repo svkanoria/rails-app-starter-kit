@@ -8,6 +8,7 @@ stack, with the following features built-in:
 1. Rails ~4.2, Angular ~1.2 (and we recommend Ruby >=2.1.2)
 1. Postgres support
 1. Complete user management, with authentication and role-based authorization
+1. User authentication via Facebook and other providers
 1. Front-end asset management using Bower
 1. Angular-based routing
 1. Angular-based flash messages
@@ -59,6 +60,13 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
 
 1. Change the session key in config/initializers/session_store.rb to suit your
    application.
+
+1. If you wish to allow authentication via Facebook, create a Facebook app if
+   you haven't already, and set the following environment variables:
+
+    FACEBOOK_APP_ID=<Your Facebook App ID>
+    FACEBOOK_APP_SECRET=<Your Facebook App Secret>
+    USE_FACEBOOK_AUTH=true
 
 == App Structure
 
@@ -161,6 +169,16 @@ through the 'AuthSvc' service. We have also provided helper methods to control
 access to certain routes. See the following for more details:
 * app/assets/javascripts/angular/routes.js
 * app/assets/javascripts/angular/services/auth_svc.js
+
+==== Authentication via Facebook
+
+We also provide authentication with Facebook out of the box, as well as easy
+integration of other providers such as Google, Twitter and many more. See the
+'Setting Up' section for how to enable Facebook authentication.
+
+==== Authentication via Other Providers
+
+COMING SOON...
 
 === Authorization
 
