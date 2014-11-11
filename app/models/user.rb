@@ -62,6 +62,7 @@ class User < ActiveRecord::Base
   def self.new_with_session (params, session)
     if (omniauth = session['devise.omniauth'])
       user = User.new
+      user.email = params[:email]
       user.apply_omniauth(omniauth)
       user.valid?
       user
@@ -92,7 +93,7 @@ class User < ActiveRecord::Base
   # available by OmniAuth.
   def apply_omniauth (omniauth)
     self.skip_confirmation!
-    self.email = omniauth['info']['email']
+    self.email = omniauth['info']['email'] if self.email.blank?
     authentications.build provider: omniauth['provider'], uid: omniauth['uid']
   end
 end
