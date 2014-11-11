@@ -34,6 +34,9 @@ class User < ActiveRecord::Base
          :rememberable,
          :trackable,
          :validatable,
+         # Comment this out if you don't need Facebook and/or other providers.
+         # Add/remove providers from the array to control which providers can
+         # be used for authentication.
          :omniauthable, omniauth_providers: [:facebook]
 
   rolify

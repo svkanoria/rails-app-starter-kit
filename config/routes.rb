@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   get 'home/index'
 
   devise_for :users,
+             # Comment this out if you don't want authentication via Facebook
+             # and/or other providers.
              controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   resources :posts
