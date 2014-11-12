@@ -6,6 +6,12 @@ Rails.application.routes.draw do
              # and/or other providers.
              controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
+  namespace :api do
+    devise_scope :user do
+      post 'sign_in' => 'sessions#create'
+    end
+  end
+
   resources :posts
 
   root 'home#index'

@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   # For requests coming from a native app, an 'app access token' is used to
   # verify authenticity, because the CSRF token is only visible to web apps.
+  #
   # Another solution could be to turn off CSRF protection for JSON requests
   # altogether, and secure our Angular code via access tokens. However, our
   # approach has some advantages:
