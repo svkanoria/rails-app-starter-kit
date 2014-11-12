@@ -1,4 +1,7 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  # Signs in the user, or redirects to the sign up page as required.
+  # This method should work for most providers. All you should have to do, is
+  # create aliases named to match the providers you wish to support.
   def all
     omniauth = request.env['omniauth.auth']
     @user = User.from_omniauth(omniauth)

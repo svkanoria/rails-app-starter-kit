@@ -1,5 +1,9 @@
 = README
 
+== Demo
+
+http://rails-app-starter-kit.herokuapp.com
+
 == About This Project
 
 A starter kit for creating applications using the Postgres, Rails and Angular
@@ -13,6 +17,7 @@ stack, with the following features built-in:
 1. Angular-based routing
 1. Angular-based flash messages
 1. Angular interfacing with server CSRF protection and server form validation
+1. Secure API-based access for native apps
 1. Rails code testing using RSpec and other best practices
 1. Angular and JS code testing using Teaspoon
 1. Integration with the Bootstrap styling framework
@@ -71,6 +76,14 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
    * Comment out the ':omniauthable...' line in app/models/user.rb
    * Comment out the 'controllers:...' line with the 'devise_for' directive in
      config/routes.rb
+
+1. If you wish to allow API-based access for native apps, set the following
+   environment variable:
+
+    APP_ACCESS_TOKEN=<Some random string>
+
+   You must then send this token with each request, in the 'X-App-Access-Token'
+   header.
 
 == App Structure
 
