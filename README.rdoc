@@ -190,8 +190,9 @@ access to certain routes. See the following for more details:
 ==== Authentication via Facebook
 
 We also provide authentication with Facebook out of the box, as well as easy
-integration of other providers such as Google, Twitter and many more. See the
-'Setting Up' section for how to enable Facebook authentication.
+integration of other providers such as Google, Twitter and more.
+
+See the 'Setting Up' section for how to enable Facebook authentication.
 
 ==== Authentication via Other Providers
 
@@ -244,6 +245,15 @@ We also provide some guidelines on how to structure CSS/SCSS files. For more
 information see:
 * http://getbootstrap.com
 * https://github.com/twbs/bootstrap-sass
+
+=== Access from Native Apps
+
+Secure access from native apps is achieved by requiring an 'app access token'
+along with each request, in the 'X-App-Access-Token' header. Remember to carry
+out all communication over HTTPS, to prevent the access token from being
+sniffed.
+
+See the 'Setting Up' section for how to create a valid app access token.
 
 == Testing in Detail
 

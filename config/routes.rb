@@ -7,8 +7,14 @@ Rails.application.routes.draw do
              controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   namespace :api do
-    devise_scope :user do
-      post 'sign_in' => 'sessions#create'
+    namespace :users do
+      # Devise API routes are set up to mirror default Devise routes
+      devise_scope :user do
+        post 'sign_in' => 'sessions#create'
+
+        post 'sign_up' => 'registrations#create'
+        delete '/' => 'registrations#destroy'
+      end
     end
   end
 
