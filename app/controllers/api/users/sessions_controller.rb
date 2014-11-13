@@ -11,7 +11,7 @@ module Api
           if resource.persisted?
             sign_in(resource_name, resource)
           elsif (errors = resource.errors).any?
-            render json: errors
+            render json: errors, status: :unprocessable_entity
           end
         else
           warden.authenticate!(scope: resource_name)
