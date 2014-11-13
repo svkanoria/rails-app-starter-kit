@@ -15,18 +15,32 @@ class ApplicationController < ActionController::Base
   # * Makes it safe for the web app to operate over plain HTTP
   skip_before_action :verify_authenticity_token, if: :valid_app_access_token?
 
-  before_action :set_sign_in_redirect
+  before_action :authenticate_user_from_token,
+                :set_sign_in_redirect
 
   rescue_from Pundit::NotAuthorizedError, with: :deny_access
 
-  protected
+  private
 
   # Checks for a valid app access token in the 'X-App-Access-Token' header.
   def valid_app_access_token?
-    app_access_token = request.headers['X-App-Access-Token']
+    token = request.headers['X-App-Access-Token']
 
-    app_access_token.present? &&
-        app_access_token == Rails.application.secrets.app_access_token
+    token.present? && token == Rails.application.secrets.app_access_token
+  end
+
+  # Authenticates a user from the email and authentication supplied via the
+  # 'X-User-Email' and 'X-User-Authentication-Token' headers.
+  def authenticate_user_from_token
+    email = request.headers['X-User-Email']
+
+    if email && (user = User.find_by(email: email))
+      token = request.headers['X-User-Authentication-Token']
+
+      if Devise.secure_compare(user.authentication_token, token)
+        sign_in user, store: false
+      end
+    end
   end
 
   # Sets where Devise should redirect on sign-in.

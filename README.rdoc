@@ -285,7 +285,8 @@ follows:
     user: {
       "id": 434899 (for example),
       "email": "some@email.com",
-      "confirmed": false (or true)
+      "confirmed": false (or true),
+      "authentication_token": "sometoken" (if authenticated after creation)
     }
   }
 
@@ -312,7 +313,8 @@ follows:
   {
     user: {
       "id": 434899,
-      "email: "some@email.com
+      "email: "some@email.com,
+      "authentication_token": "sometoken"
     }
   }
 
@@ -336,6 +338,13 @@ user creation is successful, is signed in. The response is as above.
 For more on both password and provider based authentication, see:
 * app/controllers/api/users/sessions_controller.rb
 * app/views/api/users/sessions/create.json.jbuilder
+
+==== Authenticated Requests
+
+To make an authenticated request to any endpoint, include the user's email and
+authentication token (see above) in the following request headers:
+* X-User-Email
+* X-User-Authentication-Token
 
 == Testing in Detail
 

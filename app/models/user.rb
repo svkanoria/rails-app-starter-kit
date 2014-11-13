@@ -41,6 +41,10 @@ class User < ActiveRecord::Base
 
   rolify
 
+  validates :authentication_token, uniqueness: true
+
+  before_save :ensure_authentication_token
+
   has_many :authentications, dependent: :destroy
   has_many :posts, dependent: :destroy
 
@@ -98,5 +102,20 @@ class User < ActiveRecord::Base
     self.skip_confirmation!
     self.email = omniauth[:info][:email] if self.email.blank?
     authentications.build provider: omniauth[:provider], uid: omniauth[:uid]
+  end
+
+  private
+
+  def ensure_authentication_token
+    if authentication_token.blank?
+      self.authentication_token = create_authentication_token
+    end
+  end
+
+  def create_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.find_by(authentication_token: token)
+    end
   end
 end
