@@ -96,7 +96,7 @@ class User < ActiveRecord::Base
   # available by OmniAuth.
   def apply_omniauth (omniauth)
     self.skip_confirmation!
-    self.email = omniauth['info']['email'] if self.email.blank?
-    authentications.build provider: omniauth['provider'], uid: omniauth['uid']
+    self.email = omniauth[:info][:email] if self.email.blank?
+    authentications.build provider: omniauth[:provider], uid: omniauth[:uid]
   end
 end

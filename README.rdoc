@@ -255,6 +255,66 @@ sniffed.
 
 See the 'Setting Up' section for how to create a valid app access token.
 
+Errors from any endpoint can be in one of the following two formats:
+
+  { "error": "some error" }
+
+  OR
+
+  { "errors": { "some-key": "some error", ... } }
+
+==== User Registration
+
+New users can be registered via the following endpoint:
+
+  /api/users/sign_up
+
+The following information needs to be sent:
+
+  {
+    "email": "some@email.com",
+    "password": "somepassword"
+  }
+
+If the user is registered successfully, the user's details are returned, as
+follows:
+
+  {
+    "id": 434899 (for example),
+    "email": "some@email.com",
+    "confirmed": false (or true)
+  }
+
+==== Authentication via Password
+
+To authenticate a user with an email and password, send a request identical to
+the regitsration request, to the following endpoint:
+
+  /api/users/sign_in
+
+If the user is authenticated successfully, the user's details are returned, as
+follows:
+
+  {
+    "id": 434899,
+    "email: "some@email.com
+  }
+
+==== Authentication via Facebook (or Other Provider)
+
+To authenticate a user via Facebook or another provider, send a request to the
+same endpoint, as follows:
+
+  {
+    "provider": "facebook" (or other),
+    "uid": 12309939 (i.e. the provider's ID for the user),
+    "email": "some@email.com"
+  }
+
+If a user corresponding to the provider and UID exists, it is signed in.
+Otherwise, a new user is created using the email address provided, and if the
+user creation is successful, is signed in. The response is as above.
+
 == Testing in Detail
 
 === Testing Rails Code
