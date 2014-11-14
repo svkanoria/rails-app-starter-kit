@@ -30,11 +30,15 @@ angular.module('PostsCtrl', ['Post']).
        * 'postErrors' scope variable with these errors.
        */
       $scope.actionCreate = function () {
+        $scope.pleaseWaitSvc.request();
+
         $scope.post.$save(function (response) {
+          $scope.pleaseWaitSvc.release();
           flash.set('success', 'Post created.');
 
           $location.path('posts');
         }, function (failureResponse) {
+          $scope.pleaseWaitSvc.release();
           $scope.postErrors = failureResponse.data.errors;
         });
       };
@@ -52,11 +56,15 @@ angular.module('PostsCtrl', ['Post']).
        * 'postErrors' scope variable with these errors.
        */
       $scope.actionUpdate = function () {
+        $scope.pleaseWaitSvc.request();
+
         $scope.post.$update(function (response) {
+          $scope.pleaseWaitSvc.release();
           flash.set('success', 'Post updated.');
 
           $location.path('posts');
         }, function (failureResponse) {
+          $scope.pleaseWaitSvc.release();
           $scope.postErrors = failureResponse.data.errors;
         });
       };
@@ -65,12 +73,16 @@ angular.module('PostsCtrl', ['Post']).
        * The 'destroy' action.
        */
       $scope.actionDestroy = function () {
+        $scope.pleaseWaitSvc.request();
+
         $scope.post.$delete(function (response) {
+          $scope.pleaseWaitSvc.release();
           flash.set('success', 'Post deleted.');
 
           $location.path('posts');
         }, function (failureResponse) {
-          flash.set('success', 'Error deleting post.')
+          $scope.pleaseWaitSvc.release();
+          flash.set('error', 'Error deleting post.')
         });
       };
     }]);

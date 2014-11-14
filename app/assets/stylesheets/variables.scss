@@ -1,14 +1,15 @@
-// Contains all styling variables
+// Contains all styling variables, except those related to Angular directives.
+//
+// For directive related variables, see the individual styling files for each
+// directive, in the app/stylesheets/directives folder.
+// This is done to make directives easy to extract into standalone code.
 
 // Variables for animations
-$anim-duration: 1s;
+$anim-duration: 0.5s;
 $anim-easing: linear;
 
 $anim-fade-duration: $anim-duration;
 $anim-fade-easing: $anim-easing;
 
 // General variables (layout, header, footer, components etc.)
-// Add here
-
-// Variables for Angular directives
 // Add here

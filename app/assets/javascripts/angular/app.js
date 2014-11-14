@@ -21,5 +21,6 @@ var app = angular.module('App', [
 
   // Directives
   'AuthenticationLinks',
-  'FormErrors'
+  'FormErrors',
+  'PleaseWait'
 ]);
