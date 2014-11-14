@@ -1,21 +1,19 @@
 angular.module('PostsCtrl', ['Post']).
   controller('PostsCtrl', [
-    '$scope', '$location', '$routeParams', 'flash', 'Post',
-    function ($scope, $location, $routeParams, flash, Post) {
+    '$scope', '$location', '$routeParams', 'flash', 'Post', 'initialData',
+    function ($scope, $location, $routeParams, flash, Post, initialData) {
       /**
        * The 'index' action.
        */
       $scope.actionIndex = function () {
-        $scope.posts = Post.query();
+        $scope.posts = initialData;
       };
 
       /**
        * The 'show' action.
        */
       $scope.actionShow = function () {
-        $scope.post = Post.get({
-          postId: $routeParams.id
-        });
+        $scope.post = initialData;
       };
 
       /**
@@ -23,9 +21,7 @@ angular.module('PostsCtrl', ['Post']).
        * Builds an empty post for the form.
        */
       $scope.actionNew = function () {
-        $scope.post = new Post({
-          message: '' // It is good practice to initialize to non-null values
-        });
+        $scope.post = initialData;
       };
 
       /**
@@ -47,9 +43,7 @@ angular.module('PostsCtrl', ['Post']).
        * The 'edit' action.
        */
       $scope.actionEdit = function () {
-        $scope.post = Post.get({
-          postId: $routeParams.id
-        });
+        $scope.post = initialData;
       };
 
       /**

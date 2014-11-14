@@ -39,6 +39,22 @@ app.config(['$routeProvider', function ($routeProvider) {
     }];
   };
 
+  var initialData = function (ctrl, action) {
+    return ['$injector', function ($injector) {
+      var svc = $injector.get(ctrl + 'InitialData');
+
+      if (svc) {
+        var actionMethod = svc['action' + _.capitalize(action)];
+
+        if (actionMethod) {
+          return actionMethod();
+        }
+      }
+
+      return null;
+    }];
+  };
+
   $routeProvider.
     // Home routes
     when('/', {
@@ -49,23 +65,33 @@ app.config(['$routeProvider', function ($routeProvider) {
     // Post routes
     when('/posts', {
       templateUrl: 'controllers/posts/index.html',
-      controller: 'PostsCtrl'
+      controller: 'PostsCtrl',
+      resolve: {
+        initialData: initialData('PostCtrl', 'index')
+      }
     }).
     when('/posts/new', {
       templateUrl: 'controllers/posts/new.html',
       controller: 'PostsCtrl',
-      resolve: { auth: requireSignIn() }
+      resolve: {
+        auth: requireSignIn(),
+        initialData: initialData('PostCtrl', 'new')
+      }
     }).
     when('/posts/:id', {
       templateUrl: 'controllers/posts/show.html',
-      controller: 'PostsCtrl'
+      controller: 'PostsCtrl',
+      resolve: {
+        initialData: initialData('PostCtrl', 'show')
+      }
     }).
     when('/posts/:id/edit', {
       templateUrl: 'controllers/posts/edit.html',
       controller: 'PostsCtrl',
       resolve: {
         auth1: requireSignIn(),
-        auth2: requireServerAuth('/posts/:id/edit')
+        auth2: requireServerAuth('/posts/:id/edit'),
+        initialData: initialData('PostCtrl', 'edit')
       }
     }).
     when('/unauthorized', {
