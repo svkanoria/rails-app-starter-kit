@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="App">
 <head>
   <title>Rails App Starter Kit</title>
   <%= stylesheet_link_tag 'application', media: 'all' %>
@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
 </head>
-<body ng-app="App">
+<body ng-controller="AppCtrl">
   <%= render 'layouts/top_nav' %>
 
   <div class="container" id="flash-container">

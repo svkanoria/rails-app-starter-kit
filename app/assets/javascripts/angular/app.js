@@ -14,6 +14,7 @@ var app = angular.module('App', [
   'Post',
 
   // Controllers
+  'AppCtrl',
   'HomeCtrl',
   'PostsCtrl',
 

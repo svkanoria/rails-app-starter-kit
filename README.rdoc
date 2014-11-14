@@ -425,6 +425,21 @@ Coming soon.
 1. Create any directives that may be required for the view
 1. Write some directive unit tests
 
+=== Common Angular Tasks
+
+==== Exposing Some Data to All Controllers
+
+It can sometimes be useful to expose some data or service to all controllers
+(and consequently views). One example is the 'AuthSvc', since most controllers
+and views are likely to use authentication services in one way or another; for
+example, showing an 'Edit' link for a post only for the owner of the post.
+
+This can be done in the 'AppCtrl', our Angular equivalent of Rails'
+ApplicationController. Anything added to its scope becomes available to every
+controller and view.
+
+See app/assets/javascripts/angular/controllers/app_ctrl.js.
+
 === Coding Style Conventions
 
 ==== General

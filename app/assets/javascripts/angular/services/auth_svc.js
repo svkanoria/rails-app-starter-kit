@@ -25,8 +25,27 @@ angular.module('AuthSvc', []).
     };
 
     /**
-     * Returns whether the currently signed in user has one of the given
-     * role(s).
+     * Returns whether the currently signed in user (if any) is equal to the
+     * given user object or user id.
+     * Equality is determined solely on the basis of id comparison.
+     * @param userOrId {Object|number) - A user object, or id.
+     * @returns {boolean}
+     */
+    var currentUserIs = function (userOrId) {
+      if (CurrentUser) {
+        if (typeof(userOrId) === 'number') {
+          return CurrentUser.id === userOrId;
+        } else {
+          return CurrentUser.id === userOrId.id;
+        }
+      }
+
+      return false;
+    };
+
+    /**
+     * Returns whether the currently signed in user (if any) has one of the
+     * given role(s).
      * @param role {string|string[]} - A role, or array of roles.
      * @returns {boolean}
      */
@@ -170,6 +189,7 @@ angular.module('AuthSvc', []).
     // Return the service object
     return {
       currentUser: currentUser,
+      currentUserIs: currentUserIs,
       hasRole: hasRole,
       requireSignIn: requireSignIn,
       requireServerAuth: requireServerAuth
