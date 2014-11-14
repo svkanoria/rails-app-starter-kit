@@ -1,5 +1,6 @@
 module Api
   module Users
+    # Handles user authentication via JSON.
     class SessionsController < Devise::SessionsController
       respond_to :json
 
