@@ -7,6 +7,9 @@ http://rails-app-starter-kit.herokuapp.com
 Please treat any data (posts, users etc.) as transient. It may or may not be
 available after a certain period of time.
 
+For accessing via native apps, the app access token is z23498f58959thf85.
+See the 'Access from Native Apps' section for details.
+
 == About This Project
 
 A starter kit for creating applications using the Postgres, Rails and Angular
