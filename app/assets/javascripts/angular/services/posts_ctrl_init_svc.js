@@ -1,6 +1,6 @@
-// Provides initial data for PostCtrl actions.
-angular.module('PostCtrlInitSvc', ['Post']).
-  factory('PostCtrlInitSvc', [
+// Provides initial data for PostsCtrl actions.
+angular.module('PostsCtrlInitSvc', ['Post']).
+  factory('PostsCtrlInitSvc', [
     '$route', 'Post',
     function($route, Post) {
       /**

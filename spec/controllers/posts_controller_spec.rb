@@ -87,7 +87,7 @@ RSpec.describe PostsController, type: :controller do
         it 'updates the post' do
           new_message = 'This is an update.'
 
-          put :update, id: pozt.id, post: { message: 'This is an update.' }
+          put :update, id: pozt.id, post: { message: new_message }
           pozt.reload
 
           expect(pozt.message).to eq(new_message)

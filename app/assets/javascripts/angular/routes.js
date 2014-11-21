@@ -96,7 +96,7 @@ app.config(['$routeProvider', function ($routeProvider) {
       templateUrl: 'controllers/posts/index.html',
       controller: 'PostsCtrl',
       resolve: {
-        initialData: initialData('PostCtrl', 'index')
+        initialData: initialData('PostsCtrl', 'index')
       }
     }).
     when('/posts/new', {
@@ -104,14 +104,14 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller: 'PostsCtrl',
       resolve: {
         auth: requireSignIn(),
-        initialData: initialData('PostCtrl', 'new')
+        initialData: initialData('PostsCtrl', 'new')
       }
     }).
     when('/posts/:id', {
       templateUrl: 'controllers/posts/show.html',
       controller: 'PostsCtrl',
       resolve: {
-        initialData: initialData('PostCtrl', 'show')
+        initialData: initialData('PostsCtrl', 'show')
       }
     }).
     when('/posts/:id/edit', {
@@ -120,7 +120,7 @@ app.config(['$routeProvider', function ($routeProvider) {
       resolve: {
         auth1: requireSignIn(),
         auth2: requireServerAuth('/posts/:id/edit'),
-        initialData: initialData('PostCtrl', 'edit')
+        initialData: initialData('PostsCtrl', 'edit')
       }
     }).
     when('/unauthorized', {
@@ -134,15 +134,24 @@ app.config(['$routeProvider', function ($routeProvider) {
     });
 }]);
 
-/*
- * Works in conjunction with 'requireSignIn' and 'requireServerAuth'.
- * If their promises do not resolve, we catch the resulting $routeChangeError
- * and redirect to the sign-in page.
- */
 app.run([
-  '$rootScope', '$window', '$location',
-  function($rootScope, $window, $location) {
+  '$rootScope', '$window', '$location', 'PleaseWaitSvc',
+  function($rootScope, $window, $location, PleaseWaitSvc) {
+    // To show a 'Please Wait...' message between route changes
+    $rootScope.$on('$routeChangeStart', function() {
+      PleaseWaitSvc.request();
+    });
+
+    /*
+     * Works in conjunction with 'requireSignIn' and 'requireServerAuth'.
+     * If their promises do not resolve, we catch the $routeChangeError that
+     * results, and redirect to the sign-in page.
+     *
+     * Also hides the 'Please Wait...' message requested above.
+     */
     $rootScope.$on('$routeChangeError', function(e, curr, prev, rejection) {
+      PleaseWaitSvc.releaseAll();
+
       switch (rejection) {
         case 'NOT_SIGNED_IN':
           $window.location.href = '/users/sign_in?x_return_to=' +
@@ -159,5 +168,10 @@ app.run([
 
           break;
       }
+    });
+
+    // This hides the 'Please Wait...' message requested above.
+    $rootScope.$on('$routeChangeSuccess', function() {
+      PleaseWaitSvc.releaseAll();
     });
   }]);

@@ -12,7 +12,7 @@ var app = angular.module('App', [
   // Services
   'AuthSvc',
   'Post',
-  'PostCtrlInitSvc',
+  'PostsCtrlInitSvc',
 
   // Controllers
   'AppCtrl',

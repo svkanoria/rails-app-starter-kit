@@ -20,6 +20,40 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :deny_access
 
+  public
+
+  # Renders a JSON error for any failed operation for any reason, as follows:
+  #   { error: 'Some error message' }
+  #
+  # The reason for failure could be anything:
+  # * An exception was thrown
+  # * The request did not have a required query parameter
+  # * A query parameter was badly formatted
+  #
+  # Supports localization of error messages.
+  # For example, if i18n_prefix is 'klass.method', and error is 'some_error',
+  # then it will look for this localized error message:
+  #   op_errors:
+  #     klass:
+  #       method:
+  #         some_error: Some error message
+  #
+  # @param i18n_prefix [String] usually 'class_name.method_name'. Can be nil
+  # @param error [String, Symbol] eg. :some_parameter_missing
+  # @param status [Symbol] the HTTP status code to be used for the response
+  def render_op_error (i18n_prefix, error, status = :bad_request)
+    respond_to do |format|
+      format.json {
+        i18n_key = 'op_errors.'
+        i18n_key += "#{i18n_prefix}." if i18n_prefix.present?
+        i18n_key += error.to_s
+
+        render json: { error: I18n.t(i18n_key, default: error.to_s.humanize) },
+               status: status
+      }
+    end
+  end
+
   private
 
   # Checks for a valid app access token in the 'X-App-Access-Token' header.

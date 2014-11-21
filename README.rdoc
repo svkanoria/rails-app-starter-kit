@@ -428,6 +428,18 @@ Coming soon.
 1. Create any directives that may be required for the view
 1. Write some directive unit tests
 
+=== Common Server Tasks
+
+==== Rendering a JSON Error Msg for Any Controller Action
+
+When creating an API, you will likely want to render JSON error messages in a
+consistent format, from any controller action.
+
+The 'render_op_error' method defined in the application controller lets you do
+this in a flexible manner, and even supports localization.
+
+See its documentation here: app/controllers/application_controller.rb.
+
 === Common Angular Tasks
 
 ==== Exposing Some Data to All Controllers

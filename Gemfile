@@ -80,6 +80,9 @@ gem 'bootstrap-sass', '~> 3.2.0'
 # For Bootstrap compatible Rails form helpers
 gem 'bootstrap_form'
 
+# For pagination
+gem 'kaminari'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

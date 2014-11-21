@@ -36,16 +36,36 @@ angular.module('PleaseWait', []).
    *
    *   When you no longer need the message to be displayed, call the 'release'
    *   method.
+   *
+   *   To ensure the message is hidden, call the 'releaseAll' method.
    */
-  factory('PleaseWaitSvc', function () {
+  factory('PleaseWaitSvc', ['$timeout', function ($timeout) {
     var counter = 0;
+    var timeout = null;
 
     var request = function () {
-      ++counter;
+      timeout = $timeout(function () {
+        ++counter;
+        timeout = null;
+      }, 400);
     };
 
     var release = function () {
-      --counter;
+      if (timeout) {
+        $timeout.cancel(timeout);
+        timeout = null;
+      } else if (counter > 0) {
+        --counter;
+      }
+    };
+
+    var releaseAll = function () {
+      if (timeout) {
+        $timeout.cancel(timeout);
+        timeout = null;
+      }
+
+      counter = 0;
     };
 
     var getCounter = function () {
@@ -55,6 +75,7 @@ angular.module('PleaseWait', []).
     return {
       request: request,
       release: release,
+      releaseAll: releaseAll,
       getCounter: getCounter
     };
-  });
+  }]);

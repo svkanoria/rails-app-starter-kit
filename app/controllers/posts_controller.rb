@@ -5,10 +5,15 @@ class PostsController < ApplicationController
 
   # This is good practice, as it provides a check that 'authorize' calls have
   # not been inadvertantly skipped.
-  after_action :verify_authorized, except: [:index, :show]
+  after_action :verify_authorized
 
   def index
     @posts = Post.includes(:user).all
+    authorize Post
+
+    @posts = policy_scope(Post).includes(:user).
+        page(params[:page] || 1).
+        per([(params[:per] || 20).to_i, 100].min)
 
     respond_with @posts
   end

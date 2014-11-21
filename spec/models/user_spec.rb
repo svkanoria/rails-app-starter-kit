@@ -22,6 +22,7 @@
 #  locked_at              :datetime
 #  created_at             :datetime
 #  updated_at             :datetime
+#  authentication_token   :string
 #
 
 require 'spec_helper'
