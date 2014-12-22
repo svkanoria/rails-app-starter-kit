@@ -8,12 +8,13 @@ class PostsController < ApplicationController
   after_action :verify_authorized
 
   def index
-    @posts = Post.includes(:user).all
     authorize Post
 
-    @posts = policy_scope(Post).includes(:user).
-        page(params[:page] || 1).
-        per([(params[:per] || 20).to_i, 100].min)
+    @posts = policy_scope(Post).includes(:user)
+
+    @metadata = PaginationMetadata.new(@posts, params[:page], params[:per])
+
+    @posts = @posts.page(@metadata.page).per(@metadata.per)
 
     respond_with @posts
   end

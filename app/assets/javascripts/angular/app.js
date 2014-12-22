@@ -10,6 +10,7 @@ var app = angular.module('App', [
   'flashular',
 
   // Services
+  'ResourceUtils',
   'AuthSvc',
   'Post',
   'PostsCtrlInitSvc',

@@ -27,6 +27,7 @@ angular.module('PleaseWait', []).
       }
     }
   }]).
+
   /*
    * A service backing the 'please-wait' directive.
    *
@@ -42,12 +43,18 @@ angular.module('PleaseWait', []).
   factory('PleaseWaitSvc', ['$timeout', function ($timeout) {
     var counter = 0;
     var timeout = null;
+    var counterIncrement = 1;
 
     var request = function () {
-      timeout = $timeout(function () {
-        ++counter;
-        timeout = null;
-      }, 400);
+      if (timeout) {
+        ++counterIncrement;
+      } else {
+        timeout = $timeout(function () {
+          counter += counterIncrement;
+          counterIncrement = 1;
+          timeout = null;
+        }, 500);
+      }
     };
 
     var release = function () {
