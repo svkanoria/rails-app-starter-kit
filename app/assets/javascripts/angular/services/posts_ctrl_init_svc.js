@@ -3,13 +3,8 @@ angular.module('PostsCtrlInitSvc', ['Post']).
   factory('PostsCtrlInitSvc', [
     '$route', 'Post',
     function($route, Post) {
-      /**
-       * Initial data for the 'index' action.
-       * @returns {Object} The list of posts, as a promise.
-       */
-      var actionIndex = function () {
-        return Post.query().$promise;
-      };
+      // The 'index' action data is fetched directly in the controller.
+      // Hence there is no 'actionIndex' method here.
 
       /**
        * Initial data for the 'show' action.
@@ -41,7 +36,6 @@ angular.module('PostsCtrlInitSvc', ['Post']).
 
       // Return the service object
       return {
-        actionIndex: actionIndex,
         actionShow: actionShow,
         actionNew: actionNew,
         actionEdit: actionEdit

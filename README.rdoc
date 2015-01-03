@@ -4,7 +4,7 @@
 
 http://rails-app-starter-kit.herokuapp.com
 
-Please treat any data (posts, users etc.) as transient. It may or may not be
+Please treat any data (posts, users etc.) as transient. They may not be
 available after a certain period of time.
 
 For accessing via native apps, the app access token is z23498f58959thf85.
@@ -34,7 +34,7 @@ Several ideas have been taken from http://angular-rails.com.
 See Gemfile.lock for each gem's version. We recommend using these versions, or
 newer, for best results.
 
-If you with to change the Ruby version, remember to also do so in the Gemfile
+If you wish to change the Ruby version, remember to also do so in the Gemfile
 (near the top).
 
 == Setting Up
@@ -56,8 +56,8 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
 
 1. Create two databases named as follows, or edit /config/database.yml to suit
    your needs, and then create the appropriate databases:
-   * 'rails-app-starter-kit_development' (for developing)
-   * 'rails-app-starter-kit_test' (for testing)
+   * rails-app-starter-kit_development (for developing)
+   * rails-app-starter-kit_test (for testing)
 
    Also change the production database details, either now, or before you wish
    to push your app to production. If you use Heroku, these details will be
@@ -69,7 +69,7 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
 
    This will set up the required tables in the database.
 
-1. Change the session key in config/initializers/session_store.rb to suit your
+1. Change the session key in /config/initializers/session_store.rb to suit your
    application.
 
 1. If you wish to allow authentication via Facebook, create a Facebook app if
@@ -79,9 +79,9 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
     FACEBOOK_APP_SECRET=<Your Facebook App Secret>
 
    If you don't want this functionality, do the following:
-   * Comment out the ':omniauthable...' line in app/models/user.rb
+   * Comment out the ':omniauthable...' line in /app/models/user.rb
    * Comment out the 'controllers:...' line with the 'devise_for' directive in
-     config/routes.rb
+     /config/routes.rb
 
 1. If you wish to allow API-based access for native apps, set the following
    environment variable:
@@ -104,6 +104,7 @@ additions, a sampling of which is shown below:
                |- routes.js.erb
                |- controllers
                |- directives
+               |- modules (self-contained 'packages' of functionality)
                |- templates (contains all Angular templates, i.e. views)
        |- stylesheets (contains all CSS styles)
    |- controllers
@@ -138,7 +139,7 @@ generally after you run a migration, as follows:
 
 === Front-end Asset Management
 
-Normally, Rails does asset management from within the (app/lib/vender)/assets
+Normally, Rails does asset management from within the (/app/lib/vendor)/assets
 folders. However, because we are supporting very 'front-end heavy' applications,
 we use Bower, which is the most widely used such tool. We use the 'bower-rails'
 gem for this purpose. See the following for more information:
@@ -146,7 +147,7 @@ gem for this purpose. See the following for more information:
 * https://github.com/42dev/bower-rails
 
 To add/remove front-end libraries, add-to/remove-from the /bower.json file the
-required library/libraries. Then run:
+required library or libraries. Then run:
 
   $ rake bower:install
 
@@ -183,15 +184,15 @@ kept outside of Angular. See
 https://medium.com/opinionated-angularjs/techniques-for-authentication-in-angularjs-applications-7bbf0346acec
 for a detailed discussion; note however that our implementation is different.
 Relevant files in our implementation are:
-* app/assets/javascripts/angular/directives/authentication_links.js
-* controllers/application_controller (the 'set_sign_in_redirect' method)
+* /app/assets/javascripts/angular/directives/authentication_links.js
+* /app/controllers/application_controller (the 'set_sign_in_redirect' method)
 * All devise related files, of course
 
 In the JS and Angular code, the currently signed in user details are available
 through the 'AuthSvc' service. We have also provided helper methods to control
 access to certain routes. See the following for more details:
-* app/assets/javascripts/angular/routes.js
-* app/assets/javascripts/angular/services/auth_svc.js
+* /app/assets/javascripts/angular/routes.js
+* /app/assets/javascripts/angular/services/auth_svc.js
 
 ==== Authentication via Facebook
 
@@ -212,7 +213,7 @@ Authorization in the Ruby code is done via two gems:
 * pundit[https://github.com/elabs/pundit]: For authorizing actions based on
   roles
 
-Authorization policies are placed in app/policies.
+Authorization policies are placed in /app/policies.
 
 In JS and Angular code, role-based authorization has been implemented to the
 extent of route access. See the Authentication section above.
@@ -225,7 +226,7 @@ exclusively on the server-side.
 
 We provide a clean integration between Angular form validation and server-side
 form validation via the 'formErrors' directive. See
-app/assets/javascripts/angular/directives/form_errors.js.
+/app/assets/javascripts/angular/directives/form_errors.js.
 
 === Background Jobs
 
@@ -303,8 +304,8 @@ To delete a user, send a DELETE request to the following endpoint:
 Deletion only succeeds in one case: a signed in user deleting itself.
 
 See the following files for more:
-* app/controllers/api/users/registrations_controller.rb
-* app/views/api/users/registrations/create.json.jbuilder
+* /app/controllers/api/users/registrations_controller.rb
+* /app/views/api/users/registrations/create.json.jbuilder
 
 ==== Authentication via Password
 
@@ -342,8 +343,8 @@ Otherwise, a new user is created using the email address provided, and if the
 user creation is successful, is signed in. The response is as above.
 
 For more on both password and provider based authentication, see:
-* app/controllers/api/users/sessions_controller.rb
-* app/views/api/users/sessions/create.json.jbuilder
+* /app/controllers/api/users/sessions_controller.rb
+* /app/views/api/users/sessions/create.json.jbuilder
 
 ==== Authenticated Requests
 
@@ -373,15 +374,15 @@ http://www.agileventures.org/articles/testing-with-rspec-stubs-mocks-factories-w
 Many controller tests require a user (possibly having certain roles) to be
 signed in. We have provided integration with devise for easy authentication.
 See the following for more information:
-* spec/factories/users.rb
-* spec/support/controller_macros.rb
+* /spec/factories/users.rb
+* /spec/support/controller_macros.rb
 
 ==== Authorization Policy Testing
 
 We provide an easy way to test authorization policies generated using pundit.
-See spec/support/pundit_matcher.rb for relevant RSpec matchers.
+See /spec/support/pundit_matcher.rb for relevant RSpec matchers.
 
-Authorization policy tests are placed in spec/policies.
+Authorization policy tests are placed in /spec/policies.
 
 === Testing JS and Angular Code
 
@@ -400,31 +401,31 @@ Coming soon.
     rails g model Widget
     rails g controller Widgets
 
-1. Edit the config/routes.rb file
+1. Edit the /config/routes.rb file
 1. Write some model unit tests. For reference see:
-   * spec/models/post_spec.rb
-   * spec/factories/posts.rb
+   * /spec/models/post_spec.rb
+   * /spec/factories/posts.rb
 1. Write some model functionality
 1. Create an authorization policy. For reference see
-   app/policies/post_policy.rb.
+   /app/policies/post_policy.rb.
 1. Write some controller unit tests. For reference see
-   spec/controllers/posts_controller_spec.rb.
+   /spec/controllers/posts_controller_spec.rb.
 1. Write some authorization policy tests. For reference see
-   spec/policies/post_policy_spec.rb.
+   /spec/policies/post_policy_spec.rb.
 1. Write some controller functionality
 1. Write the server views (which basically render out responses as JSON). For
-   reference, see app/views/posts/index.json.jbuilder. JBuilder
+   reference, see /app/views/posts/index.json.jbuilder. JBuilder
    (https://github.com/rails/jbuilder) comes bundled with Rails, and is a much
    better way to create JSON, than using the 'as_json' method.
 1. Create an Angular resource to communicate with the controller. See
-   app/assets/javascripts/angular/services/post.js.
+   /app/assets/javascripts/angular/services/post.js.
 1. Create an Angular controller that uses the resource. For reference see
-   app/assets/javascripts/angular/controllers/posts_ctrl.js.
+   /app/assets/javascripts/angular/controllers/posts_ctrl.js.
 1. Write some Angular controller unit tests. For reference see
-   app/spec/javascripts/controllers/home_ctrl_spec.js.
+   /app/spec/javascripts/controllers/home_ctrl_spec.js.
 1. Create an Angular view (template). For reference see
-   app/assets/javascripts/angular/templates/controllers/posts/index.html.
-1. Update the app/assets/javascripts/angular/routes.js file
+   /app/assets/javascripts/angular/templates/controllers/posts/index.html.
+1. Update the /app/assets/javascripts/angular/routes.js file
 1. Create any directives that may be required for the view
 1. Write some directive unit tests
 
@@ -438,7 +439,7 @@ consistent format, from any controller action.
 The 'render_op_error' method defined in the application controller lets you do
 this in a flexible manner, and even supports localization.
 
-See its documentation here: app/controllers/application_controller.rb.
+See its documentation here: /app/controllers/application_controller.rb.
 
 === Common Angular Tasks
 
@@ -453,7 +454,7 @@ This can be done in the 'AppCtrl', our Angular equivalent of Rails'
 ApplicationController. Anything added to its scope becomes available to every
 controller and view.
 
-See app/assets/javascripts/angular/controllers/app_ctrl.js.
+See /app/assets/javascripts/angular/controllers/app_ctrl.js.
 
 === Coding Style Conventions
 

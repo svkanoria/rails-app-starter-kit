@@ -18,9 +18,13 @@ module Api
           warden.authenticate!(scope: resource_name)
         end
 
-        # At this point, the user is guaranteed to have been signed in, since
-        # any errors would already have been rendered.
+        # At this point the user is guaranteed to have been signed in, since any
+        # errors would already have been rendered.
         @user = current_user
+
+        # Explicitly set HTTP status code to 201 (created) when successful, else
+        # respond_with returns 200 on encountering the JBuilder template.
+        respond_with @user, status: :created
       end
     end
   end

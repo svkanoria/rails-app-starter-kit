@@ -6,7 +6,34 @@ angular.module('PostsCtrl', ['Post']).
        * The 'index' action.
        */
       $scope.actionIndex = function () {
-        $scope.posts = initialData;
+        var postsQuery = null;
+
+        // Debounce the posts retrieval.
+        // This code is merely illustrative. In the case of this particular
+        // action, no debouncing is required.
+        var fetchPosts = _.debounce(function () {
+          $scope.pleaseWaitSvc.request();
+
+          postsQuery = Post.query();
+
+          postsQuery.$promise.then(function (response) {
+            $scope.posts = response;
+          }, function (failureResponse) {
+            // Do something on failure
+          }).finally(function () {
+            $scope.pleaseWaitSvc.release();
+          });
+        }, 400);
+
+        // Cancel old request if pending.
+        // This code is merely illustrative. In the case of this particular
+        // action, no cancelling is required.
+        if (postsQuery) {
+          postsQuery.cancel();
+          postsQuery = null;
+        }
+
+        fetchPosts();
       };
 
       /**

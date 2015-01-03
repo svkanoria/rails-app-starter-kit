@@ -10,7 +10,6 @@ var app = angular.module('App', [
   'flashular',
 
   // Services
-  'ResourceUtils',
   'AuthSvc',
   'Post',
   'PostsCtrlInitSvc',
@@ -23,5 +22,8 @@ var app = angular.module('App', [
   // Directives
   'AuthenticationLinks',
   'FormErrors',
-  'PleaseWait'
+  'PleaseWait',
+
+  // Modules
+  'ResourceUtils'
 ]);

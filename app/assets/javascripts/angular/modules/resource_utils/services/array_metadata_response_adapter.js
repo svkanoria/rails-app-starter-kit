@@ -1,6 +1,12 @@
-// Utilities for Angular $resource.
-angular.module('ResourceUtils', []).
-  factory('ResourceUtils', function () {
+/*
+ * Methods for adapting array responses containing metadata (such as total
+ * count, remaining count etc.) into a regular Angular resource array, while
+ * still keeping intact the metadata for further use.
+ *
+ * See the adaptToArray method.
+ */
+angular.module('ArrayMetadataResponseAdapter', []).
+  factory('ArrayMetadataResponseAdapter', function () {
     /**
      * Adapts non-array responses into array ones.
      *
@@ -18,7 +24,7 @@ angular.module('ResourceUtils', []).
      *     ]
      *   }
      *
-     * In this case the standard $resource fails, as it needs a plain array.
+     * Here, the standard $resource fails, as it needs a plain array.
      * Use this method to adapt the response to an array format, while still
      * keeping intact the metadata for further use. This metadata can be
      * retrieved through the $metadata property of the final result.
@@ -28,16 +34,19 @@ angular.module('ResourceUtils', []).
      *
      *   angular.module('SomeModule', ['ngResource', 'ResourceUtils']).
      *     factory('SomeResource', [
-     *       '$resource', 'ResourceUtils',
-     *       function($resource, ResourceUtils) {
+     *       '$resource', 'ArrayMetadataResponseAdapter',
+     *       function($resource, ArrayMetadataResponseAdapter) {
      *         return $resource(
      *             :
      *             :
      *           // Extra/overridden methods
      *           {
-     *             query: ResourceUtils.adaptToArray('results', 'extra', {
-     *               method: 'GET'
-     *             }),
+     *             query: ArrayMetadataResponseAdapter.adaptToArray(
+     *               'results', 'extra', {
+     *                 method: 'GET'
+     *               }),
+     *               :
+     *               :
      *           });
      *       }]);
      *
@@ -78,6 +87,8 @@ angular.module('ResourceUtils', []).
       metadataKey = metadataKey || 'metadata';
 
       return function (data) {
+        if (!data) return data;
+
         var wrappedResult = angular.fromJson(data);
         wrappedResult[arrayKey].$metadata = wrappedResult[metadataKey];
 
@@ -96,13 +107,16 @@ angular.module('ResourceUtils', []).
      *   some_method: {
      *       :
      *     interceptor: {
-     *       response: ResourceUtils.passMetadata()
+     *       response: ArrayMetadataResponseAdapter.passMetadata()
      *     }
      *   }
      */
     var passMetadata = function () {
       return function (response) {
-        response.resource.$metadata = response.data.$metadata;
+        if (response.data) {
+          response.resource.$metadata = response.data.$metadata;
+        }
+
         return response.resource;
       };
     };
