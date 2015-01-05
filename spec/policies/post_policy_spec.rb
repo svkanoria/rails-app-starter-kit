@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe PostPolicy do
+  include TenantedAccess
+
   subject { PostPolicy.new(user, post) }
 
   context 'for a guest user' do

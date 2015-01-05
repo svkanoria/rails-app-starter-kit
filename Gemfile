@@ -83,6 +83,9 @@ gem 'bootstrap_form'
 # For pagination
 gem 'kaminari'
 
+# For multi-tenancy
+gem 'acts_as_tenant'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

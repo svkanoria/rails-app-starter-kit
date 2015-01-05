@@ -8,6 +8,7 @@
 #  user_id    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  tenant_id  :integer          not null
 #
 
 FactoryGirl.define do
@@ -17,20 +18,9 @@ FactoryGirl.define do
   factory :authentication do
     provider 'facebook'
     uid '10499594'
+    user
 
-    ignore do
-      user nil
-    end
-
-    # Allows creation of an authentication belonging to a specific user.
-    # Example:
-    #   FactoryGirl.create(:authentication, user: some_user)
-    before(:create) do |authentication, evaluator|
-      if (user = evaluator.user.presence)
-        authentication.user = user
-      else
-        authentication.user = create(:user)
-      end
-    end
+    # We omit the tenant. It should generally be created as a side-effect of
+    # setting the current tenant.
   end
 end

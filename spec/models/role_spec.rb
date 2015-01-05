@@ -8,6 +8,7 @@
 #  resource_type :string
 #  created_at    :datetime
 #  updated_at    :datetime
+#  tenant_id     :integer          not null
 #
 
 require 'rails_helper'

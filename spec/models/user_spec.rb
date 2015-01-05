@@ -23,6 +23,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  authentication_token   :string
+#  tenant_id              :integer          not null
 #
 
 require 'spec_helper'

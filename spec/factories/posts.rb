@@ -7,6 +7,7 @@
 #  user_id    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  tenant_id  :integer          not null
 #
 
 FactoryGirl.define do
@@ -16,20 +17,9 @@ FactoryGirl.define do
   #   FactoryGirl.create(:post, user: some_user)
   factory :post do
     message 'This is a post!'
+    user
 
-    ignore do
-      user nil
-    end
-
-    # Allows creation of a post belonging to a specific user.
-    # Example:
-    #   FactoryGirl.create(:post, user: some_user)
-    before(:create) do |post, evaluator|
-      if (user = evaluator.user.presence)
-        post.user = user
-      else
-        post.user = create(:user)
-      end
-    end
+    # We omit the tenant. It should generally be created as a side-effect of
+    # setting the current tenant.
   end
 end

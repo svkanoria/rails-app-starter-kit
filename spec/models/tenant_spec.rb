@@ -1,18 +1,16 @@
 # == Schema Information
 #
-# Table name: authentications
+# Table name: tenants
 #
 #  id         :integer          not null, primary key
-#  provider   :string
-#  uid        :string
-#  user_id    :integer
+#  name       :string           not null
+#  subdomain  :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  tenant_id  :integer          not null
 #
 
 require 'rails_helper'
 
-RSpec.describe Authentication, type: :model do
+RSpec.describe Tenant, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
 end

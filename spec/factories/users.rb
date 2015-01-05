@@ -23,6 +23,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  authentication_token   :string
+#  tenant_id              :integer          not null
 #
 
 FactoryGirl.define do
@@ -36,6 +37,9 @@ FactoryGirl.define do
     password_confirmation 'password'
     # Required if the devise confirmable module is used
     confirmed_at Time.now
+
+    # We omit the tenant. It should generally be created as a side-effect of
+    # setting the current tenant.
 
     ignore do
       roles nil

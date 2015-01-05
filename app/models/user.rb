@@ -23,9 +23,12 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  authentication_token   :string
+#  tenant_id              :integer          not null
 #
 
 class User < ActiveRecord::Base
+  acts_as_tenant :tenant
+
   # Include default devise modules. Others available are:
   # :lockable and :timeoutable
   devise :confirmable,

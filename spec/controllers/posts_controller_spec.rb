@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
+  include TenantedAccess
+
   before :each do
     request.accept = 'application/json' # For testing JSON requests
   end
