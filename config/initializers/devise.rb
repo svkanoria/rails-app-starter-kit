@@ -38,7 +38,17 @@ Devise.setup do |config|
   # For instance, if you set :request_keys to [:subdomain], :subdomain will be
   # used on authentication. The same considerations mentioned for
   # authentication_keys also apply to request_keys.
-  # config.request_keys = []
+  #
+  # MY NOTE:
+  # Changed from [] to [:subdomain], to make the subdomain available for use in
+  # the overridden 'find_for_authentication' method. We need it to set the
+  # current tenant.
+  #
+  # Without this change, the subdomain is not available for use. Note that we
+  # don't mess with config.authentication_keys, although it looks similar. That
+  # is used not for finding the user to authenticate, but for actually
+  # authenticating it.
+  config.request_keys = [:subdomain]
 
   # Configure which authentication keys should be case-insensitive.
   # These keys will be down-cased upon creating or modifying a user and when

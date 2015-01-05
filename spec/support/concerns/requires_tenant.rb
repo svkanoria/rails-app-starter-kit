@@ -1,7 +1,7 @@
 # Include in controller/policy spec files that need a current tenant.
 # This will automatically create a tenant and set it to be current before each
 # test.
-module TenantedAccess
+module RequiresTenant
   extend ActiveSupport::Concern
 
   included do

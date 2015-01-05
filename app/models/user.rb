@@ -98,6 +98,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  # We scope the search for users to the current tenant.
+  # Acts As Tenant claims to do perform out of the box, but sadly it doesn't!
+  def self.find_for_authentication (warden_conditions)
+    ActsAsTenant.with_tenant(
+        Tenant.find_by_subdomain(warden_conditions[:subdomain])) do
+
+      User.find_by_email(warden_conditions[:email])
+    end
+  end
+
   public
 
   # Pre-populates this user's fields (to the extent possible), with data made

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
-  include Pundit
-
   set_current_tenant_by_subdomain(:tenant, :subdomain)
+
+  include Pundit
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -17,7 +17,8 @@ class ApplicationController < ActionController::Base
   # * Makes it safe for the web app to operate over plain HTTP
   skip_before_action :verify_authenticity_token, if: :valid_app_access_token?
 
-  before_action :authenticate_user_from_token,
+  before_action :require_tenant_if_subdomain,
+                :authenticate_user_from_token,
                 :set_sign_in_redirect
 
   rescue_from Pundit::NotAuthorizedError, with: :deny_access
@@ -63,6 +64,16 @@ class ApplicationController < ActionController::Base
     token = request.headers['X-App-Access-Token']
 
     token.present? && token == Rails.application.secrets.app_access_token
+  end
+
+  # Raises an exception if the request is to a subdomain, but the subdomain
+  # doesn't correspond to a tenant.
+  #
+  # @raise [ActiveRecord::RecordNotFound]
+  def require_tenant_if_subdomain
+    if request.subdomain.present? && !ActsAsTenant.current_tenant
+      raise ActiveRecord::RecordNotFound
+    end
   end
 
   # Authenticates a user from the email and authentication supplied via the

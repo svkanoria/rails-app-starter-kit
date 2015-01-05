@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe PostPolicy do
-  include TenantedAccess
+  include RequiresTenant
 
   subject { PostPolicy.new(user, post) }
 

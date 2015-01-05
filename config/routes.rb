@@ -1,26 +1,31 @@
 Rails.application.routes.draw do
-  get 'home/index'
+  # Only allow access via a subdomain.
+  # Routes that do not need a subdomain should be placed outside these
+  # constraints.
+  constraints lambda { |r| r.subdomain.present? && r.subdomain != 'www' } do
+    get 'home/index'
 
-  devise_for :users,
-             # Comment this out if you don't want authentication via Facebook
-             # and/or other providers.
-             controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+    devise_for :users,
+               # Comment this out if you don't want authentication via Facebook
+               # and/or other providers.
+               controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
-  namespace :api do
-    namespace :users do
-      # Devise API routes are set up to mirror default Devise routes
-      devise_scope :user do
-        post 'sign_in' => 'sessions#create'
+    namespace :api do
+      namespace :users do
+        # Devise API routes are set up to mirror default Devise routes
+        devise_scope :user do
+          post 'sign_in' => 'sessions#create'
 
-        post 'sign_up' => 'registrations#create'
-        delete '/' => 'registrations#destroy'
+          post 'sign_up' => 'registrations#create'
+          delete '/' => 'registrations#destroy'
+        end
       end
     end
+
+    resources :posts
+
+    root 'home#index'
   end
-
-  resources :posts
-
-  root 'home#index'
 
   # Priority is based on order of creation: first created => highest priority.
   # See how all your routes lay out with "rake routes".

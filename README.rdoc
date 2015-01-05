@@ -4,3 +4,22 @@
 
 This is a multi-tenanted version of Rails App Starter Kit (the master branch).
 See its README for detailed information.
+
+== Scope and Subdomain Based Multitenancy
+
+At the database and model level, multi-tenancy is implemented with "scopes".
+
+Data to be contained to a single tenant have their corresponding models
+belong_to the tenant, and the default_scope set to filter results to only the
+currently active tenant.
+
+This functionality is implemented using the acts_as_tenant gem. For more, see
+https://github.com/ErwinM/acts_as_tenant
+
+== Multi-tenant Users
+
+The User model has been made multi-tenanted.
+
+However, some applications may need users to be shared across all tenants. To
+achieve this, certain changes will need to be made to the code:
+1. Comment out the User#find_for_authentication method
