@@ -3,7 +3,11 @@
 == About This Project
 
 This is a multi-tenanted version of Rails App Starter Kit (the master branch).
-See its README for detailed information.
+See its README for detailed information. Additional features:
+
+1. Scope and subdomain based multitenancy (for maximum database flexibility)
+1. Checks for maintaining tenant data integrity
+1. Multi-tenancy in every aspect - even user registration emails!
 
 == Scope and Subdomain Based Multitenancy
 
@@ -22,4 +26,5 @@ The User model has been made multi-tenanted.
 
 However, some applications may need users to be shared across all tenants. To
 achieve this, certain changes will need to be made to the code:
+
 1. Comment out the User#find_for_authentication method
