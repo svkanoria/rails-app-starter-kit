@@ -30,20 +30,27 @@ class User < ActiveRecord::Base
   acts_as_tenant :tenant
 
   # Include default devise modules. Others available are:
-  # :lockable and :timeoutable
+  # :validatable, :lockable and :timeoutable
+  #
+  # Leave out :validatable as it forces emails to be unique across tenants.
+  # The only solution is to remove this module, and write our own email and
+  # password validations.
   devise :confirmable,
          :database_authenticatable,
          :registerable,
          :recoverable,
          :rememberable,
          :trackable,
-         :validatable,
          # Comment this out if you don't need Facebook and/or other providers.
          # Add/remove providers from the array to control which providers can
          # be used for authentication.
          :omniauthable, omniauth_providers: [:facebook]
 
   rolify
+
+  validates :email, presence: true, uniqueness: { scope: :tenant_id }
+  validates :password, presence: true, length: { in: 8..20 },
+            confirmation: true, if: :password_required?
 
   validates :authentication_token, uniqueness: true
 
@@ -85,7 +92,10 @@ class User < ActiveRecord::Base
   # Skips password requirement when signing in via an external provider using
   # OmniAuth.
   def password_required?
-    super && authentications.empty?
+    # From the Devise::Models::Validatable module, as we've left it out
+    orig_cond = !persisted? || !password.nil? || !password_confirmation.nil?
+
+    orig_cond && authentications.empty?
   end
 
   # Skips password requirement when updating a user that has signed in via an
@@ -99,7 +109,7 @@ class User < ActiveRecord::Base
   end
 
   # We scope the search for users to the current tenant.
-  # Acts As Tenant claims to do perform out of the box, but sadly it doesn't!
+  # Acts As Tenant purports to do this out of the box, but sadly it does not!
   def self.find_for_authentication (warden_conditions)
     ActsAsTenant.with_tenant(
         Tenant.find_by_subdomain(warden_conditions[:subdomain])) do
