@@ -27,7 +27,8 @@ Rails.application.routes.draw do
     root 'home#index'
   end
 
-  resources :tenants, only: [:create, :destroy]
+  resources :tenants, only: [:create]
+  resource :tenant, only: [:destroy]
 
   # Priority is based on order of creation: first created => highest priority.
   # See how all your routes lay out with "rake routes".

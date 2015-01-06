@@ -13,7 +13,7 @@ class TenantsController < ApplicationController
   end
 
   def destroy
-    @tenant = Tenant.find(params[:id])
+    @tenant = ActsAsTenant.current_tenant
     authorize @tenant
 
     @tenant.destroy

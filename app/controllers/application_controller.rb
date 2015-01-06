@@ -71,7 +71,9 @@ class ApplicationController < ActionController::Base
   #
   # @raise [ActiveRecord::RecordNotFound]
   def require_tenant_if_subdomain
-    if request.subdomain.present? && !ActsAsTenant.current_tenant
+    subdomain = request.subdomain
+
+    if subdomain.present? && subdomain != 'www' && !ActsAsTenant.current_tenant
       raise ActiveRecord::RecordNotFound
     end
   end

@@ -26,7 +26,7 @@ RSpec.describe TenantsController, type: :controller do
     context 'for a guest user' do
       describe 'DELETE destroy' do
         it 'forbids the request' do
-          delete :destroy, id: ActsAsTenant.current_tenant.id
+          delete :destroy
 
           expect(response).to have_http_status(:unauthorized)
         end
@@ -42,7 +42,7 @@ RSpec.describe TenantsController, type: :controller do
 
       describe 'DELETE destroy' do
         it 'forbids the request' do
-          delete :destroy, id: ActsAsTenant.current_tenant.id
+          delete :destroy
 
           expect(response).to have_http_status(:unauthorized)
         end
@@ -59,7 +59,7 @@ RSpec.describe TenantsController, type: :controller do
       describe 'DELETE destroy' do
         it 'destroys the tenant' do
           expect {
-            delete :destroy, id: ActsAsTenant.current_tenant.id
+            delete :destroy
           }.to change(Tenant, :count).by(-1)
         end
       end
