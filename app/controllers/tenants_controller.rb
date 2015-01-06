@@ -1,8 +1,11 @@
 class TenantsController < ApplicationController
   respond_to :json
 
+  after_action :verify_authorized
+
   def create
     @tenant = Tenant.new(tenant_params)
+    authorize @tenant
 
     @tenant.save
 
@@ -11,6 +14,7 @@ class TenantsController < ApplicationController
 
   def destroy
     @tenant = Tenant.find(params[:id])
+    authorize @tenant
 
     @tenant.destroy
 

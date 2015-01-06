@@ -33,12 +33,21 @@ class Tenant < ActiveRecord::Base
   private
 
   def create_admin
-    User.create! email: admin_email, password: Devise.friendly_token.first(8)
+    ActsAsTenant.with_tenant(self) do
+      user = User.new email: admin_email,
+                      password: Devise.friendly_token.first(8)
+
+      # Don't send out confirmation email when testing!
+      user.skip_confirmation! if Rails.env.test?
+
+      user.save!
+      user.add_role :admin
+    end
   end
 
   def set_as_current_tenant
-    ActsAsTenant.current_tenant = self
-
-    yield
+    ActsAsTenant.with_tenant(self) do
+      yield
+    end
   end
 end

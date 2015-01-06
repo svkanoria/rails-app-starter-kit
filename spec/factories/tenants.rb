@@ -13,5 +13,9 @@ FactoryGirl.define do
   factory :tenant do
     sequence(:name) {|n| "Tenant #{n}"}
     sequence(:subdomain) {|n| "tenant#{n}"}
+
+    initialize_with {
+      new(attributes.merge! admin_email: "admin@#{subdomain}.com")
+    }
   end
 end
