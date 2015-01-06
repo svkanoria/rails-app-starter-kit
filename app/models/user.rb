@@ -118,6 +118,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  alias_method :orig_send_devise_notification, :send_devise_notification
+  # Need to make this public, for the job to be able to call it
+  public :orig_send_devise_notification
+
+  def send_devise_notification (notification, *args)
+    SendDeviseNotificationJob.perform_later(tenant, id, notification.to_s,
+                                            *args)
+  end
+
   public
 
   # Pre-populates this user's fields (to the extent possible), with data made
