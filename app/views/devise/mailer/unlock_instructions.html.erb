@@ -8,6 +8,7 @@
 <p>Click the link below to unlock your account:</p>
 
 <p>
-  <%= link_to 'Unlock my account', unlock_url(@resource,
-                                              unlock_token: @token) %>
+  <%= link_to 'Unlock my account', unlock_url(
+                                   @resource, unlock_token: @token,
+                                   subdomain: @resource.tenant.subdomain) %>
 </p>

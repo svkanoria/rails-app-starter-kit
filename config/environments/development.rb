@@ -40,6 +40,9 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  # MY NOTE: For devise to work
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  # MY NOTE:
+  # For devise to work.
+  # Further, using 'lvh.me' instead of 'localhost' enables subdomain based
+  # access (and hence multi-tenancy) during development.
+  config.action_mailer.default_url_options = { host: 'lvh.me:3000' }
 end
