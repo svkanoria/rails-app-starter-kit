@@ -17,20 +17,6 @@ FactoryGirl.define do
   factory :authentication do
     provider 'facebook'
     uid '10499594'
-
-    ignore do
-      user nil
-    end
-
-    # Allows creation of an authentication belonging to a specific user.
-    # Example:
-    #   FactoryGirl.create(:authentication, user: some_user)
-    before(:create) do |authentication, evaluator|
-      if (user = evaluator.user.presence)
-        authentication.user = user
-      else
-        authentication.user = create(:user)
-      end
-    end
+    user
   end
 end

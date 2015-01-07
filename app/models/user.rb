@@ -49,6 +49,32 @@ class User < ActiveRecord::Base
   has_many :authentications, dependent: :destroy
   has_many :posts, dependent: :destroy
 
+  # Skips password requirement when signing in via an external provider using
+  # OmniAuth.
+  def password_required?
+    super && authentications.empty?
+  end
+
+  # Skips password requirement when updating a user that has signed in via an
+  # external provider using Omniauth.
+  def update_with_password(params, *options)
+    if encrypted_password.blank?
+      update_attributes(params, *options)
+    else
+      super
+    end
+  end
+
+  # Alias the original method and make it public, so that it can be called by
+  # the background job
+  alias_method :orig_send_devise_notification, :send_devise_notification
+  public :orig_send_devise_notification
+
+  # Sends Devise notification emails in the background.
+  def send_devise_notification (notification, *args)
+    SendDeviseNotificationJob.perform_later(self, notification.to_s, *args)
+  end
+
   # Returns a user matching the given Omniauth authentication data.
   # If no such user exists, attempts to create one.
   def self.from_omniauth (omniauth)
@@ -74,22 +100,6 @@ class User < ActiveRecord::Base
       user.apply_omniauth(omniauth)
       user.valid?
       user
-    else
-      super
-    end
-  end
-
-  # Skips password requirement when signing in via an external provider using
-  # OmniAuth.
-  def password_required?
-    super && authentications.empty?
-  end
-
-  # Skips password requirement when updating a user that has signed in via an
-  # external provider using Omniauth.
-  def update_with_password(params, *options)
-    if encrypted_password.blank?
-      update_attributes(params, *options)
     else
       super
     end

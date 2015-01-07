@@ -2,8 +2,9 @@
 module ControllerMacros
   # For signing in a user (optionally with certain roles), for controller tests
   # requiring an authenticated user.
+  #
   # @param user_or_roles [User, Array<String>] A user object, an array of roles
-  # or nil. In the latter two cases, a user is created.
+  #   or nil. In the latter two cases, a user is created.
   def sign_in_user (user_or_roles = nil)
     @request.env['devise.mapping'] = Devise.mappings[:user]
 
