@@ -78,6 +78,17 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Alias the original method and make it public, so that it can be called by
+  # the background job
+  alias_method :orig_send_devise_notification, :send_devise_notification
+  public :orig_send_devise_notification
+
+  # Sends Devise notification emails in the background.
+  def send_devise_notification (notification, *args)
+    SendDeviseNotificationJob.perform_later(tenant, id, notification.to_s,
+                                            *args)
+  end
+
   # Returns a user matching the given Omniauth authentication data.
   # If no such user exists, attempts to create one.
   def self.from_omniauth (omniauth)
@@ -94,7 +105,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  # When creating a new user, pre-populates its fields (if possible) with data
+  # When creating a new user, pre-populates its fields if possible, with data
   # made available by OmniAuth.
   def self.new_with_session (params, session)
     if (omniauth = session['devise.omniauth'])
@@ -109,22 +120,13 @@ class User < ActiveRecord::Base
   end
 
   # We scope the search for users to the current tenant.
-  # Acts As Tenant purports to do this out of the box, but sadly it does not!
+  # Acts As Tenant claims to do this out of the box, but it doesn't!
   def self.find_for_authentication (warden_conditions)
     ActsAsTenant.with_tenant(
         Tenant.find_by_subdomain(warden_conditions[:subdomain])) do
 
       User.find_by_email(warden_conditions[:email])
     end
-  end
-
-  alias_method :orig_send_devise_notification, :send_devise_notification
-  # Need to make this public, for the job to be able to call it
-  public :orig_send_devise_notification
-
-  def send_devise_notification (notification, *args)
-    SendDeviseNotificationJob.perform_later(tenant, id, notification.to_s,
-                                            *args)
   end
 
   public

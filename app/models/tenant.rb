@@ -37,7 +37,10 @@ class Tenant < ActiveRecord::Base
       user = User.new email: admin_email,
                       password: Devise.friendly_token.first(8)
 
-      # Don't send out confirmation email when testing!
+      # Required if the devise confirmable module is used.
+      # Skips confirmation while testing, which makes it possible to sign in
+      # with this user in a test, if required. As a side effect, it also
+      # skips sending a confirmation email, which is efficient!
       user.skip_confirmation! if Rails.env.test?
 
       user.save!
