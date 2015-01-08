@@ -27,7 +27,7 @@ stack, with the following features built-in:
 1. Rails code testing using RSpec and other best practices
 1. Angular and JS code testing using Teaspoon
 1. Integration with the Bootstrap styling framework
-1. Admin app for administrators only (coming soon)
+1. Admin app for administrators (coming soon)
 1. Ready-to-deploy on Heroku
 
 Several ideas have been taken from http://angular-rails.com.
@@ -130,6 +130,12 @@ additions, a sampling of which is shown below:
   vendor
    |- assets
        |- bower_components (all front-end components mananged by Bower)
+
+The 'admin' folders contain files related to the admin app. This will be
+discussed towards the end of this README. Until then, the sections below are
+written from the point of view of the client (i.e. main or 'non-admin') part of
+the app. As it happens much of this information also holds true for the admin
+app!
 
 == Dev Tools
 
@@ -363,10 +369,6 @@ authentication token (see above) in the following request headers:
 * X-User-Email
 * X-User-Authentication-Token
 
-=== Admin App for Administrators
-
-Coming soon.
-
 == Testing in Detail
 
 === Testing Rails Code
@@ -401,6 +403,24 @@ Authorization policy tests are placed in /spec/policies.
 === Testing JS and Angular Code
 
 Coming soon.
+
+== Admin App for Administrators
+
+Coming soon.
+
+We have tried to keep the admin app as separate from the client (main) app as
+possible.
+
+The admin landing page has its own layout, so in theory, one can use a
+completely different set of front-end tools for it. However, to get you started,
+we provide a skeleton app using many of the same libraries as the client app.
+
+The code is organized as follows:
+* All admin related server-side code lives within 'admin' folders.
+* All admin related front-end code lives 'admin' folders in app/assets. Here,
+  the only difference is that the client app code is put into 'client' folders,
+  and the shared code in 'shared' folders. This enables easy inclusion of
+  desired files into the client/admin application.(js/scss) files.
 
 == Contributing/Using
 
