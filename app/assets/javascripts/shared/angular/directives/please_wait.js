@@ -18,7 +18,7 @@ angular.module('PleaseWait', []).
   directive('pleaseWait', ['PleaseWaitSvc', function (PleaseWaitSvc) {
     return {
       restrict: 'E',
-      templateUrl: 'directives/please_wait.html',
+      templateUrl: 'shared/directives/please_wait.html',
       transclude: true,
       scope: {},
 

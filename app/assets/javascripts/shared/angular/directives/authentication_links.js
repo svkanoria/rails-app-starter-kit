@@ -10,7 +10,7 @@ angular.module('AuthenticationLinks', []).
     function ($location, AuthSvc) {
       return {
         restrict: 'EA',
-        templateUrl: 'directives/authentication_links.html',
+        templateUrl: 'shared/directives/authentication_links.html',
         replace: true,
         scope: {},
 

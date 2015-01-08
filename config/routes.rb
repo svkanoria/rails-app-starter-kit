@@ -20,6 +20,10 @@ Rails.application.routes.draw do
 
   resources :posts
 
+  namespace :admin do
+    root 'home#index'
+  end
+
   root 'home#index'
 
   # Priority is based on order of creation: first created => highest priority.

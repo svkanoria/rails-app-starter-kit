@@ -1,21 +1,7 @@
-// This is a manifest file that'll be compiled into application.js, which will
-// include all the files listed below.
-//
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts,
-// vendor/assets/javascripts, or vendor/assets/javascripts of plugins, if any,
-// can be referenced here using a relative path.
-//
-// It's not advisable to add code directly here, but if you do it'll appear at
-// the bottom of the compiled file.
-//
-// Read Sprockets README
-// (https://github.com/sstephenson/sprockets#sprockets-directives) for details
-// about supported directives.
-//
 //= require jquery
 //= require jquery_ujs
 // See comments in assets/javascripts/bootstrap-custom.js
-//= require bootstrap-custom
+//= require bootstrap-custom.js
 //
 // From vendor/bower_components:
 //= require angular/angular
@@ -29,9 +15,14 @@
 // Note the 'min'. This is needed since flashular.js does not minify correctly.
 //= require flashular/dist/flashular.min.js
 //
+// Files shared between client and admin apps
+//= require_tree ../shared
+//= require_tree ../templates/shared
+//
+//= require_tree ../templates/admin
 //= require_tree ./angular
-//= require angular/app
-//= require angular/routes
+//= require ./angular/app
+//= require ./angular/routes
 
 // Mixin Underscore.string functions with Underscore
 _.mixin(_.str.exports());

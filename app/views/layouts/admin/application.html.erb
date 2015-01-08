@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html ng-app="App">
 <head>
-  <title>Rails App Starter Kit</title>
-  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <title>Rails App Starter Kit - Admin</title>
+  <%= stylesheet_link_tag 'admin/application', media: 'all' %>
 
-  <%= javascript_include_tag 'client/application' %>
+  <%= javascript_include_tag 'admin/application' %>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
 </head>
 <body ng-controller="AppCtrl">
-  <%= render 'layouts/top_nav' %>
+  <%= render 'layouts/admin/top_nav' %>
 
   <please-wait>
     Please wait...
@@ -26,7 +26,7 @@
 
   <%= yield %>
 
-  <%= render 'layouts/footer' %>
+  <%= render 'layouts/admin/footer' %>
 
   <%# Set currently signed in user details, if any %>
   <script type="application/javascript">

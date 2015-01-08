@@ -105,8 +105,8 @@ additions, a sampling of which is shown below:
                |- controllers
                |- directives
                |- modules (self-contained 'packages' of functionality)
-               |- templates (contains all Angular templates, i.e. views)
        |- stylesheets (contains all CSS styles)
+       |- templates (contains all Angular templates, i.e. views)
    |- controllers
        |- home_controller.rb (the 'entry point' controller)
    |- jobs (contains all background jobs)
@@ -424,7 +424,7 @@ Coming soon.
 1. Write some Angular controller unit tests. For reference see
    /app/spec/javascripts/controllers/home_ctrl_spec.js.
 1. Create an Angular view (template). For reference see
-   /app/assets/javascripts/angular/templates/controllers/posts/index.html.
+   /app/assets/templates/controllers/posts/index.html.
 1. Update the /app/assets/javascripts/angular/routes.js file
 1. Create any directives that may be required for the view
 1. Write some directive unit tests

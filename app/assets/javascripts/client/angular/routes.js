@@ -87,20 +87,20 @@ app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.
     // Home routes
     when('/', {
-      templateUrl: 'controllers/home/index.html',
+      templateUrl: 'client/controllers/home/index.html',
       controller: 'HomeCtrl'
     }).
 
     // Post routes
     when('/posts', {
-      templateUrl: 'controllers/posts/index.html',
+      templateUrl: 'client/controllers/posts/index.html',
       controller: 'PostsCtrl',
       resolve: {
         initialData: initialData('PostsCtrl', 'index')
       }
     }).
     when('/posts/new', {
-      templateUrl: 'controllers/posts/new.html',
+      templateUrl: 'client/controllers/posts/new.html',
       controller: 'PostsCtrl',
       resolve: {
         auth: requireSignIn(),
@@ -108,14 +108,14 @@ app.config(['$routeProvider', function ($routeProvider) {
       }
     }).
     when('/posts/:id', {
-      templateUrl: 'controllers/posts/show.html',
+      templateUrl: 'client/controllers/posts/show.html',
       controller: 'PostsCtrl',
       resolve: {
         initialData: initialData('PostsCtrl', 'show')
       }
     }).
     when('/posts/:id/edit', {
-      templateUrl: 'controllers/posts/edit.html',
+      templateUrl: 'client/controllers/posts/edit.html',
       controller: 'PostsCtrl',
       resolve: {
         auth1: requireSignIn(),
@@ -124,13 +124,13 @@ app.config(['$routeProvider', function ($routeProvider) {
       }
     }).
     when('/unauthorized', {
-      templateUrl: '401.html'
+      templateUrl: 'shared/401.html'
     }).
     when('/server_error', {
-      templateUrl: '500.html'
+      templateUrl: 'shared/500.html'
     }).
     otherwise({
-      templateUrl: '404.html'
+      templateUrl: 'shared/404.html'
     });
 }]);
 
