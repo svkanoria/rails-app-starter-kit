@@ -27,6 +27,7 @@ stack, with the following features built-in:
 1. Rails code testing using RSpec and other best practices
 1. Angular and JS code testing using Teaspoon
 1. Integration with the Bootstrap styling framework
+1. Admin app for administrators only (coming soon)
 1. Ready-to-deploy on Heroku
 
 Several ideas have been taken from http://angular-rails.com.
@@ -99,22 +100,31 @@ additions, a sampling of which is shown below:
   app
    |- assets
        |- javascripts
-           |- angular (contains all Angular code)
-               |- app.js (the 'entry point' for Angular)
-               |- routes.js.erb
-               |- controllers
-               |- directives
-               |- modules (self-contained 'packages' of functionality)
+           |- admin (for the admin app)
+           |- client (for the main 'non-admin' app)
+           |- shared (common to main and admin app)
+               |- angular (contains all Angular code)
+                   |- app.js (the 'entry point' for Angular)
+                   |- routes.js.erb
+                   |- controllers
+                   |- directives
+                   |- modules (self-contained 'packages' of functionality)
+           |- templates (contains all Angular templates, i.e. views)
+               |- admin
+               |- client
+               |- shared
        |- stylesheets (contains all CSS styles)
-       |- templates (contains all Angular templates, i.e. views)
    |- controllers
+       |- admin (all admin controllers)
        |- home_controller.rb (the 'entry point' controller)
    |- jobs (contains all background jobs)
-   |- policies (user authorization policies)
+   |- policies (access authorization policies)
+       |- admin (all admin authorization policies)
    |- views
+       |- admin (all admin views)
        |- home
            |- index.html (the 'entry point' view)
-  specs (contains all tests)
+  spec (contains all tests)
    |- support (utility stuff for testing)
    |- javascripts (contains all JS and Angular tests)
   vendor
@@ -352,6 +362,10 @@ To make an authenticated request to any endpoint, include the user's email and
 authentication token (see above) in the following request headers:
 * X-User-Email
 * X-User-Authentication-Token
+
+=== Admin App for Administrators
+
+Coming soon.
 
 == Testing in Detail
 

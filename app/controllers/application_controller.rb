@@ -89,6 +89,12 @@ class ApplicationController < ActionController::Base
   # Responds with a 401 (:unauthorized) HTTP status code.
   def deny_access
     respond_to do |format|
+      format.html {
+        flash[:alert] = 'You are not authorized to perform this action'
+
+        redirect_to root_path
+      }
+
       format.json {
         # Some schools of thought advocate the use of 404 (:not_found). See
         # http://www.bennadel.com/blog/2400-handling-forbidden-restful-requests-401-vs-403-vs-404.htm
