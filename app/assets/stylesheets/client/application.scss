@@ -11,14 +11,14 @@
 
 // All styling variables.
 // Imported first, so that variables can be used in any other styling file.
-@import 'variables';
+@import '../shared/variables';
 
 // Canned animations for Angular
-@import 'animations';
+@import '../shared/animations';
 
 // General styles (layout, header, footer, components etc.)
-@import 'layout';
-@import 'devise';
+@import '../shared/layout';
+@import '../shared/devise';
 
 // Styles for Angular directives
-@import 'directives/please-wait';
+@import '../shared/directives/please-wait';

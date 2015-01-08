@@ -194,15 +194,15 @@ kept outside of Angular. See
 https://medium.com/opinionated-angularjs/techniques-for-authentication-in-angularjs-applications-7bbf0346acec
 for a detailed discussion; note however that our implementation is different.
 Relevant files in our implementation are:
-* /app/assets/javascripts/angular/directives/authentication_links.js
+* /app/assets/javascripts/shared/angular/directives/authentication_links.js
 * /app/controllers/application_controller (the 'set_sign_in_redirect' method)
 * All devise related files, of course
 
 In the JS and Angular code, the currently signed in user details are available
 through the 'AuthSvc' service. We have also provided helper methods to control
 access to certain routes. See the following for more details:
-* /app/assets/javascripts/angular/routes.js
-* /app/assets/javascripts/angular/services/auth_svc.js
+* /app/assets/javascripts/client/angular/routes.js
+* /app/assets/javascripts/shared/angular/services/auth_svc.js
 
 ==== Authentication via Facebook
 
@@ -236,7 +236,7 @@ exclusively on the server-side.
 
 We provide a clean integration between Angular form validation and server-side
 form validation via the 'formErrors' directive. See
-/app/assets/javascripts/angular/directives/form_errors.js.
+/app/assets/javascripts/shared/angular/directives/form_errors.js.
 
 === Background Jobs
 
@@ -432,14 +432,14 @@ Coming soon.
    (https://github.com/rails/jbuilder) comes bundled with Rails, and is a much
    better way to create JSON, than using the 'as_json' method.
 1. Create an Angular resource to communicate with the controller. See
-   /app/assets/javascripts/angular/services/post.js.
+   /app/assets/javascripts/shared/angular/services/post.js.
 1. Create an Angular controller that uses the resource. For reference see
-   /app/assets/javascripts/angular/controllers/posts_ctrl.js.
+   /app/assets/javascripts/client/angular/controllers/posts_ctrl.js.
 1. Write some Angular controller unit tests. For reference see
-   /app/spec/javascripts/controllers/home_ctrl_spec.js.
+   /app/spec/javascripts/client/controllers/home_ctrl_spec.js.
 1. Create an Angular view (template). For reference see
-   /app/assets/templates/controllers/posts/index.html.
-1. Update the /app/assets/javascripts/angular/routes.js file
+   /app/assets/javascripts/templates/client/controllers/posts/index.html.
+1. Update the /app/assets/javascripts/client/angular/routes.js file
 1. Create any directives that may be required for the view
 1. Write some directive unit tests
 
@@ -468,7 +468,7 @@ This can be done in the 'AppCtrl', our Angular equivalent of Rails'
 ApplicationController. Anything added to its scope becomes available to every
 controller and view.
 
-See /app/assets/javascripts/angular/controllers/app_ctrl.js.
+See /app/assets/javascripts/client/angular/controllers/app_ctrl.js.
 
 === Coding Style Conventions
 
