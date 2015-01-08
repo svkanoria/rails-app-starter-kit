@@ -9,6 +9,9 @@ var app = angular.module('App', [
   'ng-rails-csrf',
   'flashular',
 
+  // Constants
+  'RouteUtils',
+
   // Services
   'AuthSvc',
   'Post',

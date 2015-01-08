@@ -2,137 +2,60 @@
  * Angular application routes.
  * Uses the 'app' variable defined in app.js, so must be loaded after it.
  */
-app.config(['$routeProvider', function ($routeProvider) {
-  ////////////////////
-  // Helper Methods //
-  ////////////////////
+app.config([
+  '$routeProvider', 'ROUTE_UTILS',
+  function ($routeProvider, ROUTE_UTILS) {
+    var R = ROUTE_UTILS; // Shortcut
 
-  /*
-   * Use within the 'resolve' property of a route.
-   * See comments for namesake in AuthSvc service.
-   *
-   * Usage:
-   *   when('/some-route', {
-   *      :
-   *     resolve: { someProperty: requireSignIn(optionalRoleOrRoles) }
-   *   })
-   *
-   * @param [role] {string|string[]} - The role(s) to allow, if any.
-   */
-  var requireSignIn = function (roles) {
-    return ['AuthSvc', function (AuthSvc) {
-      return AuthSvc.requireSignIn(roles);
-    }];
-  };
+    $routeProvider.
+      // Home routes
+      when('/', {
+        templateUrl: 'client/controllers/home/index.html',
+        controller: 'HomeCtrl'
+      }).
 
-  /*
-   * Use within the 'resolve' property of a route.
-   * See comments for namesake in AuthSvc service.
-   *
-   * Usage:
-   *   when('/some-route', {
-   *      :
-   *     resolve: { someProperty: requireServerAuth(serverRoute) }
-   *   })
-   *
-   * @param serverRoute {string} - The server route to hit.
-   */
-  var requireServerAuth = function (serverRoute) {
-    return ['$route', 'AuthSvc', function ($route, AuthSvc) {
-      return AuthSvc.requireServerAuth(serverRoute, $route.current.params);
-    }];
-  };
-
-  /*
-   * Use within the 'resolve' property of a route.
-   * A convenience method for ensuring the presence of required initial data
-   * before navigating to a route.
-   *
-   * Assumes certain conventions:
-   * * If the controller name is 'SomeCtrl', there is a service called
-   *   'SomeCtrlInitSvc' that provides this initial data.
-   * * For every controller action requiring initial data, the service has a
-   *   method called 'actionSomeAction' that returns the initial data.
-   *   For example, 'actionIndex', 'actionShow' etc.
-   *
-   * Usage:
-   *   when('/some-route', {
-   *      :
-   *     resolve: { someProperty: initialData(ctrl, action) }
-   *   })
-   *
-   * @param ctrl {string} - The controller name.
-   * @param action {string} - The action name.
-   */
-  var initialData = function (ctrl, action) {
-    return ['$injector', function ($injector) {
-      var svc = $injector.get(ctrl + 'InitSvc');
-
-      if (svc) {
-        var actionMethod = svc['action' + _.capitalize(action)];
-
-        if (actionMethod) {
-          return actionMethod();
+      // Post routes
+      when('/posts', {
+        templateUrl: 'client/controllers/posts/index.html',
+        controller: 'PostsCtrl',
+        resolve: {
+          initialData: R.initialData('PostsCtrl', 'index')
         }
-      }
-
-      return null;
-    }];
-  };
-
-  ////////////
-  // Routes //
-  ////////////
-
-  $routeProvider.
-    // Home routes
-    when('/', {
-      templateUrl: 'client/controllers/home/index.html',
-      controller: 'HomeCtrl'
-    }).
-
-    // Post routes
-    when('/posts', {
-      templateUrl: 'client/controllers/posts/index.html',
-      controller: 'PostsCtrl',
-      resolve: {
-        initialData: initialData('PostsCtrl', 'index')
-      }
-    }).
-    when('/posts/new', {
-      templateUrl: 'client/controllers/posts/new.html',
-      controller: 'PostsCtrl',
-      resolve: {
-        auth: requireSignIn(),
-        initialData: initialData('PostsCtrl', 'new')
-      }
-    }).
-    when('/posts/:id', {
-      templateUrl: 'client/controllers/posts/show.html',
-      controller: 'PostsCtrl',
-      resolve: {
-        initialData: initialData('PostsCtrl', 'show')
-      }
-    }).
-    when('/posts/:id/edit', {
-      templateUrl: 'client/controllers/posts/edit.html',
-      controller: 'PostsCtrl',
-      resolve: {
-        auth1: requireSignIn(),
-        auth2: requireServerAuth('/posts/:id/edit'),
-        initialData: initialData('PostsCtrl', 'edit')
-      }
-    }).
-    when('/unauthorized', {
-      templateUrl: 'shared/401.html'
-    }).
-    when('/server_error', {
-      templateUrl: 'shared/500.html'
-    }).
-    otherwise({
-      templateUrl: 'shared/404.html'
-    });
-}]);
+      }).
+      when('/posts/new', {
+        templateUrl: 'client/controllers/posts/new.html',
+        controller: 'PostsCtrl',
+        resolve: {
+          auth: R.requireSignIn(),
+          initialData: R.initialData('PostsCtrl', 'new')
+        }
+      }).
+      when('/posts/:id', {
+        templateUrl: 'client/controllers/posts/show.html',
+        controller: 'PostsCtrl',
+        resolve: {
+          initialData: R.initialData('PostsCtrl', 'show')
+        }
+      }).
+      when('/posts/:id/edit', {
+        templateUrl: 'client/controllers/posts/edit.html',
+        controller: 'PostsCtrl',
+        resolve: {
+          auth1: R.requireSignIn(),
+          auth2: R.requireServerAuth('/posts/:id/edit'),
+          initialData: R.initialData('PostsCtrl', 'edit')
+        }
+      }).
+      when('/unauthorized', {
+        templateUrl: 'shared/401.html'
+      }).
+      when('/server_error', {
+        templateUrl: 'shared/500.html'
+      }).
+      otherwise({
+        templateUrl: 'shared/404.html'
+      });
+  }]);
 
 app.run([
   '$rootScope', '$window', '$location', 'PleaseWaitSvc',
