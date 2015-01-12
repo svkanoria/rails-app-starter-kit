@@ -12,10 +12,10 @@
 // (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery.js
+//= require jquery
 //= require jquery_ujs
 // See comments in assets/javascripts/bootstrap-custom.js
-//= require bootstrap-custom.js
+//= require bootstrap-custom
 //
 // From vendor/bower_components:
 //= require angular/angular
