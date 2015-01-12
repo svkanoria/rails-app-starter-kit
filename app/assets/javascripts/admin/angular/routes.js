@@ -23,6 +23,8 @@ app.config([
       otherwise({
         templateUrl: 'shared/404.html'
       });
-
-    app.run(R.onAppRun);
   }]);
+
+app.run(['$injector', 'ROUTE_UTILS', function ($injector, ROUTE_UTILS) {
+  $injector.invoke(ROUTE_UTILS.onAppRun);
+}]);
