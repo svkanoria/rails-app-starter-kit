@@ -24,6 +24,10 @@ Rails.application.routes.draw do
 
     resources :posts
 
+    namespace :admin do
+      root 'home#index'
+    end
+
     root 'home#index'
   end
 
