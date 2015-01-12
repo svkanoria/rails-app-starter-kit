@@ -82,12 +82,11 @@ angular.module('RouteUtils', [])
      * please-wait directive on route change.
      *
      * Usage:
-     *   app.config([
-     *     '$routeProvider', 'ROUTE_UTILS',
-     *     function ($routeProvider, ROUTE_UTILS) {
-     *       // Set up routes, then...
-     *
-     *       app.run(ROUTE_UTILS.onAppRun);
+     *   app.run([
+     *     '$injector', 'ROUTE_UTILS',
+     *     function ($injector, ROUTE_UTILS) {
+     *        :
+     *       $injector.invoke(ROUTE_UTILS.onAppRun);
      *     }]);
      *
      * @type {*[]}
