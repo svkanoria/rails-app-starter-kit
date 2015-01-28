@@ -14,6 +14,13 @@ app.config([
         controller: 'HomeCtrl'
       }).
 
+      // Post routes
+      when('/posts', {
+        templateUrl: 'admin/controllers/posts/index.html',
+        controller: 'PostsCtrl'
+      }).
+
+      // Error routes
       when('/unauthorized', {
         templateUrl: 'shared/401.html'
       }).

@@ -3,8 +3,13 @@
 <head>
   <title>Rails App Starter Kit - Admin</title>
   <%= stylesheet_link_tag 'admin/application', media: 'all' %>
+  <%# Easiest way to include DataTables %>
+  <link rel="stylesheet" type="text/css"
+        href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css">
 
   <%= javascript_include_tag 'admin/application' %>
+  <script type="text/javascript" charset="utf8"
+          src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
