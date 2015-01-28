@@ -6,7 +6,8 @@
  * in HTML, we have named it 'datatable'.
  *
  * Usage:
- *   <table datatable>
+ *   <table datatable
+ *          ?options="Object expr">
  *     :
  *   </table>
  */
@@ -15,8 +16,12 @@ angular.module('DataTable', []).
     return {
       restrict: 'A',
 
+      scope: {
+        options: '='
+      },
+
       link: function (scope, element, attrs) {
-        $(element).DataTable();
+        $(element).DataTable(scope.options || {});
       }
     };
   }]);

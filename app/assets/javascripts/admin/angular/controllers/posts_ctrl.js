@@ -6,6 +6,9 @@ angular.module('PostsCtrl', []).
        * The 'index' action.
        */
       $scope.actionIndex = function () {
-
+        $scope.dataTableOptions = {
+          serverSide: true,
+          ajax: '/admin/posts.json'
+        };
       };
     }]);
