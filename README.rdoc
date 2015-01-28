@@ -422,6 +422,9 @@ The code is organized as follows:
   and the shared code in 'shared' folders. This enables easy inclusion of
   desired files into the client/admin application.(js/scss) files.
 
+Rails models are typically shared between the client and admin apps. However,
+controllers and views are separate.
+
 == Contributing/Using
 
 === Creating a CRUD Resource
