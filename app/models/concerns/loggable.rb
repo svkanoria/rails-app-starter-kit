@@ -4,6 +4,7 @@ module Loggable
   extend ActiveSupport::Concern
 
   # Returns a logger object.
+  #
   # @return [ActiveSupport::Logger]
   def logger
     Rails.logger

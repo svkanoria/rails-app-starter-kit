@@ -34,6 +34,7 @@ angular.module('FormErrors', []).
       controller: [function () {
         /**
          * Updates the form with errors given as a JSON object.
+         *
          * @param form - The form controller.
          * @param errors - The errors, provided as follows:
          *   {

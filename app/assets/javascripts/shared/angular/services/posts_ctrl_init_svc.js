@@ -8,6 +8,7 @@ angular.module('PostsCtrlInitSvc', ['Post']).
 
       /**
        * Initial data for the 'show' action.
+       *
        * @returns {Object} The post corresponding to the current route, as a
        * promise.
        */
@@ -17,6 +18,7 @@ angular.module('PostsCtrlInitSvc', ['Post']).
 
       /**
        * Initial data for the 'new' action.
+       *
        * @returns {Post} A new unsaved post.
        */
       var actionNew = function () {
@@ -27,6 +29,7 @@ angular.module('PostsCtrlInitSvc', ['Post']).
 
       /**
        * Initial data for the 'edit' action.
+       *
        * @returns {Object} The post corresponding to the current route, as a
        * promise.
        */
