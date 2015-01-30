@@ -18,6 +18,7 @@ angular.module('AuthSvc', []).
 
     /**
      * Gets the currently signed in user's details, if any.
+     *
      * @returns {?Object} Signed in user details, or null.
      */
     var currentUser = function () {
@@ -28,7 +29,9 @@ angular.module('AuthSvc', []).
      * Returns whether the currently signed in user (if any) is equal to the
      * given user object or user id.
      * Equality is determined solely on the basis of id comparison.
-     * @param userOrId {Object|number) - A user object, or id.
+     *
+     * @param userOrId {Object|number} - A user object, or id.
+     *
      * @returns {boolean}
      */
     var currentUserIs = function (userOrId) {
@@ -46,7 +49,9 @@ angular.module('AuthSvc', []).
     /**
      * Returns whether the currently signed in user (if any) has one of the
      * given role(s).
+     *
      * @param role {string|string[]} - A role, or array of roles.
+     *
      * @returns {boolean}
      */
     var hasRole = function (role) {
@@ -87,6 +92,7 @@ angular.module('AuthSvc', []).
      *   });
      *
      * @param [role] {string|string[]} - The role(s) to allow, if any.
+     *
      * @returns {Object} A promise that resolves only if a user is signed in
      * and, in case 'role' is non-empty, has one of the given role(s).
      */
@@ -131,6 +137,7 @@ angular.module('AuthSvc', []).
      * compatible with $routeProvider.
      * @param [routeParams] {Object} - A hash of parameters to concretize the
      * route, by replacing named groups with real values.
+     *
      * @returns {Object} A promise that resolves only if the server responds
      * with a non-error status code. Resolves with the response returned from
      * the server; this may obviate the need for another request to fetch the
@@ -171,6 +178,7 @@ angular.module('AuthSvc', []).
      * @param route {string} - The route, in a format compatible with
      * $routeProvider.
      * @param routeParams {Object} - A hash of parameters.
+     *
      * @returns {string} The concretized route.
      */
     var concretizeRoute = function (route, routeParams) {

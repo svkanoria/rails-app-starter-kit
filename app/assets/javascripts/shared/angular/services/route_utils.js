@@ -14,7 +14,7 @@ angular.module('RouteUtils', [])
      *     resolve: { someProperty: requireSignIn(optionalRoleOrRoles) }
      *   })
      *
-     * @param [role] {string|string[]} - The role(s) to allow, if any.
+     * @param [roles] {string|string[]} - The role(s) to allow, if any.
      */
     var requireSignIn = function (roles) {
       return ['AuthSvc', function (AuthSvc) {
