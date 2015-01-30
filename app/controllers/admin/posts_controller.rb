@@ -5,5 +5,9 @@ class Admin::PostsController < Admin::ApplicationController
 
   def index
     authorize Post
+
+    @posts_adapter = DataTableAdapter.new(Post, params)
+
+    respond_with @posts_adapter
   end
 end

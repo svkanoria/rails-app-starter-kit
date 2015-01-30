@@ -8,7 +8,12 @@ angular.module('PostsCtrl', []).
       $scope.actionIndex = function () {
         $scope.dataTableOptions = {
           serverSide: true,
-          ajax: '/admin/posts.json'
+          ajax: '/admin/posts.json',
+          columns: [
+            { data: 'id' },
+            { data: 'message' },
+            { data: 'created_at' }
+          ]
         };
       };
     }]);
