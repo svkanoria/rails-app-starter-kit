@@ -425,6 +425,17 @@ The code is organized as follows:
 Rails models are typically shared between the client and admin apps. However,
 controllers and views are separate.
 
+=== jQuery DataTables
+
+DataTables forms an integral part of the admin app, giving admins the ability to
+filter, sort and edit data conveniently.
+
+It is included directly from a CDN, and not through the asset pipeline, since
+the latter results in complications, and the former seems to suffice. See
+/app/views/layouts/admin/application.html.erb.
+
+For more on DataTables, see http://datatables.net.
+
 == Contributing/Using
 
 === Creating a CRUD Resource
