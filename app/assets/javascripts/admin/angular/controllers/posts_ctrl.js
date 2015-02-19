@@ -15,5 +15,17 @@ angular.module('PostsCtrl', []).
             { data: 'created_at' }
           ]
         };
+
+        $scope.queryBuilderOptions = {
+          columns: [
+            { name: 'id', type: 'number' },
+            { name: 'message', type: 'text' },
+            { name: 'created_at', type: 'date' }
+          ]
+        };
+
+        $scope.queryBuilderFilters = [
+          { column: 'id', values: ['10'], op: '=' }
+        ];
       };
     }]);

@@ -1,6 +1,9 @@
 <div ng-init="actionIndex()">
   <h2>Posts</h2>
 
+  <query-builder options="queryBuilderOptions"
+                 filters="queryBuilderFilters"></query-builder>
+
   <table datatable options="dataTableOptions"
          class="display responsive no-wrap" width="100%">
 
