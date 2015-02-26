@@ -59,6 +59,8 @@ app.config([
       });
   }]);
 
-app.run(['$injector', 'ROUTE_UTILS', function ($injector, ROUTE_UTILS) {
-  $injector.invoke(ROUTE_UTILS.onAppRun);
-}]);
+app.run([
+  '$injector', 'ROUTE_UTILS',
+  function ($injector, ROUTE_UTILS) {
+    $injector.invoke(ROUTE_UTILS.onAppRun);
+  }]);
