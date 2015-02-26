@@ -22,50 +22,51 @@
  *   </span>
  */
 angular.module('FormErrors', []).
-  directive('formErrors', function () {
-    return {
-      restrict: 'A',
-      require: ['formErrors', 'form'],
+  directive('formErrors', [
+    function () {
+      return {
+        restrict: 'A',
+        require: ['formErrors', 'form'],
 
-      scope: {
-        formErrors: '='
-      },
+        scope: {
+          formErrors: '='
+        },
 
-      controller: [function () {
-        /**
-         * Updates the form with errors given as a JSON object.
-         *
-         * @param form - The form controller.
-         * @param errors - The errors, provided as follows:
-         *   {
-         *     field1: ['error msg 1', 'error msg 2', ...],
-         *     field2: ['...'],
-         *       :
-         *   }
-         */
-        this.validateForm = function (form, errors) {
-          if (errors) {
-            _.each(errors, function (fieldErrors, key) {
-              var camelizedKey = _.camelize(key);
+        controller: [function () {
+          /**
+           * Updates the form with errors given as a JSON object.
+           *
+           * @param form - The form controller.
+           * @param errors - The errors, provided as follows:
+           *   {
+           *     field1: ['error msg 1', 'error msg 2', ...],
+           *     field2: ['...'],
+           *       :
+           *   }
+           */
+          this.validateForm = function (form, errors) {
+            if (errors) {
+              _.each(errors, function (fieldErrors, key) {
+                var camelizedKey = _.camelize(key);
 
-              _.each(fieldErrors, function (fieldError) {
-                var field = form[camelizedKey];
+                _.each(fieldErrors, function (fieldError) {
+                  var field = form[camelizedKey];
 
-                field.$dirty = true;
-                field.$setValidity(camelizedKey + 'Field', false);
+                  field.$dirty = true;
+                  field.$setValidity(camelizedKey + 'Field', false);
+                });
               });
-            });
-          }
-        };
-      }],
+            }
+          };
+        }],
 
-      link: function (scope, element, attrs, ctrls) {
-        var formErrors = ctrls[0];
-        var form = ctrls[1];
+        link: function (scope, element, attrs, ctrls) {
+          var formErrors = ctrls[0];
+          var form = ctrls[1];
 
-        scope.$watch('formErrors', function (errors) {
-          formErrors.validateForm(form, errors);
-        });
-      }
-    };
-  });
+          scope.$watch('formErrors', function (errors) {
+            formErrors.validateForm(form, errors);
+          });
+        }
+      };
+    }]);

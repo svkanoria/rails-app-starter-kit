@@ -15,18 +15,20 @@ angular.module('PleaseWait', []).
    *     Custom HTML message
    *   </div>
    */
-  directive('pleaseWait', ['PleaseWaitSvc', function (PleaseWaitSvc) {
-    return {
-      restrict: 'E',
-      templateUrl: 'shared/directives/please_wait.html',
-      transclude: true,
-      scope: {},
+  directive('pleaseWait', [
+    'PleaseWaitSvc',
+    function (PleaseWaitSvc) {
+      return {
+        restrict: 'E',
+        templateUrl: 'shared/directives/please_wait.html',
+        transclude: true,
+        scope: {},
 
-      link: function (scope, element, attrs) {
-        scope.pleaseWaitSvc = PleaseWaitSvc;
-      }
-    };
-  }]).
+        link: function (scope, element, attrs) {
+          scope.pleaseWaitSvc = PleaseWaitSvc;
+        }
+      };
+    }]).
 
   /*
    * A service backing the 'please-wait' directive.
@@ -40,49 +42,51 @@ angular.module('PleaseWait', []).
    *
    *   To ensure the message is hidden, call the 'releaseAll' method.
    */
-  factory('PleaseWaitSvc', ['$timeout', function ($timeout) {
-    var counter = 0;
-    var timeout = null;
-    var counterIncrement = 1;
+  factory('PleaseWaitSvc', [
+    '$timeout',
+    function ($timeout) {
+      var counter = 0;
+      var timeout = null;
+      var counterIncrement = 1;
 
-    var request = function () {
-      if (timeout) {
-        ++counterIncrement;
-      } else {
-        timeout = $timeout(function () {
-          counter += counterIncrement;
-          counterIncrement = 1;
+      var request = function () {
+        if (timeout) {
+          ++counterIncrement;
+        } else {
+          timeout = $timeout(function () {
+            counter += counterIncrement;
+            counterIncrement = 1;
+            timeout = null;
+          }, 500);
+        }
+      };
+
+      var release = function () {
+        if (timeout) {
+          $timeout.cancel(timeout);
           timeout = null;
-        }, 500);
-      }
-    };
+        } else if (counter > 0) {
+          --counter;
+        }
+      };
 
-    var release = function () {
-      if (timeout) {
-        $timeout.cancel(timeout);
-        timeout = null;
-      } else if (counter > 0) {
-        --counter;
-      }
-    };
+      var releaseAll = function () {
+        if (timeout) {
+          $timeout.cancel(timeout);
+          timeout = null;
+        }
 
-    var releaseAll = function () {
-      if (timeout) {
-        $timeout.cancel(timeout);
-        timeout = null;
-      }
+        counter = 0;
+      };
 
-      counter = 0;
-    };
+      var getCounter = function () {
+        return counter;
+      };
 
-    var getCounter = function () {
-      return counter;
-    };
-
-    return {
-      request: request,
-      release: release,
-      releaseAll: releaseAll,
-      getCounter: getCounter
-    };
-  }]);
+      return {
+        request: request,
+        release: release,
+        releaseAll: releaseAll,
+        getCounter: getCounter
+      };
+    }]);

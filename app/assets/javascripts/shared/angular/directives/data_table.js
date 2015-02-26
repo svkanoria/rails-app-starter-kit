@@ -12,16 +12,17 @@
  *   </table>
  */
 angular.module('DataTable', []).
-  directive('datatable', [function () {
-    return {
-      restrict: 'A',
+  directive('datatable', [
+    function () {
+      return {
+        restrict: 'A',
 
-      scope: {
-        options: '='
-      },
+        scope: {
+          options: '='
+        },
 
-      link: function (scope, element, attrs) {
-        $(element).DataTable(scope.options || {});
-      }
-    };
-  }]);
+        link: function (scope, element, attrs) {
+          $(element).DataTable(scope.options || {});
+        }
+      };
+    }]);
