@@ -19,8 +19,8 @@ var app = angular.module('App', [
   'FormErrors',
   'PleaseWait',
   'DataTable',
-  'QueryBuilder',
 
   // Modules
-  'ResourceUtils'
+  'ResourceUtils',
+  'QueryBuilder'
 ]);

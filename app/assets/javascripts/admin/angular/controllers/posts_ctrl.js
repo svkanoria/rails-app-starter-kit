@@ -9,6 +9,7 @@ angular.module('PostsCtrl', []).
         $scope.dataTableOptions = {
           serverSide: true,
           ajax: '/admin/posts.json',
+          searching: false, // Since we are using query builder
           columns: [
             { data: 'id' },
             { data: 'message' },

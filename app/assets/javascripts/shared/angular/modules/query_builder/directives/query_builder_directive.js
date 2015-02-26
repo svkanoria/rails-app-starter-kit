@@ -1,7 +1,7 @@
 /*
- * Lets users build SQL-like queries represented as JSON.
+ * The directive for creating a graphical query builder.
  */
-angular.module('QueryBuilder', []).
+angular.module('QueryBuilderDirective', []).
   directive('queryBuilder', [
     function () {
       return {
