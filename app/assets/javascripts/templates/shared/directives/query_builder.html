@@ -1,24 +1,6 @@
-<!--
-Uses the 'select as label for value in array' comprehension for ng-options.
-See
-http://www.undefinednull.com/2014/08/11/a-brief-walk-through-of-the-ng-options-in-angularjs/
-for an understanding of why this is required.
- -->
 <div class="query-builder">
   <div ng-repeat="filter in filters">
-    <select class="filter-column"
-            ng-model="filter.column"
-            ng-options="c.name as c.name for c in options.columns">
-    </select>
-
-    <select class="filter-op"
-            ng-model="filter.op"
-            ng-options="op as op for op in ops">
-    </select>
-
-    <span class="filter-values">
-      <input type="text" class="filter-value" ng-model="filter.values[0]">
-    </span>
+    <qb-filter qb-options="options" model="filter"></qb-filter>
 
     <a href="" class="filter-remove" ng-click="removeFilter($index)">x</a>
   </div>

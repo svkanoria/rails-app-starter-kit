@@ -6,5 +6,6 @@
  */
 angular.module('QueryBuilder', [
   // Directives
-  'QueryBuilderDirective'
+  'QueryBuilderDirective',
+  'QBFilter'
 ]);
