@@ -12,11 +12,13 @@ var app = angular.module('App', [
   // Controllers
   'AppCtrl',
   'HomeCtrl',
+  'PostsCtrl',
 
   // Directives
   'AuthenticationLinks',
   'FormErrors',
   'PleaseWait',
+  'DataTable',
 
   // Modules
   'ResourceUtils'

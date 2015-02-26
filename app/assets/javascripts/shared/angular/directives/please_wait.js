@@ -25,7 +25,7 @@ angular.module('PleaseWait', []).
       link: function (scope, element, attrs) {
         scope.pleaseWaitSvc = PleaseWaitSvc;
       }
-    }
+    };
   }]).
 
   /*

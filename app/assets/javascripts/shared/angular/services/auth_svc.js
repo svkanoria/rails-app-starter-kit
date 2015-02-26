@@ -178,6 +178,7 @@ angular.module('AuthSvc', []).
      * @param route {string} - The route, in a format compatible with
      * $routeProvider.
      * @param routeParams {Object} - A hash of parameters.
+     *
      * @returns {string} The concretized route.
      */
     var concretizeRoute = function (route, routeParams) {

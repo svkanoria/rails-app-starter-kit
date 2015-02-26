@@ -46,6 +46,8 @@ app.config([
           initialData: R.initialData('PostsCtrl', 'edit')
         }
       }).
+
+      // Error routes
       when('/unauthorized', {
         templateUrl: 'shared/401.html'
       }).
