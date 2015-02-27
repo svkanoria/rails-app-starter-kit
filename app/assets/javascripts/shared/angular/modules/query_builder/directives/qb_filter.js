@@ -1,10 +1,10 @@
 /*
  * The directive for a single filter in a query-builder.
  */
-angular.module('QBFilter', []).
+angular.module('QBFilter', ['QBEditorProvider']).
   directive('qbFilter', [
-    '$compile',
-    function ($compile) {
+    '$compile', 'QBEditor',
+    function ($compile, QBEditor) {
       return {
         restrict: 'E',
         templateUrl: 'shared/directives/qb_filter.html',
@@ -59,14 +59,7 @@ angular.module('QBFilter', []).
 
             editorContainer.html('');
 
-            var editorHtml = '';
-            var opArity = (op === 'range') ? 2 : 1;
-
-            for (var i = 0; i < opArity; ++i) {
-              editorHtml += '<input type="' + (columnType || 'text') +
-                '" class="filter-value" ng-model="model.values[' + i + ']">';
-            }
-
+            var editorHtml = QBEditor.getEditorHtml(columnType, op);
             var editor = $compile(editorHtml)(scope);
 
             editorContainer.html(editor);
