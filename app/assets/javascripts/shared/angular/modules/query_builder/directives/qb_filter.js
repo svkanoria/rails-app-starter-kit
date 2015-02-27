@@ -19,9 +19,15 @@ angular.module('QBFilter', []).
           // Helper Stuff //
           //////////////////
 
+          // Default comparison operators
+          var DEFAULT_OPS = ['=', '<', '<=', '>', '>=', 'contains', 'range'];
+
+          // For caching editor values by 'column-name;op'.
+          // Used to pre-populate editors for user friendliness.
+          var editorCache = {};
+
           /**
-           * Returns the column type (by looking it up in qbOptions), given a
-           * column name.
+           * Returns the column type (from qbOptions), given its name.
            *
            * @param columnName {string} - A column name.
            *
@@ -41,23 +47,30 @@ angular.module('QBFilter', []).
           }
 
           /**
-           * Sets the value editor, based on the type of the column selected.
+           * Sets the value editor, based on:
+           * * The type of the column selected
+           * * The operator selected
            *
            * @param [columnType='text'] {string} - A column type.
+           * @param op {string} - An operator.
            */
-          function setEditor (columnType) {
-            var input = '<input type="' + (columnType || 'text') +
-              '" class="filter-value" ng-model="model.values[0]">';
+          function setEditor (columnType, op) {
+            var editorContainer = $(element).find('.filter-values');
 
-            var el = $compile(input)(scope);
+            editorContainer.html('');
 
-            $(element).find('.filter-values').html(el);
+            var editorHtml = '';
+            var opArity = (op === 'range') ? 2 : 1;
+
+            for (var i = 0; i < opArity; ++i) {
+              editorHtml += '<input type="' + (columnType || 'text') +
+                '" class="filter-value" ng-model="model.values[' + i + ']">';
+            }
+
+            var editor = $compile(editorHtml)(scope);
+
+            editorContainer.html(editor);
           }
-
-          /**
-           * Default comparison operators.
-           */
-          var DEFAULT_OPS = ['=', '<', '<=', '>=', '>', 'like'];
 
           //////////////////////
           // Procedural Stuff //
@@ -74,11 +87,22 @@ angular.module('QBFilter', []).
             scope.model.op = scope.ops[0];
           }
 
-          scope.$watch('model.column', function (value) {
-            if (value) {
-              setEditor(getColumnType(value));
-            }
-          });
+          scope.$watch('[model.column, model.op]',
+            function (newValue, oldValue) {
+              if (oldValue[0] && oldValue[1]) {
+                // Cache the value of the editor going out
+                editorCache[oldValue[0] + ';' + oldValue[1]] =
+                  scope.model.values;
+              }
+
+              if (newValue[0] && newValue[1]) {
+                // Load the value for the editor coming in
+                scope.model.values =
+                  editorCache[newValue[0] + ';' +  newValue[1]] || [];
+
+                setEditor(getColumnType(newValue[0]), newValue[1]);
+              }
+            }, true);
         }
       };
     }]);
