@@ -21,7 +21,15 @@ angular.module('PostsCtrl', []).
             { data: 'id' },
             { data: 'message' },
             { data: 'created_at' }
-          ]
+          ],
+          stateSave: true, // Ensure table element has an id for this to work!
+          // Save/load the query builder state along with the table state
+          stateSaveParams: function (settings, data) {
+            data.filters = $scope.queryBuilderFilters;
+          },
+          stateLoadParams: function (settings, data) {
+            $scope.queryBuilderFilters = data.filters || [];
+          }
         };
 
         $scope.queryBuilderOptions = {
@@ -31,9 +39,5 @@ angular.module('PostsCtrl', []).
             { name: 'created_at', type: 'date' }
           ]
         };
-
-        $scope.queryBuilderFilters = [
-          { column: 'id', values: ['10'], op: '=' }
-        ];
       };
     }]);
