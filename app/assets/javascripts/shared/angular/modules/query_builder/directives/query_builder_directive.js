@@ -39,13 +39,17 @@ angular.module('QueryBuilderDirective', []).
         restrict: 'E',
         templateUrl: 'shared/directives/query_builder.html',
         replace: true,
+        require: 'form',
 
         scope: {
           options: '=',
           filters: '='
         },
 
-        link: function (scope, element, attrs) {
+        link: function (scope, element, attrs, form) {
+          // For use in the template
+          scope.form = form;
+
           /**
            * Adds a filter.
            */
@@ -55,6 +59,8 @@ angular.module('QueryBuilderDirective', []).
 
               // Let qb-filter decide what to set as 'values' and 'op'
             });
+
+            form.$setDirty();
           };
 
           /**
@@ -64,6 +70,8 @@ angular.module('QueryBuilderDirective', []).
            */
           scope.removeFilter = function (index) {
             scope.filters.splice(index, 1);
+
+            form.$setDirty();
           };
 
           /**
@@ -73,7 +81,11 @@ angular.module('QueryBuilderDirective', []).
            * display some data.
            */
           scope.submit = function () {
-            scope.options.onSubmit();
+            if (scope.options.onSubmit) {
+              scope.options.onSubmit();
+            }
+
+            form.$setPristine();
           };
         }
       };

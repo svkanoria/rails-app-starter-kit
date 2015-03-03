@@ -60,9 +60,13 @@ angular.module('QBFilter', ['QBEditorProvider']).
             editorContainer.html('');
 
             var editorHtml = QBEditor.getEditorHtml(columnType, op);
-            var editor = $compile(editorHtml)(scope);
+            editorContainer.html(editorHtml);
 
-            editorContainer.html(editor);
+            // Note: We compile the control AFTER inserting into the DOM. This
+            // way the control registers itself with the parent form, which is
+            // required for the various form states ('$dirty' etc.) and
+            // validation to work.
+            $compile(editorContainer.contents())(scope);
           }
 
           //////////////////////

@@ -1,10 +1,16 @@
-<div class="query-builder">
+<form class="query-builder">
   <div ng-repeat="filter in filters track by $index">
     <qb-filter qb-options="options" model="filter"></qb-filter>
 
     <a href="" class="filter-remove" ng-click="removeFilter($index)">x</a>
   </div>
 
-  <button ng-click="addFilter()">Add Filter</button>
-  <button ng-click="submit()">Search</button>
-</div>
+  <a href="" ng-click="addFilter()">+ Add Filter</a>
+  <br/>
+
+  <button type="button" class="btn"
+          ng-class="{'btn-primary': form.$dirty, 'btn-default': form.$pristine}"
+          ng-click="submit()">
+    Apply Filters
+  </button>
+</form>
