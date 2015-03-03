@@ -1,0 +1,20 @@
+// Variables
+
+$query-builder-margin-bottom: $padding-base-vertical*3;
+$qb-filter-margin-bottom: $padding-small-vertical;
+$qb-filter-add-margin-bottom: $padding-small-vertical;
+
+// Styles
+
+.query-builder {
+  margin-bottom: $query-builder-margin-bottom;
+
+  > .filter {
+    margin-bottom: $qb-filter-margin-bottom;
+  }
+
+  > .filter-add {
+    display: inline-block;
+    margin-bottom: $qb-filter-add-margin-bottom;
+  }
+}

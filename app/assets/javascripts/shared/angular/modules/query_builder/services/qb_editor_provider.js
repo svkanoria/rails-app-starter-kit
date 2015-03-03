@@ -35,7 +35,8 @@ angular.module('QBEditorProvider', []).
 
         for (var i = 0; i < opArity; ++i) {
           editorHtml += '<input type="' + (columnType || 'text') +
-          '" class="filter-value" ng-model="model.values[' + i + ']">';
+          '" class="filter-value form-control" ng-model="model.values[' +
+          i + ']">';
         }
 
         return editorHtml;

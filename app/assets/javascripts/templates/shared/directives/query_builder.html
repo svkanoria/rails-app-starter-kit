@@ -1,11 +1,15 @@
-<form class="query-builder">
-  <div ng-repeat="filter in filters track by $index">
-    <qb-filter qb-options="options" model="filter"></qb-filter>
+<form class="query-builder form-inline" novalidate>
+  <div class="filter" ng-repeat="filter in filters track by $index">
+    <a href="" class="filter-remove" ng-click="removeFilter($index)">
+      <span class="glyphicon glyphicon-remove-circle"></span></a>
 
-    <a href="" class="filter-remove" ng-click="removeFilter($index)">x</a>
+    <qb-filter qb-options="options" model="filter"></qb-filter>
   </div>
 
-  <a href="" ng-click="addFilter()">+ Add Filter</a>
+  <a href="" class="filter-add" ng-click="addFilter()">
+    <span class="glyphicon glyphicon-plus-sign"></span>
+    Add Filter
+  </a>
   <br/>
 
   <button type="button" class="btn"
