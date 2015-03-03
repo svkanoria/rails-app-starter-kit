@@ -7,9 +7,14 @@
  *
  * Usage:
  *   <table datatable
- *          ?options="Object expr">
+ *          ?options="Object expr",
+ *          ?instance="Empty expr">
  *     :
  *   </table>
+ *
+ * The 'instance' expression is populated with the underlying 'raw' data table.
+ * This exposes all of the DataTables functionality to the controller, but
+ * should be used with care!
  */
 angular.module('DataTable', []).
   directive('datatable', [
@@ -18,11 +23,16 @@ angular.module('DataTable', []).
         restrict: 'A',
 
         scope: {
-          options: '='
+          options: '=',
+          instance: '='
         },
 
         link: function (scope, element, attrs) {
-          $(element).DataTable(scope.options || {});
+          var instance = $(element).DataTable(scope.options || {});
+
+          if (scope.instance !== undefined) {
+            scope.instance = instance;
+          }
         }
       };
     }]);

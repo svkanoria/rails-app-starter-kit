@@ -32,6 +32,10 @@ angular.module('PostsCtrl', []).
           }
         };
 
+        // The 'raw' data table instance.
+        // This is populated by the 'datatable' directive.
+        $scope.dataTableInstance = null;
+
         $scope.queryBuilderOptions = {
           columns: [
             { name: 'id', type: 'number' },
@@ -39,7 +43,7 @@ angular.module('PostsCtrl', []).
             { name: 'created_at', type: 'date' }
           ],
           onSubmit: function () {
-            // TODO Trigger a data table refreshco
+            $scope.dataTableInstance.ajax.reload(); // Reload the data table
           }
         };
       };
