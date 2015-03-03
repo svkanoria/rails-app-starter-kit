@@ -12,7 +12,10 @@
  *       { name: 'some-name', type: 'some-type' },
  *         :
  *     ],
- *     ?ops: [ 'op1', 'op2' ... ]
+ *     ?ops: [ 'op1', 'op2' ... ],
+ *     ?onSubmit: function () {
+ *       // Generally, submit the created filter to the server
+ *     }
  *   }
  *
  * All and only HTML5 input types can be used as column types.
@@ -60,6 +63,16 @@ angular.module('QueryBuilderDirective', []).
            */
           scope.removeFilter = function (index) {
             scope.filters.splice(index, 1);
+          };
+
+          /**
+           * Merely calls the 'options.onSubmit' callback, if provided.
+           *
+           * The callback must do the real work of using the created filter to
+           * display some data.
+           */
+          scope.submit = function () {
+            scope.options.onSubmit();
           };
         }
       };

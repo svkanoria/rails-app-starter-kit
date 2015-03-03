@@ -70,6 +70,7 @@ class DataTableAdapter
   end
 
   def apply_filters
+    # TODO Support not only global search, but also column search
     if @search_value && @searchable_column_names.any?
       conditions = []
 
@@ -99,6 +100,7 @@ class DataTableAdapter
           "#{column_name} = #{search_value}"
         end
       else
+        # TODO Support more data types in column search conditions
         nil
     end
   end

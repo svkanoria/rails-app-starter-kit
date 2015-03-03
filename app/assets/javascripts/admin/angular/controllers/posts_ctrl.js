@@ -37,7 +37,10 @@ angular.module('PostsCtrl', []).
             { name: 'id', type: 'number' },
             { name: 'message', type: 'text' },
             { name: 'created_at', type: 'date' }
-          ]
+          ],
+          onSubmit: function () {
+            // TODO Trigger a data table refreshco
+          }
         };
       };
     }]);
