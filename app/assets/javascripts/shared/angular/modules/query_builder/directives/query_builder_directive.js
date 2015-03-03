@@ -38,6 +38,7 @@ angular.module('QueryBuilderDirective', []).
       return {
         restrict: 'E',
         templateUrl: 'shared/directives/query_builder.html',
+        replace: true,
 
         scope: {
           options: '=',

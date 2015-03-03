@@ -1,5 +1,5 @@
 <div class="query-builder">
-  <div ng-repeat="filter in filters">
+  <div ng-repeat="filter in filters track by $index">
     <qb-filter qb-options="options" model="filter"></qb-filter>
 
     <a href="" class="filter-remove" ng-click="removeFilter($index)">x</a>
