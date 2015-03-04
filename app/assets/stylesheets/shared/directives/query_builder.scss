@@ -1,7 +1,10 @@
 // Variables
 
-$query-builder-margin-bottom: $padding-base-vertical*3;
+$query-builder-margin-bottom: $padding-large-vertical;
+
 $qb-filter-margin-bottom: $padding-small-vertical;
+$qb-filter-value-margin-right: 4px; // Trial and error
+
 $qb-filter-add-margin-bottom: $padding-small-vertical;
 
 // Styles
@@ -10,7 +13,18 @@ $qb-filter-add-margin-bottom: $padding-small-vertical;
   margin-bottom: $query-builder-margin-bottom;
 
   > .filter {
-    margin-bottom: $qb-filter-margin-bottom;
+    // The filter bottom margin is applied to each filter form control
+    // individually, rather than directly to the parent filter element. This
+    // approach automatically introduces spacing between controls when they
+    // stack up on small screens.
+    .filter-column, .filter-op {
+      margin-bottom: $qb-filter-margin-bottom;
+    }
+
+    .filter-value {
+      margin-bottom: $qb-filter-margin-bottom;
+      margin-right: $qb-filter-value-margin-right;
+    }
   }
 
   > .filter-add {

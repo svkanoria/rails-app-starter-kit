@@ -17,6 +17,7 @@ angular.module('PostsCtrl', []).
             }
           },
           searching: false, // Since we are using query builder
+          processing: true, // Show the 'processing' indicator
           columns: [
             { data: 'id' },
             { data: 'message' },
