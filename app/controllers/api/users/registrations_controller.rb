@@ -7,7 +7,7 @@ module Api
       # create need not be overridden
 
       # update needs to be overridden
-      # TODO Override the JSON registration controller 'update' action
+      # TODO Override the 'update' action
 
       def destroy
         resource.destroy
