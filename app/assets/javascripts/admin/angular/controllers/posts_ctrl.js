@@ -29,11 +29,7 @@ angular.module('PostsCtrl', []).
             data.filters = $scope.queryBuilderFilters;
           },
           stateLoadParams: function (settings, data) {
-            if (data && data.filters) {
-              $scope.queryBuilderFilters = data.filters;
-            } else {
-              $scope.queryBuilderFilters = [];
-            }
+            $scope.queryBuilderFilters = data.filters;
           }
         };
 

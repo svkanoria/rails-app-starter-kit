@@ -53,6 +53,10 @@ angular.module('QueryBuilderDirective', []).
           // For use in the template
           scope.form = form;
 
+          if (!scope.filters) {
+            scope.filters = [];
+          }
+
           // Dummy id for ng-repeat to track by
           var nextFilterId = 0;
 
