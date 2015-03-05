@@ -17,6 +17,6 @@
 /.idea
 
 # Ignore all documentation files. They can be generated using YARD locally if
-# desired.
+# desired: type 'yard' on the command line, in the project root directory.
 /doc
 /.yardoc

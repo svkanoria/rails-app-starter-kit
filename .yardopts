@@ -1,1 +1,1 @@
---no-private --protected app/**/*.rb - README.rdoc
+--no-private --protected app/**/*.rb - README.rdoc LICENSE.txt
