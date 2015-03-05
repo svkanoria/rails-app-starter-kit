@@ -73,8 +73,11 @@ angular.module('QBFilter', ['QBEditorProvider']).
           // Procedural Stuff //
           //////////////////////
 
-          // The operators to show (user specified, otherwise default)
-          scope.ops = scope.qbOptions.ops || DEFAULT_OPS;
+          // The operators to show.
+          // For now, we just show the default ops. Later, we will have to add
+          // some code for determining which ops to show.
+          // TODO Support custom operators
+          scope.ops = DEFAULT_OPS;
 
           if (!scope.model.values) {
             scope.model.values = [];

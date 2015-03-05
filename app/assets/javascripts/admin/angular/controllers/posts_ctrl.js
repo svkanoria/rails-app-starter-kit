@@ -39,7 +39,7 @@ angular.module('PostsCtrl', []).
 
         $scope.queryBuilderOptions = {
           columns: [
-            { name: 'id', type: 'number' },
+            { name: 'id', type: 'text' }, // See query-builder for why 'text'
             { name: 'message', type: 'text' },
             { name: 'created_at', type: 'date' }
           ],

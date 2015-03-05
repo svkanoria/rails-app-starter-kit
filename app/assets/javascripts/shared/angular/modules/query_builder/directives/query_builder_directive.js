@@ -12,15 +12,18 @@
  *       { name: 'some-name', type: 'some-type' },
  *         :
  *     ],
- *     ?ops: [ 'op1', 'op2' ... ],
  *     ?onSubmit: function () {
  *       // Generally, submit the created filter to the server
  *     }
  *   }
  *
  * All and only HTML5 input types can be used as column types.
- * The 'ops' property is optional, and only useful if you want to override the
- * default comparison operators that are displayed.
+ * Normally, it is best to use 'text' as it is the most flexible, and we won't
+ * really care about validation.
+ *
+ * Presently we do not support custom operators. However, we will do so in the
+ * future.
+ * TODO Support custom operators
  *
  * The 'filters' attribute must be as follows:
  *   [
