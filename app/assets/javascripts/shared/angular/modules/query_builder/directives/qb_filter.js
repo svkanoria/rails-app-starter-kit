@@ -91,14 +91,12 @@ angular.module('QBFilter', ['QBEditorProvider']).
             function (newValue, oldValue) {
               if (oldValue[0] && oldValue[1]) {
                 // Cache the value of the editor going out
-                editorCache[oldValue[0] + ';' + oldValue[1]] =
-                  scope.model.values;
+                editorCache[oldValue[0]] = scope.model.values;
               }
 
               if (newValue[0] && newValue[1]) {
                 // Load the value for the editor coming in
-                scope.model.values =
-                  editorCache[newValue[0] + ';' +  newValue[1]] || [];
+                scope.model.values = editorCache[newValue[0]] || [];
 
                 setEditor(getColumnType(newValue[0]), newValue[1]);
               }

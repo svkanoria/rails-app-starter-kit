@@ -13,7 +13,7 @@ class QueryBuilder
       '<' => '<',
       '<=' => '<=',
       '>' => '>',
-      '>=' => '=>',
+      '>=' => '>=',
       'contains' => 'ILIKE',
       'range' => 'BETWEEN'
   }
