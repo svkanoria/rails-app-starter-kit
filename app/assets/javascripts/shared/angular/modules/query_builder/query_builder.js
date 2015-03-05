@@ -5,6 +5,10 @@
  * DataTables etc.
  */
 angular.module('QueryBuilder', [
+  // Services
+  'QBEditorProvider',
+
   // Directives
-  'QueryBuilderDirective'
+  'QueryBuilderDirective',
+  'QBFilter'
 ]);
