@@ -93,9 +93,11 @@ class QueryBuilder
   end
 
   def build_column_expr (column, column_type, op)
-    case [column_type, op]
-      when [:integer, 'contains']
-        "CAST (#{column} AS text)"
+    case column_type
+      when :integer, :float, :decimal
+        (op == 'contains') ? "CAST (#{column} AS text)" : column
+      when :datetime, :timestamp
+        "CAST (#{column} AS date)"
       else
         column
     end
