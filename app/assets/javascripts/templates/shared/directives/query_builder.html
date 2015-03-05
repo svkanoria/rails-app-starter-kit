@@ -1,5 +1,5 @@
 <form class="query-builder form-inline" novalidate>
-  <div class="filter" ng-repeat="filter in filters track by $index">
+  <div class="filter" ng-repeat="filter in filters track by filter._id">
     <a href="" class="filter-remove" ng-click="removeFilter($index)">
       <span class="glyphicon glyphicon-remove-circle"></span></a>
 

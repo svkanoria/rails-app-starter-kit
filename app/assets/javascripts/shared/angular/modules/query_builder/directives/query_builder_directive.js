@@ -53,11 +53,15 @@ angular.module('QueryBuilderDirective', []).
           // For use in the template
           scope.form = form;
 
+          // Dummy id for ng-repeat to track by
+          var nextFilterId = 0;
+
           /**
            * Adds a filter.
            */
           scope.addFilter = function () {
             scope.filters.push({
+              _id: nextFilterId++,
               column: scope.options.columns[0].name
 
               // Let qb-filter decide what to set as 'values' and 'op'
