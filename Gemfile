@@ -83,6 +83,9 @@ gem 'bootstrap_form'
 # For pagination
 gem 'kaminari'
 
+# using for Twitter and Facebook Config Settings
+gem "rails_config"
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
