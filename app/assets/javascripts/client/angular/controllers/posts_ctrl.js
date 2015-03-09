@@ -1,7 +1,9 @@
-angular.module('PostsCtrl', ['Post']).
+angular.module('PostsCtrl', ['Post', 'MediaLibrarySvc']).
   controller('PostsCtrl', [
     '$scope', '$location', '$routeParams', 'flash', 'Post', 'initialData',
-    function ($scope, $location, $routeParams, flash, Post, initialData) {
+    'MediaLibrarySvc',
+    function ($scope, $location, $routeParams, flash, Post, initialData,
+              MediaLibrarySvc) {
       /**
        * The 'index' action.
        */
@@ -48,6 +50,8 @@ angular.module('PostsCtrl', ['Post']).
        * Builds an empty post for the form.
        */
       $scope.actionNew = function () {
+        MediaLibrarySvc.setDisplayMode('show');
+
         $scope.post = initialData;
       };
 
@@ -74,6 +78,8 @@ angular.module('PostsCtrl', ['Post']).
        * The 'edit' action.
        */
       $scope.actionEdit = function () {
+        MediaLibrarySvc.setDisplayMode('show');
+
         $scope.post = initialData;
       };
 

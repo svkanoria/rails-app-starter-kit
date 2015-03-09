@@ -26,5 +26,6 @@ var app = angular.module('App', [
   'PleaseWait',
 
   // Modules
-  'ResourceUtils'
+  'ResourceUtils',
+  'MediaLibrary'
 ]);
