@@ -19,6 +19,7 @@ stack, with the following features built-in:
 1. Postgres support
 1. Complete user management, with authentication and role-based authorization
 1. User authentication via Facebook and other providers
+1. Local environment variable storage with RailsConfig.
 1. Front-end asset management using Bower
 1. Angular-based routing
 1. Angular-based flash messages
