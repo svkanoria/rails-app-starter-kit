@@ -20,20 +20,20 @@ angular.module('AppCtrl', ['AuthSvc', 'PleaseWait']).
           accessKey: CommonInfo.aws_access_key_id
         },
         signature: {
-          endpoint: '/s3/signature'
+          endpoint: '/fine_uploader/s3_signature'
         },
         uploadSuccess: {
-          endpoint: '/s3/success'
+          endpoint: '/fine_uploader/s3_upload_success'
         },
         iframeSupport: {
-          localBlankPagePath: '/success.html'
+          localBlankPagePath: '/upload_success.html'
         },
         retry: {
           enableAuto: true // defaults to false
         },
         deleteFile: {
           enabled: true,
-          endpoint: '/s3handler'
+          endpoint: '/fine_uploader/s3_delete_file'
         }
       };
     }]);

@@ -20,6 +20,12 @@ Rails.application.routes.draw do
 
   resources :posts
 
+  scope 'fine_uploader' do
+    post 's3_signature' => 'fine_uploader#s3_signature'
+    post 's3_upload_success' => 'fine_uploader#s3_upload_success'
+    post 's3_delete_file' => 'fine_uploader#s3_delete_file'
+  end
+
   namespace :admin do
     resources :posts, only: :index
 
