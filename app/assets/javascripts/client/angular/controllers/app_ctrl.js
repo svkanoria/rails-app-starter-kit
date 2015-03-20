@@ -10,4 +10,30 @@ angular.module('AppCtrl', ['AuthSvc', 'PleaseWait']).
     function($scope, AuthSvc, PleaseWaitSvc) {
       $scope.authSvc = AuthSvc;
       $scope.pleaseWaitSvc = PleaseWaitSvc;
+
+      // For the media library uploader directive declared in the Rails layout
+      // file
+      $scope.uploaderOptions = {
+        debug: CommonInfo.env == 'development',
+        request: {
+          endpoint: CommonInfo.aws_s3_bucket + '.s3.amazonaws.com',
+          accessKey: CommonInfo.aws_access_key_id
+        },
+        signature: {
+          endpoint: '/s3/signature'
+        },
+        uploadSuccess: {
+          endpoint: '/s3/success'
+        },
+        iframeSupport: {
+          localBlankPagePath: '/success.html'
+        },
+        retry: {
+          enableAuto: true // defaults to false
+        },
+        deleteFile: {
+          enabled: true,
+          endpoint: '/s3handler'
+        }
+      };
     }]);

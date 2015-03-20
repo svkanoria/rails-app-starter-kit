@@ -4,5 +4,6 @@ angular.module('MediaLibrary', [
   'MediaLibrarySvc',
 
   // Directives
-  'MediaLibraryDirective'
+  'MediaLibraryDirective',
+  'FineUploader'
 ]);

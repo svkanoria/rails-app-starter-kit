@@ -1,0 +1,21 @@
+<%# Global JS variables required for server-client interfacing.
+  # Keep these to a minimum, as they pollute the global namespace!
+  #%>
+<script type="application/javascript">
+  <%# Set currently signed in user's details, if any %>
+  <% if (c = current_user_json) %>
+    var CurrentUser = <%= raw c %>;
+  <% else %>
+    var CurrentUser = null;
+  <% end %>
+
+  <%# Set info that may be useful on the client side.
+    # For example, the media library uploader requires some AWS details set
+    # using environment variables.
+    # %>
+  var CommonInfo = {
+    environment: '<%= Rails.env %>',
+    aws_s3_bucket: '<%= Rails.application.secrets.aws_s3_bucket %>',
+    aws_access_key_id: '<%= Rails.application.secrets.aws_access_key_id %>'
+  };
+</script>

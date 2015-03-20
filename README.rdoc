@@ -18,6 +18,7 @@ stack, with the following features built-in:
 1. Rails ~4.2, Angular ~1.2 (and we recommend Ruby >=2.1.2)
 1. Postgres support
 1. Complete user management, with authentication and role-based authorization
+1. Complete user upload management via a media library
 1. User authentication via Facebook and other providers
 1. Front-end asset management using Bower
 1. Angular-based routing
@@ -233,6 +234,20 @@ Authorization policies are placed in /app/policies.
 
 In JS and Angular code, role-based authorization has been implemented to the
 extent of route access. See the Authentication section above.
+
+=== Media Library
+
+Most applications need some way of storing media and other files uploaded by
+users, and of associating uploads with models. For example, an attachment to a
+post, a user profile pic etc.
+
+We provide a full featured, flexible solution right out of the box!
+
+The only catch is that we use FineUploader[http://fineuploader.com/] to carry
+out the actual uploads. If you're not developing an open-source application, a
+license must be purchased.
+
+COMING SOON...
 
 === Form Submission
 

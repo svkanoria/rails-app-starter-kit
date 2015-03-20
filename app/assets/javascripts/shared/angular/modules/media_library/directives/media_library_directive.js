@@ -1,5 +1,16 @@
 /*
  * The media library directive.
+ *
+ * Usage:
+ *   <media-library uploader-options="Object expr">
+ *   </media-library>
+ *
+ * The uploader options are passed to the uploader directive.
+ * We provide one uploader (which we then use by default): The 'fine-uploader'
+ * directive. However, you can create you own if you wish. If you do roll your
+ * own, you must also modify this directive's template to use your uploader
+ * instead:
+ * /app/assets/javascripts/templates/shared/directives/media_library.html
  */
 angular.module('MediaLibraryDirective', ['MediaLibrarySvc']).
   directive('mediaLibrary', [
@@ -9,7 +20,10 @@ angular.module('MediaLibraryDirective', ['MediaLibrarySvc']).
         restrict: 'E',
         templateUrl: 'shared/directives/media_library.html',
         replace: true,
-        scope: {},
+
+        scope: {
+          uploaderOptions: '='
+        },
 
         link: function (scope, element, attrs) {
           scope.$watch(MediaLibrarySvc.getDisplayMode, function (value) {

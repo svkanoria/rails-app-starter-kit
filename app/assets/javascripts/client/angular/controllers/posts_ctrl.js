@@ -50,8 +50,6 @@ angular.module('PostsCtrl', ['Post', 'MediaLibrarySvc']).
        * Builds an empty post for the form.
        */
       $scope.actionNew = function () {
-        MediaLibrarySvc.setDisplayMode('show');
-
         $scope.post = initialData;
       };
 
