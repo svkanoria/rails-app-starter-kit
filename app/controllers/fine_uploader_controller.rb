@@ -23,13 +23,14 @@ class FineUploaderController < ApplicationController
   #
   # @return [Hash] the signed policy document
   def signed_policy_document (policy_document)
-    policy = Base64.encode64(policy_document.to_json).gsub('\n', '')
+    # Note the double-quotes around \n. This is important.
+    policy = Base64.encode64(policy_document.to_json).gsub("\n", '')
 
     signature = Base64.encode64(
         OpenSSL::HMAC.digest(
-            OpenSSL::Digest::Digest.new('sha1'),
+            OpenSSL::Digest.new('sha1'),
             Rails.application.secrets.aws_secret_access_key, policy)
-    ).gsub('\n','')
+    ).gsub("\n",'')
 
     { policy: policy, signature: signature }
   end

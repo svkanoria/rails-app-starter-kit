@@ -247,6 +247,16 @@ The only catch is that we use FineUploader[http://fineuploader.com/] to carry
 out the actual uploads. If you're not developing an open-source application, a
 license must be purchased.
 
+See the following for more information:
+
+* Client-side code:
+  * /app/assets/javascripts/shared/angular/modules/media_library/
+  * /app/assets/javascripts/client/angular/controllers/app_ctrl.js
+
+* Server-side code:
+  * /app/controllers/fine_uploader_controller.rb
+  * /config/routes.rb
+
 COMING SOON...
 
 === Form Submission
