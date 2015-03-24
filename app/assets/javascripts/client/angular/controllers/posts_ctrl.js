@@ -1,9 +1,9 @@
-angular.module('PostsCtrl', ['Post', 'MediaLibrarySvc']).
+angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc']).
   controller('PostsCtrl', [
     '$scope', '$location', '$routeParams', 'flash', 'Post', 'initialData',
-    'MediaLibrarySvc',
+    'AttachmentLibrarySvc',
     function ($scope, $location, $routeParams, flash, Post, initialData,
-              MediaLibrarySvc) {
+              AttachmentLibrarySvc) {
       /**
        * The 'index' action.
        */
@@ -76,7 +76,7 @@ angular.module('PostsCtrl', ['Post', 'MediaLibrarySvc']).
        * The 'edit' action.
        */
       $scope.actionEdit = function () {
-        MediaLibrarySvc.setDisplayMode('show');
+        AttachmentLibrarySvc.setDisplayMode('show');
 
         $scope.post = initialData;
       };

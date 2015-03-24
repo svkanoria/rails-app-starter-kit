@@ -11,8 +11,8 @@ angular.module('AppCtrl', ['AuthSvc', 'PleaseWait']).
       $scope.authSvc = AuthSvc;
       $scope.pleaseWaitSvc = PleaseWaitSvc;
 
-      // For the media library uploader directive declared in the Rails layout
-      // file
+      // For the attachment library directive declared in the Rails application
+      // layout.
       $scope.uploaderOptions = {
         debug: CommonInfo.env == 'development',
         request: {
@@ -30,10 +30,6 @@ angular.module('AppCtrl', ['AuthSvc', 'PleaseWait']).
         },
         retry: {
           enableAuto: true // defaults to false
-        },
-        deleteFile: {
-          enabled: true,
-          endpoint: '/fine_uploader/s3_delete_file'
         }
       };
     }]);

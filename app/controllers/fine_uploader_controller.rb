@@ -1,17 +1,21 @@
-# Handles requests from FineUploader.
+# Handles requests from Fine Uploader.
 class FineUploaderController < ApplicationController
   respond_to :json
 
+  # TODO Find way to add CSRF token to FineUploader requests
   skip_before_action :verify_authenticity_token
 
   def s3_signature
-    render json: signed_policy_document(params[:fine_uploader])
+    render json: sign_policy_document(params[:fine_uploader])
   end
 
   def s3_upload_success
-  end
+    url = s3_build_url(params[:bucket], params[:key])
 
-  def s3_delete_file
+    @attachment = Attachment.create(name: params[:name], url: url)
+
+    # Fine Uploader won't accept the default 201 'created' status
+    respond_with @attachment, location: nil, status: 200
   end
 
   private
@@ -22,7 +26,7 @@ class FineUploaderController < ApplicationController
   #   request parameters
   #
   # @return [Hash] the signed policy document
-  def signed_policy_document (policy_document)
+  def sign_policy_document (policy_document)
     # Note the double-quotes around \n. This is important.
     policy = Base64.encode64(policy_document.to_json).gsub("\n", '')
 
@@ -33,5 +37,15 @@ class FineUploaderController < ApplicationController
     ).gsub("\n",'')
 
     { policy: policy, signature: signature }
+  end
+
+  # Returns an AWS S3 URL, given a bucket name and an object key.
+  #
+  # @param bucket [String] the bucket name
+  # @param key [String] the object key
+  #
+  # @return [String] the object's absolute URL
+  def s3_build_url (bucket, key)
+    "https://s3.amazonaws.com/#{bucket}/#{key}"
   end
 end

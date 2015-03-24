@@ -1,4 +1,4 @@
-// FineUploader based uploader for media library.
+// FineUploader based uploader for attachment library.
 angular.module('FineUploader', []).
   directive('fineUploader', [
     function () {

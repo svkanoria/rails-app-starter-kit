@@ -1,8 +1,8 @@
 /*
- * The brains behind the media-library directive.
+ * The brains behind the attachment-library directive.
  */
-angular.module('MediaLibrarySvc', []).
-  factory('MediaLibrarySvc', [
+angular.module('AttachmentLibrarySvc', []).
+  factory('AttachmentLibrarySvc', [
     function () {
       var displayMode = 'progress';
 

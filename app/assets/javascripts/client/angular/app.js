@@ -27,5 +27,5 @@ var app = angular.module('App', [
 
   // Modules
   'ResourceUtils',
-  'MediaLibrary'
+  'AttachmentLibrary'
 ]);

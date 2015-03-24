@@ -1,0 +1,11 @@
+// Variables
+
+$attachment-library-margin: $padding-small-vertical $padding-small-horizontal;
+
+// Styles
+
+.attachment-library {
+  position: fixed;
+  bottom: 0;
+  margin: $attachment-library-margin;
+}
