@@ -83,6 +83,9 @@ gem 'bootstrap_form'
 # For pagination
 gem 'kaminari'
 
+# For AWS integration
+gem 'aws-sdk', '~> 2'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
