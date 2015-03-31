@@ -62,8 +62,6 @@ class AwsUtils
   def self.s3_delete (url)
     delete_params = s3_parse_url(url)
 
-    puts delete_params
-
     AwsUtils::S3.delete_object(delete_params)
   end
 end
