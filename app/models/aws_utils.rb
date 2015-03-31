@@ -3,8 +3,16 @@ class AwsUtils
   # S3 URL
   S3_URL = 'https://s3.amazonaws.com'
 
-  # S3 instance
-  S3 = Aws::S3::Client.new
+  # S3 client
+  @@S3 = nil
+
+  # S3 client (lazily evaluated).
+  # Use this, and not @@S3 directly.
+  #
+  # @return [Aws::S3::Client]
+  def self.S3
+    @@S3 ||= Aws::S3::Client.new
+  end
 
   # Builds an AWS S3 URL, from a bucket name and an object key.
   #
@@ -62,6 +70,6 @@ class AwsUtils
   def self.s3_delete (url)
     delete_params = s3_parse_url(url)
 
-    AwsUtils::S3.delete_object(delete_params)
+    AwsUtils.S3.delete_object(delete_params)
   end
 end
