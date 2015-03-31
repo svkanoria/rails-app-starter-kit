@@ -29,13 +29,6 @@ angular.module('AttachmentLibraryDirective', ['AttachmentLibrarySvc']).
           scope.$watch(AttachmentLibrarySvc.getDisplayMode, function (value) {
             scope.displayMode = value;
           });
-
-          // By default, show iff any uploads are in progress.
-          // To show or hide completely in any view, the view's controller must
-          // set the display mode explicitly, to 'show' or 'hide'.
-          scope.$on('$routeChangeStart', function () {
-            AttachmentLibrarySvc.setDisplayMode('progress');
-          });
         }
       }
     }]);

@@ -1,7 +1,8 @@
 // FineUploader based uploader for attachment library.
-angular.module('FineUploader', []).
+angular.module('FineUploader', ['AttachmentLibrarySvc']).
   directive('fineUploader', [
-    function () {
+    'AttachmentLibrarySvc',
+    function (AttachmentLibrarySvc) {
       return {
         restrict: 'E',
         templateUrl: 'shared/directives/fine_uploader.html',
@@ -25,6 +26,18 @@ angular.module('FineUploader', []).
                 }
               });
             });
+
+          // Hide the 'Upload' button unless in 'show' mode
+          scope.$watch(AttachmentLibrarySvc.getDisplayMode, function (value) {
+            var uploadButtonElement =
+              $(element).find('.qq-upload-button-selector');
+
+            if (value === 'show') {
+              uploadButtonElement.show();
+            } else {
+              uploadButtonElement.hide();
+            }
+          });
         }
       };
     }
