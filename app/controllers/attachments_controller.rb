@@ -6,13 +6,11 @@ class AttachmentsController < ApplicationController
   def index
     authorize Attachment
 
-    @attachments = policy_scope(Attachment)
+    attachments_filter = QueryBuilder.new(Attachment, params[:filters])
 
-    @metadata = PaginationMetadata.new(@attachments, params[:page],
-                                       params[:per])
+    @attachments_adapter = DataTableAdapter.new(Attachment, params,
+                                                attachments_filter.query)
 
-    @attachments = @attachments.page(@metadata.page).per(@metadata.per)
-
-    respond_with @attachments
+    respond_with @attachments_adapter
   end
 end

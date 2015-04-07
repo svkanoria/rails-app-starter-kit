@@ -1,6 +1,4 @@
-/*
- * The service behind the attachment-library directive.
- */
+// The service behind the attachment-library directive.
 angular.module('AttachmentLibrarySvc', []).
   factory('AttachmentLibrarySvc', [
     function () {

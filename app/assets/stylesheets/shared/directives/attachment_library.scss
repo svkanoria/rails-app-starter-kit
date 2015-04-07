@@ -1,6 +1,9 @@
 // Variables
 
 $attachment-library-margin: $padding-small-vertical $padding-small-horizontal;
+$attachment-library-padding: $padding-small-vertical $padding-small-horizontal;
+$attachment-library-bg: transparentize($gray-lighter, 0.1);
+$attachment-library-border-radius: $border-radius-small;
 
 // Styles
 
@@ -8,4 +11,7 @@ $attachment-library-margin: $padding-small-vertical $padding-small-horizontal;
   position: fixed;
   bottom: 0;
   margin: $attachment-library-margin;
+  padding: $attachment-library-padding;
+  background: $attachment-library-bg;
+  border-radius: $attachment-library-border-radius;
 }

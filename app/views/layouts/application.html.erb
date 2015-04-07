@@ -5,9 +5,12 @@
 
   <%= stylesheet_link_tag 'client/application', media: 'all' %>
   <%= stylesheet_link_tag '/fine_uploader/fine-uploader.css' %>
+  <%# Easiest way to include DataTables. Note also the 'js' partial below %>
+  <%= render 'layouts/data_tables/css' %>
 
   <%= javascript_include_tag 'client/application' %>
   <%= javascript_include_tag '/fine_uploader/s3.jquery.fine-uploader.min.js' %>
+  <%= render 'layouts/data_tables/js' %>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
