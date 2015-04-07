@@ -36,7 +36,7 @@ RSpec.describe FineUploaderController, type: :controller do
 
     describe 'POST s3_signature' do
       it 'allows the request' do
-        attrs = FactoryGirl.attributes_for(:fine_uploader_s3_signatures)
+        attrs = FactoryGirl.attributes_for(:fine_uploader_s3_signature)
 
         post :s3_signature, fine_uploader: attrs
 

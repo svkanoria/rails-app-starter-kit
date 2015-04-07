@@ -18,7 +18,7 @@ class FineUploaderController < ApplicationController
 
     url = AwsUtils.s3_build_url(params[:bucket], params[:key])
 
-    @attachment = Attachment.create(name: params[:name], url: url)
+    @attachment = current_user.attachments.create(name: params[:name], url: url)
 
     Attachment.delete_from_store(url) unless @attachment.persisted?
 

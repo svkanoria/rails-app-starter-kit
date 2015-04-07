@@ -19,9 +19,12 @@ ActiveRecord::Schema.define(version: 20150324061551) do
   create_table "attachments", force: true do |t|
     t.string   "name"
     t.string   "url",        limit: 1024
+    t.integer  "user_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
+
+  add_index "attachments", ["user_id"], name: "index_attachments_on_user_id", using: :btree
 
   create_table "authentications", force: true do |t|
     t.string   "provider"

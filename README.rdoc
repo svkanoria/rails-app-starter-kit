@@ -247,6 +247,9 @@ The only catch is that we use FineUploader[http://fineuploader.com/] to carry
 out the actual uploads. If you're not developing an open-source application, a
 license must be purchased.
 
+Attachments belong to users. Users only have access to their own attachments at
+all times. Each attachment can be attached to multiple objects.
+
 See the following for more information:
 
 * Client-side code:

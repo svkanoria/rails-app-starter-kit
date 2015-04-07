@@ -8,8 +8,11 @@ class CreateAttachments < ActiveRecord::Migration
       # is equivalent in performance to 'string' which translates to varchar).
       # However, we want to try and remain as DB agnostic as possible.
       t.string :url, limit: 1024
+      t.belongs_to :user
 
       t.timestamps null: false
     end
+
+    add_index :attachments, :user_id
   end
 end

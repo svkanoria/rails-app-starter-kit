@@ -5,6 +5,7 @@
 #  id         :integer          not null, primary key
 #  name       :string
 #  url        :string(1024)
+#  user_id    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

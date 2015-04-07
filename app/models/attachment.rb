@@ -5,16 +5,19 @@
 #  id         :integer          not null, primary key
 #  name       :string
 #  url        :string(1024)
+#  user_id    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
 class Attachment < ActiveRecord::Base
   validates :url, presence: true
+  validates :user_id, presence: true
 
   before_save :populate_missing_fields
-
   after_destroy :delete_from_provider
+
+  belongs_to :user
 
   private
 
