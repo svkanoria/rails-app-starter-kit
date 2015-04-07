@@ -1,5 +1,5 @@
 <div class="attachment-library" ng-hide="displayMode === 'hide'">
-  <attachment-browser ng-show="displayMode === 'show'"></attachment-browser>
+  <attachment-browser ng-if="displayMode === 'show'"></attachment-browser>
 
   <fine-uploader options="uploaderOptions"></fine-uploader>
 </div>
