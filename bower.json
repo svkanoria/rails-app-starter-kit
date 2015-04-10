@@ -9,6 +9,7 @@
     "angular-mocks": "~1.2.x",
     "underscore": "~1.7.x",
     "underscore.string": "~2.3.x",
-    "flashular": "svkanoria/flashular#master"
+    "flashular": "svkanoria/flashular#master",
+    "jquery-ui": "~1.11.x"
   }
 }

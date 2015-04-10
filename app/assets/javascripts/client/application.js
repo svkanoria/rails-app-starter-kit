@@ -12,8 +12,24 @@
 // (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
+// Comment out the 2 lines below. Instead, use what Bower installed along with
+// jQuery UI.
+// require jquery
+// require jquery_ujs
+//
+// jQuery from vendor
+//= require jquery/dist/jquery
+// jQuery UI from vendor (only the stuff that we need, and stuff that does not
+// conflict with Bootstrap). Add more files as required.
+// To help ensure that you have required any and all dependencies, refer to
+// http://jqueryui.com/download/
+//= require jquery-ui/ui/core
+//= require jquery-ui/ui/widget
+//= require jquery-ui/ui/mouse
+//= require jquery-ui/ui/position
+//= require jquery-ui/ui/draggable
+//= require jquery-ui/ui/droppable
+//
 // See comments in assets/javascripts/bootstrap-custom.js
 //= require bootstrap-custom
 //
