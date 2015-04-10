@@ -20,7 +20,7 @@ angular.module('QBFilter', ['QBEditorProvider']).
           //////////////////
 
           // Default comparison operators
-          var DEFAULT_OPS = ['=', '<', '<=', '>', '>=', 'contains', 'range'];
+          var DEFAULT_OPS = ['contains', '=', '<', '<=', '>', '>=', 'range'];
 
           // For caching editor values by 'column-name;op'.
           // Used to pre-populate editors for user friendliness.

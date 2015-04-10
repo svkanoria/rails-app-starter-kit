@@ -17,9 +17,11 @@ angular.module('AttachmentBrowser', ['QueryBuilder', 'DataTable']).
               serverSide: true,
               ajax: {
                 url: '/attachments.json',
-                // Just add the query builder filters to all AJAX requests sent
-                // by the data table!
                 data: function (d) {
+                  // Add the following to all AJAX requests:
+                  // The URL column (for rendering the name as a link)
+                  d.columns.push({ data: 'url' });
+                  // The query builder filters (for advanced result filtering)
                   d.filters = scope.queryBuilderFilters;
                 }
               },
@@ -27,7 +29,12 @@ angular.module('AttachmentBrowser', ['QueryBuilder', 'DataTable']).
               processing: true, // Show the 'processing' indicator
               columns: [
                 { data: 'id' },
-                { data: 'name' },
+                { data: 'name',
+                  render: function (data, type, row, meta) {
+                    return '<a href="' + row.url + '" target="_blank">' + data +
+                      '</a>';
+                  }
+                },
                 { data: 'created_at' }
               ],
               // Ensure table element has an id for this to work!
@@ -47,9 +54,9 @@ angular.module('AttachmentBrowser', ['QueryBuilder', 'DataTable']).
 
             scope.queryBuilderOptions = {
               columns: [
+                { name: 'name', type: 'text' },
                 // See query-builder for why 'id' column has type 'text'
                 { name: 'id', type: 'text' },
-                { name: 'name', type: 'text' },
                 { name: 'created_at', type: 'date' }
               ],
               onSubmit: function () {

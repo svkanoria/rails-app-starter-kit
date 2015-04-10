@@ -1,4 +1,6 @@
-<div class="attachment-library" ng-hide="displayMode === 'hide'">
+<div class="attachment-library display-mode-{{displayMode}}"
+     ng-hide="displayMode === 'hide'">
+
   <attachment-browser ng-if="displayMode === 'show'"></attachment-browser>
 
   <fine-uploader options="uploaderOptions"></fine-uploader>

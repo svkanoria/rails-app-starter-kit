@@ -10,8 +10,17 @@ $attachment-library-border-radius: $border-radius-small;
 .attachment-library {
   position: fixed;
   bottom: 0;
+  max-width: 100%;
+  max-height: 90%;
+  overflow-y: scroll;
   margin: $attachment-library-margin;
   padding: $attachment-library-padding;
   background: $attachment-library-bg;
   border-radius: $attachment-library-border-radius;
+
+  &.display-mode-progress {
+    padding: 0;
+    background: none;
+    border-radius: 0;
+  }
 }
