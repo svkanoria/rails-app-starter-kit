@@ -19,11 +19,19 @@ angular.module('FineUploader', ['AttachmentLibrarySvc']).
             .on('complete', function(event, id) {
               var fileElement = $(this).fineUploaderS3('getItemByFileId', id);
 
-              fileElement.delay(2000).slideUp({
-                duration: 100,
-                always: function () {
-                  fileElement.remove();
-                }
+              var hideFileElement = fileElement.find('.dismiss-progress-bar');
+
+              hideFileElement.css('display', 'inline');
+
+              hideFileElement.on('click', function (event) {
+                event.preventDefault();
+
+                fileElement.slideUp({
+                  duration: 100,
+                  always: function () {
+                    fileElement.remove();
+                  }
+                });
               });
             });
 
