@@ -31,8 +31,8 @@ angular.module('AttachmentBrowser', ['QueryBuilder', 'DataTable']).
                 { data: 'id' },
                 { data: 'name',
                   render: function (data, type, row, meta) {
-                    return '<a href="' + row.url + '" target="_blank">' + data +
-                      '</a>';
+                    return '<a href="' + row.url + '" target="_blank">'
+                      + data + '</a>';
                   }
                 },
                 { data: 'created_at' }
@@ -45,6 +45,17 @@ angular.module('AttachmentBrowser', ['QueryBuilder', 'DataTable']).
               },
               stateLoadParams: function (settings, data) {
                 scope.queryBuilderFilters = data.filters;
+              },
+              createdRow: function (row, data, dataIndex) {
+                $(row).draggable({
+                  helper: function (event) {
+                    return '<div class="attachment-drag-helper">'
+                      + data.id + ': ' + data.name + '</div>';
+                  },
+                  appendTo: 'body',
+                  cursor: 'crosshair',
+                  cursorAt: { left: 5 }
+                });
               }
             };
 
