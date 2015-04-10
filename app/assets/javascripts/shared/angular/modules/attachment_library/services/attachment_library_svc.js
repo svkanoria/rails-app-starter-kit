@@ -1,7 +1,8 @@
 // The service behind the attachment-library directive.
 angular.module('AttachmentLibrarySvc', []).
   factory('AttachmentLibrarySvc', [
-    function () {
+    '$rootScope',
+    function ($rootScope) {
       var displayMode = 'progress';
 
       /**
@@ -14,7 +15,7 @@ angular.module('AttachmentLibrarySvc', []).
       };
 
       /**
-       * Set the display mode.
+       * Sets the display mode.
        *
        * In 'progress' mode, only uploads in progress (if any) are shown, and
        * nothing else.
@@ -25,10 +26,24 @@ angular.module('AttachmentLibrarySvc', []).
         displayMode = displayMode_;
       };
 
+      /**
+       * Emits the 'attachment_library.upload_successful' event on $rootScope,
+       * to announce a successful upload.
+       *
+       * Listeners such as the attachment browser, can then update themselves
+       * as required.
+       *
+       * Must be called by the uploader directive.
+       */
+      var emitUploadSuccessful = function () {
+        $rootScope.$emit('attachment_library.upload_successful');
+      };
+
       // Return the service object
       return {
         getDisplayMode: getDisplayMode,
-        setDisplayMode: setDisplayMode
+        setDisplayMode: setDisplayMode,
+        emitUploadSuccessful: emitUploadSuccessful
       };
     }]).
 

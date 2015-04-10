@@ -1,6 +1,7 @@
 angular.module('AttachmentBrowser', ['QueryBuilder', 'DataTable']).
   directive('attachmentBrowser', [
-    function () {
+    '$rootScope',
+    function ($rootScope) {
       return {
         restrict: 'E',
         templateUrl: 'shared/directives/attachment_browser.html',
@@ -74,6 +75,15 @@ angular.module('AttachmentBrowser', ['QueryBuilder', 'DataTable']).
                 scope.dataTableInstance.ajax.reload(); // Reload the data table
               }
             };
+
+            $rootScope.$on('attachment_library.upload_successful', function () {
+              if (scope.dataTableInstance) {
+                // Reorder by last created, to ensure latest upload is visible
+                scope.dataTableInstance.order([2, 'desc']);
+
+                scope.dataTableInstance.ajax.reload();
+              }
+            })
           }
         }
       };

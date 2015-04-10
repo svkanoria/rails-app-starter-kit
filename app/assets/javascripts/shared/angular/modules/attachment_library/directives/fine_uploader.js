@@ -16,7 +16,7 @@ angular.module('FineUploader', ['AttachmentLibrarySvc']).
           $(element)
             .fineUploaderS3(scope.options)
             // Hide the progress bar when complete
-            .on('complete', function(event, id) {
+            .on('complete', function(event, id, name, responseJSON) {
               var fileElement = $(this).fineUploaderS3('getItemByFileId', id);
 
               var hideFileElement = fileElement.find('.dismiss-progress-bar');
@@ -33,6 +33,10 @@ angular.module('FineUploader', ['AttachmentLibrarySvc']).
                   }
                 });
               });
+
+              if (responseJSON.success) {
+                AttachmentLibrarySvc.emitUploadSuccessful();
+              }
             });
 
           // Hide the 'Upload' button unless in 'show' mode
