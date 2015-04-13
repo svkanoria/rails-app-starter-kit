@@ -1,0 +1,7 @@
+.attachment-browser {
+  // For anything but the smallest screens, set a fixed width. This seems to
+  // work best visually.
+  @media (min-width: $screen-sm-min) {
+    width: $screen-sm-min/1.3;
+  }
+}

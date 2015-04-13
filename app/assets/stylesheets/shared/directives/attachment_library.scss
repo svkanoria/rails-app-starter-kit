@@ -1,9 +1,10 @@
 // Variables
 
-$attachment-library-margin: $padding-small-vertical $padding-small-horizontal;
-$attachment-library-padding: $padding-small-vertical $padding-small-horizontal;
-$attachment-library-bg: transparentize($gray-lighter, 0.1);
-$attachment-library-border-radius: $border-radius-small;
+$attach-lib-panel-margin: $padding-small-vertical $padding-small-horizontal;
+$attach-lib-panel-padding: $padding-small-vertical $padding-small-horizontal;
+$attach-lib-panel-bg: transparentize($gray-lighter, 0.1);
+$attach-lib-panel-border-radius: $border-radius-small;
+$attach-lib-panel-box-shadow-color: $gray-light;
 
 $attachment-drag-helper-padding: $padding-small-vertical $padding-small-horizontal;
 $attachment-drag-helper-bg: $brand-info;
@@ -16,16 +17,17 @@ $attachment-drag-helper-border-radius: $border-radius-small;
   bottom: 50px;
   max-height: 70%;
   overflow-y: scroll;
-  margin: $attachment-library-margin;
-  padding: $attachment-library-padding;
-  background: $attachment-library-bg;
-  border-radius: $attachment-library-border-radius;
+  margin: $attach-lib-panel-margin;
+  padding: $attach-lib-panel-padding;
+  background: $attach-lib-panel-bg;
+  border-radius: $attach-lib-panel-border-radius;
+  box-shadow: 1px 1px 8px #bbb;
 }
 
 .attachment-library-toggle {
   position: fixed;
   bottom: 0;
-  margin: $attachment-library-margin;
+  margin: $attach-lib-panel-margin;
   padding: 10px 13px; // Trial and error
   border-radius: 50%;
 }
