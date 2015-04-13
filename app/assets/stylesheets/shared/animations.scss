@@ -1,19 +1,23 @@
 // Contains canned animations for Angular.
+// Dependent on the excellent Animate.css library.
+//
 // Each animation is provided in two avatars:
-//   1. As a Sass mixin for use in your own classes
-//   2. As a class for use directly on some element
+// 1. As a Sass mixin for use in your own classes
+// 2. As a class for use directly on some element
 //
 // Both the mixin and the class for an animation have the same name, and they
 // all begin with the 'anim-' prefix. Mixins are more flexible as they can be
 // configured with arguments, whereas classes only work with the defaults.
 
+@import "animate-css/animate";
+
 ///////////////
 // Utilities //
 ///////////////
 
-@mixin transition($args: $anim-duration $anim-easing all) {
-  -webkit-transition: $args;
-  transition: $args;
+@mixin animation($args: $anim $duration) {
+  -webkit-animation: $args;
+  animation: $args;
 }
 
 ////////////////
@@ -22,18 +26,12 @@
 
 // Fade
 
-@mixin anim-fade($duration: $anim-fade-duration, $easing: $anim-fade-easing) {
+@mixin anim-fade-enter($duration: $anim-duration) {
   &.ng-enter {
-    @include transition($duration $easing all);
-
-    opacity: 0;
-  }
-
-  &.ng-enter-active {
-    opacity: 1;
+    @include animation(fadeIn $duration);
   }
 }
 
-.anim-fade {
-  @include anim-fade;
+.anim-fade-enter {
+  @include anim-fade-enter;
 }
