@@ -22,6 +22,15 @@ $attachment-drag-helper-border-radius: $border-radius-small;
   background: $attach-lib-panel-bg;
   border-radius: $attach-lib-panel-border-radius;
   box-shadow: 1px 1px 8px #bbb;
+
+  &.ng-hide-add {
+    @include animation(fadeOutDown 0.5s);
+    display: block !important;
+  }
+
+  &.ng-hide-remove {
+    @include animation(fadeInUp 0.5s);
+  }
 }
 
 .attachment-library-toggle {
