@@ -11,7 +11,7 @@ $attachment-drag-helper-border-radius: $border-radius-small;
 
 // Styles
 
-.attachment-library {
+.attachment-library-panel {
   position: fixed;
   bottom: 0;
   max-width: 100%;
@@ -21,12 +21,14 @@ $attachment-drag-helper-border-radius: $border-radius-small;
   padding: $attachment-library-padding;
   background: $attachment-library-bg;
   border-radius: $attachment-library-border-radius;
+}
 
-  &.alert-only-mode {
-    padding: 0;
-    background: none;
-    border-radius: 0;
-  }
+.attachment-library-expander {
+  position: fixed;
+  bottom: 0;
+  margin: $attachment-library-margin;
+  padding: 15px 18px; // Trial and error
+  border-radius: 50%;
 }
 
 .attachment-drag-helper {

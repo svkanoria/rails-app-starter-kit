@@ -1,7 +1,11 @@
-<div class="attachment-library" ng-class="{'alert-only-mode': !visible}"
-     ng-show="visible">
+<div class="attachment-library">
+  <div class="attachment-library-panel">
+    <attachment-browser ng-if="visible"></attachment-browser>
 
-  <attachment-browser ng-if="visible"></attachment-browser>
+    <fine-uploader options="uploaderOptions"></fine-uploader>
+  </div>
 
-  <fine-uploader options="uploaderOptions"></fine-uploader>
+  <div class="attachment-library-expander btn btn-primary">
+    <span class="glyphicon glyphicon-paperclip"></span>
+  </div>
 </div>
