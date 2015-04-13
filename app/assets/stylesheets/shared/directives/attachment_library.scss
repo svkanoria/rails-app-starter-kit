@@ -13,9 +13,8 @@ $attachment-drag-helper-border-radius: $border-radius-small;
 
 .attachment-library-panel {
   position: fixed;
-  bottom: 0;
-  max-width: 100%;
-  max-height: 90%;
+  bottom: 50px;
+  max-height: 70%;
   overflow-y: scroll;
   margin: $attachment-library-margin;
   padding: $attachment-library-padding;
@@ -23,11 +22,11 @@ $attachment-drag-helper-border-radius: $border-radius-small;
   border-radius: $attachment-library-border-radius;
 }
 
-.attachment-library-expander {
+.attachment-library-toggle {
   position: fixed;
   bottom: 0;
   margin: $attachment-library-margin;
-  padding: 15px 18px; // Trial and error
+  padding: 10px 13px; // Trial and error
   border-radius: 50%;
 }
 

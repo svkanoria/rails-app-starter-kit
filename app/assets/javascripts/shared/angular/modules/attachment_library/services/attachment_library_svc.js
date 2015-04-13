@@ -4,6 +4,7 @@ angular.module('AttachmentLibrarySvc', []).
     '$rootScope',
     function ($rootScope) {
       var visible = false;
+      var minimized = false;
 
       /**
        * Gets visibility.
@@ -23,10 +24,26 @@ angular.module('AttachmentLibrarySvc', []).
        * pending or progress alerts unacknowledged, these will continue to be
        * visible.
        *
-       * @param {boolean } value - Whether visible or not.
+       * @param {boolean} value - Whether visible or not.
        */
       var setVisible = function (value) {
         visible = value;
+      };
+
+      /**
+       * Gets whether minimized.
+       *
+       * @returns {boolean} Whether minimized or not.
+       */
+      var getMinimized = function () {
+        return minimized;
+      };
+
+      /**
+       * Toggles whether minimized.
+       */
+      var toggleMinimized = function () {
+        minimized = !minimized;
       };
 
       /**
@@ -46,6 +63,8 @@ angular.module('AttachmentLibrarySvc', []).
       return {
         getVisible: getVisible,
         setVisible: setVisible,
+        getMinimized: getMinimized,
+        toggleMinimized: toggleMinimized,
         emitUploadSuccessful: emitUploadSuccessful
       };
     }]).

@@ -30,9 +30,7 @@ angular.module('AttachmentLibraryDirective', ['AttachmentLibrarySvc']).
         },
 
         link: function (scope, element, attrs) {
-          scope.$watch(AttachmentLibrarySvc.getVisible, function (value) {
-            scope.visible = value;
-          });
+          scope.alSvc = AttachmentLibrarySvc;
         }
       }
     }]);
