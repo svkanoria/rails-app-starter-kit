@@ -30,8 +30,8 @@ angular.module('AttachmentLibraryDirective', ['AttachmentLibrarySvc']).
         },
 
         link: function (scope, element, attrs) {
-          scope.$watch(AttachmentLibrarySvc.getDisplayMode, function (value) {
-            scope.displayMode = value;
+          scope.$watch(AttachmentLibrarySvc.getVisible, function (value) {
+            scope.visible = value;
           });
         }
       }

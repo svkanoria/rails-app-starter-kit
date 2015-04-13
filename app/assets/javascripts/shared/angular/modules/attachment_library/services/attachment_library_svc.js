@@ -3,35 +3,38 @@ angular.module('AttachmentLibrarySvc', []).
   factory('AttachmentLibrarySvc', [
     '$rootScope',
     function ($rootScope) {
-      var displayMode = 'progress';
+      var visible = false;
 
       /**
-       * Gets the display mode.
+       * Gets visibility.
        *
-       * @returns {string} The display mode.
+       * See also the documentation for setVisible.
+       *
+       * @returns {boolean} Whether visible or not.
        */
-      var getDisplayMode = function () {
-        return displayMode;
+      var getVisible = function () {
+        return visible;
       };
 
       /**
-       * Sets the display mode.
+       * Sets visibility.
        *
-       * In 'progress' mode, only uploads in progress (if any) are shown, and
-       * nothing else.
+       * The invisibility is 'weak', in the sense that if there are uploads
+       * pending or progress alerts unacknowledged, these will continue to be
+       * visible.
        *
-       * @param displayMode_ - The display mode (show, hide or progress).
+       * @param {boolean } value - Whether visible or not.
        */
-      var setDisplayMode = function (displayMode_) {
-        displayMode = displayMode_;
+      var setVisible = function (value) {
+        visible = value;
       };
 
       /**
-       * Emits the 'attachment_library.upload_successful' event on $rootScope,
+       * Emits the 'attachment_library.upload_successful' event on $rootScope
        * to announce a successful upload.
        *
        * Listeners such as the attachment browser, can then update themselves
-       * as required.
+       * accordingly.
        *
        * Must be called by the uploader directive.
        */
@@ -41,8 +44,8 @@ angular.module('AttachmentLibrarySvc', []).
 
       // Return the service object
       return {
-        getDisplayMode: getDisplayMode,
-        setDisplayMode: setDisplayMode,
+        getVisible: getVisible,
+        setVisible: setVisible,
         emitUploadSuccessful: emitUploadSuccessful
       };
     }]).
@@ -51,10 +54,10 @@ angular.module('AttachmentLibrarySvc', []).
   run([
     '$rootScope', 'AttachmentLibrarySvc',
     function ($rootScope, AttachmentLibrarySvc) {
-      // By default, show iff any uploads are in progress.
-      // To show or hide completely in any view, the view's controller should
-      // set the display mode explicitly, to 'show' or 'hide'.
+      // Hide by default.
+      // To force show the library in some view, the view's controller should
+      // call setVisible(true).
       $rootScope.$on('$routeChangeStart', function () {
-        AttachmentLibrarySvc.setDisplayMode('progress');
+        AttachmentLibrarySvc.setVisible(false);
       });
     }]);

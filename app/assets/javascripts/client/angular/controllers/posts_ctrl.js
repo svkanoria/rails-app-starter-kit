@@ -76,7 +76,7 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc']).
        * The 'edit' action.
        */
       $scope.actionEdit = function () {
-        AttachmentLibrarySvc.setDisplayMode('show');
+        AttachmentLibrarySvc.setVisible(true);
 
         $scope.post = initialData;
       };

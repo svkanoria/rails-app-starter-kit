@@ -22,7 +22,7 @@ $attachment-drag-helper-border-radius: $border-radius-small;
   background: $attachment-library-bg;
   border-radius: $attachment-library-border-radius;
 
-  &.display-mode-progress {
+  &.alert-only-mode {
     padding: 0;
     background: none;
     border-radius: 0;

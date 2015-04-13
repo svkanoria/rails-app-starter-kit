@@ -15,7 +15,7 @@ angular.module('FineUploader', ['AttachmentLibrarySvc']).
         link: function (scope, element, attrs) {
           $(element)
             .fineUploaderS3(scope.options)
-            // Hide the progress bar when complete
+            // Enable user to hide the progress bar when done
             .on('complete', function(event, id, name, responseJSON) {
               var fileElement = $(this).fineUploaderS3('getItemByFileId', id);
 
@@ -39,12 +39,12 @@ angular.module('FineUploader', ['AttachmentLibrarySvc']).
               }
             });
 
-          // Hide the 'Upload' button unless in 'show' mode
-          scope.$watch(AttachmentLibrarySvc.getDisplayMode, function (value) {
+          // Hide the 'Upload' button when in alert-only mode
+          scope.$watch(AttachmentLibrarySvc.getVisible, function (visible) {
             var uploadButtonElement =
               $(element).find('.qq-upload-button-selector');
 
-            if (value === 'show') {
+            if (visible) {
               uploadButtonElement.show();
             } else {
               uploadButtonElement.hide();
