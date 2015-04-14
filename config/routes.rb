@@ -22,6 +22,8 @@ Rails.application.routes.draw do
 
   resources :attachments, except: :create
 
+  resources :attachment_joins, only: [:create, :destroy]
+
   scope 'fine_uploader' do
     post 's3_signature' => 'fine_uploader#s3_signature'
     post 's3_upload_success' => 'fine_uploader#s3_upload_success'

@@ -18,6 +18,8 @@ class Attachment < ActiveRecord::Base
   after_destroy :delete_from_provider
 
   belongs_to :user
+  has_many :attachment_joins, dependent: :destroy
+  has_many :attachments, through: :attachment_joins
 
   private
 
