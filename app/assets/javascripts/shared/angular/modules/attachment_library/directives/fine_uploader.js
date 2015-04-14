@@ -15,8 +15,11 @@ angular.module('FineUploader', ['AttachmentLibrarySvc']).
         link: function (scope, element, attrs) {
           $(element)
             .fineUploaderS3(scope.options)
+            .on('submit', function (id, name) {
+              AttachmentLibrarySvc.incrementAlertCount(1);
+            })
             // Enable user to hide the progress bar when done
-            .on('complete', function(event, id, name, responseJSON) {
+            .on('complete', function (event, id, name, responseJSON) {
               var fileElement = $(this).fineUploaderS3('getItemByFileId', id);
 
               var hideFileElement = fileElement.find('.dismiss-progress-bar');
@@ -30,6 +33,8 @@ angular.module('FineUploader', ['AttachmentLibrarySvc']).
                   duration: 100,
                   always: function () {
                     fileElement.remove();
+                    AttachmentLibrarySvc.incrementAlertCount(-1);
+                    scope.$apply();
                   }
                 });
               });

@@ -1,4 +1,6 @@
-<div class="attachment-library">
+<div class="attachment-library"
+     ng-hide="!alSvc.getVisible() && alSvc.getAlertCount() == 0">
+
   <div class="attachment-library-panel" ng-hide="alSvc.getMinimized()">
     <attachment-browser ng-if="alSvc.getVisible()"></attachment-browser>
 

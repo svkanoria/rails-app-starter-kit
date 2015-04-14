@@ -4,7 +4,8 @@ angular.module('AttachmentLibrarySvc', []).
     '$rootScope',
     function ($rootScope) {
       var visible = false;
-      var minimized = false;
+      var minimized = true;
+      var alertCount = 0;
 
       /**
        * Gets visibility.
@@ -47,6 +48,28 @@ angular.module('AttachmentLibrarySvc', []).
       };
 
       /**
+       * Gets the number of alerts pending user action.
+       *
+       * @returns {number}
+       */
+      var getAlertCount = function () {
+        return alertCount;
+      };
+
+      /**
+       * Increments the number of alerts pending user action.
+       *
+       * Must be called whenever there is an alert (usually from the uploader)
+       * that is pending user action. In case of any such alerts, the library
+       * remains partially visible even when set otherwise.
+       *
+       * @param {number} delta - A positive or negative number.
+       */
+      var incrementAlertCount = function (delta) {
+        alertCount += delta;
+      };
+
+      /**
        * Emits the 'attachment_library.upload_successful' event on $rootScope
        * to announce a successful upload.
        *
@@ -65,6 +88,8 @@ angular.module('AttachmentLibrarySvc', []).
         setVisible: setVisible,
         getMinimized: getMinimized,
         toggleMinimized: toggleMinimized,
+        getAlertCount: getAlertCount,
+        incrementAlertCount: incrementAlertCount,
         emitUploadSuccessful: emitUploadSuccessful
       };
     }]).
