@@ -1,7 +1,8 @@
-angular.module('AttachmentBrowser', ['QueryBuilder', 'DataTable']).
+angular.module('AttachmentBrowser', [
+  'QueryBuilder', 'DataTable', 'AttachmentLibrarySvc']).
   directive('attachmentBrowser', [
-    '$rootScope',
-    function ($rootScope) {
+    '$rootScope', 'AttachmentLibrarySvc',
+    function ($rootScope, AttachmentLibrarySvc) {
       return {
         restrict: 'E',
         templateUrl: 'shared/directives/attachment_browser.html',
@@ -55,7 +56,18 @@ angular.module('AttachmentBrowser', ['QueryBuilder', 'DataTable']).
                   },
                   appendTo: 'body',
                   cursor: 'crosshair',
-                  cursorAt: { left: 5 }
+                  cursorAt: { left: 5 },
+                  start: function (event) {
+                    // Hide attachment library, so that it doesn't obstruct any
+                    // drop zones
+                    AttachmentLibrarySvc.toggleMinimized();
+                    scope.$apply();
+                  },
+                  stop: function (event) {
+                    // Show attachment library again
+                    AttachmentLibrarySvc.toggleMinimized();
+                    scope.$apply();
+                  }
                 });
               }
             };

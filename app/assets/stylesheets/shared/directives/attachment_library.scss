@@ -12,6 +12,11 @@ $attachment-drag-helper-border-radius: $border-radius-small;
 
 // Styles
 
+@keyframes attachment-library-panel-slide-down {
+  0% { bottom: 50px; }
+  100% { bottom: -70%; }
+}
+
 .attachment-library-panel {
   position: fixed;
   bottom: 50px;
@@ -24,12 +29,11 @@ $attachment-drag-helper-border-radius: $border-radius-small;
   box-shadow: 1px 1px 8px #bbb;
 
   &.ng-hide-add {
-    @include animation(fadeOutDown 0.5s);
-    display: block !important;
+    animation: attachment-library-panel-slide-down 0.3s;
   }
 
   &.ng-hide-remove {
-    @include animation(fadeInUp 0.5s);
+    animation: attachment-library-panel-slide-down 0.3s reverse;
   }
 }
 

@@ -1,7 +1,0 @@
-// Contains all animation mixins
-
-// Convenient mixin for creating vendor prefixed animations
-@mixin animation($args: fadeIn $anim-duration) {
-  -webkit-animation: $args;
-  animation: $args;
-}

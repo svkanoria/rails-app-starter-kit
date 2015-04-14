@@ -12,10 +12,9 @@
 // See http://odetocode.com/blogs/scott/archive/2014/02/25/easy-animations-for-angularjs-with-animate-css.aspx.
 @import "animate-css/animate";
 
-// All styling variables and mixins.
-// Imported first, so that these can be used in any other styling file.
+// All styling variables.
+// Imported first, so that variables can be used in any other styling file.
 @import '../shared/variables';
-@import '../shared/animation';
 
 // General styles (layout, header, footer, components etc.)
 @import '../shared/layout';
