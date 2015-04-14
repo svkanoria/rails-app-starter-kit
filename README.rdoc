@@ -237,9 +237,10 @@ extent of route access. See the Authentication section above.
 
 === Attachment Library
 
-Most applications need some way of storing attachments and other files uploaded
-by users, and of associating uploads with models. For example, an attachment to
-a post, a user profile pic etc.
+Most applications need some way of:
+1. Storing files uploaded by users
+2. Associating these uploads with models (for example, an attachment to a post,
+   a user profile pic etc.
 
 We provide a full featured, flexible solution right out of the box!
 
@@ -247,8 +248,9 @@ The only catch is that we use FineUploader[http://fineuploader.com/] to carry
 out the actual uploads. If you're not developing an open-source application, a
 license must be purchased.
 
-Attachments belong to users. Users only have access to their own attachments at
-all times. Each attachment can be attached to multiple objects.
+Attachments belong to users. Users only ever have access to their own
+attachments. Each attachment can be attached to multiple objects - there is a
+many to many relationship between attachments and what they are attached to.
 
 See the following for more information:
 
@@ -257,7 +259,12 @@ See the following for more information:
   * /app/assets/javascripts/client/angular/controllers/app_ctrl.js
 
 * Server-side code:
+  * /app/models/attachment.rb
+  * /app/models/attachment_join.rb
+  * /app/controllers/attachments_controller.rb
+  * /app/controllers/attachment_joins_controller.rb
   * /app/controllers/fine_uploader_controller.rb
+  * /app/policies/* (namesake policies for above controllers)
   * /config/routes.rb
 
 COMING SOON...
