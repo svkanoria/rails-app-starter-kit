@@ -1,5 +1,7 @@
 // Variables
 
+$attach-lib-panel-bottom: 50px;
+$attach-lib-panel-max-height: 70%;
 $attach-lib-panel-margin: $padding-small-vertical $padding-small-horizontal;
 $attach-lib-panel-padding: $padding-small-vertical $padding-small-horizontal;
 $attach-lib-panel-bg: transparentize($gray-lighter, 0.1);
@@ -13,14 +15,14 @@ $attachment-drag-helper-border-radius: $border-radius-small;
 // Styles
 
 @keyframes attachment-library-panel-slide-down {
-  0% { bottom: 50px; }
-  100% { bottom: -70%; }
+  0% { bottom: $attach-lib-panel-bottom; }
+  100% { bottom: -($attach-lib-panel-max-height + 5%); }
 }
 
 .attachment-library-panel {
   position: fixed;
-  bottom: 50px;
-  max-height: 70%;
+  bottom: $attach-lib-panel-bottom;
+  max-height: $attach-lib-panel-max-height;
   overflow-y: scroll;
   margin: $attach-lib-panel-margin;
   padding: $attach-lib-panel-padding;
@@ -32,9 +34,21 @@ $attachment-drag-helper-border-radius: $border-radius-small;
     animation: attachment-library-panel-slide-down 0.3s;
   }
 
+  // The default 'display: none' used by 'ng-hide' causes DataTables to render
+  // incorrectly at times. So we "psuedo" hide instead of really hiding.
+  &.ng-hide {
+    display: block !important;
+    bottom: -($attach-lib-panel-max-height + 5%);
+  }
+
   &.ng-hide-remove {
     animation: attachment-library-panel-slide-down 0.3s reverse;
   }
+}
+
+@keyframes attachment-library-toggle-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .attachment-library-toggle {
@@ -43,6 +57,14 @@ $attachment-drag-helper-border-radius: $border-radius-small;
   margin: $attach-lib-panel-margin;
   padding: 10px 13px; // Trial and error
   border-radius: 50%;
+
+  &.minimized-add {
+    animation: attachment-library-toggle-rotate 0.4s reverse;
+  }
+
+  &.minimized-remove {
+    animation: attachment-library-toggle-rotate 0.4s;
+  }
 }
 
 .attachment-drag-helper {
