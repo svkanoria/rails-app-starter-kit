@@ -16,6 +16,7 @@ FactoryGirl.define do
   # Examples:
   #   # Sets attachment owner to a Post.
   #   # The attachment and post belong to the same user.
+  #   # Also sets to the role to 'image'.
   #   FactoryGirl.create(:attachment_join)
   #
   #   FactoryGirl.create(:attachment_join, attachment: some_attachment,
@@ -26,6 +27,7 @@ FactoryGirl.define do
     end
 
     attachment
+    role 'image'
 
     after(:build) do |attachment_join, evaluator|
       attachment_join.attachment_owner = evaluator.attachment_owner ||
