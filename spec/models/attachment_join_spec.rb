@@ -8,6 +8,7 @@
 #  attachment_owner_type :string
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
+#  role                  :string
 #
 
 require 'rails_helper'

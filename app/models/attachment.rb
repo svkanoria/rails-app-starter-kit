@@ -19,7 +19,6 @@ class Attachment < ActiveRecord::Base
 
   belongs_to :user
   has_many :attachment_joins, dependent: :destroy
-  has_many :attachments, through: :attachment_joins
 
   private
 
