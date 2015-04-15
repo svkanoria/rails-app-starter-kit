@@ -9,8 +9,7 @@ class AttachmentJoinPolicy < ApplicationPolicy
   end
 
   def create?
-    user && user.id == record.attachment.user_id &&
-        user.id == record.attachment_owner.user_id
+    user && user.id == record.attachment.user_id
   end
 
   def update?

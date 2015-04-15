@@ -25,19 +25,19 @@ describe AttachmentJoinPolicy do
     it { should_not permit(:update) }
     it { should_not permit(:edit) }
 
-    context 'for an attachment and owner created by someone else' do
+    context 'for an attachment created by someone else' do
       it { should_not permit(:create) }
       it { should_not permit(:new) }
       it { should_not permit(:destroy) }
     end
 
-    context 'for an attachment and owner created by the user' do
+    context 'for an attachment created by the user' do
       let(:attachment_join) {
         attachment = FactoryGirl.create(:attachment, user: user)
 
-        # The factory automatically assigns the attachment user to the
+        # Note: The factory automatically assigns the attachment user to the
         # attachment owner user (unless explicitly passed an owner object via
-        # attachment_owner).
+        # attachment_owner). FYI.
         FactoryGirl.create(:attachment_join, attachment: attachment)
       }
 
