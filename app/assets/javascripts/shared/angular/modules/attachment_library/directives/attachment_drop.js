@@ -23,7 +23,15 @@ angular.module('AttachmentDrop', []).
         },
 
         link: function (scope, element, attrs) {
+          var dropAreaElement = $(element).find('.attachment-drop-area');
 
+          dropAreaElement.droppable({
+            accept: '.droppable-attachment',
+            hoverClass: 'attachment-drop-area-active',
+            drop: function (event, ui) {
+              console.log(ui);
+            }
+          });
         }
       }
     }]);

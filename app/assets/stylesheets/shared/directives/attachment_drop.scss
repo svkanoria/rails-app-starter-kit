@@ -5,16 +5,33 @@ $dropped-attachment-padding: $padding-small-vertical $padding-small-horizontal;
 $dropped-attachment-bg: $gray-lighter;
 $dropped-attachment-border-radius: $border-radius-small;
 
+$attachment-drop-area-padding: $padding-large-vertical $padding-small-horizontal;
+$attachment-drop-area-bg: lighten($brand-info, 30%);
+$attachment-drop-area-color: $gray-light;
+
+$attachment-drop-area-active-bg: darken($attachment-drop-area-bg, 15%);
+
 // Styles
 
-ul.dropped-attachments {
+.dropped-attachments {
   list-style: none outside;
   padding-left: 0;
 }
 
-li.dropped-attachment {
+.dropped-attachment {
   margin-bottom: $dropped-attachment-margin-bottom;
   padding: $dropped-attachment-padding;
   background: $dropped-attachment-bg;
   border-radius: $dropped-attachment-border-radius;
+}
+
+.attachment-drop-area {
+  padding: $attachment-drop-area-padding;
+  background: $attachment-drop-area-bg;
+  border-radius: $dropped-attachment-border-radius;
+  color: $attachment-drop-area-color;
+}
+
+.attachment-drop-area-active {
+  background: $attachment-drop-area-active-bg;
 }

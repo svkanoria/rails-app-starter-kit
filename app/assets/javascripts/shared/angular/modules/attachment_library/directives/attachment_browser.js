@@ -50,6 +50,10 @@ angular.module('AttachmentBrowser', [
                 scope.queryBuilderFilters = data.filters;
               },
               createdRow: function (row, data, dataIndex) {
+                // The attachment-drop directive only accepts draggables with
+                // this class.
+                $(row).addClass('droppable-attachment');
+
                 $(row).draggable({
                   helper: function (event) {
                     return '<div class="attachment-drag-helper">'
