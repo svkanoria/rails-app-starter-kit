@@ -8,7 +8,6 @@ angular.module('AttachmentBrowser', [
         restrict: 'E',
         templateUrl: 'shared/directives/attachment_browser.html',
         replace: true,
-
         scope: {},
 
         link: {

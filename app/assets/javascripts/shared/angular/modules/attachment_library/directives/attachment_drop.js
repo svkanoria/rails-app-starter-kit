@@ -3,7 +3,10 @@
  * and associate the dropped attachments with a model.
  *
  * Usage:
- *   <attachment-drop attachments="Array expr"></attachment-drop>
+ *   <attachment-drop attachments="Array expr"
+ *                    attachment-owner-id="some id"
+ *                    attachment-owner-type="some server model class">
+ *   </attachment-drop>
  *
  * The 'attachments' attribute must be passed an array of attachments in the
  * following format (at a minimum):
@@ -29,6 +32,8 @@ angular.module('AttachmentDrop', []).
             accept: '.droppable-attachment',
             hoverClass: 'attachment-drop-area-active',
             drop: function (event, ui) {
+              console.log(attrs.attachmentOwnerId);
+              console.log(attrs.attachmentOwnerType);
               console.log(ui);
             }
           });

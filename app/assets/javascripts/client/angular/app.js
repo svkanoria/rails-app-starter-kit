@@ -14,6 +14,7 @@ var app = angular.module('App', [
   'RouteUtils',
   'Post',
   'PostsCtrlInitSvc',
+  'AttachmentJoin',
 
   // Controllers
   'AppCtrl',
