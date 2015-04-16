@@ -9,7 +9,9 @@ class AttachmentJoinsController < ApplicationController
 
     @attachment_join.save
 
-    respond_with @attachment_join
+    # Explicitly set HTTP status code to 201 (created) when successful, else
+    # respond_with returns 200 on encountering the JBuilder template
+    respond_with @attachment_join, status: :created
   end
 
   def destroy

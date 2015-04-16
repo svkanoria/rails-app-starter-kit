@@ -6,7 +6,8 @@ class AttachmentsController < ApplicationController
   def index
     authorize Attachment
 
-    attachments_filter = QueryBuilder.new(Attachment, params[:filters])
+    attachments_filter = QueryBuilder.new(policy_scope(Attachment),
+                                          params[:filters])
 
     @attachments_adapter = DataTableAdapter.new(Attachment, params,
                                                 attachments_filter.query)
