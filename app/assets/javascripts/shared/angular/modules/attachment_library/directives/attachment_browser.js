@@ -1,3 +1,4 @@
+// The attachment browser, for use within the attachment-library directive.
 angular.module('AttachmentBrowser', [
   'QueryBuilder', 'DataTable', 'AttachmentLibrarySvc']).
   directive('attachmentBrowser', [
@@ -60,11 +61,6 @@ angular.module('AttachmentBrowser', [
                   start: function (event) {
                     // Hide attachment library, so that it doesn't obstruct any
                     // drop zones
-                    AttachmentLibrarySvc.toggleMinimized();
-                    scope.$apply();
-                  },
-                  stop: function (event) {
-                    // Show attachment library again
                     AttachmentLibrarySvc.toggleMinimized();
                     scope.$apply();
                   }

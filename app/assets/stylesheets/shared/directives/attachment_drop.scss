@@ -1,0 +1,20 @@
+// Variables
+
+$dropped-attachment-margin-bottom: $padding-small-vertical;
+$dropped-attachment-padding: $padding-small-vertical $padding-small-horizontal;
+$dropped-attachment-bg: $gray-lighter;
+$dropped-attachment-border-radius: $border-radius-small;
+
+// Styles
+
+ul.dropped-attachments {
+  list-style: none outside;
+  padding-left: 0;
+}
+
+li.dropped-attachment {
+  margin-bottom: $dropped-attachment-margin-bottom;
+  padding: $dropped-attachment-padding;
+  background: $dropped-attachment-bg;
+  border-radius: $dropped-attachment-border-radius;
+}

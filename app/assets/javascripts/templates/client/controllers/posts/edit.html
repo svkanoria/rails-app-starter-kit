@@ -3,4 +3,13 @@
 
   <div ng-include="'client/controllers/posts/_form.html'">
   </div>
+
+  <h3>Attachments</h3>
+
+  <div class="row">
+    <div class="col-sm-6 col-lg-5">
+      <attachment-drop attachments="post.attachments['image']">
+      </attachment-drop>
+    </div>
+  </div>
 </div>

@@ -6,5 +6,6 @@ angular.module('AttachmentLibrary', [
   // Directives
   'AttachmentLibraryDirective',
   'AttachmentBrowser',
-  'FineUploader'
+  'FineUploader',
+  'AttachmentDrop'
 ]);
