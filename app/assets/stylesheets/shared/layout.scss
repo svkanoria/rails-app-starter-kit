@@ -5,5 +5,7 @@
 }
 
 .angular-view {
-  @include anim-fade;
+  &.ng-enter {
+    animation: fadeIn 0.5s;
+  }
 }

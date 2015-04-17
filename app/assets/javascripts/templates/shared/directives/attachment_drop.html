@@ -1,0 +1,18 @@
+<div class="attachment-drop">
+  <ul class="dropped-attachments">
+    <li ng-repeat="attachment in attachments" class="dropped-attachment">
+      <a href="" class="detach-button" ng-click="detachAttachmentAt($index)">
+        <span class="glyphicon glyphicon-remove-circle"></span></a>
+
+      <span class="attachment-name">
+        <a href="{{attachment.url}}" target="_blank">
+          {{attachment.id}}: {{attachment.name}}</a>
+      </span>
+    </li>
+  </ul>
+
+  <div class="attachment-drop-area">
+    <span class="glyphicon glyphicon-paperclip"></span>
+    Drop attachments here...
+  </div>
+</div>

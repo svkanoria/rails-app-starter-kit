@@ -14,6 +14,7 @@ var app = angular.module('App', [
   'RouteUtils',
   'Post',
   'PostsCtrlInitSvc',
+  'AttachmentJoin',
 
   // Controllers
   'AppCtrl',
@@ -26,5 +27,6 @@ var app = angular.module('App', [
   'PleaseWait',
 
   // Modules
-  'ResourceUtils'
+  'ResourceUtils',
+  'AttachmentLibrary'
 ]);

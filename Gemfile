@@ -83,6 +83,12 @@ gem 'bootstrap_form'
 # For pagination
 gem 'kaminari'
 
+# For AWS integration
+gem 'aws-sdk', '~> 2'
+
+# For auto-prefixing Sass/CSS styles with vendor prefixes
+gem 'autoprefixer-rails'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

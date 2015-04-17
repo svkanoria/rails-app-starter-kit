@@ -18,6 +18,7 @@ stack, with the following features built-in:
 1. Rails ~4.2, Angular ~1.2 (and we recommend Ruby >=2.1.2)
 1. Postgres support
 1. Complete user management, with authentication and role-based authorization
+1. Complete user upload management via an attachment library
 1. User authentication via Facebook and other providers
 1. Front-end asset management using Bower
 1. Angular-based routing
@@ -233,6 +234,40 @@ Authorization policies are placed in /app/policies.
 
 In JS and Angular code, role-based authorization has been implemented to the
 extent of route access. See the Authentication section above.
+
+=== Attachment Library
+
+Most applications need some way of:
+1. Storing files uploaded by users
+2. Associating these uploads with models (for example, an attachment to a post,
+   a user profile pic etc.
+
+We provide a full featured, flexible solution right out of the box!
+
+The only catch is that we use FineUploader[http://fineuploader.com/] to carry
+out the actual uploads. If you're not developing an open-source application, a
+license must be purchased.
+
+Attachments belong to users. Users only ever have access to their own
+attachments. Each attachment can be attached to multiple objects - there is a
+many to many relationship between attachments and what they are attached to.
+
+See the following for more information:
+
+* Client-side code:
+  * /app/assets/javascripts/shared/angular/modules/attachment_library/
+  * /app/assets/javascripts/client/angular/controllers/app_ctrl.js
+
+* Server-side code:
+  * /app/models/attachment.rb
+  * /app/models/attachment_join.rb
+  * /app/controllers/attachments_controller.rb
+  * /app/controllers/attachment_joins_controller.rb
+  * /app/controllers/fine_uploader_controller.rb
+  * /app/policies/* (namesake policies for above controllers)
+  * /config/routes.rb
+
+COMING SOON...
 
 === Form Submission
 

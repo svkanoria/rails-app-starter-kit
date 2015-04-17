@@ -1,7 +1,9 @@
-angular.module('PostsCtrl', ['Post']).
+angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc']).
   controller('PostsCtrl', [
     '$scope', '$location', '$routeParams', 'flash', 'Post', 'initialData',
-    function ($scope, $location, $routeParams, flash, Post, initialData) {
+    'AttachmentLibrarySvc',
+    function ($scope, $location, $routeParams, flash, Post, initialData,
+              AttachmentLibrarySvc) {
       /**
        * The 'index' action.
        */
@@ -74,6 +76,8 @@ angular.module('PostsCtrl', ['Post']).
        * The 'edit' action.
        */
       $scope.actionEdit = function () {
+        AttachmentLibrarySvc.setVisible(true);
+
         $scope.post = initialData;
       };
 

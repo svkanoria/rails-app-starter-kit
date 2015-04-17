@@ -48,6 +48,7 @@ class User < ActiveRecord::Base
 
   has_many :authentications, dependent: :destroy
   has_many :posts, dependent: :destroy
+  has_many :attachments, dependent: :destroy
 
   # Skips password requirement when signing in via an external provider using
   # OmniAuth.
