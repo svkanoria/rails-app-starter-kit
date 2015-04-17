@@ -12,17 +12,17 @@ module ActsAsAttachmentOwner
     has_many :attachments, through: :attachment_joins
   end
 
-  # Returns all attachments, grouped by the roles they're attached in.
+  # Returns all attachment joins, grouped by role.
   #
-  # @return [Hash{String, Array<Attachment>}]
-  def all_attachments_by_role
+  # @return [Hash{String, Array<AttachmentJoin>}]
+  def all_attachment_joins_by_role
     result = {}
 
     attachment_joins.includes(:attachment).each do |attachment_join|
       role = attachment_join.role || 'default'
 
       result[role] ||= []
-      result[role] << Attachment.find(attachment_join.attachment_id)
+      result[role] << attachment_join
     end
 
     result

@@ -1,9 +1,9 @@
 <div class="attachment-drop">
   <ul class="dropped-attachments">
     <li ng-repeat="attachment in attachments" class="dropped-attachment">
-      <span class="detach-button">
-        <span class="glyphicon glyphicon-remove-circle"></span>
-      </span>
+      <a href="" class="detach-button" ng-click="detachAttachmentAt($index)">
+        <span class="glyphicon glyphicon-remove-circle"></span></a>
+
       <span class="attachment-name">
         <a href="{{attachment.url}}" target="_blank">
           {{attachment.id}}: {{attachment.name}}</a>
