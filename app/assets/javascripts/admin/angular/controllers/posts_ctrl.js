@@ -43,6 +43,7 @@ angular.module('PostsCtrl', []).
             { name: 'id', type: 'text' }, // See query-builder for why 'text'
             { name: 'created_at', type: 'date' }
           ],
+          initialColumns: ['message', 'id'],
           onSubmit: function () {
             $scope.dataTableInstance.ajax.reload(); // Reload the data table
           }

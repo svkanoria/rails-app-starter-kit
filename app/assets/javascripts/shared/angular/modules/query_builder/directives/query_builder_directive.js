@@ -12,16 +12,17 @@
  *       { name: 'some-name', type: 'some-type' },
  *         :
  *     ],
+ *     ?initialColumns: [ 'some-name', ... ], // Seed filters
  *     ?onSubmit: function () {
  *       // Generally, submit the created filter to the server
  *     }
  *   }
  *
  * All and only HTML5 input types can be used as column types.
- * Normally, it is best to use 'text' as it is the most flexible, and we won't
+ * Normally it is best to use 'text', as it is the most flexible, and we won't
  * really care about validation.
  *
- * Presently we do not support custom operators. However, we will do so in the
+ * Presently we do not support custom operators. However, we will do so in
  * future.
  * TODO Support custom operators
  *
@@ -62,11 +63,13 @@ angular.module('QueryBuilderDirective', []).
 
           /**
            * Adds a filter.
+           *
+           * @param [column] {string} - The initial column to choose, if any.
            */
-          scope.addFilter = function () {
+          scope.addFilter = function (column) {
             scope.filters.push({
               _id: nextFilterId++,
-              column: scope.options.columns[0].name
+              column: column || scope.options.columns[0].name
 
               // Let qb-filter decide what to set as 'values' and 'op'
             });
@@ -77,7 +80,7 @@ angular.module('QueryBuilderDirective', []).
           /**
            * Removes the filter at an index.
            *
-           * @param {Number} index - The index of the filter to remove.
+           * @param index {number} - The index of the filter to remove.
            */
           scope.removeFilter = function (index) {
             scope.filters.splice(index, 1);
@@ -98,6 +101,17 @@ angular.module('QueryBuilderDirective', []).
 
             form.$setPristine();
           };
+
+          // Add seed filters (if any and if necessary)
+          if (scope.filters.length === 0) {
+            var initialColumns = scope.options.initialColumns;
+
+            if (initialColumns) {
+              for (var i = 0; i < initialColumns.length; ++i) {
+                scope.addFilter(initialColumns[i]);
+              }
+            }
+          }
         }
       };
     }]);
