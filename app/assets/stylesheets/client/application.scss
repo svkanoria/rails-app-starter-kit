@@ -23,6 +23,7 @@
 @import '../shared/devise';
 
 // Styles for Angular directives
+@import '../shared/directives/flash_alerts';
 @import '../shared/directives/please_wait';
 @import '../shared/directives/query_builder';
 @import '../shared/directives/attachment_library';
