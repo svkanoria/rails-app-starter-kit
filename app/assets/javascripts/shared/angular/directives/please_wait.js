@@ -11,9 +11,7 @@ angular.module('PleaseWait', []).
    * method of 'PleaseWaitSvc' is greater than zero or not.
    *
    * Usage:
-   *   <div please-wait>
-   *     Custom HTML message
-   *   </div>
+   *   <please-wait></please-wait>
    */
   directive('pleaseWait', [
     'PleaseWaitSvc',
@@ -21,7 +19,6 @@ angular.module('PleaseWait', []).
       return {
         restrict: 'E',
         templateUrl: 'shared/directives/please_wait.html',
-        transclude: true,
         scope: {},
 
         link: function (scope, element, attrs) {

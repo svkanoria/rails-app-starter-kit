@@ -1,21 +1,27 @@
 // Variables
 
-$please-wait-top: 10px;
-$please-wait-width: 120px;
-$please-wait-padding: $padding-small-vertical $padding-small-horizontal;
-$please-wait-bg: transparentize($brand-info, 0.5);
-$please-wait-border-radius: $border-radius-small;
+$please-wait-top: 12px; // Trial and error
+$please-wait-color: $brand-warning;
+$please-wait-font-size: 21px; // Trial and error;
 
 // Styles
+
+@keyframes please-wait-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(359deg); }
+}
 
 .please-wait {
   position: fixed;
   top: $please-wait-top;
   left: 50%;
-  width: $please-wait-width;
-  margin-left: -$please-wait-width/2;
-  padding: $please-wait-padding;
-  background: $please-wait-bg;
-  border-radius: $please-wait-border-radius;
+  width: 40px;
+  margin-left: -20px;
   text-align: center;
+  color: $please-wait-color;
+  font-size: $please-wait-font-size;
+
+  > .glyphicon-cog {
+    animation: please-wait-spin 2s infinite linear;
+  }
 }
