@@ -5,19 +5,29 @@
  * * Detaching attachments from a server resource
  *
  * Usage:
- *   <attachment-drop attachments="Array expr"
+ *   <attachment-drop attachments="Object expr"
  *                    attachment-owner-id="some id"
  *                    attachment-owner-type="some server model class"
  *                    role="some role">
  *   </attachment-drop>
  *
- * The 'attachments' attribute must be passed an array of attachments in the
- * following format (at a minimum):
+ * The 'attachments' attribute must be provided in the following format:
  *
- *   [{ id: id, name: 'some name', url: 'some url', join_id: id2 }, ...]
+ *   {
+ *     role1: [
+ *       { id: id, name: 'some name', url: 'some url', join_id: id2 },
+ *         :
+ *     ],
+ *     role2: [ ... ],
+ *       :
+ *   }
  *
  * where 'join_id' is the id of the join table entry linking attachments to
  * attachment owners.
+ *
+ * The 'role' attribute narrows the focus of the directive to just one role
+ * within the 'attachments' object. Thus, note that you need one directive per
+ * role.
  */
 angular.module('AttachmentDrop', ['AttachmentJoin']).
   directive('attachmentDrop', [
@@ -33,18 +43,25 @@ angular.module('AttachmentDrop', ['AttachmentJoin']).
         },
 
         link: function (scope, element, attrs) {
+          if (!scope.attachments[attrs.role]) {
+            scope.attachments[attrs.role] = [];
+          }
+
+          // The array of attachments of the provided role
+          scope.roleAttachments = scope.attachments[attrs.role];
+
           /**
            * Detaches an attachment from a server resource.
            *
            * @param index {number} - The index of the attachment in
-           *   scope.attachments
+           *   scope.roleAttachments
            */
           scope.detachAttachmentAt = function (index) {
-            var joinId = scope.attachments[index].join_id;
+            var joinId = scope.roleAttachments[index].join_id;
 
             AttachmentJoin.delete({attachmentJoinId: joinId},
               function (response) {
-                scope.attachments.splice(index, 1);
+                scope.roleAttachments.splice(index, 1);
               },
               function (failureResponse) {
                 // Do something on failure
@@ -67,7 +84,7 @@ angular.module('AttachmentDrop', ['AttachmentJoin']).
               };
 
               AttachmentJoin.save(attachmentAttrs, function (response) {
-                scope.attachments.push(response);
+                scope.roleAttachments.push(response);
               }, function (failureResponse) {
                 // Do something on failure
               });

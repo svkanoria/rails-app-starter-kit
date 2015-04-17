@@ -93,6 +93,21 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
    You must then send this token with each request, in the 'X-App-Access-Token'
    header.
 
+1. If you wish to user the attachment library, set the following enrironment
+   variables:
+
+    AWS_ACCESS_KEY_ID=<Your AWS Access Key ID>
+    AWS_SECRET_ACCESS_KEY=<Your AWS Secret Access Key>
+    AWS_REGION=<The AWS region you are operating out of>
+    AWS_S3_BUCKET=<The S3 bucket you want to store your uploads in>
+
+   We recommend you provision an AWS IAM user with limited permissions, so that
+   all unrelated AWS data remains secure. These permissions mut of course
+   include uploading and deleting objects from the bucket.
+
+   Also ensure that the bucket allows CORS, including the DELETE method:
+   http://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html
+
 == App Structure
 
 The application structure is similar to a standard Rails app, with certain
