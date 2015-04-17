@@ -23,6 +23,9 @@ $attachment-drop-area-active-bg: darken($attachment-drop-area-bg, 15%);
   padding: $dropped-attachment-padding;
   background: $dropped-attachment-bg;
   border-radius: $dropped-attachment-border-radius;
+
+  &.ng-enter { animation: fadeIn 0.3s; }
+  &.ng-leave { animation: fadeOut 0.3s; }
 }
 
 .attachment-drop-area {
