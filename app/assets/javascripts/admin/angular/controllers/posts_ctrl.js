@@ -19,7 +19,11 @@ angular.module('PostsCtrl', []).
           searching: false, // Since we are using query builder
           processing: true, // Show the 'processing' indicator
           columns: [
-            { data: 'id' },
+            { data: 'id',
+              render: function (data, type, row, meta) {
+                return '<a href="/#/posts/' + data + '">' + data + '</a>';
+              }
+            },
             { data: 'message' },
             { data: 'created_at' }
           ],

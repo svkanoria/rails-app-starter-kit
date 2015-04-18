@@ -282,8 +282,6 @@ See the following for more information:
   * /app/policies/* (namesake policies for above controllers)
   * /config/routes.rb
 
-COMING SOON...
-
 === Form Submission
 
 Form validation should generally take place at the Angular end. However, this
