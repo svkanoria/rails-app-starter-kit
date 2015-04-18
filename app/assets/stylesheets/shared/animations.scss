@@ -1,0 +1,15 @@
+// Contains animation utilities and custom animations.
+// Try not to add too many custom animations; use the included Animate.css
+// library whenever possible.
+
+@keyframes spin-glyphicon {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(359deg); }
+}
+
+// Makes any glyphicon spin indefinitely.
+// For example, <span class="glyphicon glyphicon-refresh spin-glyphicon"></span>
+// creates a spinner!
+.spin-glyphicon {
+  animation: spin-glyphicon 2s infinite linear;
+}

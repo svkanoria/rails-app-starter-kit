@@ -17,6 +17,8 @@ angular.module('FineUploader', ['AttachmentLibrarySvc']).
             .fineUploaderS3(scope.options)
             .on('submit', function (id, name) {
               AttachmentLibrarySvc.incrementAlertCount(1);
+              AttachmentLibrarySvc.setUploadsInProgress(true);
+              scope.$apply();
             })
             // Enable user to hide the progress bar when done
             .on('complete', function (event, id, name, responseJSON) {
@@ -42,6 +44,25 @@ angular.module('FineUploader', ['AttachmentLibrarySvc']).
               if (responseJSON.success) {
                 AttachmentLibrarySvc.emitUploadSuccessful();
               }
+            })
+            .on('allComplete', function () {
+              AttachmentLibrarySvc.setUploadsInProgress(false);
+              scope.$apply();
+            })
+            // 'complete' is not fired when an upload is cancelled, so we must
+            // handle this case separately.
+            .on('cancel', function () {
+              AttachmentLibrarySvc.incrementAlertCount(-1);
+
+              // 'allComplete' is not fired when there are all and only
+              // cancellations. However, we do know that cancelled upload alerts
+              // are removed immediately. So all cancellation => no alerts =>
+              // no uploads in progress!
+              if (AttachmentLibrarySvc.getAlertCount() == 0) {
+                AttachmentLibrarySvc.setUploadsInProgress(false);
+              }
+
+              scope.$apply();
             });
 
           // Hide the 'Upload' button when in alert-only mode

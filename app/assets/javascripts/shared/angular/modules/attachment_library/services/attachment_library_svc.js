@@ -5,6 +5,7 @@ angular.module('AttachmentLibrarySvc', []).
     function ($rootScope) {
       var visible = false;
       var minimized = true;
+      var uploadsInProgress = false;
       var alertCount = 0;
 
       /**
@@ -48,6 +49,26 @@ angular.module('AttachmentLibrarySvc', []).
       };
 
       /**
+       * Gets whether there are any uploads currently in progress.
+       *
+       * @returns {boolean} Whether uploads are in progress or not.
+       */
+      var getUploadsInProgress = function () {
+        return uploadsInProgress;
+      };
+
+      /**
+       * Sets whether there are any uploads currently in progress.
+       *
+       * Must be called by the uploader directive.
+       *
+       * @param {boolean} value - Whether uploads are in progress or not.
+       */
+      var setUploadsInProgress = function (value) {
+        uploadsInProgress = value;
+      };
+
+      /**
        * Gets the number of alerts pending user action.
        *
        * @returns {number}
@@ -88,6 +109,8 @@ angular.module('AttachmentLibrarySvc', []).
         setVisible: setVisible,
         getMinimized: getMinimized,
         toggleMinimized: toggleMinimized,
+        getUploadsInProgress: getUploadsInProgress,
+        setUploadsInProgress: setUploadsInProgress,
         getAlertCount: getAlertCount,
         incrementAlertCount: incrementAlertCount,
         emitUploadSuccessful: emitUploadSuccessful

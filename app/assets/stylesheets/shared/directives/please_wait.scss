@@ -6,11 +6,6 @@ $please-wait-font-size: 21px; // Trial and error;
 
 // Styles
 
-@keyframes please-wait-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(359deg); }
-}
-
 .please-wait {
   position: fixed;
   top: $please-wait-top;
@@ -20,8 +15,4 @@ $please-wait-font-size: 21px; // Trial and error;
   text-align: center;
   color: $please-wait-color;
   font-size: $please-wait-font-size;
-
-  > .glyphicon-cog {
-    animation: please-wait-spin 2s infinite linear;
-  }
 }

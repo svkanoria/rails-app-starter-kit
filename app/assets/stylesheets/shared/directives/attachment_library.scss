@@ -58,11 +58,13 @@ $attachment-drag-helper-border-radius: $border-radius-small;
   padding: 10px 13px; // Trial and error
   border-radius: 50%;
 
-  &.minimized-add {
+  // Only animate the paperclip icon (i.e. when no uploads in progress), since
+  // the spinner is already animated
+  &.no-uploads.minimized-add {
     animation: attachment-library-toggle-rotate 0.4s reverse;
   }
 
-  &.minimized-remove {
+  &.no-uploads.minimized-remove {
     animation: attachment-library-toggle-rotate 0.4s;
   }
 }

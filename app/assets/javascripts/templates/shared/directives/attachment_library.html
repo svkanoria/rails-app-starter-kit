@@ -8,9 +8,10 @@
   </div>
 
   <div class="attachment-library-toggle btn btn-primary"
-       ng-class="{minimized: alSvc.getMinimized()}"
+       ng-class="{minimized: alSvc.getMinimized(), 'no-uploads': !alSvc.getUploadsInProgress()}"
        ng-click="alSvc.toggleMinimized()">
 
-    <span class="glyphicon glyphicon-paperclip"></span>
+    <span class="glyphicon"
+          ng-class="{'glyphicon-paperclip': !alSvc.getUploadsInProgress(), 'glyphicon-refresh spin-glyphicon': alSvc.getUploadsInProgress()}"></span>
   </div>
 </div>
