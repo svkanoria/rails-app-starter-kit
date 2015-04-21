@@ -13,6 +13,35 @@ angular.module('FineUploader', ['AttachmentLibrarySvc']).
         },
 
         link: function (scope, element, attrs) {
+          //////////////////
+          // Helper Stuff //
+          //////////////////
+
+          //All statuses that qualify an upload as 'idle'
+          var IDLE_STATUSES = [
+            qq.status.UPLOAD_FAILED, qq.status.UPLOAD_SUCCESSFUL,
+            qq.status.CANCELED, qq.status.REJECTED, qq.status.DELETED,
+            qq.status.DELETE_FAILED];
+
+          /**
+           * Returns the number of uploads in progress (i.e. not idle).
+           *
+           * @returns {number}
+           */
+          function uploadsInProgress () {
+            var allUploads = $(element).fineUploader('getUploads');
+
+            var idleUploads = $(element).fineUploader('getUploads', {
+              status: IDLE_STATUSES
+            });
+
+            return allUploads.length - idleUploads.length;
+          }
+
+          //////////////////////
+          // Procedural Stuff //
+          //////////////////////
+
           $(element)
             .fineUploaderS3(scope.options)
             .on('submit', function (id, name) {
@@ -49,16 +78,16 @@ angular.module('FineUploader', ['AttachmentLibrarySvc']).
               AttachmentLibrarySvc.setUploadsInProgress(false);
               scope.$apply();
             })
-            // 'complete' is not fired when an upload is cancelled, so we must
-            // handle this case separately.
+            // 'complete' (and sometimes even 'allComplete') is not fired when
+            // an upload is cancelled, so we must handle this case separately.
             .on('cancel', function () {
+              // Since cancelled upload alerts are removed automatically
               AttachmentLibrarySvc.incrementAlertCount(-1);
 
-              // 'allComplete' is not fired when there are all and only
-              // cancellations. However, we do know that cancelled upload alerts
-              // are removed immediately. So all cancellation => no alerts =>
-              // no uploads in progress!
-              if (AttachmentLibrarySvc.getAlertCount() == 0) {
+              // Note the comparison against 1, and not 0. This is because the
+              // just-cancelled upload has not yet marked as 'canceled' by
+              // FineUploader.
+              if (uploadsInProgress() <= 1) {
                 AttachmentLibrarySvc.setUploadsInProgress(false);
               }
 

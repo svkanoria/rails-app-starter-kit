@@ -100,13 +100,25 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
     AWS_SECRET_ACCESS_KEY=<Your AWS Secret Access Key>
     AWS_REGION=<The AWS region you are operating out of>
     AWS_S3_BUCKET=<The S3 bucket you want to store your uploads in>
+    AWS_CF_KEY_PAIR_ID=<The CloudFront Key Pair Id>
+    AWS_CF_PRIVATE_KEY=<Contents of the Key Pair .pem file (see below)>
+    AWS_CF_DISTRIBUTION=<The CloudFront distribution linked to the bucket,
+      starting with the protocol (http:// or https://)>
 
    We recommend you provision an AWS IAM user with limited permissions, so that
-   all unrelated AWS data remains secure. These permissions mut of course
+   all unrelated AWS data remains secure. These permissions must of course
    include uploading and deleting objects from the bucket.
 
    Also ensure that the bucket allows CORS, including the DELETE method:
    http://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html
+
+   Our opinionated view is that S3 objects must always be accessed through
+   CloudFront, rather than directly. To set up CloudFront, see:
+   http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/PrivateContent.html
+
+   Also create a CloudFront Key Pair, to be used for generating signed URLS for
+   protected access to your S3 objects. This Key Pair will be available for
+   download as a .pem file. Keep this file private!
 
 == App Structure
 

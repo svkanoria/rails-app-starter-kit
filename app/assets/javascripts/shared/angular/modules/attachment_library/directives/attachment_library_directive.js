@@ -33,6 +33,17 @@ angular.module('AttachmentLibraryDirective', ['AttachmentLibrarySvc']).
 
         link: function (scope, element, attrs) {
           scope.alSvc = AttachmentLibrarySvc;
+
+          var panel = $(element).children().first();
+
+          // Whenever a file starts uploading, bring its progress bar into view,
+          // by scrolling to the bottom.
+          scope.$watch('alSvc.getUploadsInProgress()',
+            function (newValue, oldValue) {
+              if (newValue && !oldValue) {
+                panel.animate({ scrollTop: panel[0].scrollHeight }, 300);
+              }
+            });
         }
       }
     }]);
