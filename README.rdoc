@@ -118,7 +118,10 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
 
    Also create a CloudFront Key Pair, to be used for generating signed URLS for
    protected access to your S3 objects. This Key Pair will be available for
-   download as a .pem file. Keep this file private!
+   download as a .pem file.
+
+   Set AWS_CF_PRIVATE_KEY to the entire contents of the .pem file as one long
+   string, manually inserting '\n' at the end of each line.
 
 == App Structure
 

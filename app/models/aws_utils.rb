@@ -83,29 +83,40 @@ class AwsUtils
 
   # Returns a signed CloudFront URL.
   #
-  # @param url [String] the URL to sign
+  # @param url [String] the S3 URL to sign
   # @param expires_in [ActiveSupport::Duration] The duration for which the URL
   #   should be valid
   #
   # @return [String] the signed URL
   def self.cf_signed_url (url, expires_in = 24.hours)
+    s3_key = s3_parse_url(url)[:key]
+
+    # 1. Base URL
+    cf_url = "#{Rails.application.secrets.aws_cf_distribution}/#{URI.encode(s3_key)}"
+
+    # 2. Separator
+    separator = cf_url =~ /\?/ ? '&' : '?'
+
+    # 3. Expires at
     # AWS works on UTC, so make sure we are not using local time
     expires_at = (Time.zone.now.getutc + expires_in).to_i.to_s
 
     private_key = OpenSSL::PKey::RSA.new(
-        Rails.application.secrets.aws_cf_private_key)
+        Rails.application.secrets.aws_cf_private_key.gsub('\n', "\n"))
 
-    policy = %Q[{"Statement":[{"Resource":"#{url}","Condition":{"DateLessThan":{"AWS:EpochTime":#{expires_at}}}}]}]
+    policy = %Q[{"Statement":[{"Resource":"#{cf_url}","Condition":{"DateLessThan":{"AWS:EpochTime":#{expires_at}}}}]}]
     signature = Base64.strict_encode64(
         private_key.sign(OpenSSL::Digest::SHA1.new, policy))
 
+    # 4. Signature
     # Not sure why we need this, but it's in Amazon's perl script and it seems
     # necessary. Different base64 implementations maybe?
     signature.tr!('+=/', '-_~')
 
-    separator = url =~ /\?/ ? '&' : '?'
+    # 5. Key Pair ID
+    key_pair_id = Rails.application.secrets.aws_cf_key_pair_id
 
-    # The signed URL
-    "#{url}#{separator}Expires=#{exp_at}&Signature=#{signature}&Key-Pair-Id=#{ENV['AWS_CF_KEY_PAIR_ID']}"
+    # The signed URL (Concatenation of 1 through 5)
+    "#{cf_url}#{separator}Expires=#{expires_at}&Signature=#{signature}&Key-Pair-Id=#{key_pair_id}"
   end
 end

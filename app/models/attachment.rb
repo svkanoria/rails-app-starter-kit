@@ -21,12 +21,12 @@ class Attachment < ActiveRecord::Base
   has_many :attachment_joins, dependent: :destroy
 
   # Returns a protected access URL.
+  # Always use this URL to access the attachment.
   #
-  # The 'raw' URL should never be used to access the attachment directly, as
-  # there is no guarantee it will work (depending on backing store security
-  # settings).
+  # The 'raw' URL should not be used directly, as there is no guarantee it'll
+  # work (depending on backing store security settings).
   #
-  # @return [String]git ad
+  # @return [String]
   def access_url
     AwsUtils.cf_signed_url(url)
   end
