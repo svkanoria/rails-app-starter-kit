@@ -15,11 +15,14 @@ var app = angular.module('App', [
   'Post',
   'PostsCtrlInitSvc',
   'AttachmentJoin',
+  'Attachment',
+  'AttachmentsCtrlInitSvc',
 
   // Controllers
   'AppCtrl',
   'HomeCtrl',
   'PostsCtrl',
+  'AttachmentsCtrl',
 
   // Directives
   'AuthenticationLinks',

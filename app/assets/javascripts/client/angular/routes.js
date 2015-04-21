@@ -47,6 +47,17 @@ app.config([
         }
       }).
 
+      // Attachment routes
+      when('/attachments/:id', {
+        templateUrl: 'client/controllers/attachments/show.html',
+        controller: 'AttachmentsCtrl',
+        resolve: {
+          auth1: R.requireSignIn(),
+          auth2: R.requireServerAuth('/attachments/:id'),
+          initialData: R.initialData('AttachmentsCtrl', 'show')
+        }
+      }).
+
       // Error routes
       when('/unauthorized', {
         templateUrl: 'shared/401.html'

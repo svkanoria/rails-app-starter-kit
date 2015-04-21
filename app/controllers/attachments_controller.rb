@@ -14,4 +14,11 @@ class AttachmentsController < ApplicationController
 
     respond_with @attachments_adapter
   end
+
+  def show
+    @attachment = Attachment.find(params[:id])
+    authorize @attachment
+
+    respond_with @attachment
+  end
 end

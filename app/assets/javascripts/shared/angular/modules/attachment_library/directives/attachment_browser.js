@@ -20,10 +20,8 @@ angular.module('AttachmentBrowser', [
               ajax: {
                 url: '/attachments.json',
                 data: function (d) {
-                  // Add the following to all AJAX requests:
-                  // The URL column (for rendering the name as a link)
-                  d.columns.push({ data: 'url' });
-                  // The query builder filters (for advanced result filtering)
+                  // Just add the query builder filters to all AJAX requests
+                  // sent by the data table!
                   d.filters = scope.queryBuilderFilters;
                 }
               },
@@ -33,8 +31,8 @@ angular.module('AttachmentBrowser', [
                 { data: 'id' },
                 { data: 'name',
                   render: function (data, type, row, meta) {
-                    return '<a href="' + row.url + '" target="_blank">'
-                      + data + '</a>';
+                    return '<a href="/#/attachments/' + row.id +
+                      '" target="_blank">' + data + '</a>';
                   }
                 },
                 { data: 'created_at' }
