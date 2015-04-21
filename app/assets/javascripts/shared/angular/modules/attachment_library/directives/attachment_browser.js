@@ -32,7 +32,9 @@ angular.module('AttachmentBrowser', [
                 { data: 'name',
                   render: function (data, type, row, meta) {
                     return '<a href="/#/attachments/' + row.id +
-                      '" target="_blank">' + data + '</a>';
+                      '" target="_blank">' + data +
+                      ' <span class="glyphicon glyphicon-new-window"></span>' +
+                      '</a>';
                   }
                 },
                 { data: 'created_at' }
