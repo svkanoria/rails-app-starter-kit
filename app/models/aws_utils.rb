@@ -1,5 +1,9 @@
 # AWS utilities.
 class AwsUtils
+  ######
+  # S3 #
+  ######
+
   # S3 URL
   S3_URL = 'https://s3.amazonaws.com'
 
@@ -71,5 +75,37 @@ class AwsUtils
     delete_params = s3_parse_url(url)
 
     AwsUtils.S3.delete_object(delete_params)
+  end
+
+  ##############
+  # CloudFront #
+  ##############
+
+  # Returns a signed CloudFront URL.
+  #
+  # @param url [String] the URL to sign
+  # @param expires_in [ActiveSupport::Duration] The duration for which the URL
+  #   should be valid
+  #
+  # @return [String] the signed URL
+  def self.cf_signed_url (url, expires_in = 24.hours)
+    # AWS works on UTC, so make sure we are not using local time
+    expires_at = (Time.zone.now.getutc + expires_in).to_i.to_s
+
+    private_key = OpenSSL::PKey::RSA.new(
+        Rails.application.secrets.aws_cf_private_key)
+
+    policy = %Q[{"Statement":[{"Resource":"#{url}","Condition":{"DateLessThan":{"AWS:EpochTime":#{expires_at}}}}]}]
+    signature = Base64.strict_encode64(
+        private_key.sign(OpenSSL::Digest::SHA1.new, policy))
+
+    # Not sure why we need this, but it's in Amazon's perl script and it seems
+    # necessary. Different base64 implementations maybe?
+    signature.tr!('+=/', '-_~')
+
+    separator = url =~ /\?/ ? '&' : '?'
+
+    # The signed URL
+    "#{url}#{separator}Expires=#{exp_at}&Signature=#{signature}&Key-Pair-Id=#{ENV['AWS_CF_KEY_PAIR_ID']}"
   end
 end

@@ -20,6 +20,17 @@ class Attachment < ActiveRecord::Base
   belongs_to :user
   has_many :attachment_joins, dependent: :destroy
 
+  # Returns a protected access URL.
+  #
+  # The 'raw' URL should never be used to access the attachment directly, as
+  # there is no guarantee it will work (depending on backing store security
+  # settings).
+  #
+  # @return [String]git ad
+  def access_url
+    AwsUtils.cf_signed_url(url)
+  end
+
   private
 
   def populate_missing_fields
