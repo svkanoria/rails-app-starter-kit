@@ -23,12 +23,20 @@ class Attachment < ActiveRecord::Base
   # Returns a protected access URL.
   # Always use this URL to access the attachment.
   #
-  # The 'raw' URL should not be used directly, as there is no guarantee it'll
+  # The 'raw' URL should not be used directly, as there's no guarantee it'll
   # work (depending on backing store security settings).
   #
   # @return [String]
   def access_url
     AwsUtils.cf_signed_url(url)
+  end
+
+  # Returns a URL to a small thumbnail image.
+  # Falls back on a placeholder if no thumbnail could be generated.
+  #
+  # @return [String] a thumbnail or placeholder URL
+  def small_thumb
+    Dragonfly.app.fetch_url(access_url).thumb('80x80').url
   end
 
   private
