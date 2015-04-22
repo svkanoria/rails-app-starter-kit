@@ -84,11 +84,11 @@ class AwsUtils
   # Returns a signed CloudFront URL.
   #
   # @param url [String] the S3 URL to sign
-  # @param expires_in [ActiveSupport::Duration] The duration for which the URL
-  #   should be valid
+  # @param expires_at [ActiveSupport::TimeWithZone] the date/time until which
+  #   the URL should be valid (must be UTC time)
   #
   # @return [String] the signed URL
-  def self.cf_signed_url (url, expires_in = 24.hours)
+  def self.cf_signed_url (url, expires_at = (Time.current + 24.hours))
     s3_key = s3_parse_url(url)[:key]
 
     # 1. Base URL
@@ -99,12 +99,12 @@ class AwsUtils
 
     # 3. Expires at
     # AWS works on UTC, so make sure we are not using local time
-    expires_at = (Time.zone.now.getutc + expires_in).to_i.to_s
+    expires_at_str = expires_at.to_i.to_s
 
     private_key = OpenSSL::PKey::RSA.new(
         Rails.application.secrets.aws_cf_private_key.gsub('\n', "\n"))
 
-    policy = %Q[{"Statement":[{"Resource":"#{cf_url}","Condition":{"DateLessThan":{"AWS:EpochTime":#{expires_at}}}}]}]
+    policy = %Q[{"Statement":[{"Resource":"#{cf_url}","Condition":{"DateLessThan":{"AWS:EpochTime":#{expires_at_str}}}}]}]
     signature = Base64.strict_encode64(
         private_key.sign(OpenSSL::Digest::SHA1.new, policy))
 
@@ -117,6 +117,6 @@ class AwsUtils
     key_pair_id = Rails.application.secrets.aws_cf_key_pair_id
 
     # The signed URL (Concatenation of 1 through 5)
-    "#{cf_url}#{separator}Expires=#{expires_at}&Signature=#{signature}&Key-Pair-Id=#{key_pair_id}"
+    "#{cf_url}#{separator}Expires=#{expires_at_str}&Signature=#{signature}&Key-Pair-Id=#{key_pair_id}"
   end
 end

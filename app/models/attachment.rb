@@ -2,12 +2,14 @@
 #
 # Table name: attachments
 #
-#  id         :integer          not null, primary key
-#  name       :string
-#  url        :string(1024)
-#  user_id    :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                :integer          not null, primary key
+#  name              :string
+#  url               :string(1024)
+#  user_id           :integer
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  access_url        :string(1024)
+#  access_expires_at :datetime
 #
 
 class Attachment < ActiveRecord::Base
@@ -20,6 +22,16 @@ class Attachment < ActiveRecord::Base
   belongs_to :user
   has_many :attachment_joins, dependent: :destroy
 
+  # Whether the access URL has expired.
+  #
+  # @param time [ActiveSupport::TimeWithZone] the time for which to ascertain
+  # expiry
+  #
+  # @return [true, false]
+  def access_expired? (time = Time.current)
+    access_expires_at && time > access_expires_at
+  end
+
   # Returns a protected access URL.
   # Always use this URL to access the attachment.
   #
@@ -31,7 +43,30 @@ class Attachment < ActiveRecord::Base
   #
   # @return [String]
   def access_url (expires_in = 24.hours)
-    AwsUtils.cf_signed_url(url, expires_in)
+    now = Time.current
+
+    if self[:access_url] && !access_expired?(now)
+      self[:access_url]
+    else
+      new_access_expires_at = now + expires_in
+
+      # Add more stores as and when supported
+      new_access_url =
+          case
+            when url.start_with?(AwsUtils::S3_URL)
+              # Sneakily double the validity!
+              # This prevents an access URL from being returned with not enough
+              # time left on it.
+              AwsUtils.cf_signed_url(url, new_access_expires_at + expires_in)
+            else
+              url
+          end
+
+      update_columns access_url: new_access_url,
+                     access_expires_at: new_access_expires_at
+
+      new_access_url
+    end
   end
 
   # Returns the file extension name (including the '.').
