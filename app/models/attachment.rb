@@ -23,20 +23,52 @@ class Attachment < ActiveRecord::Base
   # Returns a protected access URL.
   # Always use this URL to access the attachment.
   #
-  # The 'raw' URL should not be used directly, as there's no guarantee it'll
+  # The 'raw' URL should not be used directly, as there is no guarantee it'll
   # work (depending on backing store security settings).
   #
+  # @param expires_in [ActiveSupport::Duration] The duration for which the URL
+  #   should be valid
+  #
   # @return [String]
-  def access_url
-    AwsUtils.cf_signed_url(url)
+  def access_url (expires_in = 24.hours)
+    AwsUtils.cf_signed_url(url, expires_in)
+  end
+
+  # Returns the file extension name (including the '.').
+  #
+  # @return [String]
+  def extname
+    File.extname(url)
+  end
+
+  # Returns the MIME type.
+  #
+  # @return [String]
+  def mime_type
+    Rack::Mime.mime_type(extname)
+  end
+
+  # Returns whether this is a standard web image (PNG or JPEG).
+  #
+  # @return [true, false]
+  def web_image?
+    Rack::Mime.match?(mime_type, 'image/*')
   end
 
   # Returns a URL to a small thumbnail image.
-  # Falls back on a placeholder if no thumbnail could be generated.
+  # Falls back on a placeholder image if thumbnail generation is not supported
+  # for this type of attachment.
+  #
+  # @param size [String] a size as accepted by ImageMagick. See
+  #   http://markevans.github.io/dragonfly/imagemagick/ for reference.
   #
   # @return [String] a thumbnail or placeholder URL
-  def small_thumb
-    Dragonfly.app.fetch_url(access_url).thumb('80x80').url
+  def thumb (size = '80x80#')
+    if web_image?
+      Dragonfly.app.fetch_url(access_url).thumb(size).url
+    else
+      'http://placehold.it/40&text=No+Image';
+    end
   end
 
   private
@@ -54,7 +86,7 @@ class Attachment < ActiveRecord::Base
   # Initiates a request to delete an attachment from the backing store.
   #
   # Extracted out into a class method, so that it can be used to delete
-  # just-uploaded files whose corresponding Attachment model was not created
+  # just-uploaded files whose corresponding Attachment models were not created
   # successfully.
   #
   # @param url [String] the attachment URL
