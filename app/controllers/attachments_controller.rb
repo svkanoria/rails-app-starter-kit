@@ -9,8 +9,10 @@ class AttachmentsController < ApplicationController
     attachments_filter = QueryBuilder.new(policy_scope(Attachment),
                                           params[:filters])
 
-    @attachments_adapter = DataTableAdapter.new(Attachment, params,
-                                                attachments_filter.query)
+    # We need the additional 'url' column for including the small thumb in the
+    # rendered JSON (see the corresponding JBuilder file).
+    @attachments_adapter = DataTableAdapter.new(
+        Attachment, params, attachments_filter.query, ['url'])
 
     respond_with @attachments_adapter
   end

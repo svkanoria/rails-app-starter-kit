@@ -5,5 +5,6 @@ json.recordsFiltered @attachments_adapter.records_filtered
 json.data do
   json.array! @attachments_adapter.data do |attachment|
     json.(attachment, :id, :name, :created_at)
+    json.small_thumb attachment.small_thumb
   end
 end

@@ -25,7 +25,12 @@ class DataTableAdapter
   # @param request_params [Hash] the HTTP request parameters, as is
   # @param seed_query [ActiveRecord::Relation] the query to use as the "base"
   #   for building upon. If not provided, model_klass is used.
-  def initialize (model_klass, request_params, seed_query = nil)
+  # @param extra_columns [Array<String>] any extra columns to be selected from
+  #   the model. This can be useful if the JSON being rendered depends on
+  #   columns that are not being requested by the client.
+  def initialize (model_klass, request_params, seed_query = nil,
+                  extra_columns = nil)
+
     @model_klass = model_klass
     @request_params = request_params
     @data = seed_query || model_klass
@@ -41,7 +46,7 @@ class DataTableAdapter
 
     apply_sorting
     apply_pagination
-    apply_column_selection
+    apply_column_selection(extra_columns)
   end
 
   private
@@ -116,7 +121,7 @@ class DataTableAdapter
     @data = @data.limit(@length) unless @length == -1
   end
 
-  def apply_column_selection
-    @data = @data.select(@column_names)
+  def apply_column_selection (extra_columns = nil)
+    @data = @data.select(@column_names + (extra_columns || []))
   end
 end

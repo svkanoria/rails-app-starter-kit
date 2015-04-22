@@ -15,6 +15,29 @@ angular.module('AttachmentBrowser', [
           // datatable) must be set during pre-link. By post-link, it will be
           // too late, as the children will be linked already.
           pre: function (scope, element, attrs) {
+            //////////////////
+            // Helper Stuff //
+            //////////////////
+
+            /**
+             * Returns the name rendered using custom HTML.
+             * Parameters are as required by the DataTables API.
+             *
+             * @returns {string} HTML string.
+             */
+            function renderName (data, type, row, meta) {
+              return '<span>'
+                + '<img src="' + row.small_thumb + '"> '
+                + '<a href="/#/attachments/' + row.id + '" target="_blank">'
+                  + data
+                  + ' <span class="glyphicon glyphicon-new-window"></span>'
+                + '</a></span>';
+            }
+
+            //////////////////////
+            // Procedural Stuff //
+            //////////////////////
+
             scope.dataTableOptions = {
               serverSide: true,
               ajax: {
@@ -29,14 +52,7 @@ angular.module('AttachmentBrowser', [
               processing: true, // Show the 'processing' indicator
               columns: [
                 { data: 'id' },
-                { data: 'name',
-                  render: function (data, type, row, meta) {
-                    return '<a href="/#/attachments/' + row.id +
-                      '" target="_blank">' + data +
-                      ' <span class="glyphicon glyphicon-new-window"></span>' +
-                      '</a>';
-                  }
-                },
+                { data: 'name', render: renderName },
                 { data: 'created_at' }
               ],
               // Ensure table element has an id for this to work!
