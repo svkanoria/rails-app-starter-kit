@@ -14,6 +14,19 @@
 class Post < ActiveRecord::Base
   acts_as_tenant :tenant
 
+  include ActsAsAttachmentOwner
+
+  acts_as_attachment_owner(
+      accepts_roles: [
+          { image: {
+              count: 1,
+              filter: lambda { |attachment, post|
+                attachment.user_id == post.user_id
+              }
+          } },
+          :contributed_image
+      ])
+
   validates :message, presence: true, length: { minimum: 10, maximum: 140 }
   validates :user_id, presence: true
 

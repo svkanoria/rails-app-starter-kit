@@ -2,21 +2,26 @@
 // For a list of Bootstrap variables for use/modification, see
 // https://github.com/twbs/bootstrap-sass/blob/master/assets/stylesheets/bootstrap/_variables.scss.
 @import "bootstrap-sprockets";
-// See comments in assets/stylesheets/bootstrap-custom.scss
+// See comments in /app/assets/stylesheets/bootstrap-custom.scss
 @import "bootstrap-custom";
 
 @import "rails_bootstrap_forms";
+
+// Animate.css.
+// For how to use with Angular, see
+// See http://odetocode.com/blogs/scott/archive/2014/02/25/easy-animations-for-angularjs-with-animate-css.aspx.
+@import "animate-css/animate";
 
 // All styling variables.
 // Imported first, so that variables can be used in any other styling file.
 @import '../shared/variables';
 
-// Canned animations for Angular
-@import '../shared/animations';
-
 // General styles (layout, header, footer, components etc.)
 @import '../shared/layout';
+@import '../shared/animations';
 @import '../shared/devise';
 
 // Styles for Angular directives
-@import '../shared/directives/please-wait';
+@import '../shared/directives/flash_alerts';
+@import '../shared/directives/please_wait';
+@import '../shared/directives/query_builder';

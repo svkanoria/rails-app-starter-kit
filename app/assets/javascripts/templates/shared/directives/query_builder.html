@@ -1,0 +1,20 @@
+<form class="query-builder form-inline" novalidate>
+  <div class="filter" ng-repeat="filter in filters track by filter._id">
+    <a href="" class="filter-remove" ng-click="removeFilter($index)">
+      <span class="glyphicon glyphicon-remove-circle"></span></a>
+
+    <qb-filter qb-options="options" model="filter"></qb-filter>
+  </div>
+
+  <a href="" class="filter-add" ng-click="addFilter()">
+    <span class="glyphicon glyphicon-plus-sign"></span>
+    Add Filter
+  </a>
+  <br/>
+
+  <button type="button" class="btn"
+          ng-class="{'btn-primary': form.$dirty, 'btn-default': form.$pristine}"
+          ng-click="submit()">
+    Apply Filters
+  </button>
+</form>

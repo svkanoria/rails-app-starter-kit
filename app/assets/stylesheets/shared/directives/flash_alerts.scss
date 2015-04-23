@@ -1,0 +1,26 @@
+// Variables
+
+$flash-alerts-top: $navbar-height + $padding-small-vertical;
+$flash-alerts-padding: 0 $padding-small-horizontal;
+
+$flash-alert-padding: $padding-small-vertical $padding-small-horizontal;
+
+// Styles
+
+.alerts {
+  position: fixed;
+  top: $flash-alerts-top;
+  left: 0;
+  width: 100%;
+  padding: $flash-alerts-padding;
+  text-align: center;
+
+  > .alert {
+    display: inline-block;
+    padding: $flash-alert-padding;
+
+    > .close {
+      line-height: 0.9; // Trial and error
+    }
+  }
+}

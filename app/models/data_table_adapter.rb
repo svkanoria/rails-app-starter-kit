@@ -25,7 +25,12 @@ class DataTableAdapter
   # @param request_params [Hash] the HTTP request parameters, as is
   # @param seed_query [ActiveRecord::Relation] the query to use as the "base"
   #   for building upon. If not provided, model_klass is used.
-  def initialize (model_klass, request_params, seed_query = nil)
+  # @param extra_columns [Array<String>] any extra columns to be selected from
+  #   the model. This can be useful if the JSON being rendered depends on
+  #   columns that are not being requested by the client.
+  def initialize (model_klass, request_params, seed_query = nil,
+                  extra_columns = nil)
+
     @model_klass = model_klass
     @request_params = request_params
     @data = seed_query || model_klass
@@ -41,7 +46,7 @@ class DataTableAdapter
 
     apply_sorting
     apply_pagination
-    apply_column_selection
+    apply_column_selection(extra_columns)
   end
 
   private
@@ -70,6 +75,7 @@ class DataTableAdapter
   end
 
   def apply_filters
+    # TODO Support not only global search, but also column search
     if @search_value && @searchable_column_names.any?
       conditions = []
 
@@ -91,29 +97,17 @@ class DataTableAdapter
   # @return [String, nil] the search condition, if it makes semantic sense. A
   #   search of the id column for a non-number is pointless, for example.
   def build_column_search_condition (column_name, search_value)
-    case column_type(column_name)
+    case Utils.column_type(@model_klass, column_name)
       when :string
         "#{column_name} ILIKE '%#{search_value}%'"
-      when :integer
-        if is_int?(search_value)
+      when :integer, :float, :decimal
+        if Utils.is_numeric?(search_value)
           "#{column_name} = #{search_value}"
         end
       else
+        # TODO Support more data types in column search conditions
         nil
     end
-  end
-
-  # Returns the type of a database column.
-  #
-  # @param column_name [String] the column name
-  #
-  # @return [Symbol] the column type
-  def column_type (column_name)
-    @model_klass.columns_hash[column_name].type
-  end
-
-  def is_int? (str)
-    str.to_i.to_s == str
   end
 
   def apply_sorting
@@ -127,7 +121,7 @@ class DataTableAdapter
     @data = @data.limit(@length) unless @length == -1
   end
 
-  def apply_column_selection
-    @data = @data.select(@column_names)
+  def apply_column_selection (extra_columns = nil)
+    @data = @data.select(@column_names + (extra_columns || []))
   end
 end

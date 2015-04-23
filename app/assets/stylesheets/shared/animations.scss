@@ -1,39 +1,15 @@
-// Contains canned animations for Angular.
-// Each animation is provided in two avatars:
-//   1. As a Sass mixin for use in your own classes
-//   2. As a class for use directly on some element
-//
-// Both the mixin and the class for an animation have the same name, and they
-// all begin with the 'anim-' prefix. Mixins are more flexible as they can be
-// configured with arguments, whereas classes only work with the defaults.
+// Contains animation utilities and custom animations.
+// Try not to add too many custom animations; use the included Animate.css
+// library whenever possible.
 
-///////////////
-// Utilities //
-///////////////
-
-@mixin transition($args: $anim-duration $anim-easing all) {
-  -webkit-transition: $args;
-  transition: $args;
+@keyframes spin-glyphicon {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(359deg); }
 }
 
-////////////////
-// Animations //
-////////////////
-
-// Fade
-
-@mixin anim-fade($duration: $anim-fade-duration, $easing: $anim-fade-easing) {
-  &.ng-enter {
-    @include transition($duration $easing all);
-
-    opacity: 0;
-  }
-
-  &.ng-enter-active {
-    opacity: 1;
-  }
-}
-
-.anim-fade {
-  @include anim-fade;
+// Makes any glyphicon spin indefinitely.
+// For example, <span class="glyphicon glyphicon-refresh spin-glyphicon"></span>
+// creates a spinner!
+.spin-glyphicon {
+  animation: spin-glyphicon 2s infinite linear;
 }

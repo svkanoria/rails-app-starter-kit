@@ -14,11 +14,15 @@ var app = angular.module('App', [
   'RouteUtils',
   'Post',
   'PostsCtrlInitSvc',
+  'AttachmentJoin',
+  'Attachment',
+  'AttachmentsCtrlInitSvc',
 
   // Controllers
   'AppCtrl',
   'HomeCtrl',
   'PostsCtrl',
+  'AttachmentsCtrl',
 
   // Directives
   'AuthenticationLinks',
@@ -26,5 +30,6 @@ var app = angular.module('App', [
   'PleaseWait',
 
   // Modules
-  'ResourceUtils'
+  'ResourceUtils',
+  'AttachmentLibrary'
 ]);

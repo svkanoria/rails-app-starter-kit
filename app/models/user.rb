@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
 
   has_many :authentications, dependent: :destroy
   has_many :posts, dependent: :destroy
+  has_many :attachments, dependent: :destroy
 
   # Skips password requirement when signing in via an external provider using
   # OmniAuth.
@@ -105,7 +106,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  # When creating a new user, pre-populates its fields if possible, with data
+  # When creating a new user, pre-populates its fields (if possible) with data
   # made available by OmniAuth.
   def self.new_with_session (params, session)
     if (omniauth = session['devise.omniauth'])

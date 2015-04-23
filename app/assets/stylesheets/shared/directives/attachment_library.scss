@@ -1,0 +1,76 @@
+// Variables
+
+$attach-lib-panel-bottom: 50px;
+$attach-lib-panel-max-height: 70%;
+$attach-lib-panel-margin: $padding-small-vertical $padding-small-horizontal;
+$attach-lib-panel-padding: $padding-small-vertical $padding-small-horizontal;
+$attach-lib-panel-bg: transparentize($gray-lighter, 0.1);
+$attach-lib-panel-border-radius: $border-radius-small;
+$attach-lib-panel-box-shadow-color: $gray-light;
+
+$attachment-drag-helper-padding: $padding-small-vertical $padding-small-horizontal;
+$attachment-drag-helper-bg: $brand-info;
+$attachment-drag-helper-border-radius: $border-radius-small;
+
+// Styles
+
+@keyframes attachment-library-panel-slide-down {
+  0% { bottom: $attach-lib-panel-bottom; }
+  100% { bottom: -($attach-lib-panel-max-height + 5%); }
+}
+
+.attachment-library-panel {
+  position: fixed;
+  bottom: $attach-lib-panel-bottom;
+  max-height: $attach-lib-panel-max-height;
+  overflow-y: scroll;
+  margin: $attach-lib-panel-margin;
+  padding: $attach-lib-panel-padding;
+  background: $attach-lib-panel-bg;
+  border-radius: $attach-lib-panel-border-radius;
+  box-shadow: 1px 1px 8px #bbb;
+
+  &.ng-hide-add {
+    animation: attachment-library-panel-slide-down 0.3s;
+  }
+
+  // The default 'display: none' used by 'ng-hide' causes DataTables to render
+  // incorrectly at times. So we "psuedo" hide instead of really hiding.
+  &.ng-hide {
+    display: block !important;
+    bottom: -($attach-lib-panel-max-height + 5%);
+  }
+
+  &.ng-hide-remove {
+    animation: attachment-library-panel-slide-down 0.3s reverse;
+  }
+}
+
+@keyframes attachment-library-toggle-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.attachment-library-toggle {
+  position: fixed;
+  bottom: 0;
+  margin: $attach-lib-panel-margin;
+  padding: 10px 13px; // Trial and error
+  border-radius: 50%;
+
+  // Only animate the paperclip icon (i.e. when no uploads in progress), since
+  // the spinner is already animated
+  &.no-uploads.minimized-add {
+    animation: attachment-library-toggle-rotate 0.4s reverse;
+  }
+
+  &.no-uploads.minimized-remove {
+    animation: attachment-library-toggle-rotate 0.4s;
+  }
+}
+
+.attachment-drag-helper {
+  padding: $attachment-drag-helper-padding;
+  background: $attachment-drag-helper-bg;
+  border-radius: $attachment-drag-helper-border-radius;
+}

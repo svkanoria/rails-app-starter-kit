@@ -1,7 +1,11 @@
 <div ng-init="actionIndex()">
   <h2>Posts</h2>
 
-  <table datatable options="dataTableOptions"
+  <query-builder options="queryBuilderOptions"
+                 filters="queryBuilderFilters"></query-builder>
+
+  <table id="posts-table"
+         datatable options="dataTableOptions" instance="dataTableInstance"
          class="display responsive no-wrap" width="100%">
 
     <thead>

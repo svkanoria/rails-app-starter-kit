@@ -1,0 +1,18 @@
+// Variables
+
+$please-wait-top: 12px; // Trial and error
+$please-wait-color: $brand-warning;
+$please-wait-font-size: 21px; // Trial and error;
+
+// Styles
+
+.please-wait {
+  position: fixed;
+  top: $please-wait-top;
+  left: 50%;
+  width: 40px;
+  margin-left: -20px;
+  text-align: center;
+  color: $please-wait-color;
+  font-size: $please-wait-font-size;
+}

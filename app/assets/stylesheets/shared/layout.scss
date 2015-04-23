@@ -5,5 +5,12 @@
 }
 
 .angular-view {
-  @include anim-fade;
+  &.ng-enter {
+    animation: fadeIn 0.5s;
+  }
+}
+
+// Looks better smaller!
+.glyphicon-new-window {
+  font-size: 85%;
 }

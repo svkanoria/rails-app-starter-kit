@@ -3,4 +3,15 @@
 
   <div ng-include="'client/controllers/posts/_form.html'">
   </div>
+
+  <h3>Contributed Images</h3>
+
+  <div class="row">
+    <div class="col-sm-6 col-lg-5">
+      <attachment-drop attachments="post.attachments"
+                       attachment-owner-id="{{post.id}}"
+                       attachment-owner-type="Post" role="contributed_image">
+      </attachment-drop>
+    </div>
+  </div>
 </div>

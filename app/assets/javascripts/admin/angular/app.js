@@ -21,5 +21,16 @@ var app = angular.module('App', [
   'DataTable',
 
   // Modules
-  'ResourceUtils'
+  'ResourceUtils',
+  'QueryBuilder'
 ]);
+
+app.config([
+  'QBEditorProvider',
+  function (QBEditorProvider) {
+    QBEditorProvider.addEditorFactory({
+      createEditorHtml: function (columnType, op) {
+        // return some HTML
+      }
+    });
+  }]);
