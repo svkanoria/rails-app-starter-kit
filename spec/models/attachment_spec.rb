@@ -10,6 +10,7 @@
 #  updated_at        :datetime         not null
 #  access_url        :string(1024)
 #  access_expires_at :datetime
+#  tenant_id         :integer          not null
 #
 
 require 'rails_helper'

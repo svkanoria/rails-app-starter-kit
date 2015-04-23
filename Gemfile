@@ -86,6 +86,16 @@ gem 'kaminari'
 # For multi-tenancy
 gem 'acts_as_tenant'
 
+# For AWS integration
+gem 'aws-sdk', '~> 2'
+
+# For auto-prefixing Sass/CSS styles with vendor prefixes
+gem 'autoprefixer-rails'
+
+# For on-the-fly image manipulation (and subsequent caching, for efficiency).
+# Can do uploads too, but we don't use it for that.
+gem 'dragonfly', '~> 1.0.7'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

@@ -11,10 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150105110447) do
+ActiveRecord::Schema.define(version: 20150423123509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attachment_joins", force: true do |t|
+    t.integer  "attachment_id"
+    t.integer  "attachment_owner_id"
+    t.string   "attachment_owner_type"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "role"
+    t.integer  "tenant_id",             null: false
+  end
+
+  create_table "attachments", force: true do |t|
+    t.string   "name"
+    t.string   "url",               limit: 1024
+    t.integer  "user_id"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "access_url",        limit: 1024
+    t.datetime "access_expires_at"
+    t.integer  "tenant_id",                      null: false
+  end
+
+  add_index "attachments", ["user_id"], name: "index_attachments_on_user_id", using: :btree
 
   create_table "authentications", force: true do |t|
     t.string   "provider"
