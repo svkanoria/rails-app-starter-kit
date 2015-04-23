@@ -19,8 +19,5 @@ FactoryGirl.define do
     provider 'facebook'
     uid '10499594'
     user
-
-    # We omit the tenant. It should generally be created as a side-effect of
-    # setting the current tenant.
   end
 end

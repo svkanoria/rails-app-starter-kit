@@ -38,9 +38,6 @@ FactoryGirl.define do
     # Required if the devise confirmable module is used
     confirmed_at Time.now
 
-    # We omit the tenant. It should generally be created as a side-effect of
-    # setting the current tenant.
-
     ignore do
       roles nil
     end
