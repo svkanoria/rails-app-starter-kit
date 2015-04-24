@@ -6,9 +6,14 @@ Rails.application.routes.draw do
     get 'home/index'
 
     devise_for :users,
-               # Comment this out if you don't want authentication via Facebook
-               # and/or other providers.
-               controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+               controllers: {
+                   # Custom controllers needed to support multitenancy
+                   sessions: 'sessions',
+                   registrations: 'registrations',
+                   # Comment this out if you don't want authentication via
+                   # Facebook and/or other providers.
+                   omniauth_callbacks: 'omniauth_callbacks'
+               }
 
     namespace :api do
       namespace :users do
