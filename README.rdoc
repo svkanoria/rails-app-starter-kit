@@ -4,7 +4,7 @@
 
 http://rails-app-starter-kit.herokuapp.com
 
-Please treat any data (posts, users etc.) as transient. They may not be
+Please treat any data (posts, users etc.) as transient. These may not be
 available after a certain period of time.
 
 For accessing via native apps, the app access token is z23498f58959thf85.
