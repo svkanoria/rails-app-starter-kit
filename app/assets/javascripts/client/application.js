@@ -46,8 +46,9 @@
 //= require underscore/underscore
 //= require underscore.string/lib/underscore.string
 // Note the 'min'. This is needed since flashular.js does not minify correctly.
-//= require flashular/dist/flashular.min.js
+//= require flashular/dist/flashular.min
 //= require moment/moment
+//= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker
 //
 // Files shared between client and admin apps
 //= require_tree ../shared

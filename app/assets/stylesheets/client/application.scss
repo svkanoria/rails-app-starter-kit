@@ -14,20 +14,23 @@
 // See http://odetocode.com/blogs/scott/archive/2014/02/25/easy-animations-for-angularjs-with-animate-css.aspx.
 @import "animate-css/animate";
 
+@import "eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min";
+
 // All styling variables.
 // Imported first, so that variables can be used in any other styling file.
-@import '../shared/variables';
+@import "../shared/variables";
 
 // General styles (layout, header, footer, components etc.)
-@import '../shared/layout';
-@import '../shared/animations';
-@import '../shared/devise';
+@import "../shared/layout";
+@import "../shared/animations";
+@import "../shared/devise";
 
 // Styles for Angular directives
-@import '../shared/directives/flash_alerts';
-@import '../shared/directives/please_wait';
-@import '../shared/directives/query_builder';
-@import '../shared/directives/attachment_library';
-@import '../shared/directives/attachment_browser';
-@import '../shared/directives/fine_uploader';
-@import '../shared/directives/attachment_drop';
+@import "../shared/directives/flash_alerts";
+@import "../shared/directives/please_wait";
+@import "../shared/directives/query_builder";
+@import "../shared/directives/attachment_library";
+@import "../shared/directives/attachment_browser";
+@import "../shared/directives/fine_uploader";
+@import "../shared/directives/attachment_drop";
+@import "../shared/directives/date_time_picker";

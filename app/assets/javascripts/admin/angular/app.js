@@ -19,6 +19,7 @@ var app = angular.module('App', [
   'FormErrors',
   'PleaseWait',
   'DataTable',
+  'DateTimePicker',
 
   // Modules
   'ResourceUtils',
@@ -30,7 +31,18 @@ app.config([
   function (QBEditorProvider) {
     QBEditorProvider.addEditorFactory({
       createEditorHtml: function (columnType, op) {
-        // return some HTML
+        if (columnType === 'date') {
+          var editorHtml = '';
+          var opArity = (op === 'range') ? 2 : 1;
+
+          for (var i = 0; i < opArity; ++i) {
+            editorHtml +=
+              '<date-time-picker class="filter-value" model="model.values[' +
+              i + ']"></date-time-picker>'
+          }
+
+          return editorHtml;
+        }
       }
     });
   }]);

@@ -1,0 +1,8 @@
+.date-time-picker {
+  // To allow it to be used in-line with other inputs
+  display: inline-block;
+  // Needs to be positioned as relative for the drop-down to work
+  position: relative;
+  // For correct vertical alignment with other in-line inputs
+  vertical-align: middle;
+}

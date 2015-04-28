@@ -28,8 +28,30 @@ var app = angular.module('App', [
   'AuthenticationLinks',
   'FormErrors',
   'PleaseWait',
+  'DateTimePicker',
 
   // Modules
   'ResourceUtils',
   'AttachmentLibrary'
 ]);
+
+app.config([
+  'QBEditorProvider',
+  function (QBEditorProvider) {
+    QBEditorProvider.addEditorFactory({
+      createEditorHtml: function (columnType, op) {
+        if (columnType === 'date') {
+          var editorHtml = '';
+          var opArity = (op === 'range') ? 2 : 1;
+
+          for (var i = 0; i < opArity; ++i) {
+            editorHtml +=
+              '<date-time-picker class="filter-value" model="model.values[' +
+              i + ']"></date-time-picker>'
+          }
+
+          return editorHtml;
+        }
+      }
+    });
+  }]);
