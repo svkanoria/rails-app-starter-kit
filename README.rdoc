@@ -552,6 +552,18 @@ this in a flexible manner, and even supports localization.
 
 See its documentation here: /app/controllers/application_controller.rb.
 
+=== Common Client Tasks
+
+==== Formatting Dates and Times
+
+This is a very common task, for which we use the excellent
+Moment.js[http://momentjs.com] library. We generally prefer the format 'LLL'
+(see their home page for information) or similar, since it is locale-based, and
+not hard-coded.
+
+For a usage example, see
+/app/assets/javascripts/admin/angular/controllers/posts_ctrl.js.
+
 === Common Angular Tasks
 
 ==== Exposing Some Data to All Controllers

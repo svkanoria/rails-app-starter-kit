@@ -33,6 +33,7 @@
 //= require underscore.string/lib/underscore.string
 // Note the 'min'. This is needed since flashular.js does not minify correctly.
 //= require flashular/dist/flashular.min.js
+//= require moment/moment
 //
 // Files shared between client and admin apps
 //= require_tree ../shared
