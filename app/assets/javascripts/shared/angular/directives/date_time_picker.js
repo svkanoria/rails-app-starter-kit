@@ -34,7 +34,7 @@ angular.module('DateTimePicker', []).
            *
            * @returns {?String} The format.
            */
-          this.getFormat = function () {
+          this.format = function () {
             return ($scope.options) ? $scope.options['format'] : null;
           };
 
@@ -42,8 +42,8 @@ angular.module('DateTimePicker', []).
            * Returns the granularity implied by the given format.
            *
            * Used by the link function to determine how to format the value to
-           * be sent back to the server. The format indicates to the server the
-           * types of comparison to use: dates only, times only, or both.
+           * be sent to the server. The format indicates to the server the type
+           * of comparison to use: dates only, times only, or both.
            *
            * @param [format] {String} - The format.
            *
@@ -85,7 +85,7 @@ angular.module('DateTimePicker', []).
             scope.$evalAsync(function () {
               scope.baseModel = input.data('DateTimePicker').date();
 
-              switch (ctrl.granularity(ctrl.getFormat())) {
+              switch (ctrl.granularity(ctrl.format())) {
                 case 1:
                   scope.model = scope.baseModel.format('YYYY-MM-DD');
                   break;
@@ -101,7 +101,7 @@ angular.module('DateTimePicker', []).
           });
 
           scope.$watch('baseModel', function (value) {
-            scope.prettyModel = (value) ? value.format(ctrl.getFormat()) : null;
+            scope.prettyModel = (value) ? value.format(ctrl.format()) : null;
           });
         }
       }
