@@ -8,6 +8,10 @@
  *
  * The model expression must evaluate to a date string in ISO 8601 format.
  * An example of this format: '2015-04-15T12:11:17.139Z'.
+ *
+ * The model may also evaluate to just the date portion, or just the time
+ * portion.
+ * Examples: '2015-04-15' (date only), 'T12:11:17.139Z' (time only).
  */
 angular.module('DateTimePicker', []).
   directive('dateTimePicker', [
@@ -74,7 +78,13 @@ angular.module('DateTimePicker', []).
           // Initial value set
           var listenOnce = scope.$watch('model', function (value) {
             if (value) {
-              input.data('DateTimePicker').date(moment(value));
+              // If time only, add a dummy date portion to be able to parse and
+              // display correctly.
+              var moment_ = (value[0] === 'T') ?
+                moment(moment().format('YYYY-MM-DD') + value) :
+                moment(value);
+
+              input.data('DateTimePicker').date(moment_);
 
               listenOnce(); // De-register the watcher
             }
@@ -83,15 +93,18 @@ angular.module('DateTimePicker', []).
           // Subsequent changes
           instance.on('dp.change', function () {
             scope.$evalAsync(function () {
-              scope.baseModel = input.data('DateTimePicker').date().utc();
+              scope.baseModel = input.data('DateTimePicker').date();
 
               switch (ctrl.granularity(ctrl.format())) {
                 case 1: // Date only
-                  scope.model = scope.baseModel.format('YYYY-MM-DD');
+                  // Convoluted way to convert to UTC, but required
+                  scope.baseModelUtc = moment(scope.baseModel).utc();
+                  scope.model = scope.baseModelUtc.format('YYYY-MM-DD');
                   break;
                 case 2: // Time only
+                  scope.baseModelUtc = moment(scope.baseModel).utc();
                   // Match format to the time portion of the ISO string
-                  scope.model = scope.baseModel.format('hh:mm:ss:SSS[Z]');
+                  scope.model = scope.baseModelUtc.format('[T]hh:mm:ss.SSS[Z]');
                   break;
                 case 3: // Date & time
                   scope.model = scope.baseModel.toISOString();

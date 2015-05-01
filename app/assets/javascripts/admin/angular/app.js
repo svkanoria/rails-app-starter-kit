@@ -39,7 +39,7 @@ app.config([
             editorHtml +=
               '<date-time-picker class="filter-value"'
                 + 'model="model.values[' + i + ']"'
-                + ' options="{ format: \'LL\' }">' +
+                + ' options="{ format: \'LT\' }">' +
               '</date-time-picker>'
           }
 
