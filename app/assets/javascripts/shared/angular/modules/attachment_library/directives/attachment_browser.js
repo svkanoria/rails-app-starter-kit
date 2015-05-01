@@ -53,7 +53,11 @@ angular.module('AttachmentBrowser', [
               columns: [
                 { data: 'id' },
                 { data: 'name', render: renderName },
-                { data: 'created_at' }
+                { data: 'created_at',
+                  render: function (data, type, row, meta) {
+                    return moment(data).format('LLL');
+                  }
+                }
               ],
               // Ensure table element has an id for this to work!
               stateSave: true,

@@ -61,6 +61,14 @@ angular.module('QueryBuilderDirective', []).
           // Dummy id for ng-repeat to track by
           var nextFilterId = 0;
 
+          if (scope.filters.length > 0) {
+            var usedIds = _.map(scope.filters, function (filter) {
+              return filter._id;
+            });
+
+            nextFilterId = _.max(usedIds) + 1;
+          }
+
           /**
            * Adds a filter.
            *

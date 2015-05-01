@@ -25,7 +25,11 @@ angular.module('PostsCtrl', []).
               }
             },
             { data: 'message' },
-            { data: 'created_at' }
+            { data: 'created_at',
+              render: function (data, type, row, meta) {
+                return moment(data).format('LLL');
+              }
+            }
           ],
           stateSave: true, // Ensure table element has an id for this to work!
           // Save/load the query builder state along with the table state
