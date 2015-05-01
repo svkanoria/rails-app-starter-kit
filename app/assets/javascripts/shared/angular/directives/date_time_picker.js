@@ -83,18 +83,21 @@ angular.module('DateTimePicker', []).
           // Subsequent changes
           instance.on('dp.change', function () {
             scope.$evalAsync(function () {
-              scope.baseModel = input.data('DateTimePicker').date();
+              scope.baseModel = input.data('DateTimePicker').date().utc();
 
               switch (ctrl.granularity(ctrl.format())) {
-                case 1:
+                case 1: // Date only
                   scope.model = scope.baseModel.format('YYYY-MM-DD');
                   break;
-                case 2:
-                case 3:
+                case 2: // Time only
+                  // Match format to the time portion of the ISO string
+                  scope.model = scope.baseModel.format('hh:mm:ss:SSS[Z]');
+                  break;
+                case 3: // Date & time
                   scope.model = scope.baseModel.toISOString();
                   break;
                 default:
-                  scope.model = scope.baseModel.toISOString();
+                  console.log('Invalid datetime granularity');
               }
 
             });
