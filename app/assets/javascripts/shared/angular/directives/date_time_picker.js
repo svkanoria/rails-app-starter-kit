@@ -33,8 +33,11 @@ angular.module('DateTimePicker', []).
 
           var input = $(element).find('input');
           var instance = input.datetimepicker(scope.options || {});
+          var initialized = false;
 
           instance.on('dp.change', function () {
+            if (!initialized) return;
+
             var viewValue = input.data('DateTimePicker').date();
 
             scope.$evalAsync(function () {
@@ -50,6 +53,7 @@ angular.module('DateTimePicker', []).
               moment(modelValue);
 
             input.data('DateTimePicker').date(fullModelValue);
+            if (!initialized) initialized = true;
 
             return fullModelValue.format(dateTimePicker.format());
           });
