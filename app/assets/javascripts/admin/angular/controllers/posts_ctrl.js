@@ -13,7 +13,7 @@ angular.module('PostsCtrl', []).
             // Just add the query builder filters to all AJAX requests sent by
             // the data table!
             data: function (d) {
-              //d.filters = $scope.queryBuilderFilters;
+              d.filters = $scope.queryBuilderFilters;
             }
           },
           searching: false, // Since we are using query builder
