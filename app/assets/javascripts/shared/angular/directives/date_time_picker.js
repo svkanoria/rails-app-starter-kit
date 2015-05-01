@@ -46,16 +46,30 @@ angular.module('DateTimePicker', []).
           });
 
           ngModel.$formatters.push(function (modelValue) {
-            // If time only, add a dummy date portion to be able to parse and
-            // display correctly.
-            var fullModelValue = (modelValue[0] === 'T') ?
-              moment(moment().format('YYYY-MM-DD') + modelValue) :
-              moment(modelValue);
+            var viewValue = null;
 
-            input.data('DateTimePicker').date(fullModelValue);
+            if (modelValue) {
+              // If time only, add dummy date portion to be able to parse and
+              // display correctly.
+              var fullModelValue = (modelValue[0] === 'T') ?
+                moment(moment().format('YYYY-MM-DD') + modelValue) :
+                moment(modelValue);
+
+              // If condition is a hacky workaround for the plugin not having
+              // been initialized after switching operators!
+              // TODO Fix weird bug in date-time-picker
+              if (input.data('DateTimePicker')) {
+                input.data('DateTimePicker').date(fullModelValue);
+              }
+
+              viewValue = fullModelValue.format(dateTimePicker.format());
+            } else {
+              viewValue = null;
+            }
+
             if (!initialized) initialized = true;
 
-            return fullModelValue.format(dateTimePicker.format());
+            return viewValue;
           });
 
           ngModel.$parsers.push(function (viewValue) {
