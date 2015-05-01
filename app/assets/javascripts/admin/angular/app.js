@@ -38,8 +38,8 @@ app.config([
           for (var i = 0; i < opArity; ++i) {
             editorHtml +=
               '<date-time-picker class="filter-value"'
-                + 'model="model.values[' + i + ']"'
-                + ' options="{ format: \'LLL\' }">' +
+                + 'ng-model="model.values[' + i + ']"'
+                + ' options="{ format: \'LL\' }">' +
               '</date-time-picker>'
           }
 
