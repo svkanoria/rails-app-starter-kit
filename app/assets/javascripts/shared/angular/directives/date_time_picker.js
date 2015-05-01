@@ -55,12 +55,7 @@ angular.module('DateTimePicker', []).
                 moment(moment().format('YYYY-MM-DD') + modelValue) :
                 moment(modelValue);
 
-              // If condition is a hacky workaround for the plugin not having
-              // been initialized after switching operators!
-              // TODO Fix weird bug in date-time-picker
-              if (input.data('DateTimePicker')) {
-                input.data('DateTimePicker').date(fullModelValue);
-              }
+              input.data('DateTimePicker').date(fullModelValue);
 
               viewValue = fullModelValue.format(dateTimePicker.format());
             } else {
@@ -85,6 +80,13 @@ angular.module('DateTimePicker', []).
               default:
                 console.log('Invalid datetime granularity');
             }
+          });
+
+          element.on('$destroy', function () {
+            instance.off('dp.change');
+
+            ngModel.$formatters.length = 0;
+            ngModel.$parsers.length = 0;
           });
         }
       }
