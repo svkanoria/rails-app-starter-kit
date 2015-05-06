@@ -93,7 +93,7 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
    You must then send this token with each request, in the 'X-App-Access-Token'
    header.
 
-1. If you wish to user the attachment library, set the following enrironment
+1. If you wish to user the attachment library, set the following environment
    variables:
 
     AWS_ACCESS_KEY_ID=<Your AWS Access Key ID>
@@ -104,6 +104,13 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
     AWS_CF_PRIVATE_KEY=<Contents of the Key Pair .pem file (see below)>
     AWS_CF_DISTRIBUTION=<The CloudFront distribution linked to the bucket,
       starting with the protocol (http:// or https://)>
+
+   And only for production, set this too:
+
+    DRAGONFLY_CDN=<The CDN used to serve Dragonfly (gem) processed images such
+      as thumbnails etc.>
+
+   The origin of the Dragonfly CDN must be the domain name of your app.
 
    We recommend you provision an AWS IAM user with limited permissions, so that
    all unrelated AWS data remains secure. These permissions must of course
