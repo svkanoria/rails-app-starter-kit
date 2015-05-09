@@ -10,16 +10,26 @@ Dragonfly.app.configure do
 
   secret '3d7e51f364d3847fd351d94b127896ee8cd7a9f5b710540c541d9545bfd58359'
 
-  url_format '/media/:job/:name'
+  # MY NOTE: Some CDNs do not support/encourage query params, so we embed the
+  # SHA in the URL explicitly, else Dragonfly sets it as a query param.
+  url_format '/media/:job/:sha/:name'
 
-  # MY NOTE: Not needed, since we don't user Dragonfly for uploading
+  # MY NOTE: Not needed, since we don't use Dragonfly for uploading
+  #
   # datastore :file,
   #   root_path: Rails.root.join('public/system/dragonfly', Rails.env),
   #   server_root: Rails.root.join('public')
 
-  # MY NOTE: We need this to be able to use fetch_url.
+  # MY NOTE: We need this to be able to use fetch_url
+  #
   # List of allowed urls when using fetch_url (strings or regexps)
   fetch_url_whitelist [/.*/]
+
+  # MY NOTE: We serve images through a CDN. The CDN caches the images and thus
+  # minimizes our image processing computations. Essential for scalability!
+  if Rails.env.production?
+    url_host Rails.application.secrets.dragonfly_cdn
+  end
 end
 
 # Logger
