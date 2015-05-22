@@ -69,8 +69,8 @@ gem 'responders'
 # For running background tasks
 gem 'delayed_job_active_record'
 
-# A popular EventMachine based application server
-gem 'thin'
+# Web server that supports concurrent request handling
+gem 'puma'
 
 # Bootstrap front-end framework.
 # We use the gem, rather than Bower, for the ease of integration as compared to
