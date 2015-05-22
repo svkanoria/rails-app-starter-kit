@@ -87,7 +87,7 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
    The defaults are 2 and 5 respectively.
 
    IMPORTANT: MAX_THREADS will be ignored for now, as we have not yet tested the
-   app's threaded safety. We will be working on this soon.
+   app's thread safety. We will be working on this soon.
 
 1. If you wish to allow authentication via Facebook, create a Facebook app if
    you haven't already, and set the following environment variables:
