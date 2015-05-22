@@ -40,6 +40,26 @@ newer, for best results.
 If you wish to change the Ruby version, remember to also do so in the Gemfile
 (near the top).
 
+== Running the App (RubyMine)
+
+This section only applies if you are using RubyMine.
+
+Since we are using the Puma web server with a config file (/config/puma.rb), we
+need a custom run/debug configuration for the app. The default RubyMine ones do
+not pick up the Puma config file.
+
+Do so as follows:
+
+1. Click on Run > Edit Configurations
+1. Click on the '+' button, then select 'Gem Command'
+1. Enter the following: Name: Puma, Gem name = puma, Executable name = puma,
+   Arguments = -C config/puma.rb
+
+As tested on RubyMine 7.1, this configuration works for both running and
+debugging. Be sure to set all environment variables on this configuration, NOT
+the default ones. Also set the environment variables on the 'Rails console: xxx'
+configuration, for the Rails console to work correctly.
+
 == Setting Up
 
 Pre-requisites: You must have Node, Bower and Ruby installed.
