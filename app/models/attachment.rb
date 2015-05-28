@@ -113,6 +113,18 @@ class Attachment < ActiveRecord::Base
     false
   end
 
+  # The browser viewer type (if any) to use for viewing this attachment.
+  #
+  # @return [String, nil] the viewer type (image, video or nil). nil indicates
+  #   that this attachment is not browser friendly.
+  def web_viewer_type
+    case
+      when web_image? then 'image'
+      when web_video? then 'video'
+      else nil
+    end
+  end
+
   # Returns a URL to a small thumbnail image.
   # Falls back on a placeholder image if thumbnail generation is not supported
   # for this type of attachment.
