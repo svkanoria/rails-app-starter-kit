@@ -83,11 +83,34 @@ class Attachment < ActiveRecord::Base
     Rack::Mime.mime_type(extname)
   end
 
-  # Returns whether this is a standard web image (PNG or JPEG).
+  # Returns whether this is a standard web image.
+  # Takes a conservative view that only PNG, JP(E)G and GIFs qualify.
   #
   # @return [true, false]
   def web_image?
-    Rack::Mime.match?(mime_type, 'image/*')
+    %w(png jpg jpeg gif).each do |sub_type|
+      return true if Rack::Mime.match?(mime_type, "image/#{sub_type}")
+    end
+
+    false
+  end
+
+  # Returns whether this is a standard web video.
+  #
+  # Incorporates a set of formats that cover all popular mobile and desktop
+  # browsers. However, not all formats will play on all browsers. Furthermore,
+  # care must be taken to ensure the correct profile, even within a format!
+  #
+  # For detailed browser coverage strategy, see:
+  # http://blog.zencoder.com/2013/09/13/what-formats-do-i-need-for-html5-video
+  #
+  # @return [true, false]
+  def web_video?
+    %w(mp4 ogg webm).each do |sub_type|
+      return true if Rack::Mime.match?(mime_type, "video/#{sub_type}")
+    end
+
+    false
   end
 
   # Returns a URL to a small thumbnail image.
@@ -113,7 +136,7 @@ class Attachment < ActiveRecord::Base
   end
 
   # Called after destruction.
-  # In turns, this calls Attachment.delete_from_store.
+  # In turn, this calls Attachment.delete_from_store.
   def delete_from_provider
     Attachment.delete_from_store(url)
   end
