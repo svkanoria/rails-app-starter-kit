@@ -19,7 +19,7 @@ stack, with the following features built-in:
 1. Puma web server
 1. Postgres support
 1. Complete user management, with authentication and role-based authorization
-1. Complete user upload management via an attachment library
+1. Complete user upload management and viewing, via an attachment library
 1. User authentication via Facebook and other providers
 1. Front-end asset management using Bower
 1. Angular-based routing
@@ -139,6 +139,7 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
     AWS_CF_PRIVATE_KEY=<Contents of the Key Pair .pem file (see below)>
     AWS_CF_DISTRIBUTION=<The CloudFront distribution linked to the bucket,
       starting with the protocol (http:// or https://)>
+    JW_PLAYER_ACCOUNT_TOKEN=<JWPlayer account token>
 
    And only for production, set this too:
 
@@ -164,6 +165,15 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
 
    Set AWS_CF_PRIVATE_KEY to the entire contents of the .pem file as one long
    string, manually inserting '\n' at the end of each line.
+
+   For playing back video attachments, we provide JWPlayer (an HTML5 and Flash
+   based video player) integration out of the box. If you haven't already, you
+   will need to sign up for an account at http://www.jwplayer.com/sign-up, so
+   you can get an account token.
+
+   If you want to use another player, you'll need to provide your own Angular
+   directive for it. In this case, you need not set the JW_PLAYER_ACCOUNT_TOKEN
+   environment variable.
 
 == App Structure
 
@@ -318,7 +328,8 @@ We provide a full featured, flexible solution right out of the box!
 
 The only catch is that we use FineUploader[http://fineuploader.com/] to carry
 out the actual uploads. If you're not developing an open-source application, a
-license must be purchased.
+license must be purchased. The same goes for JWPlayer, an HTML5 and Flash based
+video player we use for playing back video attachments.
 
 Attachments belong to users. Users only ever have access to their own
 attachments. Each attachment can be attached to multiple objects - there is a
@@ -329,6 +340,7 @@ See the following for more information:
 * Client-side code:
   * /app/assets/javascripts/shared/angular/modules/attachment_library/
   * /app/assets/javascripts/client/angular/controllers/app_ctrl.js
+  * /app/assets/javascripts/shared/angular/directives/jw_player.js
 
 * Server-side code:
   * /app/models/attachment.rb

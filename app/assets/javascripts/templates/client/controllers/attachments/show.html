@@ -4,4 +4,7 @@
   <p class="attachment">
     {{attachment.name}}
   </p>
+
+  <div jw-player id="video-player" options="videoPlayerOptions"
+       ng-if="attachment.web_viewer_type === 'video'"></div>
 </div>
