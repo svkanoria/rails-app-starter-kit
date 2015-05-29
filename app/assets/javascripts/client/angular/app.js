@@ -29,7 +29,6 @@ var app = angular.module('App', [
   'FormErrors',
   'PleaseWait',
   'DateTimePicker',
-  'VideoJS',
 
   // Modules
   'ResourceUtils',
