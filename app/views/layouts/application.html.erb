@@ -37,5 +37,10 @@
   <%= render 'layouts/fine_uploader_tmpl' %>
 
   <%= render 'layouts/global_js_vars' %>
+
+  <% if Rails.application.secrets.jw_player_account_token %>
+    <script src="//jwpsrv.com/library/<%= Rails.application.secrets.jw_player_account_token %>.js">
+    </script>
+  <% end %>
 </body>
 </html>
