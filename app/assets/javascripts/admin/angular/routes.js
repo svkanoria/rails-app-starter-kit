@@ -7,27 +7,27 @@ app.config([
   function ($routeProvider, ROUTE_UTILS) {
     var R = ROUTE_UTILS; // Shortcut
 
-    $routeProvider.
+    $routeProvider
       // Home routes
-      when('/', {
+      .when('/', {
         templateUrl: 'admin/controllers/home/index.html',
         controller: 'HomeCtrl'
-      }).
+      })
 
       // Post routes
-      when('/posts', {
+      .when('/posts', {
         templateUrl: 'admin/controllers/posts/index.html',
         controller: 'PostsCtrl'
-      }).
+      })
 
       // Error routes
-      when('/unauthorized', {
+      .when('/unauthorized', {
         templateUrl: 'shared/401.html'
-      }).
-      when('/server_error', {
+      })
+      .when('/server_error', {
         templateUrl: 'shared/500.html'
-      }).
-      otherwise({
+      })
+      .otherwise({
         templateUrl: 'shared/404.html'
       });
   }]);

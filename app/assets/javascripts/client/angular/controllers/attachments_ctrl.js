@@ -1,5 +1,5 @@
-angular.module('AttachmentsCtrl', []).
-  controller('AttachmentsCtrl', [
+angular.module('AttachmentsCtrl', [])
+  .controller('AttachmentsCtrl', [
     '$scope', 'Attachment', 'initialData',
     function ($scope, Attachment, initialData) {
       /**

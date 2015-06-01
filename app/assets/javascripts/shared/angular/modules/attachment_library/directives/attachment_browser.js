@@ -1,7 +1,7 @@
 // The attachment browser, for use within the attachment-library directive.
 angular.module('AttachmentBrowser', [
-  'QueryBuilder', 'DataTable', 'AttachmentLibrarySvc']).
-  directive('attachmentBrowser', [
+  'QueryBuilder', 'DataTable', 'AttachmentLibrarySvc'])
+  .directive('attachmentBrowser', [
     '$rootScope', 'AttachmentLibrarySvc',
     function ($rootScope, AttachmentLibrarySvc) {
       return {

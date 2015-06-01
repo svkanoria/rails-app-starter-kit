@@ -4,8 +4,8 @@
  * Usage:
  *   <authentication-links></authentication-links>
  */
-angular.module('AuthenticationLinks', []).
-  directive('authenticationLinks', [
+angular.module('AuthenticationLinks', [])
+  .directive('authenticationLinks', [
     '$location', 'AuthSvc',
     function ($location, AuthSvc) {
       return {

@@ -1,5 +1,5 @@
-angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc']).
-  controller('PostsCtrl', [
+angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
+  .controller('PostsCtrl', [
     '$scope', '$location', '$routeParams', 'flash', 'Post', 'initialData',
     'AttachmentLibrarySvc',
     function ($scope, $location, $routeParams, flash, Post, initialData,

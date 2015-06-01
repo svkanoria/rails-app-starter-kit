@@ -1,5 +1,5 @@
-angular.module('AppCtrl', ['AuthSvc', 'PleaseWait']).
-  controller('AppCtrl', [
+angular.module('AppCtrl', ['AuthSvc', 'PleaseWait'])
+  .controller('AppCtrl', [
     '$scope', 'AuthSvc', 'PleaseWaitSvc',
     function($scope, AuthSvc, PleaseWaitSvc) {
       $scope.authSvc = AuthSvc;

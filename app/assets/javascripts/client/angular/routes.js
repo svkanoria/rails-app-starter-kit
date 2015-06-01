@@ -7,37 +7,37 @@ app.config([
   function ($routeProvider, ROUTE_UTILS) {
     var R = ROUTE_UTILS; // Shortcut
 
-    $routeProvider.
+    $routeProvider
       // Home routes
-      when('/', {
+      .when('/', {
         templateUrl: 'client/controllers/home/index.html',
         controller: 'HomeCtrl'
-      }).
+      })
 
       // Post routes
-      when('/posts', {
+      .when('/posts', {
         templateUrl: 'client/controllers/posts/index.html',
         controller: 'PostsCtrl',
         resolve: {
           initialData: R.initialData('PostsCtrl', 'index')
         }
-      }).
-      when('/posts/new', {
+      })
+      .when('/posts/new', {
         templateUrl: 'client/controllers/posts/new.html',
         controller: 'PostsCtrl',
         resolve: {
           auth: R.requireSignIn(),
           initialData: R.initialData('PostsCtrl', 'new')
         }
-      }).
-      when('/posts/:id', {
+      })
+      .when('/posts/:id', {
         templateUrl: 'client/controllers/posts/show.html',
         controller: 'PostsCtrl',
         resolve: {
           initialData: R.initialData('PostsCtrl', 'show')
         }
-      }).
-      when('/posts/:id/edit', {
+      })
+      .when('/posts/:id/edit', {
         templateUrl: 'client/controllers/posts/edit.html',
         controller: 'PostsCtrl',
         resolve: {
@@ -45,10 +45,10 @@ app.config([
           auth2: R.requireServerAuth('/posts/:id/edit'),
           initialData: R.initialData('PostsCtrl', 'edit')
         }
-      }).
+      })
 
       // Attachment routes
-      when('/attachments/:id', {
+      .when('/attachments/:id', {
         templateUrl: 'client/controllers/attachments/show.html',
         controller: 'AttachmentsCtrl',
         resolve: {
@@ -56,16 +56,16 @@ app.config([
           auth2: R.requireServerAuth('/attachments/:id'),
           initialData: R.initialData('AttachmentsCtrl', 'show')
         }
-      }).
+      })
 
       // Error routes
-      when('/unauthorized', {
+      .when('/unauthorized', {
         templateUrl: 'shared/401.html'
-      }).
-      when('/server_error', {
+      })
+      .when('/server_error', {
         templateUrl: 'shared/500.html'
-      }).
-      otherwise({
+      })
+      .otherwise({
         templateUrl: 'shared/404.html'
       });
   }]);

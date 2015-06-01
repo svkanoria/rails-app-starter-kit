@@ -1,6 +1,6 @@
 // Provides initial data for AttachmentsCtrl actions.
-angular.module('AttachmentsCtrlInitSvc', ['Attachment']).
-  factory('AttachmentsCtrlInitSvc', [
+angular.module('AttachmentsCtrlInitSvc', ['Attachment'])
+  .factory('AttachmentsCtrlInitSvc', [
     '$route', 'Attachment',
     function($route, Attachment) {
       /**

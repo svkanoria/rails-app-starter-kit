@@ -18,8 +18,8 @@
  * * Have your uploader call AttachmentLibrarySvc.setUploadsInProgress() to keep
  *   the service updated on whether any uploads are currently in progress
  */
-angular.module('AttachmentLibraryDirective', ['AttachmentLibrarySvc']).
-  directive('attachmentLibrary', [
+angular.module('AttachmentLibraryDirective', ['AttachmentLibrarySvc'])
+  .directive('attachmentLibrary', [
     'AttachmentLibrarySvc',
     function (AttachmentLibrarySvc) {
       return {

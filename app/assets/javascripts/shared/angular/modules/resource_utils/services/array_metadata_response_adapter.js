@@ -5,8 +5,8 @@
  *
  * See the adaptToArray method.
  */
-angular.module('ArrayMetadataResponseAdapter', []).
-  factory('ArrayMetadataResponseAdapter', [
+angular.module('ArrayMetadataResponseAdapter', [])
+  .factory('ArrayMetadataResponseAdapter', [
     function () {
       /**
        * Adapts non-array responses into array ones.

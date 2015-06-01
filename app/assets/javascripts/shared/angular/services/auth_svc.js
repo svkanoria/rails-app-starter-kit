@@ -10,8 +10,8 @@
  * Authorization is checked via simple rules defined herein. Add/modify rules
  * based on your requirements.
  */
-angular.module('AuthSvc', []).
-  factory('AuthSvc', [
+angular.module('AuthSvc', [])
+  .factory('AuthSvc', [
     '$q', '$http',
     function ($q, $http) {
       ////////////////////
@@ -152,11 +152,11 @@ angular.module('AuthSvc', []).
           serverRoute = concretizeRoute(serverRoute, routeParams);
         }
 
-        $http.get(serverRoute).
-          success(function (data) {
+        $http.get(serverRoute)
+          .success(function (data) {
             deferred.resolve(data);
-          }).
-          error(function (data, status) {
+          })
+          .error(function (data, status) {
             // Some schools of thought advocate the use of 404. See
             // http://www.bennadel.com/blog/2400-handling-forbidden-restful-requests-401-vs-403-vs-404.htm
             if (status == 401) {

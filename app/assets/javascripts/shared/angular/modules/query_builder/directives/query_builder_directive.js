@@ -36,8 +36,8 @@
  * also serves to restore filters from some saved state. At the very least, it
  * must be an empty array.
  */
-angular.module('QueryBuilderDirective', []).
-  directive('queryBuilder', [
+angular.module('QueryBuilderDirective', [])
+  .directive('queryBuilder', [
     function () {
       return {
         restrict: 'E',

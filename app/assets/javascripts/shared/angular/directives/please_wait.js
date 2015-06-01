@@ -3,7 +3,7 @@
  * This is useful to show while the user is waiting on something to happen,
  * typically on a response from the server.
  */
-angular.module('PleaseWait', []).
+angular.module('PleaseWait', [])
   /*
    * The directive that shows/hides the custom message.
    * This directive is provided for convenience. It is not required to use it.
@@ -13,7 +13,7 @@ angular.module('PleaseWait', []).
    * Usage:
    *   <please-wait></please-wait>
    */
-  directive('pleaseWait', [
+  .directive('pleaseWait', [
     'PleaseWaitSvc',
     function (PleaseWaitSvc) {
       return {
@@ -25,7 +25,7 @@ angular.module('PleaseWait', []).
           scope.pleaseWaitSvc = PleaseWaitSvc;
         }
       };
-    }]).
+    }])
 
   /*
    * A service backing the 'please-wait' directive.
@@ -39,7 +39,7 @@ angular.module('PleaseWait', []).
    *
    *   To ensure the message is hidden, call the 'releaseAll' method.
    */
-  factory('PleaseWaitSvc', [
+  .factory('PleaseWaitSvc', [
     '$timeout',
     function ($timeout) {
       var counter = 0;

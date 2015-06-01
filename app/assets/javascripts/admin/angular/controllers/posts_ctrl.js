@@ -1,5 +1,5 @@
-angular.module('PostsCtrl', []).
-  controller('PostsCtrl', [
+angular.module('PostsCtrl', [])
+  .controller('PostsCtrl', [
     '$scope',
     function($scope) {
       /**
