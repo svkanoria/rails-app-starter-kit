@@ -6,17 +6,20 @@
  *
  * The error object must contain the validation errors from the server in the
  * following format:
+ *
  *   {
  *     field1: ['error msg 1', 'error msg 2', ...],
  *     field2: ['...'],
  *       :
  *   }
+ *
  * where field1, field2 etc. must correspond to the names of the form fields.
  * This object may be null or empty.
  *
  * Note that although this directive adds the appropriate ng-invalid classes,
  * the actual error messages must be displayed manually. This can be done by
  * adding this snippet of code below an input named, say, 'field1':
+ *
  *   <span ng-show="errorObject['field1']">
  *     {{errorObject['field1'][0]}} // Shows the first error message only
  *   </span>
