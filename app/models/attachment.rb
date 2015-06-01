@@ -91,7 +91,7 @@ class Attachment < ActiveRecord::Base
   end
 
   # Returns whether this is a standard web image.
-  # Takes a conservative view that only PNG, JP(E)G and GIFs qualify.
+  # Takes a conservative view that only PNGs, JP(E)Gs and GIFs qualify.
   #
   # @return [true, false]
   def web_image?
@@ -122,12 +122,12 @@ class Attachment < ActiveRecord::Base
 
   # The browser viewer type (if any) to use for viewing this attachment.
   #
-  # @return [String, nil] the viewer type (image, video or nil). nil indicates
-  #   that this attachment is not browser friendly.
+  # @return [Symbol, nil] the viewer type, or nil if it cannot be determined
   def web_viewer_type
     case
-      when web_image? then 'image'
-      when web_video? then 'video'
+      when web_image? then :image
+      when web_video? then :video
+      when Rack::Mime.match?(mime_type, 'application/pdf') then :pdf
       else nil
     end
   end
@@ -168,12 +168,9 @@ class Attachment < ActiveRecord::Base
   def self.backing_store (url)
     # Add more stores as and when supported
     case
-      when url.start_with?(AwsUtils::S3_URL)
-        :aws_s3
-      when url.start_with?('https://youtube.com')
-        :youtube
-      else
-        nil
+      when url.start_with?(AwsUtils::S3_URL) then :aws_s3
+      when url.start_with?('https://youtube.com') then :youtube
+      else nil
     end
   end
 
