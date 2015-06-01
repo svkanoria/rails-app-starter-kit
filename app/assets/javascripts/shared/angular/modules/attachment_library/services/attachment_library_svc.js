@@ -1,6 +1,6 @@
 // The service behind the attachment-library directive.
-angular.module('AttachmentLibrarySvc', []).
-  factory('AttachmentLibrarySvc', [
+angular.module('AttachmentLibrarySvc', [])
+  .factory('AttachmentLibrarySvc', [
     '$rootScope',
     function ($rootScope) {
       var visible = false;
@@ -115,10 +115,10 @@ angular.module('AttachmentLibrarySvc', []).
         incrementAlertCount: incrementAlertCount,
         emitUploadSuccessful: emitUploadSuccessful
       };
-    }]).
+    }])
 
   // Initialization
-  run([
+  .run([
     '$rootScope', 'AttachmentLibrarySvc',
     function ($rootScope, AttachmentLibrarySvc) {
       // Hide by default.

@@ -1,6 +1,6 @@
 // Manages the Attachment resource on the server.
-angular.module('Attachment', ['ResourceUtils']).
-  factory('Attachment', [
+angular.module('Attachment', ['ResourceUtils'])
+  .factory('Attachment', [
     'CancelableResourceFactory',
     function(CancelableResourceFactory) {
       return CancelableResourceFactory.createResource(

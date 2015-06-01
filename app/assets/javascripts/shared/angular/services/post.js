@@ -1,6 +1,6 @@
 // Manages the Post resource on the server.
-angular.module('Post', ['ResourceUtils']).
-  factory('Post', [
+angular.module('Post', ['ResourceUtils'])
+  .factory('Post', [
     'CancelableResourceFactory', 'ArrayMetadataResponseAdapter',
     function(CancelableResourceFactory, ArrayMetadataResponseAdapter) {
       return CancelableResourceFactory.createResource(

@@ -1,6 +1,6 @@
 // Provides initial data for PostsCtrl actions.
-angular.module('PostsCtrlInitSvc', ['Post']).
-  factory('PostsCtrlInitSvc', [
+angular.module('PostsCtrlInitSvc', ['Post'])
+  .factory('PostsCtrlInitSvc', [
     '$route', 'Post',
     function($route, Post) {
       // The 'index' action data is fetched directly in the controller.

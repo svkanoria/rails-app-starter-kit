@@ -21,8 +21,8 @@
  *     {{errorObject['field1'][0]}} // Shows the first error message only
  *   </span>
  */
-angular.module('FormErrors', []).
-  directive('formErrors', [
+angular.module('FormErrors', [])
+  .directive('formErrors', [
     function () {
       return {
         restrict: 'A',

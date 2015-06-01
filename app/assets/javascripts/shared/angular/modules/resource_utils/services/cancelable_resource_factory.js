@@ -8,8 +8,8 @@
  * * http://stackoverflow.com/questions/21666960/how-to-cancel-resource-requests
  * * https://developer.rackspace.com/blog/cancelling-ajax-requests-in-angularjs-applications
  */
-angular.module('CancelableResourceFactory', ['ngResource']).
-  factory('CancelableResourceFactory', [
+angular.module('CancelableResourceFactory', ['ngResource'])
+  .factory('CancelableResourceFactory', [
     '$q', '$resource',
     function($q, $resource) {
       /**

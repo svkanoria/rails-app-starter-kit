@@ -1,6 +1,6 @@
 // FineUploader based uploader for attachment library.
-angular.module('FineUploader', ['AttachmentLibrarySvc']).
-  directive('fineUploader', [
+angular.module('FineUploader', ['AttachmentLibrarySvc'])
+  .directive('fineUploader', [
     'AttachmentLibrarySvc',
     function (AttachmentLibrarySvc) {
       return {

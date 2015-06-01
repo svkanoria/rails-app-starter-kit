@@ -29,8 +29,8 @@
  * within the 'attachments' object. Thus, note that you need one directive per
  * role.
  */
-angular.module('AttachmentDrop', ['AttachmentJoin']).
-  directive('attachmentDrop', [
+angular.module('AttachmentDrop', ['AttachmentJoin'])
+  .directive('attachmentDrop', [
     'AttachmentJoin',
     function (AttachmentJoin) {
       return {

@@ -1,6 +1,8 @@
-// A solution for date and/or time user input, based on the
-// http://eonasdan.github.io/bootstrap-datetimepicker jQuery plugin.
-angular.module('DateTimePicker', []).
+/*
+ * A solution for date and/or time user input, based on the
+ * http://eonasdan.github.io/bootstrap-datetimepicker jQuery plugin.
+ */
+angular.module('DateTimePicker', [])
   /*
    * A directive for selecting dates and/or times.
    *
@@ -14,7 +16,7 @@ angular.module('DateTimePicker', []).
    * * Just the date portion of the above string. Example: '2015-04-15'
    * * Just the time portion of the above string. Example: 'T12:11:17.139Z'
    */
-  directive('dateTimePicker', [
+  .directive('dateTimePicker', [
     function () {
       return {
         restrict: 'E',
@@ -90,10 +92,10 @@ angular.module('DateTimePicker', []).
           });
         }
       }
-    }]).
+    }])
 
   // Controller for the date-time-picker directive.
-  controller('DateTimePickerCtrl', [
+  .controller('DateTimePickerCtrl', [
     '$scope',
     function ($scope) {
       // These cover all Moment.js possibilities

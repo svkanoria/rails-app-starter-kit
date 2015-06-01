@@ -7,8 +7,8 @@
  *                  options="Object expr">
  *   </div>
  */
-angular.module('JWPlayer', []).
-  directive('jwPlayer', [
+angular.module('JWPlayer', [])
+  .directive('jwPlayer', [
     function () {
       /**
        * Sensible defaults likely to always apply.

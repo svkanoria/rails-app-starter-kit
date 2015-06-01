@@ -17,8 +17,8 @@
  *     // their addition, and the first one that returns some HTML wins.
  *   }]);
  */
-angular.module('QBEditorProvider', []).
-  provider('QBEditor', [
+angular.module('QBEditorProvider', [])
+  .provider('QBEditor', [
     function () {
       /**
        * Creates a default editor.

@@ -16,8 +16,8 @@
  * This exposes all of the DataTables functionality to the controller, but
  * should be used with care!
  */
-angular.module('DataTable', []).
-  directive('datatable', [
+angular.module('DataTable', [])
+  .directive('datatable', [
     function () {
       return {
         restrict: 'A',
