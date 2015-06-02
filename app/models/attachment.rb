@@ -128,6 +128,8 @@ class Attachment < ActiveRecord::Base
       when web_image? then :image
       when web_video? then :video
       when Rack::Mime.match?(mime_type, 'application/pdf') then :pdf
+      when backing_store == :g_docs && url.end_with?('/pub')
+        :g_docs_published
       else nil
     end
   end
@@ -170,6 +172,7 @@ class Attachment < ActiveRecord::Base
     case
       when url.start_with?(AwsUtils::S3_URL) then :aws_s3
       when url.start_with?('https://youtube.com') then :youtube
+      when url.start_with?('https://docs.google.com') then :g_docs
       else nil
     end
   end
