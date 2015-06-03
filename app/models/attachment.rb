@@ -20,10 +20,17 @@ class Attachment < ActiveRecord::Base
   validates :user_id, presence: true
 
   before_save :populate_missing_fields
-  after_destroy :delete_from_provider
+  after_destroy :delete_from_store
 
   belongs_to :user
   has_many :attachment_joins, dependent: :destroy
+
+  # The backing store for this attachment (AWS, YouTube etc.).
+  #
+  # @return [Symbol, nil] the store name, or nil if not recognized
+  def backing_store
+    Attachment.backing_store(url)
+  end
 
   # Whether the access URL has expired.
   #
@@ -55,8 +62,8 @@ class Attachment < ActiveRecord::Base
 
       # Add more stores as and when supported
       new_access_url =
-          case
-            when url.start_with?(AwsUtils::S3_URL)
+          case backing_store
+            when :aws_s3
               # Sneakily double the validity!
               # This prevents an access URL from being returned with not enough
               # time left on it.
@@ -87,7 +94,7 @@ class Attachment < ActiveRecord::Base
   end
 
   # Returns whether this is a standard web image.
-  # Takes a conservative view that only PNG, JP(E)G and GIFs qualify.
+  # Takes a conservative view that only PNGs, JP(E)Gs and GIFs qualify.
   #
   # @return [true, false]
   def web_image?
@@ -118,12 +125,14 @@ class Attachment < ActiveRecord::Base
 
   # The browser viewer type (if any) to use for viewing this attachment.
   #
-  # @return [String, nil] the viewer type (image, video or nil). nil indicates
-  #   that this attachment is not browser friendly.
+  # @return [Symbol, nil] the viewer type, or nil if it cannot be determined
   def web_viewer_type
     case
-      when web_image? then 'image'
-      when web_video? then 'video'
+      when web_image? then :image
+      when web_video? then :video
+      when Rack::Mime.match?(mime_type, 'application/pdf') then :pdf
+      when backing_store == :g_docs && url.end_with?('/pub')
+        :g_docs_published
       else nil
     end
   end
@@ -152,8 +161,23 @@ class Attachment < ActiveRecord::Base
 
   # Called after destruction.
   # In turn, this calls Attachment.delete_from_store.
-  def delete_from_provider
+  def delete_from_store
     Attachment.delete_from_store(url)
+  end
+
+  # Infers the backing store name (if possible), given a URL.
+  #
+  # @param url [String] the URL
+  #
+  # @return [Symbol, nil] the store name, or nil if not recognized
+  def self.backing_store (url)
+    # Add more stores as and when supported
+    case
+      when url.start_with?(AwsUtils::S3_URL) then :aws_s3
+      when url.start_with?('https://youtube.com') then :youtube
+      when url.start_with?('https://docs.google.com') then :g_docs
+      else nil
+    end
   end
 
   # Initiates a request to delete an attachment from the backing store.
@@ -165,8 +189,8 @@ class Attachment < ActiveRecord::Base
   # @param url [String] the attachment URL
   def self.delete_from_store (url)
     # Add more stores as and when supported
-    if url.start_with? AwsUtils::S3_URL
-      AwsUtils.s3_delete(url)
+    case Attachment.backing_store(url)
+      when :aws_s3 then AwsUtils.s3_delete(url)
     end
   end
 end
