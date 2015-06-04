@@ -37,8 +37,8 @@ var app = angular.module('App', [
 ]);
 
 app.config([
-  'QBEditorProvider',
-  function (QBEditorProvider) {
+  'QBEditorProvider', 'AttachmentViewerProvider',
+  function (QBEditorProvider, AttachmentViewerProvider) {
     QBEditorProvider.addEditorFactory({
       createEditorHtml: function (columnType, op) {
         if (columnType === 'date') {
@@ -48,12 +48,36 @@ app.config([
           for (var i = 0; i < opArity; ++i) {
             editorHtml +=
               '<date-time-picker class="filter-value"'
-                + 'ng-model="model.values[' + i + ']"'
+                + ' ng-model="model.values[' + i + ']"'
                 + ' options="{ format: \'LL\' }">' +
               '</date-time-picker>'
           }
 
           return editorHtml;
+        }
+      }
+    });
+
+    AttachmentViewerProvider.addViewerFactory({
+      createViewerHtml: function (attachment) {
+        if (attachment.web_viewer_type === 'video') {
+          var viewerOptions = {
+            playlist: [{
+              sources: [{
+                file: attachment.access_url
+              }]
+            }]
+          };
+
+          var viewerOptionsStr =
+            _.replaceAll(JSON.stringify(viewerOptions), '"', "'");
+
+          var viewerHtml =
+            '<div jw-player id="video-player"'
+              + 'options="' + viewerOptionsStr + '">' +
+            '</div>';
+
+          return viewerHtml;
         }
       }
     });

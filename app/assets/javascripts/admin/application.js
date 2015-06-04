@@ -30,7 +30,7 @@
 //= require angular-rails-templates
 //= require ng-rails-csrf
 //= require underscore/underscore
-//= require underscore.string/lib/underscore.string
+//= require underscore.string/dist/underscore.string
 // Note the 'min'. This is needed since flashular.js does not minify correctly.
 //= require flashular/dist/flashular.min
 //= require moment/moment
@@ -46,7 +46,7 @@
 //= require ./angular/routes
 
 // Mixin Underscore.string functions with Underscore
-_.mixin(_.str.exports());
+_.mixin(s.exports());
 
 // OmniAuth Facebook authentication can add junk like '#_=_', to the URL being
 // redirected to. Angular interprets this as a route, which causes mayhem.

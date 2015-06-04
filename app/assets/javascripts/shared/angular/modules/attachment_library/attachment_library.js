@@ -2,10 +2,12 @@
 angular.module('AttachmentLibrary', [
   // Services
   'AttachmentLibrarySvc',
+  'AttachmentViewerProvider',
 
   // Directives
   'AttachmentLibraryDirective',
   'AttachmentBrowser',
   'FineUploader',
-  'AttachmentDrop'
+  'AttachmentDrop',
+  'AttachmentViewer'
 ]);
