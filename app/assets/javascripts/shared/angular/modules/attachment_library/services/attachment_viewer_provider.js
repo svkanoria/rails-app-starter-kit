@@ -30,10 +30,16 @@ angular.module('AttachmentViewerProvider', [])
        * since it is compiled before being added to the DOM.
        */
       function DEFAULT_VIEWER_HTML (attachment) {
-        var viewerHtml =
-          '<a href="' + attachment.access_url + '">'
-            + 'Download' +
-          '</a>';
+        var viewerHtml = '';
+
+        if (attachment.web_viewer_type === 'image') {
+          viewerHtml =
+            '<img class="image" src="' + attachment.access_url + '"></img>';
+        } else {
+          viewerHtml =
+            '<a class="download" href="' + attachment.access_url + '">'
+              + 'Download</a>';
+        }
 
         return viewerHtml;
       }
