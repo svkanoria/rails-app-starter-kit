@@ -7,13 +7,5 @@ angular.module('AttachmentsCtrl', [])
        */
       $scope.actionShow = function () {
         $scope.attachment = initialData;
-
-        $scope.videoPlayerOptions = {
-          playlist: [{
-            sources: [{
-              file: $scope.attachment.access_url
-            }]
-          }]
-        };
       };
     }]);

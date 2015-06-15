@@ -1,6 +1,4 @@
-/*
- * The directive for a single filter in a query-builder.
- */
+// The directive for a single filter in a query-builder.
 angular.module('QBFilter', ['QBEditorProvider'])
   .directive('qbFilter', [
     '$compile', 'QBEditor',
