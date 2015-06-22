@@ -21,8 +21,8 @@ describe AttachmentPolicy do
     let(:attachment) { FactoryGirl.create(:attachment) }
 
     it { should permit(:index) }
-    it { should_not permit(:create) }
-    it { should_not permit(:new) }
+    it { should permit(:create) }
+    it { should permit(:new) }
 
     context 'for an attachment created by someone else' do
       it { should_not permit(:show) }

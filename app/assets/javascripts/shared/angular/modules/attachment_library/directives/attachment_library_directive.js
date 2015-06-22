@@ -2,8 +2,7 @@
  * The attachment library directive.
  *
  * Usage:
- *   <attachment-library uploader-options="Object expr"
- *                       referrer-options="Object expr">
+ *   <attachment-library uploader-options="Object expr">
  *   </attachment-library>
  *
  * The uploader options are passed to the uploader directive.
@@ -20,10 +19,6 @@
  *     on whether any uploads are currently in progress
  *   * AttachmentLibrarySvc.incrementAlertCount(): To keep the service updated
  *     on how many (if any) alert messages are currently pending user action
- *
- * The referrer options are passed to the url-referrer directive.
- * This directive creates attachments that merely reference external URLs, and
- * don't require uploading.
  */
 angular.module('AttachmentLibraryDirective', ['AttachmentLibrarySvc'])
   .directive('attachmentLibrary', [
@@ -35,8 +30,7 @@ angular.module('AttachmentLibraryDirective', ['AttachmentLibrarySvc'])
         replace: true,
 
         scope: {
-          uploaderOptions: '=',
-          referrerOptions: '='
+          uploaderOptions: '='
         },
 
         link: function (scope, element, attrs) {

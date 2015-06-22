@@ -9,7 +9,7 @@ class AttachmentPolicy < ApplicationPolicy
   end
 
   def create?
-    false # Attachments are created via the uploader controller
+    user && user.id
   end
 
   def update?
