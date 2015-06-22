@@ -2,7 +2,8 @@
  * The attachment library directive.
  *
  * Usage:
- *   <attachment-library uploader-options="Object expr">
+ *   <attachment-library uploader-options="Object expr"
+ *                       referrer-options="Object expr">
  *   </attachment-library>
  *
  * The uploader options are passed to the uploader directive.
@@ -13,10 +14,16 @@
  * In particular, take care to do the following:
  * * Modify this directive's template to use your uploader instead:
  *   /app/assets/javascripts/templates/shared/directives/attachment_library.html
- * * Have your uploader call AttachmentLibrarySvc.emitUploadSuccessful() upon
- *   any successful upload
- * * Have your uploader call AttachmentLibrarySvc.setUploadsInProgress() to keep
- *   the service updated on whether any uploads are currently in progress
+ * * Have your uploader call the following methods at appropriate times:
+ *   * AttachmentLibrarySvc.emitUploadSuccessful(): Upon any successful upload
+ *   * AttachmentLibrarySvc.setUploadsInProgress(): To keep the service updated
+ *     on whether any uploads are currently in progress
+ *   * AttachmentLibrarySvc.incrementAlertCount(): To keep the service updated
+ *     on how many (if any) alert messages are currently pending user action
+ *
+ * The referrer options are passed to the url-referrer directive.
+ * This directive creates attachments that merely reference external URLs, and
+ * don't require uploading.
  */
 angular.module('AttachmentLibraryDirective', ['AttachmentLibrarySvc'])
   .directive('attachmentLibrary', [
@@ -28,7 +35,8 @@ angular.module('AttachmentLibraryDirective', ['AttachmentLibrarySvc'])
         replace: true,
 
         scope: {
-          uploaderOptions: '='
+          uploaderOptions: '=',
+          referrerOptions: '='
         },
 
         link: function (scope, element, attrs) {

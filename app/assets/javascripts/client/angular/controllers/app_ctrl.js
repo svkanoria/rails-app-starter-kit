@@ -32,4 +32,10 @@ angular.module('AppCtrl', ['AuthSvc', 'PleaseWait'])
           enableAuto: true // defaults to false
         }
       };
+
+      // For the attachment library directive declared in the Rails application
+      // layout.
+      $scope.referrerOptions = {
+        endpoint: '/attachments'
+      };
     }]);
