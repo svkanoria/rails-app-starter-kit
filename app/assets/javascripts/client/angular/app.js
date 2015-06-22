@@ -31,6 +31,9 @@ var app = angular.module('App', [
   'DateTimePicker',
   'JWPlayer',
 
+  // Filters
+  'StringFilters',
+
   // Modules
   'ResourceUtils',
   'AttachmentLibrary'
