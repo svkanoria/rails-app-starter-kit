@@ -78,9 +78,9 @@ angular.module('AttachmentViewerProvider', [])
           if (viewer) {
             return viewer;
           }
-
-          return DEFAULT_VIEWER_HTML(attachment);
         }
+
+        return DEFAULT_VIEWER_HTML(attachment);
       }
 
       // Return the provider object

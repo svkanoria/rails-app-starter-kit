@@ -6,7 +6,7 @@ $attach-lib-panel-margin: $padding-small-vertical $padding-small-horizontal;
 $attach-lib-panel-padding: $padding-small-vertical $padding-small-horizontal;
 $attach-lib-panel-bg: transparentize($gray-lighter, 0.1);
 $attach-lib-panel-border-radius: $border-radius-small;
-$attach-lib-panel-box-shadow-color: $gray-light;
+$attach-lib-panel-box-shadow-color: #bbb;
 
 $attachment-drag-helper-padding: $padding-small-vertical $padding-small-horizontal;
 $attachment-drag-helper-bg: $brand-info;
@@ -28,7 +28,7 @@ $attachment-drag-helper-border-radius: $border-radius-small;
   padding: $attach-lib-panel-padding;
   background: $attach-lib-panel-bg;
   border-radius: $attach-lib-panel-border-radius;
-  box-shadow: 1px 1px 8px #bbb;
+  box-shadow: 1px 1px 8px $attach-lib-panel-box-shadow-color;
 
   // For anything but the smallest screens, set a fixed width. This seems to
   // work best visually.

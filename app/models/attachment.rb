@@ -128,7 +128,9 @@ class Attachment < ActiveRecord::Base
       when web_image? then :image
       when web_video? then :video
       when Rack::Mime.match?(mime_type, 'application/pdf') then :pdf
-      when backing_store == :g_docs && url.end_with?('/pub')
+      when backing_store == :g_docs &&
+          url.end_with?('/pub', '/pub?embedded=true')
+
         :g_docs_published
       else nil
     end
