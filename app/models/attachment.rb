@@ -60,7 +60,7 @@ class Attachment < ActiveRecord::Base
       # Add more conditions as and when supported
       new_access_url =
           case backing_store
-            when :aws_s3
+            when :own_aws_s3
               # Sneakily double the validity!
               # This prevents an access URL from being returned with not enough
               # time left on it.
@@ -180,9 +180,13 @@ class Attachment < ActiveRecord::Base
   #
   # @return [Symbol, nil] the store name, or nil if not recognized
   def self.backing_store (url)
+    s3_bucket_url =
+        "#{AwsUtils::S3_URL}/#{Rails.application.secrets.aws_s3_bucket}"
+
     # Add more conditions as and when supported
     case
-      when url.start_with?(AwsUtils::S3_URL) then :aws_s3
+      when url.start_with?(s3_bucket_url) then :own_aws_s3
+      when url.start_with?(AwsUtils::S3_URL) then :other_aws_s3
       when url.start_with?('https://youtube.com') then :youtube
       when url.start_with?('https://docs.google.com') then :g_docs
       else nil
@@ -199,7 +203,7 @@ class Attachment < ActiveRecord::Base
   def self.delete_from_store (url)
     # Add more conditions as and when supported
     case Attachment.backing_store(url)
-      when :aws_s3 then AwsUtils.s3_delete(url)
+      when :own_aws_s3 then AwsUtils.s3_delete(url)
     end
   end
 end
