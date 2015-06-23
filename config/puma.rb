@@ -1,8 +1,8 @@
 # Puma web server config. Taken as-is from:
 # https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
 
-workers Integer(ENV['WEB_CONCURRENCY'] || 2)
-threads_count = Integer(ENV['MAX_THREADS'] || 5)
+workers Integer(ENV['WEB_CONCURRENCY'] || 3)
+threads_count = Integer(ENV['MAX_THREADS'] || 1)
 threads threads_count, threads_count
 
 preload_app!
