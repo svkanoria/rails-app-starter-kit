@@ -3,6 +3,9 @@
 
   <p class="attachment">
     {{attachment.name}}
+    <a ng-href="{{attachment.access_url}}" target="_blank">
+      raw <span class="glyphicon glyphicon-new-window"></span>
+    </a>
   </p>
 
   <attachment-viewer attachment="attachment"></attachment-viewer>
