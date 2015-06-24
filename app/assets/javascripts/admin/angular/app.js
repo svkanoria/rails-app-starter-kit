@@ -21,6 +21,9 @@ var app = angular.module('App', [
   'DataTable',
   'DateTimePicker',
 
+  // Filters
+  'StringFilters',
+
   // Modules
   'ResourceUtils',
   'QueryBuilder'

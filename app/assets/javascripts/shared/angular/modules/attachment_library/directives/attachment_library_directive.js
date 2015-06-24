@@ -13,10 +13,12 @@
  * In particular, take care to do the following:
  * * Modify this directive's template to use your uploader instead:
  *   /app/assets/javascripts/templates/shared/directives/attachment_library.html
- * * Have your uploader call AttachmentLibrarySvc.emitUploadSuccessful() upon
- *   any successful upload
- * * Have your uploader call AttachmentLibrarySvc.setUploadsInProgress() to keep
- *   the service updated on whether any uploads are currently in progress
+ * * Have your uploader call the following methods at appropriate times:
+ *   * AttachmentLibrarySvc.emitUploadSuccessful(): Upon any successful upload
+ *   * AttachmentLibrarySvc.setUploadsInProgress(): To keep the service updated
+ *     on whether any uploads are currently in progress
+ *   * AttachmentLibrarySvc.incrementAlertCount(): To keep the service updated
+ *     on how many (if any) alert messages are currently pending user action
  */
 angular.module('AttachmentLibraryDirective', ['AttachmentLibrarySvc'])
   .directive('attachmentLibrary', [

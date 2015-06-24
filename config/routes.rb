@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
     resources :posts
 
-    resources :attachments, except: :create
+    resources :attachments
 
     resources :attachment_joins, only: [:create, :destroy]
 

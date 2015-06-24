@@ -60,10 +60,10 @@ class Attachment < ActiveRecord::Base
     else
       new_access_expires_at = now + expires_in
 
-      # Add more stores as and when supported
+      # Add more conditions as and when supported
       new_access_url =
           case backing_store
-            when :aws_s3
+            when :own_aws_s3
               # Sneakily double the validity!
               # This prevents an access URL from being returned with not enough
               # time left on it.
@@ -127,11 +127,14 @@ class Attachment < ActiveRecord::Base
   #
   # @return [Symbol, nil] the viewer type, or nil if it cannot be determined
   def web_viewer_type
+    # Add more conditions as and when supported
     case
       when web_image? then :image
       when web_video? then :video
       when Rack::Mime.match?(mime_type, 'application/pdf') then :pdf
-      when backing_store == :g_docs && url.end_with?('/pub')
+      when backing_store == :g_docs &&
+          url.end_with?('/pub', '/pub?embedded=true')
+
         :g_docs_published
       else nil
     end
@@ -156,7 +159,16 @@ class Attachment < ActiveRecord::Base
   private
 
   def populate_missing_fields
-    self[:name] ||= File.basename(url, '.*')
+    if self[:name].blank?
+      self[:name] =
+          case
+            # Google Docs file names are not user friendly, so use alternative
+            when backing_store == :g_docs
+              "attachment-#{Time.current.strftime('%s')}"
+            else
+              File.basename(url, '.*')
+          end
+    end
   end
 
   # Called after destruction.
@@ -171,9 +183,13 @@ class Attachment < ActiveRecord::Base
   #
   # @return [Symbol, nil] the store name, or nil if not recognized
   def self.backing_store (url)
-    # Add more stores as and when supported
+    s3_bucket_url =
+        "#{AwsUtils::S3_URL}/#{Rails.application.secrets.aws_s3_bucket}"
+
+    # Add more conditions as and when supported
     case
-      when url.start_with?(AwsUtils::S3_URL) then :aws_s3
+      when url.start_with?(s3_bucket_url) then :own_aws_s3
+      when url.start_with?(AwsUtils::S3_URL) then :other_aws_s3
       when url.start_with?('https://youtube.com') then :youtube
       when url.start_with?('https://docs.google.com') then :g_docs
       else nil
@@ -188,9 +204,9 @@ class Attachment < ActiveRecord::Base
   #
   # @param url [String] the attachment URL
   def self.delete_from_store (url)
-    # Add more stores as and when supported
+    # Add more conditions as and when supported
     case Attachment.backing_store(url)
-      when :aws_s3 then AwsUtils.s3_delete(url)
+      when :own_aws_s3 then AwsUtils.s3_delete(url)
     end
   end
 end

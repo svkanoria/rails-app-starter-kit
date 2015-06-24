@@ -30,6 +30,10 @@ var app = angular.module('App', [
   'PleaseWait',
   'DateTimePicker',
   'JWPlayer',
+  'GDocsViewer',
+
+  // Filters
+  'StringFilters',
 
   // Modules
   'ResourceUtils',
@@ -76,6 +80,17 @@ app.config([
             '<div jw-player id="video-player"'
               + 'options="' + viewerOptionsStr + '">' +
             '</div>';
+
+          return viewerHtml;
+        }
+      }
+    });
+
+    AttachmentViewerProvider.addViewerFactory({
+      createViewerHtml: function (attachment) {
+        if (attachment.web_viewer_type === 'g_docs_published') {
+          var viewerHtml =
+            '<g-docs-viewer url="attachment.access_url"></g-docs-viewer>';
 
           return viewerHtml;
         }

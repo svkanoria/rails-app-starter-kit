@@ -1,0 +1,19 @@
+// Variables
+
+$g-docs-viewer-iframe-max-width: 826px; // To match the real Google Docs
+$g-docs-viewer-iframe-height: 500px;
+$g-docs-viewer-iframe-border-color: #bbb;
+
+// Styles
+
+.g-docs-viewer {
+  text-align: center;
+
+  > iframe {
+    width: 100%;
+    max-width: $g-docs-viewer-iframe-max-width;
+    height: $g-docs-viewer-iframe-height;
+    margin: 0 auto;
+    border: 1px solid $g-docs-viewer-iframe-border-color;
+  }
+}

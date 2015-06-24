@@ -9,5 +9,6 @@ angular.module('AttachmentLibrary', [
   'AttachmentBrowser',
   'FineUploader',
   'AttachmentDrop',
-  'AttachmentViewer'
+  'AttachmentViewer',
+  'UrlReferrer'
 ]);

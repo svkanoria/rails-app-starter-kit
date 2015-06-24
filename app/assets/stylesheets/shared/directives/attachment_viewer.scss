@@ -1,5 +1,14 @@
 .attachment-viewer {
   > .image {
     width: 100%;
+    text-align: center;
+
+    > img {
+      max-width: 100%;
+    }
+  }
+
+  > .no-viewer-msg {
+    text-align: center;
   }
 }

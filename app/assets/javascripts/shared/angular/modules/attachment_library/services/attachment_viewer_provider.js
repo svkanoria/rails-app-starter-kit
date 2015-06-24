@@ -34,11 +34,12 @@ angular.module('AttachmentViewerProvider', [])
 
         if (attachment.web_viewer_type === 'image') {
           viewerHtml =
-            '<img class="image" src="' + attachment.access_url + '"></img>';
+            '<div class="image">'
+              + '<img src="' + attachment.access_url + '"></img>' +
+            '</div>';
         } else {
           viewerHtml =
-            '<a class="download" href="' + attachment.access_url + '">'
-            + 'Download</a>';
+            '<div class="no-viewer-msg">No preview available</div>';
         }
 
         return viewerHtml;
@@ -78,9 +79,9 @@ angular.module('AttachmentViewerProvider', [])
           if (viewer) {
             return viewer;
           }
-
-          return DEFAULT_VIEWER_HTML(attachment);
         }
+
+        return DEFAULT_VIEWER_HTML(attachment);
       }
 
       // Return the provider object
