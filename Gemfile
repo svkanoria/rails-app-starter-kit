@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
 # For Heroku to be able to use the desired Ruby version
-ruby '2.1.2'
+ruby '2.2.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0.rc3'
+gem 'rails', '4.2.2'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -48,11 +48,7 @@ gem 'angular-rails-templates'
 gem 'ng-rails-csrf'
 
 # For authentication.
-# For now, we use a special branch for Rails 4.2 compatibility. However, devise
-# is sure to make a compatible release soon.
-# TODO Use official 4.2 compatible release of devise when available
-gem 'devise', git: 'https://github.com/plataformatec/devise.git',
-    branch: 'lm-rails-4-2'
+gem 'devise', '~> 3.5.0'
 
 # For authentication via Facebook
 gem 'omniauth-facebook'

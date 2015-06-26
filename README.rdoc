@@ -15,7 +15,7 @@ See the 'Access from Native Apps' section for details.
 A starter kit for creating applications using the Postgres, Rails and Angular
 stack, with the following features built-in:
 
-1. Rails ~4.2, Angular ~1.3 (and we recommend Ruby >=2.1.2)
+1. Ruby 2.2.2, Rails 4.2.2, Angular ~1.3
 1. Puma web server
 1. Postgres support
 1. Complete user management, with authentication and role-based authorization
@@ -55,10 +55,10 @@ Do so as follows:
 1. Enter the following: Name: Puma, Gem name = puma, Executable name = puma,
    Arguments = -C config/puma.rb
 
-As tested on RubyMine 7.1, this configuration works for both running and
+As tested on RubyMine 7.1.3, this configuration works for both running and
 debugging. Be sure to set all environment variables on this configuration, NOT
 the default ones. Also set the environment variables on the 'Rails console: xxx'
-configuration, for the Rails console to work correctly.
+configuration, for the Rails console to work correctly!
 
 == Setting Up
 
