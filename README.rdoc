@@ -104,10 +104,11 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
     WEB_CONCURRENCY=<Number of simultaneous worker processes>
     MAX_THREADS=<Max number of threads per worker>
 
-   The defaults are 3 and 1 respectively.
+   The defaults are 3 and 5 respectively.
 
-   IMPORTANT: Don't fiddle with MAX_THREADS for now, as we have not yet tested
-   the app's thread safety. We will be working on this soon.
+   IMPORTANT: Although we believe the app to be thread-safe, there is no way to
+   guarantee it! If you encounter any race conditions, starvation or deadlock,
+   just set MAX_THREADS to 1 (for now).
 
 1. If you wish to allow authentication via Facebook, create a Facebook app if
    you haven't already, and set the following environment variables:
