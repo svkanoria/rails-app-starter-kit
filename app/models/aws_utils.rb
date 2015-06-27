@@ -9,13 +9,16 @@ class AwsUtils
 
   # S3 client
   @@S3 = nil
+  @@S3_mutex = Mutex.new
 
   # S3 client (lazily evaluated).
   # Use this, and not @@S3 directly.
   #
   # @return [Aws::S3::Client]
   def self.S3
-    @@S3 ||= Aws::S3::Client.new
+    @@S3_mutex.synchronize do # Because S3 is a class variable!
+      @@S3 ||= Aws::S3::Client.new
+    end
   end
 
   # Builds an AWS S3 URL, from a bucket name and an object key.

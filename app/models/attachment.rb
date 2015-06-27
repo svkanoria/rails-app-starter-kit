@@ -150,6 +150,9 @@ class Attachment < ActiveRecord::Base
   # @return [String] a thumbnail or placeholder URL
   def thumb (size = '80x80#')
     if web_image?
+      # Although Dragonfly is not thread-safe, since this operation likely has
+      # no side-effects, we don't place it within a critical section.
+      # TODO Ensure Dragonfly processing works with multiple threads
       Dragonfly.app.fetch_url(access_url).thumb(size).url
     else
       'http://placehold.it/40&text=No+Image';
