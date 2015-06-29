@@ -5,7 +5,7 @@ class AttachmentPolicy < ApplicationPolicy
   end
 
   def show?
-    user && user.id == record.user_id
+    user && (user.has_role?(:admin) || user.id == record.user_id)
   end
 
   def create?
@@ -13,7 +13,7 @@ class AttachmentPolicy < ApplicationPolicy
   end
 
   def update?
-    user && user.id == record.user_id
+    user && (user.has_role?(:admin) || user.id == record.user_id)
   end
 
   def destroy?

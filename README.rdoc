@@ -203,7 +203,6 @@ additions, a sampling of which is shown below:
        |- home_controller.rb (the 'entry point' controller)
    |- jobs (contains all background jobs)
    |- policies (access authorization policies)
-       |- admin (all admin authorization policies)
    |- views
        |- admin (all admin views)
        |- home

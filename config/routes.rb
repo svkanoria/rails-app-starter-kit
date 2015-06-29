@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :posts, only: :index
 
+    resources :users, only: :index
+
     root 'home#index'
   end
 
