@@ -1,9 +1,7 @@
-# Authorization policy for admin/posts controller actions.
-# Note that Admin::ApplicationController already blocks non-admins, so we don't
-# need to check for that in this policy.
-class Admin::PostPolicy < Admin::ApplicationPolicy
+# Authorization policy for users controller actions.
+class UserPolicy < ApplicationPolicy
   def index?
-    true
+    user && user.has_role?(:admin)
   end
 
   # The methods below are not relevant for the controller.
