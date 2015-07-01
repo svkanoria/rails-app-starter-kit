@@ -13,6 +13,7 @@ var app = angular.module('App', [
   'AppCtrl',
   'HomeCtrl',
   'PostsCtrl',
+  'UsersCtrl',
 
   // Directives
   'AuthenticationLinks',

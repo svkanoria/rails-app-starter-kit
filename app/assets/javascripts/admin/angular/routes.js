@@ -20,6 +20,12 @@ app.config([
         controller: 'PostsCtrl'
       })
 
+      // User routes
+      .when('/users', {
+        templateUrl: 'admin/controllers/users/index.html',
+        controller: 'UsersCtrl'
+      })
+
       // Error routes
       .when('/unauthorized', {
         templateUrl: 'shared/401.html'
