@@ -37,6 +37,29 @@ angular.module('DateTimePicker', [])
           var instance = input.datetimepicker(scope.options || {});
           var initialized = false;
 
+          // Respond when the user presses Enter, by:
+          // 1. Updating the model. This is best achieved by the convoluted
+          //    method of blurring and re-focusing the input field.
+          // 2. Causing the enclosing form (if any) to submit. This is achieved
+          //    by triggering a 'click' on the form's input[type=submit]. Again
+          //    convoluted, but this ensures that submission is processed via
+          //    the regular Angular channels, and nothing is bypassed.
+          instance.on('keydown', function (event) {
+            if (event.which === 13) {
+              input.trigger('blur');
+              input.trigger('focus');
+              input.data('DateTimePicker').hide();
+
+              var form = $(element).closest('form');
+              if (!form) return;
+
+              var submitButton = form.find('[type=submit]');
+              if (!submitButton) return;
+
+              submitButton.trigger('click');
+            }
+          });
+
           instance.on('dp.change', function () {
             if (!initialized) return;
 
