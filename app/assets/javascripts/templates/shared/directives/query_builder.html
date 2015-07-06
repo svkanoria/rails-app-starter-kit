@@ -1,4 +1,4 @@
-<form class="query-builder form-inline" novalidate>
+<form class="query-builder form-inline" novalidate ng-submit="submit()">
   <div class="filter" ng-repeat="filter in filters track by filter._id">
     <a href="" class="filter-remove" ng-click="removeFilter($index)">
       <span class="glyphicon glyphicon-remove-circle"></span></a>
@@ -12,9 +12,7 @@
   </a>
   <br/>
 
-  <button type="button" class="btn"
-          ng-class="{'btn-primary': form.$dirty, 'btn-default': form.$pristine}"
-          ng-click="submit()">
-    Apply Filters
-  </button>
+  <input type="submit" class="btn"
+         ng-class="{'btn-primary': form.$dirty, 'btn-default': form.$pristine}"
+         value="Apply Filters">
 </form>
