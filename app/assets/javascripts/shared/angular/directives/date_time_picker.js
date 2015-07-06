@@ -60,8 +60,6 @@ angular.module('DateTimePicker', [])
               input.data('DateTimePicker').date(fullModelValue);
 
               viewValue = fullModelValue.format(dateTimePicker.format());
-            } else {
-              viewValue = null;
             }
 
             if (!initialized) initialized = true;
@@ -70,6 +68,8 @@ angular.module('DateTimePicker', [])
           });
 
           ngModel.$parsers.push(function (viewValue) {
+            if (!viewValue) return null;
+
             switch (dateTimePicker.granularity(dateTimePicker.format())) {
               case 1: // Date only
                 return viewValue.format('YYYY-MM-DD');
