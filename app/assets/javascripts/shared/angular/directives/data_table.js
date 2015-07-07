@@ -21,8 +21,15 @@ angular.module('DataTable', [])
     function () {
       /**
        * Adds a 'row selection' column to the data table.
-       * To do so, it manipulates both the HTML, as well as the options passed
-       * into the scope.
+       * To do so, it manipulates
+       * 1. The HTML
+       * 2. The options passed into the scope
+       *
+       * This column is added at index 0, which means all other columns are
+       * shifted right by 1. This can impact any options passed that rely on
+       * column indices. Fortunately, this method finds such options and fixes
+       * them. However, any subsequent changes or operations you perform must
+       * explicitly accommodate this extra column.
        *
        * @param {Object} scope - The scope passed to the link function.
        * @param {Object} element - The element passed to the link function.
@@ -127,11 +134,16 @@ angular.module('DataTable', [])
 
           if (index === -1) {
             $(row).addClass('selected');
-            selectedRows.push(rowId);
+
+            // Note use of '$applyAsync' vs '$apply'.
+            // This is an optimization, as it queues up the push statements to
+            // be all executed within the same digest cycle.
+            scope.$applyAsync(selectedRows.push(rowId));
           } else {
             $(row).removeClass('selected');
-            selectedRows.splice(index, 1);
             selectAllCheckbox.prop('checked', false);
+
+            scope.$applyAsync(selectedRows.splice(index, 1));
           }
         });
 
