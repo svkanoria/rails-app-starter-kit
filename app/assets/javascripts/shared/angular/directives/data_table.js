@@ -105,10 +105,29 @@ angular.module('DataTable', [])
         var options = scope.options;
         var selectedRows = scope.selectedRows;
 
+        /**
+         * Checks/Un-checks the 'select all' checkbox, depending on whether all
+         * visible rows are currently selected or not.
+         */
+        function updateSelectAllCheckbox () {
+          var unselectedRows = $(element).find('.select-row:not(:checked)');
+
+          if (unselectedRows.length == 0) {
+            selectAllCheckbox.prop('checked', true);
+          } else {
+            selectAllCheckbox.prop('checked', false)
+          }
+        }
+
         // Persist selections across paging, sorting and filtering operations
 
         var origRowCallback = options.rowCallback;
 
+        /**
+         * Called back by the data table when a row is drawn.
+         * For argument details, see
+         * https://datatables.net/reference/option/rowCallback.
+         */
         function rowCallback (row, data, index) {
           var rowId = data.DT_RowId.toString();
 
@@ -134,6 +153,7 @@ angular.module('DataTable', [])
 
           if (index === -1) {
             $(row).addClass('selected');
+            updateSelectAllCheckbox();
 
             // Note use of '$applyAsync' vs '$apply'.
             // This is an optimization, as it queues up the push statements to
@@ -156,14 +176,13 @@ angular.module('DataTable', [])
 
         var origDrawCallback = options.drawCallback;
 
+        /**
+         * Called back by the data table every time it performs a draw.
+         * For argument details, see
+         * https://datatables.net/reference/option/drawCallback.
+         */
         function drawCallback (settings) {
-          var unselectedRows = $(element).find('.select-row:not(:checked)');
-
-          if (unselectedRows.length == 0) {
-            selectAllCheckbox.prop('checked', true);
-          } else {
-            selectAllCheckbox.prop('checked', false)
-          }
+          updateSelectAllCheckbox();
 
           if (origDrawCallback) origDrawCallback(settings);
         }
