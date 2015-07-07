@@ -27,14 +27,14 @@ angular.module('DataTable', [])
        * @param {Object} scope - The scope passed to the link function.
        * @param {Object} element - The element passed to the link function.
        */
-      function addRowSelectionUI(scope, element) {
+      function addRowSelectionUI (scope, element) {
         var options = scope.options;
 
         // Prepend a checkbox column to the table HTML
 
         var th =
           '<th class="dt-head-center">'
-            + '<input type="checkbox" ng-model="selectedAll">' +
+            + '<input type="checkbox" class="select-all-rows">' +
           '</th>';
 
         element.find('thead > tr').prepend(th);
@@ -94,7 +94,7 @@ angular.module('DataTable', [])
        * @param {Object} scope - The scope passed to the link function.
        * @param {Object} element - The element passed to the link function.
        */
-      function addRowSelectionLogic(scope, element) {
+      function addRowSelectionLogic (scope, element) {
         var options = scope.options;
         var selectedRows = scope.selectedRows;
 
@@ -102,7 +102,7 @@ angular.module('DataTable', [])
 
         var origRowCallback = options.rowCallback;
 
-        function rowCallback(row, data, index) {
+        function rowCallback (row, data, index) {
           var rowId = data.DT_RowId.toString();
 
           if (_.indexOf(selectedRows, rowId) !== -1) {
@@ -116,7 +116,9 @@ angular.module('DataTable', [])
         options.rowCallback = rowCallback;
 
         // Toggle row selection when the checkbox in the newly added column is
-        // clicked.
+        // clicked. Also add 'select all' logic.
+
+        var selectAllCheckbox = $(element).find('.select-all-rows');
 
         $(element).on('click', '.select-row', function () {
           var row = $(this).closest('tr');
@@ -129,8 +131,32 @@ angular.module('DataTable', [])
           } else {
             $(row).removeClass('selected');
             selectedRows.splice(index, 1);
+            selectAllCheckbox.prop('checked', false);
           }
         });
+
+        selectAllCheckbox.on('click', function () {
+          var checked = $(this).is(':checked');
+          var selectorSuffix = (checked) ? ':not(:checked)' : ':checked';
+
+          $(element).find('.select-row' + selectorSuffix).trigger('click');
+        });
+
+        var origDrawCallback = options.drawCallback;
+
+        function drawCallback (settings) {
+          var unselectedRows = $(element).find('.select-row:not(:checked)');
+
+          if (unselectedRows.length == 0) {
+            selectAllCheckbox.prop('checked', true);
+          } else {
+            selectAllCheckbox.prop('checked', false)
+          }
+
+          if (origDrawCallback) origDrawCallback(settings);
+        }
+
+        options.drawCallback = drawCallback;
       }
 
       return {
