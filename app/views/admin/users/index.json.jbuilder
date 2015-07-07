@@ -5,5 +5,6 @@ json.recordsFiltered @users_adapter.records_filtered
 json.data do
   json.array! @users_adapter.data do |user|
     json.(user, :id, :email, :created_at)
+    json.DT_RowId user.id
   end
 end
