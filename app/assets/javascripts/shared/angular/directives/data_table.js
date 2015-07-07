@@ -24,15 +24,17 @@ angular.module('DataTable', [])
        * To do so, it manipulates both the HTML, as well as the options passed
        * into the scope.
        *
+       * @param {Object} scope - The scope passed to the link function.
        * @param {Object} element - The element passed to the link function.
-       * @param {Object} options - The data table options set on the scope.
        */
-      function addRowSelectionUI(element, options) {
+      function addRowSelectionUI(scope, element) {
+        var options = scope.options;
+
         // Prepend a checkbox column to the table HTML
 
         var th =
           '<th class="dt-head-center">'
-            + '<input type="checkbox">' +
+            + '<input type="checkbox" ng-model="selectedAll">' +
           '</th>';
 
         element.find('thead > tr').prepend(th);
@@ -67,6 +69,7 @@ angular.module('DataTable', [])
 
         // Adjust initial column sorting to accommodate the prepended checkbox
         // column.
+
         var order = options.order;
 
         if (order && order.length > 0) {
@@ -88,11 +91,15 @@ angular.module('DataTable', [])
        * 1. The 'select all' checkbox in the table header only targets currently
        *    visible rows.
        *
+       * @param {Object} scope - The scope passed to the link function.
        * @param {Object} element - The element passed to the link function.
-       * @param {Object} options - The data table options set on the scope.
-       * @param {Array<number>} selectedRows - The currently selected rows.
        */
-      function addRowSelectionLogic(element, options, selectedRows) {
+      function addRowSelectionLogic(scope, element) {
+        var options = scope.options;
+        var selectedRows = scope.selectedRows;
+
+        // Persist selections across paging, sorting and filtering operations
+
         var origRowCallback = options.rowCallback;
 
         function rowCallback(row, data, index) {
@@ -107,6 +114,9 @@ angular.module('DataTable', [])
         }
 
         options.rowCallback = rowCallback;
+
+        // Toggle row selection when the checkbox in the newly added column is
+        // clicked.
 
         $(element).on('click', '.select-row', function () {
           var row = $(this).closest('tr');
@@ -132,11 +142,11 @@ angular.module('DataTable', [])
         },
 
         link: function (scope, element, attrs) {
-          scope.selectedAll = true;
-          var selectedRows = [];
+          scope.selectedAll = false;
+          scope.selectedRows = [];
 
-          addRowSelectionUI(element, scope.options);
-          addRowSelectionLogic(element, scope.options, selectedRows);
+          addRowSelectionUI(scope, element);
+          addRowSelectionLogic(scope, element);
 
           var instance = $(element).DataTable(scope.options || {});
 
