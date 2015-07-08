@@ -41,6 +41,9 @@ angular.module('UsersCtrl', [])
         // This is populated by the 'datatable' directive.
         $scope.dataTableInstance = null;
 
+        // This is populated by the 'datatable' directive
+        $scope.dataTableSelectedRows = [];
+
         $scope.queryBuilderOptions = {
           columns: [
             { name: 'email', type: 'text' },

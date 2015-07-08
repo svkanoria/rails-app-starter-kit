@@ -8,13 +8,18 @@
  * Usage:
  *   <table datatable
  *          ?options="Object expr",
- *          ?instance="Empty expr">
+ *          ?instance="Empty expr"
+ *          ?selected-rows="Empty array expr">
  *     :
  *   </table>
  *
  * The 'instance' expression is populated with the underlying 'raw' data table.
  * This exposes all of the DataTables functionality to the controller, but
  * should be used with care!
+ *
+ * The 'selected-rows' expression, when provided, enables row selection, and is
+ * populated with the currently selected rows. Row selection has certain
+ * requirements: see 'addRowSelectionUI' documentation below.
  */
 angular.module('DataTable', [])
   .directive('datatable', [
@@ -195,15 +200,17 @@ angular.module('DataTable', [])
 
         scope: {
           options: '=',
-          instance: '='
+          instance: '=',
+          selectedRows: '='
         },
 
         link: function (scope, element, attrs) {
           scope.selectedAll = false;
-          scope.selectedRows = [];
 
-          addRowSelectionUI(scope, element);
-          addRowSelectionLogic(scope, element);
+          if (scope.selectedRows !== undefined) {
+            addRowSelectionUI(scope, element);
+            addRowSelectionLogic(scope, element);
+          }
 
           var instance = $(element).DataTable(scope.options || {});
 
