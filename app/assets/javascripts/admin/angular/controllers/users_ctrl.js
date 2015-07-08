@@ -41,7 +41,7 @@ angular.module('UsersCtrl', [])
         // This is populated by the 'datatable' directive.
         $scope.dataTableInstance = null;
 
-        // This is populated by the 'datatable' directive
+        // To enable row selection
         $scope.dataTableSelectedRows = [];
 
         $scope.queryBuilderOptions = {

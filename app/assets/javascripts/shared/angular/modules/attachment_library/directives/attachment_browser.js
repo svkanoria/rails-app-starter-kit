@@ -95,8 +95,12 @@ angular.module('AttachmentBrowser', [
             // This is populated by the 'datatable' directive.
             scope.dataTableInstance = null;
 
-            // This is populated by the 'datatable' directive
-            scope.dataTableSelectedRows = [];
+            // To enable row selection
+            scope.dataTableSelectedRows = ['72'];
+
+            scope.$watch('dataTableSelectedRows', function (value) {
+              console.log(value);
+            }, true);
 
             scope.queryBuilderOptions = {
               columns: [

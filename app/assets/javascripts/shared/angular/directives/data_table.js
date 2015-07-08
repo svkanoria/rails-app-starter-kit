@@ -149,11 +149,15 @@ angular.module('DataTable', [])
           var rows = $(element).find('tbody > tr');
 
           if ($(this).prop('checked')) {
-            rows.each(function (index) {
-              selectedRows.push($(this).attr('id'));
+            rows.each(function () {
+              var index = _.indexOf(selectedRows, $(this).attr('id'));
+
+              if (index === -1) {
+                selectedRows.push($(this).attr('id'));
+              }
             });
           } else {
-            rows.each(function (index) {
+            rows.each(function () {
               var index = _.indexOf(selectedRows, $(this).attr('id'));
 
               if (index !== -1) {
