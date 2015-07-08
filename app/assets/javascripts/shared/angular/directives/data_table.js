@@ -9,7 +9,7 @@
  *   <table datatable
  *          ?options="Object expr",
  *          ?instance="Empty expr"
- *          ?selected-rows="Empty array expr">
+ *          ?selected-rows="Array expr">
  *     :
  *   </table>
  *
@@ -18,7 +18,7 @@
  * should be used with care!
  *
  * The 'selected-rows' expression, when provided, enables row selection, and is
- * populated with the currently selected rows. Row selection has certain
+ * 2-way bound with the currently selected rows. Row selection has certain
  * requirements: see 'addRowSelectionUI' documentation below.
  */
 angular.module('DataTable', [])
@@ -28,7 +28,7 @@ angular.module('DataTable', [])
        * Adds a 'row selection' checkbox column to the data table.
        * To do so, it manipulates
        * 1. The HTML
-       * 2. The options passed into the scope
+       * 1. The options passed into the scope
        *
        * IMPORTANT: This column is added at index 0, which means all other
        * columns are shifted right by 1. This will impact any options that rely
@@ -91,6 +91,29 @@ angular.module('DataTable', [])
       function addRowSelectionLogic (scope, element) {
         var options = scope.options;
         var selectedRows = scope.selectedRows;
+        var selectAllCheckbox = $(element).find('.select-all-rows');
+
+        /**
+         * Mark a row as selected/un-selected on screen.
+         *
+         * @param {Object|string|number} rowOrId - The row or row id.
+         * @param {boolean} selected - Whether to mark selected or un-selected.
+         */
+        function setRowSelectedUI (rowOrId, selected) {
+          var row = (_.isString(rowOrId) || _.isNumber(rowOrId))
+            ? $(element).find('#' + rowOrId)
+            : rowOrId;
+
+          if (row) {
+            if (selected) {
+              $(row).addClass('selected');
+              $(row).find('.select-row').prop('checked', true);
+            } else {
+              $(row).removeClass('selected');
+              $(row).find('.select-row').prop('checked', false);
+            }
+          }
+        }
 
         /**
          * Checks/Un-checks the 'select all' checkbox, depending on whether all
@@ -106,32 +129,7 @@ angular.module('DataTable', [])
           }
         }
 
-        // Persist selections across paging, sorting and filtering operations
-
-        var origRowCallback = options.rowCallback;
-
-        /**
-         * Called back by the data table when a row is drawn.
-         * For argument details, see
-         * https://datatables.net/reference/option/rowCallback.
-         */
-        function rowCallback (row, data, index) {
-          var rowId = data.DT_RowId.toString();
-
-          if (_.indexOf(selectedRows, rowId) !== -1) {
-            $(row).addClass('selected');
-            $(row).find('.select-row').prop('checked', true);
-          }
-
-          if (origRowCallback) origRowCallback(row, data, index);
-        }
-
-        options.rowCallback = rowCallback;
-
-        // Toggle row selection when the checkbox in the newly added column is
-        // clicked. Also add 'select all' logic.
-
-        var selectAllCheckbox = $(element).find('.select-all-rows');
+        // Select/Un-select row when the prepended checkbox column is clicked
 
         $(element).on('click', '.select-row', function () {
           var row = $(this).closest('tr');
@@ -139,27 +137,68 @@ angular.module('DataTable', [])
           var index = _.indexOf(selectedRows, rowId);
 
           if (index === -1) {
-            $(row).addClass('selected');
-            updateSelectAllCheckbox();
-
-            // Note use of '$applyAsync' vs '$apply'.
-            // This is an optimization, as it queues up the push statements to
-            // be all executed within the same digest cycle.
-            scope.$applyAsync(selectedRows.push(rowId));
+            selectedRows.push(rowId);
           } else {
-            $(row).removeClass('selected');
-            selectAllCheckbox.prop('checked', false);
-
-            scope.$applyAsync(selectedRows.splice(index, 1));
+            selectedRows.splice(index, 1);
           }
+
+          scope.$apply();
         });
 
         selectAllCheckbox.on('click', function () {
-          var checked = $(this).is(':checked');
-          var selectorSuffix = (checked) ? ':not(:checked)' : ':checked';
+          var rows = $(element).find('tbody > tr');
 
-          $(element).find('.select-row' + selectorSuffix).trigger('click');
+          if ($(this).prop('checked')) {
+            rows.each(function (index) {
+              selectedRows.push($(this).attr('id'));
+            });
+          } else {
+            rows.each(function (index) {
+              var index = _.indexOf(selectedRows, $(this).attr('id'));
+
+              if (index !== -1) {
+                selectedRows.splice(index, 1);
+              }
+            });
+          }
+
+          scope.$apply();
         });
+
+        scope.$watch('selectedRows', function (value) {
+          var rows = $(element).find('tbody > tr');
+
+          rows.each (function () {
+            setRowSelectedUI($(this).attr('id'), false);
+          });
+
+          $.each(value, function (index, value) {
+            setRowSelectedUI(value, true);
+          });
+
+          updateSelectAllCheckbox();
+        }, true);
+
+        // Persist selections across paging, sorting and filtering operations
+
+        var origRowCallback = options.rowCallback;
+
+        /**
+         * Called back by the data table before a row is drawn.
+         * For argument details, see
+         * https://datatables.net/reference/option/rowCallback.
+         */
+        function rowCallback (row, data, index) {
+          var rowId = data.DT_RowId.toString();
+
+          if (_.indexOf(selectedRows, rowId) !== -1) {
+            setRowSelectedUI(row, true);
+          }
+
+          if (origRowCallback) origRowCallback(row, data, index);
+        }
+
+        options.rowCallback = rowCallback;
 
         var origDrawCallback = options.drawCallback;
 
