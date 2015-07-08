@@ -96,7 +96,7 @@ angular.module('AttachmentBrowser', [
             scope.dataTableInstance = null;
 
             // To enable row selection
-            scope.dataTableSelectedRows = ['72'];
+            scope.dataTableSelectedRows = [];
 
             scope.$watch('dataTableSelectedRows', function (value) {
               console.log(value);
