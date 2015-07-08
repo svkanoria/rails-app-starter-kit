@@ -98,10 +98,6 @@ angular.module('AttachmentBrowser', [
             // To enable row selection
             scope.dataTableSelectedRows = [];
 
-            scope.$watch('dataTableSelectedRows', function (value) {
-              console.log(value);
-            }, true);
-
             scope.queryBuilderOptions = {
               columns: [
                 { name: 'name', type: 'text' },
