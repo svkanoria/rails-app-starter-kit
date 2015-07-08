@@ -25,16 +25,14 @@ angular.module('DataTable', [])
   .directive('datatable', [
     function () {
       /**
-       * Adds a 'row selection' column to the data table.
+       * Adds a 'row selection' checkbox column to the data table.
        * To do so, it manipulates
        * 1. The HTML
        * 2. The options passed into the scope
        *
-       * This column is added at index 0, which means all other columns are
-       * shifted right by 1. This can impact any options passed that rely on
-       * column indices. Fortunately, this method finds such options and fixes
-       * them. However, any subsequent changes or operations you perform must
-       * explicitly accommodate this extra column.
+       * IMPORTANT: This column is added at index 0, which means all other
+       * columns are shifted right by 1. This will impact any options that rely
+       * on column indices!
        *
        * @param {Object} scope - The scope passed to the link function.
        * @param {Object} element - The element passed to the link function.
@@ -54,7 +52,7 @@ angular.module('DataTable', [])
 
         // Add a corresponding checkbox column to the data table options
 
-        var checkboxColumnDef = {
+        var cbColumnDef = {
           searchable: false,
           orderable: false,
           className: 'dt-body-center',
@@ -63,32 +61,16 @@ angular.module('DataTable', [])
           }
         };
 
-        var columnDefs = options.columnDefs;
-
         if (options.columns) {
-          options.columns.unshift(checkboxColumnDef);
-        } else if (columnDefs) {
-          columnDefs.unshift(_.extend(checkboxColumnDef, { targets: 0 }));
+          options.columns.unshift(cbColumnDef);
+        } else if (options.columnDefs) {
+          options.columnDefs.unshift(_.extend(cbColumnDef, { targets: 0 }));
         }
 
-        // Adjust predefined column defs to accommodate the prepended checkbox
-        // column.
-        if (columnDefs) {
-          for (var i = 0; i < columnDefs.length; ++i) {
-            columnDefs[i].targets += 1;
-          }
-        }
-
-        // Adjust initial column sorting to accommodate the prepended checkbox
-        // column.
-
-        var order = options.order;
-
-        if (order && order.length > 0) {
-          for (var i = 0; i < order.length; ++i) {
-            order[i][0] += 1;
-          }
-        } else {
+        // By default, DataTables performs an initial sort on the first column,
+        // which in our case will now be the checkbox column. Hence we shift
+        // the initial sort to the right by 1.
+        if (!options.order) {
           options.order = [[1, 'asc']];
         }
       }
