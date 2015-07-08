@@ -95,6 +95,9 @@ angular.module('AttachmentBrowser', [
             // This is populated by the 'datatable' directive.
             scope.dataTableInstance = null;
 
+            // To enable row selection
+            scope.dataTableSelectedRows = [];
+
             scope.queryBuilderOptions = {
               columns: [
                 { name: 'name', type: 'text' },
@@ -109,8 +112,10 @@ angular.module('AttachmentBrowser', [
 
             $rootScope.$on('attachment_library.upload_successful', function () {
               if (scope.dataTableInstance) {
-                // Reorder by last created, to ensure latest upload is visible
-                scope.dataTableInstance.order([2, 'desc']);
+                // Reorder by last created, to ensure latest upload is visible.
+                // Due to the extra row selection column added by the datatable
+                // directive, the created_at column is shifted over to index 3.
+                scope.dataTableInstance.order([3, 'desc']);
 
                 scope.dataTableInstance.ajax.reload();
               }

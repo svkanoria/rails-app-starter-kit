@@ -6,5 +6,6 @@ json.data do
   json.array! @attachments_adapter.data do |attachment|
     json.(attachment, :id, :name, :created_at)
     json.thumb attachment.thumb('40x40#')
+    json.DT_RowId attachment.id
   end
 end

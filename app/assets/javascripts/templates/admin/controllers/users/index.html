@@ -1,8 +1,10 @@
-<div class="attachment-browser">
+<div ng-init="actionIndex()">
+  <h2>Users</h2>
+
   <query-builder options="queryBuilderOptions"
                  filters="queryBuilderFilters"></query-builder>
 
-  <table id="attachments-table"
+  <table id="users-table"
          datatable options="dataTableOptions" instance="dataTableInstance"
          selected-rows="dataTableSelectedRows"
          class="display responsive no-wrap" width="100%">
@@ -10,7 +12,7 @@
     <thead>
     <tr>
       <th>ID</th>
-      <th>Name</th>
+      <th>Email</th>
       <th>Created At</th>
     </tr>
     </thead>

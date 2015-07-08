@@ -155,7 +155,7 @@ class Attachment < ActiveRecord::Base
       # TODO Ensure Dragonfly processing works with multiple threads
       Dragonfly.app.fetch_url(access_url).thumb(size).url
     else
-      'http://placehold.it/40&text=No+Image';
+      'http://placehold.it/40?text=No+Image';
     end
   end
 

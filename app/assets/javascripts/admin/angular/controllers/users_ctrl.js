@@ -1,5 +1,5 @@
-angular.module('PostsCtrl', [])
-  .controller('PostsCtrl', [
+angular.module('UsersCtrl', [])
+  .controller('UsersCtrl', [
     '$scope',
     function($scope) {
       /**
@@ -9,7 +9,7 @@ angular.module('PostsCtrl', [])
         $scope.dataTableOptions = {
           serverSide: true,
           ajax: {
-            url: '/admin/posts.json',
+            url: '/admin/users.json',
             // Just add the query builder filters to all AJAX requests sent by
             // the data table!
             data: function (d) {
@@ -19,12 +19,8 @@ angular.module('PostsCtrl', [])
           searching: false, // Since we are using query builder
           processing: true, // Show the 'processing' indicator
           columns: [
-            { data: 'id',
-              render: function (data, type, row, meta) {
-                return '<a href="/#/posts/' + data + '">' + data + '</a>';
-              }
-            },
-            { data: 'message' },
+            { data: 'id' },
+            { data: 'email' },
             { data: 'created_at',
               render: function (data, type, row, meta) {
                 return moment(data).format('LLL');
@@ -50,11 +46,11 @@ angular.module('PostsCtrl', [])
 
         $scope.queryBuilderOptions = {
           columns: [
-            { name: 'message', type: 'text' },
+            { name: 'email', type: 'text' },
             { name: 'id', type: 'text' }, // See query-builder for why 'text'
             { name: 'created_at', type: 'date' }
           ],
-          initialColumns: ['message', 'id'],
+          initialColumns: ['email', 'id'],
           onSubmit: function () {
             $scope.dataTableInstance.ajax.reload(); // Reload the data table
           }
