@@ -23,7 +23,8 @@
  */
 angular.module('DataTable', [])
   .directive('datatable', [
-    function () {
+    '$compile',
+    function ($compile) {
       /**
        * Adds a 'row selection' checkbox column to the data table.
        * To do so, it manipulates
@@ -220,6 +221,36 @@ angular.module('DataTable', [])
         options.drawCallback = drawCallback;
       }
 
+      /**
+       * Adds stuff that needs the data table to have been initialized.
+       *
+       * @param {Object} scope - The scope passed to the link function.
+       * @param {Object} element - The element passed to the link function.
+       */
+      function addPostInitializationStuff (scope, element) {
+        /**
+         * Un-selects absolutely all selected rows, across pages, sorts and
+         * filters.
+         */
+        scope.unSelectAllRows = function () {
+          scope.selectedRows.length = 0;
+        };
+
+        var lengthDiv = $(element).siblings('.dataTables_length');
+
+        var rowSelectionDiv =
+          $('<div class="dataTables_row-selection"'
+                + 'id="' + $(element).attr('id') + '">'
+              + 'Total {{selectedRows.length}} rows selected&nbsp;'
+              + '<a href="" ng-click="unSelectAllRows()"'
+                + 'ng-show="selectedRows.length > 0">Un-select all</a>' +
+            '</div>');
+
+        lengthDiv.after(rowSelectionDiv);
+
+        $compile(rowSelectionDiv)(scope);
+      }
+
       return {
         restrict: 'A',
 
@@ -238,6 +269,10 @@ angular.module('DataTable', [])
           }
 
           var instance = $(element).DataTable(scope.options || {});
+
+          if (scope.selectedRows !== undefined) {
+            addPostInitializationStuff(scope, element);
+          }
 
           if (scope.instance !== undefined) {
             scope.instance = instance;

@@ -1,0 +1,22 @@
+// Variables
+
+$data-tables-row-selection-spacing: $padding-small-horizontal;
+
+// Styling
+
+// Style adjusted to match what is applied by .dataTables_length
+.dataTables_row-selection {
+  float: left;
+  margin-left: $data-tables-row-selection-spacing;
+  padding-left: $data-tables-row-selection-spacing;
+  border-left: 1px solid;
+  font-weight: bold;
+
+  @media screen and (max-width: 640px) {
+    float: none;
+    margin-left: inherit;
+    padding-left: inherit;
+    border-left: 0;
+    text-align: center;
+  }
+}
