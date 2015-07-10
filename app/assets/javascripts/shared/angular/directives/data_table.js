@@ -22,8 +22,8 @@
  * 2-way bound with the currently selected rows. Row selection has certain
  * requirements: see 'addRowSelectionUI' documentation below.
  *
- * Custom bulk operations on all selected rows can be defined and performed via
- * the 'bulk-ops' attribute. The format is as follows:
+ * Custom bulk operations to be carried out on currently selected rows, can be
+ * defined via the 'bulk-ops' attribute. The format is as follows:
  *
  *   {
  *     bulkOpKey1: {
@@ -240,16 +240,17 @@ angular.module('DataTable', [])
        *
        * @param {Object} scope - The scope passed to the link function.
        * @param {Object} element - The element passed to the link function.
-       * @param {Object} attrs - The attributes passed to the link function.
        */
-      function addBulkSelectionToolbar (scope, element, attrs) {
-        var bulkOps = attrs.bulkOps || {};
-
+      function addBulkSelectionToolbar (scope, element) {
         // Add the 'Un-select All' operation of our own accord
-        bulkOps.unSelectAll = {
-          name: 'Un-select All',
-          action: function () { scope.selectedRows.length = 0; }
+        var bulkOps = {
+          unselectAll: {
+            name: 'Un-select All',
+            action: function () { scope.selectedRows.length = 0; }
+          }
         };
+
+        _.extend(bulkOps, scope.bulkOps);
 
         /**
          * Perform a bulk operation (if found) defined within 'scope.bulkOps',
@@ -297,7 +298,8 @@ angular.module('DataTable', [])
         scope: {
           options: '=',
           instance: '=',
-          selectedRows: '='
+          selectedRows: '=',
+          bulkOps: '='
         },
 
         link: function (scope, element, attrs) {
@@ -311,7 +313,7 @@ angular.module('DataTable', [])
           var instance = $(element).DataTable(scope.options || {});
 
           if (scope.selectedRows !== undefined) {
-            addBulkSelectionToolbar(scope, element, attrs);
+            addBulkSelectionToolbar(scope, element);
           }
 
           if (scope.instance !== undefined) {

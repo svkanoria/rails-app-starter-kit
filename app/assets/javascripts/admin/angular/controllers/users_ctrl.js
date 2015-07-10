@@ -44,6 +44,16 @@ angular.module('UsersCtrl', [])
         // To enable row selection
         $scope.dataTableSelectedRows = [];
 
+        // For bulk operations on currently selected rows
+        $scope.dataTableBulkOps = {
+          deleteAll: {
+            name: 'Delete All',
+            action: function () {
+              console.log('TODO Delete all selected users');
+            }
+          }
+        };
+
         $scope.queryBuilderOptions = {
           columns: [
             { name: 'email', type: 'text' },
