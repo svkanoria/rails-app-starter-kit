@@ -1,22 +1,24 @@
 // Variables
 
-$data-tables-row-selection-spacing: $padding-small-horizontal;
+$data-tables-bulk-op-margin-left: $padding-small-horizontal;
 
-// Styling
+// Styles
 
 // Style adjusted to match what is applied by .dataTables_length
-.dataTables_row-selection {
-  float: left;
-  margin-left: $data-tables-row-selection-spacing;
-  padding-left: $data-tables-row-selection-spacing;
-  border-left: 1px solid;
+.dataTables_bulk-selection {
+  clear: both;
   font-weight: bold;
+  color: #333333;
 
   @media screen and (max-width: 640px) {
-    float: none;
-    margin-left: inherit;
-    padding-left: inherit;
-    border-left: 0;
     text-align: center;
+  }
+
+  > .bulk-ops {
+    display: inline-block;
+
+    > a {
+      margin-left: $data-tables-bulk-op-margin-left;
+    }
   }
 }

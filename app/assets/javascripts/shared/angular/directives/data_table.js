@@ -9,7 +9,8 @@
  *   <table datatable
  *          ?options="Object expr",
  *          ?instance="Empty expr"
- *          ?selected-rows="Array expr">
+ *          ?selected-rows="Array expr"
+ *          ?bulk-ops="Object expr">
  *     :
  *   </table>
  *
@@ -20,6 +21,18 @@
  * The 'selected-rows' expression, when provided, enables row selection, and is
  * 2-way bound with the currently selected rows. Row selection has certain
  * requirements: see 'addRowSelectionUI' documentation below.
+ *
+ * Custom bulk operations on all selected rows can be defined and performed via
+ * the 'bulk-ops' attribute. The format is as follows:
+ *
+ *   {
+ *     bulkOpKey1: {
+ *       name: 'some name',
+ *       action: function () { // Perform some action... }
+ *     },
+ *     bulkOpKey2: { ... },
+ *      :
+ *   }
  */
 angular.module('DataTable', [])
   .directive('datatable', [
@@ -222,33 +235,60 @@ angular.module('DataTable', [])
       }
 
       /**
-       * Adds stuff that needs the data table to have been initialized.
+       * Adds a bulk selection toolbar near the top of the data table.
+       * Must be called AFTER the data table has been initialized.
        *
        * @param {Object} scope - The scope passed to the link function.
        * @param {Object} element - The element passed to the link function.
+       * @param {Object} attrs - The attributes passed to the link function.
        */
-      function addPostInitializationStuff (scope, element) {
-        /**
-         * Un-selects absolutely all selected rows, across pages, sorts and
-         * filters.
-         */
-        scope.unSelectAllRows = function () {
-          scope.selectedRows.length = 0;
+      function addBulkSelectionToolbar (scope, element, attrs) {
+        var bulkOps = attrs.bulkOps || {};
+
+        // Add the 'Un-select All' operation of our own accord
+        bulkOps.unSelectAll = {
+          name: 'Un-select All',
+          action: function () { scope.selectedRows.length = 0; }
         };
+
+        /**
+         * Perform a bulk operation (if found) defined within 'scope.bulkOps',
+         * on all currently selected rows.
+         *
+         * @param bulkOpKey - The key of the operation in the 'scope.bulkOps'
+         *   hash.
+         */
+        scope.performBulkOp = function (bulkOpKey) {
+          var bulkOp = bulkOps[bulkOpKey];
+
+          if (bulkOp) bulkOp.action();
+        };
+
+        var bulkOpsDiv =
+          $('<div class="bulk-ops" ng-show="selectedRows.length > 0"></div>');
+
+        for (var bulkOpKey in bulkOps) {
+          var bulkOp = bulkOps[bulkOpKey];
+
+          var bulkOpHtml =
+            '<a href="" ng-click="performBulkOp(\'' + bulkOpKey + '\')">'
+              + bulkOp.name + '</a>';
+
+          bulkOpsDiv.append($(bulkOpHtml));
+        }
+
+        var bulkSelectionDiv =
+          $('<div class="dataTables_bulk-selection"'
+                + 'id="' + $(element).attr('id') + '">'
+              + 'Total {{selectedRows.length}} rows selected'
+              + bulkOpsDiv[0].outerHTML +
+            '</div>');
 
         var lengthDiv = $(element).siblings('.dataTables_length');
 
-        var rowSelectionDiv =
-          $('<div class="dataTables_row-selection"'
-                + 'id="' + $(element).attr('id') + '">'
-              + 'Total {{selectedRows.length}} rows selected&nbsp;'
-              + '<a href="" ng-click="unSelectAllRows()"'
-                + 'ng-show="selectedRows.length > 0">Un-select all</a>' +
-            '</div>');
+        lengthDiv.after(bulkSelectionDiv);
 
-        lengthDiv.after(rowSelectionDiv);
-
-        $compile(rowSelectionDiv)(scope);
+        $compile(bulkSelectionDiv)(scope);
       }
 
       return {
@@ -271,7 +311,7 @@ angular.module('DataTable', [])
           var instance = $(element).DataTable(scope.options || {});
 
           if (scope.selectedRows !== undefined) {
-            addPostInitializationStuff(scope, element);
+            addBulkSelectionToolbar(scope, element, attrs);
           }
 
           if (scope.instance !== undefined) {
