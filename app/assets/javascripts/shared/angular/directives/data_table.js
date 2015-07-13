@@ -9,7 +9,8 @@
  *   <table datatable
  *          ?options="Object expr",
  *          ?instance="Empty expr"
- *          ?selected-rows="Array expr">
+ *          ?selected-rows="Array expr"
+ *          ?bulk-ops="Object expr">
  *     :
  *   </table>
  *
@@ -20,10 +21,23 @@
  * The 'selected-rows' expression, when provided, enables row selection, and is
  * 2-way bound with the currently selected rows. Row selection has certain
  * requirements: see 'addRowSelectionUI' documentation below.
+ *
+ * Custom bulk operations to be carried out on currently selected rows, can be
+ * defined via the 'bulk-ops' attribute. The format is as follows:
+ *
+ *   {
+ *     bulkOpKey1: {
+ *       name: 'some name',
+ *       action: function () { // Perform some action... }
+ *     },
+ *     bulkOpKey2: { ... },
+ *      :
+ *   }
  */
 angular.module('DataTable', [])
   .directive('datatable', [
-    function () {
+    '$compile',
+    function ($compile) {
       /**
        * Adds a 'row selection' checkbox column to the data table.
        * To do so, it manipulates
@@ -220,13 +234,72 @@ angular.module('DataTable', [])
         options.drawCallback = drawCallback;
       }
 
+      /**
+       * Adds a bulk selection toolbar near the top of the data table.
+       * Must be called AFTER the data table has been initialized.
+       *
+       * @param {Object} scope - The scope passed to the link function.
+       * @param {Object} element - The element passed to the link function.
+       */
+      function addBulkSelectionToolbar (scope, element) {
+        // Add the 'Un-select All' operation of our own accord
+        var bulkOps = {
+          unselectAll: {
+            name: 'Un-select All',
+            action: function () { scope.selectedRows.length = 0; }
+          }
+        };
+
+        _.extend(bulkOps, scope.bulkOps);
+
+        /**
+         * Perform a bulk operation (if found) defined within 'scope.bulkOps',
+         * on all currently selected rows.
+         *
+         * @param bulkOpKey - The key of the operation in the 'scope.bulkOps'
+         *   hash.
+         */
+        scope.performBulkOp = function (bulkOpKey) {
+          var bulkOp = bulkOps[bulkOpKey];
+
+          if (bulkOp) bulkOp.action();
+        };
+
+        var bulkOpsDiv =
+          $('<div class="bulk-ops" ng-show="selectedRows.length > 0"></div>');
+
+        for (var bulkOpKey in bulkOps) {
+          var bulkOp = bulkOps[bulkOpKey];
+
+          var bulkOpHtml =
+            '<a href="" ng-click="performBulkOp(\'' + bulkOpKey + '\')">'
+              + bulkOp.name + '</a>';
+
+          bulkOpsDiv.append($(bulkOpHtml));
+        }
+
+        var bulkSelectionDiv =
+          $('<div class="dataTables_bulk-selection"'
+                + 'id="' + $(element).attr('id') + '">'
+              + 'Total {{selectedRows.length}} rows selected'
+              + bulkOpsDiv[0].outerHTML +
+            '</div>');
+
+        var lengthDiv = $(element).siblings('.dataTables_length');
+
+        lengthDiv.after(bulkSelectionDiv);
+
+        $compile(bulkSelectionDiv)(scope);
+      }
+
       return {
         restrict: 'A',
 
         scope: {
           options: '=',
           instance: '=',
-          selectedRows: '='
+          selectedRows: '=',
+          bulkOps: '='
         },
 
         link: function (scope, element, attrs) {
@@ -238,6 +311,10 @@ angular.module('DataTable', [])
           }
 
           var instance = $(element).DataTable(scope.options || {});
+
+          if (scope.selectedRows !== undefined) {
+            addBulkSelectionToolbar(scope, element);
+          }
 
           if (scope.instance !== undefined) {
             scope.instance = instance;

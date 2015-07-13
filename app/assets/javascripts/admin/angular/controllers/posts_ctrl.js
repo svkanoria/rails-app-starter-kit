@@ -48,6 +48,16 @@ angular.module('PostsCtrl', [])
         // To enable row selection
         $scope.dataTableSelectedRows = [];
 
+        // For bulk operations on currently selected rows
+        $scope.dataTableBulkOps = {
+          deleteAll: {
+            name: 'Delete All',
+            action: function () {
+              console.log('TODO Delete all selected rows');
+            }
+          }
+        };
+
         $scope.queryBuilderOptions = {
           columns: [
             { name: 'message', type: 'text' },

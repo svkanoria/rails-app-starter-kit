@@ -1,0 +1,24 @@
+// Variables
+
+$data-tables-bulk-op-margin-left: $padding-small-horizontal;
+
+// Styles
+
+// Style adjusted to match what is applied by .dataTables_length
+.dataTables_bulk-selection {
+  clear: both;
+  font-weight: bold;
+  color: #333333;
+
+  @media screen and (max-width: 640px) {
+    text-align: center;
+  }
+
+  > .bulk-ops {
+    display: inline-block;
+
+    > a {
+      margin-left: $data-tables-bulk-op-margin-left;
+    }
+  }
+}
