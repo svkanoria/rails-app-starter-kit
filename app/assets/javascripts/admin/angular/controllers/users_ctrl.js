@@ -49,7 +49,7 @@ angular.module('UsersCtrl', [])
           deleteAll: {
             name: 'Delete All',
             action: function () {
-              console.log('TODO Delete all selected users');
+              console.log('TODO Delete all selected rows');
             }
           }
         };
