@@ -30,7 +30,11 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :posts, only: :index
+    resources :posts, only: :index do
+      collection do
+        post 'batch_destroy'
+      end
+    end
 
     resources :users, only: :index
 

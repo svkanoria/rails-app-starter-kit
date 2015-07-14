@@ -12,4 +12,23 @@ class Admin::PostsController < Admin::ApplicationController
 
     respond_with @posts_adapter
   end
+
+  def batch_destroy
+    authorize Post
+
+    @success_ids = []
+    @failure_ids = []
+
+    if (ids = params[:ids])
+      ids.each do |id|
+        begin
+          if (deleted_post = Post.destroy(id))
+            @success_ids << deleted_post.id
+          end
+        rescue
+          @failure_ids << id
+        end
+      end
+    end
+  end
 end
