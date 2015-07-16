@@ -15,4 +15,8 @@ class PostPolicy < ApplicationPolicy
   def destroy?
     update?
   end
+
+  def batch_destroy?
+    user && user.has_role?(:admin)
+  end
 end

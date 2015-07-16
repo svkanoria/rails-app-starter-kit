@@ -2,12 +2,19 @@
 #
 # Usage:
 #   # In the model class:
+#
 #   include ActsAsAttachmentOwner
+#
+#   # Only if you need to specify custom options
 #   acts_as_attachment_owner options_hash # See documentation
 module ActsAsAttachmentOwner
   extend ActiveSupport::Concern
 
   included do
+    @attachment_opts = {}
+
+    acts_as_attachment_owner accepts_roles: [:default]
+
     has_many :attachment_joins, as: :attachment_owner, dependent: :destroy
     has_many :attachments, through: :attachment_joins
   end
@@ -56,12 +63,8 @@ module ActsAsAttachmentOwner
     #       # { default: { ... } }
     #     ]
     #   }
-    def acts_as_attachment_owner (opts)
-      opts ||= {}
-
-      opts.reverse_merge! accepts_roles: [ :default ]
-
-      @attachment_opts = opts
+    def acts_as_attachment_owner (opts = {})
+      @attachment_opts.merge!(opts)
     end
   end
 end

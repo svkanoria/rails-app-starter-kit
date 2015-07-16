@@ -1,7 +1,7 @@
-angular.module('PostsCtrl', [])
+angular.module('PostsCtrl', ['Post'])
   .controller('PostsCtrl', [
-    '$scope',
-    function($scope) {
+    '$scope', 'Post',
+    function($scope, Post) {
       /**
        * The 'index' action.
        */
@@ -53,7 +53,14 @@ angular.module('PostsCtrl', [])
           deleteAll: {
             name: 'Delete All',
             action: function () {
-              console.log('TODO Delete all selected rows');
+              Post.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
+                function (success) {
+                  $scope.dataTableInstance.ajax.reload(); // Reload table data
+                },
+                function (failure) {
+                  console.log(failure);
+                }
+              )
             }
           }
         };
@@ -66,7 +73,7 @@ angular.module('PostsCtrl', [])
           ],
           initialColumns: ['message', 'id'],
           onSubmit: function () {
-            $scope.dataTableInstance.ajax.reload(); // Reload the data table
+            $scope.dataTableInstance.ajax.reload();
           }
         };
       };

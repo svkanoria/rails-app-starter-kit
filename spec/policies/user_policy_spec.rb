@@ -17,6 +17,7 @@ describe UserPolicy do
     it { should_not permit(:update) }
     it { should_not permit(:edit) }
     it { should_not permit(:destroy) }
+    it { should_not permit(:batch_destroy) }
   end
 
   context 'for a signed in non-admin user' do
@@ -29,6 +30,7 @@ describe UserPolicy do
     it { should_not permit(:update) }
     it { should_not permit(:edit) }
     it { should_not permit(:destroy) }
+    it { should_not permit(:batch_destroy) }
   end
 
   context 'for a signed in admin user' do
@@ -41,5 +43,6 @@ describe UserPolicy do
     it { should_not permit(:update) }
     it { should_not permit(:edit) }
     it { should_not permit(:destroy) }
+    it { should permit(:batch_destroy) }
   end
 end

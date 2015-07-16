@@ -8,6 +8,8 @@ var app = angular.module('App', [
   // Services
   'AuthSvc',
   'RouteUtils',
+  'Post',
+  'User',
 
   // Controllers
   'AppCtrl',

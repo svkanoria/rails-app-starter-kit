@@ -1,4 +1,6 @@
 class Admin::UsersController < Admin::ApplicationController
+  include BatchActions
+
   respond_to :json
 
   after_action :verify_authorized
