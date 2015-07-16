@@ -23,6 +23,8 @@ module BatchActions
     @batch_opts = {}
 
     batch_actions model: inferred_model, authorize: inferred_model
+
+    before_action :authorize_batch_action
   end
 
   # Destroys multiple records.
@@ -36,23 +38,29 @@ module BatchActions
   # * @failure_ids - an array (non nil) or record ids for which the operation
   #   was a failure
   def batch_destroy
-    batch_opts = self.class.batch_opts
-
-    authorize batch_opts[:authorize] if batch_opts[:authorize]
-
     @success_ids = []
     @failure_ids = []
 
     if (ids = params[:ids])
       ids.each do |id|
         begin
-          if (deleted_record = batch_opts[:model].destroy(id))
+          if (deleted_record = self.class.batch_opts[:model].destroy(id))
             @success_ids << deleted_record.id
           end
         rescue
           @failure_ids << id
         end
       end
+    end
+
+    render 'layouts/batch_actions/batch_destroy'
+  end
+
+  # If the 'authorize' batch option is set, authorizes the action by invoking
+  # the desired Pundit policy.
+  def authorize_batch_action
+    if (record = self.class.batch_opts[:authorize])
+      authorize record
     end
   end
 
