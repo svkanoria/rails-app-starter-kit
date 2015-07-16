@@ -1,7 +1,7 @@
-angular.module('UsersCtrl', [])
+angular.module('UsersCtrl', ['User'])
   .controller('UsersCtrl', [
-    '$scope',
-    function($scope) {
+    '$scope', 'User',
+    function($scope, User) {
       /**
        * The 'index' action.
        */
@@ -49,7 +49,14 @@ angular.module('UsersCtrl', [])
           deleteAll: {
             name: 'Delete All',
             action: function () {
-              console.log('TODO Delete all selected rows');
+              User.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
+                function (success) {
+                  $scope.dataTableInstance.ajax.reload(); // Reload table data
+                },
+                function (failure) {
+                  console.log(failure);
+                }
+              )
             }
           }
         };
