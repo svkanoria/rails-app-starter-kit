@@ -67,9 +67,10 @@ angular.module('PostsCtrl', ['Post'])
 
         $scope.queryBuilderOptions = {
           columns: [
-            { name: 'message', type: 'text' },
-            { name: 'id', type: 'text' }, // See query-builder for why 'text'
-            { name: 'created_at', type: 'date' }
+            { name: 'message', label: 'Message', type: 'text' },
+            // See query-builder for why 'id' column has type 'text'
+            { name: 'id', label: 'ID', type: 'text' },
+            { name: 'created_at', label: 'Created At', type: 'date' }
           ],
           initialColumns: ['message', 'id'],
           onSubmit: function () {

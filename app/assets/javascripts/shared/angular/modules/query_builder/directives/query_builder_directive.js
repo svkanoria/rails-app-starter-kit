@@ -9,7 +9,7 @@
  * The 'options' attribute must be as follows:
  *   {
  *     columns: [
- *       { name: 'some-name', type: 'some-type' },
+ *       { name: 'some-name', label: 'some-label', type: 'some-type' },
  *         :
  *     ],
  *     ?initialColumns: [ 'some-name', ... ], // Seed filters

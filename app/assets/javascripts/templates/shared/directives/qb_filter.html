@@ -7,7 +7,7 @@ for an understanding of why this is required.
 
 <select class="filter-column form-control"
         ng-model="model.column"
-        ng-options="c.name as c.name for c in qbOptions.columns">
+        ng-options="c.name as c.label for c in qbOptions.columns">
 </select>
 
 <select class="filter-op form-control"
