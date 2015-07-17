@@ -20,6 +20,13 @@ angular.module('QBFilter', ['QBEditorProvider'])
           // Default comparison operators
           var DEFAULT_OPS = ['contains', '=', '<', '<=', '>', '>=', 'range'];
 
+          // Column type based refinements to DEFAULT_OPS.
+          // Add more rules as and when more column types are supported.
+          var ALLOWED_OPS = {
+            checkbox: { only: ['='] },
+            date: { except: ['contains'] }
+          };
+
           // For caching editor values by 'column-name;op'.
           // Used to pre-populate editors for user friendliness.
           var editorCache = {};
@@ -42,6 +49,29 @@ angular.module('QBFilter', ['QBEditorProvider'])
             }
 
             return null;
+          }
+
+          /**
+           * Returns a list of allowed operators, given a column type.
+           *
+           * @param columnType {string} - The column type.
+           *
+           * @returns {string[]} The list of allowed operators, or the entire
+           * DEFAULT_OPS if no refinement rules have been specified via
+           * ALLOWED_OPS.
+           */
+          function getAllowedOps (columnType) {
+            var rules = ALLOWED_OPS[columnType];
+
+            if (rules) {
+              if (rules.only) {
+                return rules.only;
+              } else if (rules.except) {
+                return _.difference(DEFAULT_OPS, rules.except);
+              }
+            }
+
+            return DEFAULT_OPS;
           }
 
           /**
@@ -71,19 +101,27 @@ angular.module('QBFilter', ['QBEditorProvider'])
           // Procedural Stuff //
           //////////////////////
 
-          // The operators to show.
-          // For now, we just show the default ops. Later, we will have to add
-          // some code for determining which ops to show.
-          // TODO Support custom operators
           scope.ops = DEFAULT_OPS;
 
           if (!scope.model.values) {
             scope.model.values = [];
           }
 
-          if (!scope.model.op) {
-            scope.model.op = scope.ops[0];
-          }
+          scope.$watch('model.column', function (value) {
+            var ops = getAllowedOps(getColumnType(value));
+
+            // If the new ops list does not contain the currently selected op,
+            // un-select the current op, else ngOptions acts up!
+            if (scope.model.op && !_.contains(ops, scope.model.op)) {
+              scope.model.op = null;
+            }
+
+            scope.ops = ops;
+
+            if (!scope.model.op) {
+              scope.model.op = scope.ops[0];
+            }
+          });
 
           scope.$watch('[model.column, model.op]',
             function (newValue, oldValue) {
