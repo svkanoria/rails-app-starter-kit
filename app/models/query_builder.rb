@@ -32,7 +32,7 @@ class QueryBuilder
     apply_filters
   end
 
-  #private
+  private
 
   # Augments the model class or seed query, by applying all filters.
   # This augmented query can be retrieved via the 'query' method.

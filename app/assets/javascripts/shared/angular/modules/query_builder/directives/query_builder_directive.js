@@ -21,6 +21,11 @@
  * All and only HTML5 input types can be used as column types.
  * Normally it is best to use 'text', as it is the most flexible, and we won't
  * really care about validation.
+ * To create a 'select' element based editor, omit the type attribute. Instead,
+ * provide this attribute:
+ *   select: {
+ *     options: [{ label: 'something', value: something }, ...]
+ *   }
  *
  * Presently we do not support custom operators. However, we will do so in
  * future.

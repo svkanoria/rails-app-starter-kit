@@ -23,7 +23,7 @@ angular.module('QBFilter', ['QBEditorProvider'])
           // Column type based refinements to DEFAULT_OPS.
           // Add more rules as and when more column types are supported.
           var ALLOWED_OPS = {
-            checkbox: { only: ['='] },
+            select: { only: ['='] },
             date: { except: ['contains'] }
           };
 
@@ -32,19 +32,18 @@ angular.module('QBFilter', ['QBEditorProvider'])
           var editorCache = {};
 
           /**
-           * Returns the column type (from qbOptions), given its name.
+           * Returns a column from qbOptions, given its name.
            *
            * @param columnName {string} - A column name.
            *
-           * @returns {?string} The column type, or null if no such column is
-           * found.
+           * @returns {Object} The column, or null if no such column is found.
            */
-          function getColumnType (columnName) {
+          function getColumn (columnName) {
             for (var i = 0; i < scope.qbOptions.columns.length; ++i) {
               var column = scope.qbOptions.columns[i];
 
               if (column.name === columnName) {
-                return column.type;
+                return column;
               }
             }
 
@@ -52,11 +51,22 @@ angular.module('QBFilter', ['QBEditorProvider'])
           }
 
           /**
+           * Returns a column type, given a qbOptions column.
+           *
+           * @param column {Object} - A column.
+           *
+           * @returns {?string} The column type.
+           */
+          function getColumnType (column) {
+            return (column.select) ? 'select' : column.type;
+          }
+
+          /**
            * Returns a list of allowed operators, given a column type.
            *
-           * @param columnType {string} - The column type.
+           * @param columnType {string} - A column type.
            *
-           * @returns {string[]} The list of allowed operators, or the entire
+           * @returns {string[]} The array of allowed operators, or the entire
            * DEFAULT_OPS if no refinement rules have been specified via
            * ALLOWED_OPS.
            */
@@ -108,7 +118,7 @@ angular.module('QBFilter', ['QBEditorProvider'])
           }
 
           scope.$watch('model.column', function (value) {
-            var ops = getAllowedOps(getColumnType(value));
+            var ops = getAllowedOps(getColumnType(getColumn(value)));
 
             // If the new ops list does not contain the currently selected op,
             // un-select the current op, else ngOptions acts up!
@@ -131,10 +141,12 @@ angular.module('QBFilter', ['QBEditorProvider'])
               }
 
               if (newValue[0] && newValue[1]) {
+                scope.column = getColumn(newValue[0]);
+
                 // Load the value for the editor coming in
                 scope.model.values = editorCache[newValue[0]] || [];
 
-                setEditor(getColumnType(newValue[0]), newValue[1]);
+                setEditor(getColumnType(scope.column), newValue[1]);
               }
             }, true);
         }

@@ -66,7 +66,16 @@ angular.module('UsersCtrl', ['User'])
             { name: 'email', label: 'Email', type: 'text' },
             // See query-builder for why 'id' column has type 'text'
             { name: 'id', label: 'ID', type: 'text' },
-            { name: 'created_at', label: 'Created At', type: 'date' }
+            { name: 'created_at', label: 'Created At', type: 'date' },
+            {
+              name: 'confirmed_at', label: 'Confirmed',
+              select: {
+                options: [
+                  { label: 'True', value: true },
+                  { label: 'False', value: false }
+                ]
+              }
+            }
           ],
           initialColumns: ['email', 'id'],
           onSubmit: function () {
