@@ -141,6 +141,9 @@ angular.module('QBFilter', ['QBEditorProvider'])
               }
 
               if (newValue[0] && newValue[1]) {
+                // Expose this filter's qbOptions column on the scope, for
+                // editors to use if they require (for example, for the list of
+                // options for a select tag).
                 scope.column = getColumn(newValue[0]);
 
                 // Load the value for the editor coming in

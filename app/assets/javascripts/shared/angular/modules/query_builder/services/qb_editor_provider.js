@@ -9,6 +9,8 @@
  *         // Return some suitable HTML.
  *         // This may contain Angular directives, since it is compiled before
  *         // being added to the DOM.
+ *         // The 'model' and 'column' variables are exposed on the scope, for
+ *         // access to the data required to set up an editor.
  *       }
  *     });
  *
@@ -32,7 +34,7 @@ angular.module('QBEditorProvider', [])
       var SELECT_EDITOR_HTML = function (columnType, op) {
         if (columnType === 'select') {
           var editorHtml =
-            '<select class="filter-values form-control"'
+            '<select class="filter-value form-control"'
               + 'ng-model="model.values[0]"'
               + 'ng-options="i.value as i.label for i in column.select.options">' +
             '</select>';

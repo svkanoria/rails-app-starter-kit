@@ -2,6 +2,7 @@
 
 $query-builder-margin-bottom: $padding-large-vertical;
 
+$qb-filter-value-min-width: 172px; // Trial and error
 $qb-filter-margin-bottom: $padding-small-vertical;
 $qb-filter-value-margin-right: 4px; // Trial and error
 
@@ -28,6 +29,7 @@ $qb-filter-add-margin-bottom: $padding-small-vertical;
     }
 
     .filter-value {
+      min-width: $qb-filter-value-min-width;
       margin-bottom: $qb-filter-margin-bottom;
       margin-right: $qb-filter-value-margin-right;
     }
