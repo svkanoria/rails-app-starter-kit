@@ -67,8 +67,10 @@ angular.module('UsersCtrl', ['User'])
             // See query-builder for why 'id' column has type 'text'
             { name: 'id', label: 'ID', type: 'text' },
             { name: 'created_at', label: 'Created At', type: 'date' },
+            // Filter with a non database mapped column.
+            // See also app/controllers/admin/users_controller.rb.
             {
-              name: 'confirmed_at', label: 'Confirmed', type: 'select',
+              name: 'confirmed?', label: 'Confirmed?', type: 'select',
               options: [
                 { label: 'True', value: true },
                 { label: 'False', value: false }

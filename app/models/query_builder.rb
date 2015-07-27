@@ -20,14 +20,23 @@ class QueryBuilder
 
   # Creates a new instance.
   #
+  # Can be passed a block/Proc that builds and returns a custom 'where'
+  # condition, given a filter. This allows great flexibility, especially for
+  # supporting and handling filters that are not directly mapped to database
+  # columns. See the documentation for {#build_condition} to better understand
+  # how to write such a block.
+  #
   # @param model_klass [Class] the class of the model being queried
   # @param filters [Array] the filters sent via the HTTP request parameters
   # @param seed_query [ActiveRecord::Relation] the query to use as the "base"
   #   for building upon. If not provided, model_klass is used.
-  def initialize (model_klass, filters, seed_query = nil)
+  # @param build_custom_cond [Proc] an optional block/Proc for custom handling
+  #   of filters
+  def initialize (model_klass, filters, seed_query = nil, &build_custom_cond)
     @model_klass = model_klass
     @filters = filters
     @query = seed_query || model_klass
+    @build_custom_cond = build_custom_cond
 
     apply_filters
   end
@@ -63,21 +72,27 @@ class QueryBuilder
     return true unless values.present? && values.is_a?(Array)
     return true unless values[0].present?
 
-    condition = build_condition(filter[:column], values, filter[:op])
+    condition = (@build_custom_cond && @build_custom_cond.call(filter)) ||
+        build_condition(filter)
+
     return false unless condition
 
     @query = @query.where(condition)
   end
 
   # Builds a string suitable for a 'where' condition.
+  # At this point, the filter is guaranteed to have at least one value.
   #
-  # @param column [String] the column name
-  # @param values [Array] the values to apply the operator to
-  # @param op [String] the operator
+  # @param filter [Hash] the filter, with a minimum format as follows:
+  #   { column: 'some-column-name', value: [val1, ...], op: 'some-op' }
   #
   # @return [String, nil] a string suitable for the 'where' condition, if it
-  #   makes semantic sense.
-  def build_condition (column, values, op)
+  #   makes semantic sense
+  def build_condition (filter)
+    column = filter[:column]
+    values = filter[:values]
+    op = filter[:op]
+
     column_type = Utils.column_type(@model_klass, column)
 
     values_expr = build_values_expr(values, column_type, op)
