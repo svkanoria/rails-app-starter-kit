@@ -68,13 +68,11 @@ angular.module('UsersCtrl', ['User'])
             { name: 'id', label: 'ID', type: 'text' },
             { name: 'created_at', label: 'Created At', type: 'date' },
             {
-              name: 'confirmed_at', label: 'Confirmed',
-              select: {
-                options: [
-                  { label: 'True', value: true },
-                  { label: 'False', value: false }
-                ]
-              }
+              name: 'confirmed_at', label: 'Confirmed', type: 'select',
+              options: [
+                { label: 'True', value: true },
+                { label: 'False', value: false }
+              ]
             }
           ],
           initialColumns: ['email', 'id'],

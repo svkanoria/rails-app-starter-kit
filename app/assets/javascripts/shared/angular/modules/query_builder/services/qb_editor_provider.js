@@ -36,7 +36,8 @@ angular.module('QBEditorProvider', [])
           var editorHtml =
             '<select class="filter-value form-control"'
               + 'ng-model="model.values[0]"'
-              + 'ng-options="i.value as i.label for i in column.select.options">' +
+              + 'ng-options="o.value as o.label for o in column.options">'
+                + '<option value=""></option>' +
             '</select>';
 
           return editorHtml;

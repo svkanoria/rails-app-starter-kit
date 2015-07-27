@@ -7,6 +7,7 @@
  *   </query-builder>
  *
  * The 'options' attribute must be as follows:
+ *
  *   {
  *     columns: [
  *       { name: 'some-name', label: 'some-label', type: 'some-type' },
@@ -18,14 +19,14 @@
  *     }
  *   }
  *
- * All and only HTML5 input types can be used as column types.
+ * All and only HTML5 input types can be used as column types, even 'select'.
  * Normally it is best to use 'text', as it is the most flexible, and we won't
  * really care about validation.
- * To create a 'select' element based editor, omit the type attribute. Instead,
- * provide this attribute:
- *   select: {
- *     options: [{ label: 'something', value: something }, ...]
- *   }
+ *
+ * For a column of type 'select', provide an 'options' attribute in the column
+ * definition as follows:
+ *
+ *   options: [{ label: 'something', value: something }, ...]
  *
  * Presently we do not support custom operators. However, we will do so in
  * future.
