@@ -60,6 +60,10 @@ debugging. Be sure to set all environment variables on this configuration, NOT
 the default ones. Also set the environment variables on the 'Rails console: xxx'
 configuration, for the Rails console to work correctly!
 
+To run a worker process for background jobs, run the following command:
+
+  $ rake jobs:work
+
 == Setting Up
 
 Pre-requisites: You must have Node, Bower and Ruby installed.
@@ -94,6 +98,10 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
 
 1. Change the session key in /config/initializers/session_store.rb to suit your
    application.
+
+1. For correctly sending emails, change the
+   config.action_mailer.default_url_options 'host' parameter in
+   /config/environments/production.rb to suit your application.
 
 1. The Puma web server supports concurrent request handling, by allowing
    multiple worker processes per machine and multiple threads per worker.
