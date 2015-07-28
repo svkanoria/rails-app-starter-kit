@@ -40,6 +40,8 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  # MY NOTE: For sending emails in general, and for devise to work in particular
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  # MY NOTE: For setting up outgoing email in general, and for devise to work
+  # in particular
+  config.action_mailer.default_url_options =
+      { host: Rails.application.secrets.application_host }
 end

@@ -99,9 +99,20 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
 1. Change the session key in /config/initializers/session_store.rb to suit your
    application.
 
-1. For correctly sending emails, change the
-   config.action_mailer.default_url_options 'host' parameter in
-   /config/environments/production.rb to suit your application.
+1. To set up outgoing email in production (and simulation otherwise), set the
+   following environment variables:
+
+    APPLICATION_HOST=<The URL serving your application>
+    SMTP_ADDRESS=<The SMTP server address>
+    SMTP_PORT=<The SMTP server port>
+    SMTP_USER_NAME=<Your SMTP user name>
+    SMTP_PASSWORD=<Your SMTP password>
+    SMTP_AUTHENTICATION=<The SMTP authentication strategy>
+    SMTP_ENABLE_STARTTLS_AUTO=<true or false>
+
+   The APPLICATION_HOST variable is required. The rest may be provided only in
+   production, since you will probably not want to send real emails in other
+   enrivonments.
 
 1. The Puma web server supports concurrent request handling, by allowing
    multiple worker processes per machine and multiple threads per worker.
