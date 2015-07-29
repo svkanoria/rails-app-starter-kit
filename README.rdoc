@@ -44,25 +44,36 @@ If you wish to change the Ruby version, remember to also do so in the Gemfile
 
 This section only applies if you are using RubyMine.
 
-Since we are using the Puma web server with a config file (/config/puma.rb), we
-need a custom run/debug configuration for the app. The default RubyMine ones do
-not pick up the Puma config file.
+Since we maintain a Procfile for declaratively running the app, we need to set
+up RubyMine to use this Procfile, by creating a custom run/debug configuration.
+The default RubyMine configuration does not pick up the Procfile.
 
-Do so as follows:
+First, install the 'foreman' gem:
+
+  $ gem install foreman
+
+Note that if you have Heroku toolbelt installed, it is likely that foreman was
+installed with it. Even if this is the case, some older versions of foreman
+throw an error when loading the applications' YAML config files. In this case,
+do the following, to tget the latest version of foreman:
+
+  $ gem uninstall foreman
+  $ gem install foreman
+
+Then, set up RubyMine as follows:
 
 1. Click on Run > Edit Configurations
 1. Click on the '+' button, then select 'Gem Command'
-1. Enter the following: Name: Puma, Gem name = puma, Executable name = puma,
-   Arguments = -C config/puma.rb
+1. Enter the following: Name: Foreman, Gem name = foreman,
+   Executable name = foreman, Arguments = start
 
 As tested on RubyMine 7.1.3, this configuration works for both running and
 debugging. Be sure to set all environment variables on this configuration, NOT
 the default ones. Also set the environment variables on the 'Rails console: xxx'
 configuration, for the Rails console to work correctly!
 
-To run a worker process for background jobs, run the following command:
-
-  $ rake jobs:work
+Running/Debugging via this configuration will start up both the web and worker
+for background jobs) processes.
 
 == Setting Up
 
