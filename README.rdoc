@@ -99,8 +99,7 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
 1. Change the session key in /config/initializers/session_store.rb to suit your
    application.
 
-1. To set up outgoing email in production (and simulation otherwise), set the
-   following environment variables:
+1. To set up outgoing email, set the following environment variables:
 
     APPLICATION_HOST=<The URL serving your application>
     SMTP_ADDRESS=<The SMTP server address>
@@ -110,9 +109,9 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
     SMTP_AUTHENTICATION=<The SMTP authentication strategy>
     SMTP_ENABLE_STARTTLS_AUTO=<true or false>
 
-   The APPLICATION_HOST variable is required. The rest may be provided only in
-   production, since you will probably not want to send real emails in other
-   enrivonments.
+   The APPLICATION_HOST variable is required for development and production. The
+   others are only required in production. You need only set them in development
+   if you want to send real emails in development.
 
 1. The Puma web server supports concurrent request handling, by allowing
    multiple worker processes per machine and multiple threads per worker.
