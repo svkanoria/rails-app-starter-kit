@@ -63,13 +63,23 @@ angular.module('UsersCtrl', ['User'])
 
         $scope.queryBuilderOptions = {
           columns: [
-            { name: 'email', type: 'text' },
-            { name: 'id', type: 'text' }, // See query-builder for why 'text'
-            { name: 'created_at', type: 'date' }
+            { name: 'email', label: 'Email', type: 'text' },
+            // See query-builder for why 'id' column has type 'text'
+            { name: 'id', label: 'ID', type: 'text' },
+            { name: 'created_at', label: 'Created At', type: 'date' },
+            // Filter with a non database mapped column.
+            // See also app/controllers/admin/users_controller.rb.
+            {
+              name: 'confirmed?', label: 'Confirmed?', type: 'select',
+              options: [
+                { label: 'True', value: true },
+                { label: 'False', value: false }
+              ]
+            }
           ],
           initialColumns: ['email', 'id'],
           onSubmit: function () {
-            $scope.dataTableInstance.ajax.reload(); // Reload the data table
+            $scope.dataTableInstance.ajax.reload();
           }
         };
       };

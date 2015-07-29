@@ -20,28 +20,58 @@ angular.module('QBFilter', ['QBEditorProvider'])
           // Default comparison operators
           var DEFAULT_OPS = ['contains', '=', '<', '<=', '>', '>=', 'range'];
 
-          // For caching editor values by 'column-name;op'.
-          // Used to pre-populate editors for user friendliness.
+          // Column type based refinements to DEFAULT_OPS.
+          // Add more rules as and when more column types are supported.
+          var ALLOWED_OPS = {
+            date: { except: ['contains'] },
+            select: { only: ['='] }
+          };
+
+          // For preserving editor values across filter operator changes
           var editorCache = {};
 
           /**
-           * Returns the column type (from qbOptions), given its name.
+           * Returns a column from qbOptions, given its name.
            *
            * @param columnName {string} - A column name.
            *
-           * @returns {?string} The column type, or null if no such column is
-           * found.
+           * @returns {Object} The column.
+           *
+           * @throws An error if no column found by the given name.
            */
-          function getColumnType (columnName) {
+          function getColumn (columnName) {
             for (var i = 0; i < scope.qbOptions.columns.length; ++i) {
               var column = scope.qbOptions.columns[i];
 
               if (column.name === columnName) {
-                return column.type;
+                return column;
               }
             }
 
-            return null;
+            throw 'Column ' + columnName + ' not found';
+          }
+
+          /**
+           * Returns a list of allowed operators, given a column type.
+           *
+           * @param columnType {string} - A column type.
+           *
+           * @returns {string[]} The array of allowed operators, or the entire
+           * DEFAULT_OPS if no refinement rules have been specified via
+           * ALLOWED_OPS.
+           */
+          function getAllowedOps (columnType) {
+            var rules = ALLOWED_OPS[columnType];
+
+            if (rules) {
+              if (rules.only) {
+                return rules.only;
+              } else if (rules.except) {
+                return _.difference(DEFAULT_OPS, rules.except);
+              }
+            }
+
+            return DEFAULT_OPS;
           }
 
           /**
@@ -49,7 +79,7 @@ angular.module('QBFilter', ['QBEditorProvider'])
            * * The type of the column selected
            * * The operator selected
            *
-           * @param [columnType='text'] {string} - A column type.
+           * @param columnType {string} - A column type.
            * @param op {string} - An operator.
            */
           function setEditor (columnType, op) {
@@ -71,19 +101,27 @@ angular.module('QBFilter', ['QBEditorProvider'])
           // Procedural Stuff //
           //////////////////////
 
-          // The operators to show.
-          // For now, we just show the default ops. Later, we will have to add
-          // some code for determining which ops to show.
-          // TODO Support custom operators
           scope.ops = DEFAULT_OPS;
 
           if (!scope.model.values) {
             scope.model.values = [];
           }
 
-          if (!scope.model.op) {
-            scope.model.op = scope.ops[0];
-          }
+          scope.$watch('model.column', function (value) {
+            var ops = getAllowedOps(getColumn(value).type);
+
+            // If the new ops list does not contain the currently selected op,
+            // un-select the current op, else ngOptions acts up!
+            if (scope.model.op && !_.contains(ops, scope.model.op)) {
+              scope.model.op = null;
+            }
+
+            scope.ops = ops;
+
+            if (!scope.model.op) {
+              scope.model.op = scope.ops[0];
+            }
+          });
 
           scope.$watch('[model.column, model.op]',
             function (newValue, oldValue) {
@@ -93,10 +131,15 @@ angular.module('QBFilter', ['QBEditorProvider'])
               }
 
               if (newValue[0] && newValue[1]) {
+                // Expose this filter's qbOptions column on the scope, for
+                // editors to use if they require (for example, for the list of
+                // options for a select tag).
+                scope.column = getColumn(newValue[0]);
+
                 // Load the value for the editor coming in
                 scope.model.values = editorCache[newValue[0]] || [];
 
-                setEditor(getColumnType(newValue[0]), newValue[1]);
+                setEditor(scope.column.type, newValue[1]);
               }
             }, true);
         }

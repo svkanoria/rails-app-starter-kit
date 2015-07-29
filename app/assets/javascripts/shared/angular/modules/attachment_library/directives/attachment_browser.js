@@ -100,10 +100,10 @@ angular.module('AttachmentBrowser', [
 
             scope.queryBuilderOptions = {
               columns: [
-                { name: 'name', type: 'text' },
+                { name: 'name', label: 'Name', type: 'text' },
                 // See query-builder for why 'id' column has type 'text'
-                { name: 'id', type: 'text' },
-                { name: 'created_at', type: 'date' }
+                { name: 'id', label: 'ID', type: 'text' },
+                { name: 'created_at', label: 'Created At', type: 'date' }
               ],
               onSubmit: function () {
                 scope.dataTableInstance.ajax.reload(); // Reload the data table

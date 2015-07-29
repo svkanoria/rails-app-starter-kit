@@ -9,6 +9,8 @@
  *         // Return some suitable HTML.
  *         // This may contain Angular directives, since it is compiled before
  *         // being added to the DOM.
+ *         // The 'model' and 'column' variables are exposed on the scope, for
+ *         // access to the data required to set up an editor.
  *       }
  *     });
  *
@@ -21,7 +23,7 @@ angular.module('QBEditorProvider', [])
   .provider('QBEditor', [
     function () {
       /**
-       * Creates a default editor.
+       * Creates a 'select' element based editor.
        *
        * @param columnType {string} - The column type.
        * @param op {string} - The operator.
@@ -29,14 +31,37 @@ angular.module('QBEditorProvider', [])
        * @returns {string} The editor HTML. It may contain Angular directives,
        * since it is compiled before being added to the DOM.
        */
-      var DEFAULT_EDITOR_HTML = function (columnType, op) {
+      var SELECT_EDITOR_HTML = function (columnType, op) {
+        if (columnType === 'select') {
+          var editorHtml =
+            '<select class="filter-value form-control"'
+              + 'ng-model="model.values[0]"'
+              + 'ng-options="o.value as o.label for o in column.options">'
+                + '<option value=""></option>' +
+            '</select>';
+
+          return editorHtml;
+        }
+      };
+
+      /**
+       * Creates an 'input type="xxx"' element based editor.
+       *
+       * @param columnType {string} - The column type.
+       * @param op {string} - The operator.
+       *
+       * @returns {string} The editor HTML. It may contain Angular directives,
+       * since it is compiled before being added to the DOM.
+       */
+      var INPUT_TYPE_EDITOR_HTML = function (columnType, op) {
         var editorHtml = '';
         var opArity = (op === 'range') ? 2 : 1;
 
         for (var i = 0; i < opArity; ++i) {
-          editorHtml += '<input type="' + (columnType || 'text') +
-          '" class="filter-value form-control" ng-model="model.values[' +
-          i + ']">';
+          editorHtml +=
+            '<input type="' + (columnType || 'text')
+              + '" class="filter-value form-control"'
+              + ' ng-model="model.values[' + i + ']">';
         }
 
         return editorHtml;
@@ -78,7 +103,9 @@ angular.module('QBEditorProvider', [])
           }
         }
 
-        return DEFAULT_EDITOR_HTML(columnType, op);
+        // Default editors
+        return SELECT_EDITOR_HTML(columnType, op)
+          || INPUT_TYPE_EDITOR_HTML(columnType, op);
       };
 
       // Return the provider object

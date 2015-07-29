@@ -40,8 +40,24 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  # MY NOTE: For devise to work.
-  # Further, using 'lvh.me' instead of 'localhost' enables subdomain based
-  # access (and hence multi-tenancy) during development.
-  config.action_mailer.default_url_options = { host: 'lvh.me:3000' }
+  # MY NOTE: For setting up outgoing email in general, and for devise to work
+  # in particular
+  config.action_mailer.default_url_options =
+      { host: Rails.application.secrets.application_host }
+
+  # MY NOTE: For setting up outgoing email
+  config.action_mailer.smtp_settings = {
+      address: Rails.application.secrets.smtp_address,
+      port: Rails.application.secrets.smtp_port,
+      domain: Rails.application.secrets.application_host,
+      user_name: Rails.application.secrets.smtp_user_name,
+      password: Rails.application.secrets.smtp_password,
+      authentication: Rails.application.secrets.smtp_authentication,
+      enable_starttls_auto: Rails.application.secrets.smtp_enable_starttls_auto
+  }
+
+  # MY NOTE: If SMTP environment variables have been set, then deliver real
+  # emails
+  ActionMailer::Base.perform_deliveries =
+      config.action_mailer.smtp_settings[:address].present?
 end

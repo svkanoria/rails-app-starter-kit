@@ -7,9 +7,10 @@
  *   </query-builder>
  *
  * The 'options' attribute must be as follows:
+ *
  *   {
  *     columns: [
- *       { name: 'some-name', type: 'some-type' },
+ *       { name: 'some-name', label: 'some-label', type: 'some-type' },
  *         :
  *     ],
  *     ?initialColumns: [ 'some-name', ... ], // Seed filters
@@ -18,9 +19,14 @@
  *     }
  *   }
  *
- * All and only HTML5 input types can be used as column types.
+ * All and only HTML5 input types can be used as column types, even 'select'.
  * Normally it is best to use 'text', as it is the most flexible, and we won't
  * really care about validation.
+ *
+ * For a column of type 'select', provide an 'options' attribute in the column
+ * definition as follows:
+ *
+ *   options: [{ label: 'something', value: something }, ...]
  *
  * Presently we do not support custom operators. However, we will do so in
  * future.
