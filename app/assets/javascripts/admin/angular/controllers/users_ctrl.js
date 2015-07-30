@@ -1,7 +1,7 @@
 angular.module('UsersCtrl', ['User'])
   .controller('UsersCtrl', [
-    '$scope', 'User',
-    function($scope, User) {
+    '$scope', '$location', 'flash', 'User', 'initialData',
+    function($scope, $location, flash, User, initialData) {
       /**
        * The 'index' action.
        */
@@ -88,5 +88,32 @@ angular.module('UsersCtrl', ['User'])
             $scope.dataTableInstance.ajax.reload();
           }
         };
+      };
+
+      /**
+       * The 'new' action.
+       * Builds an empty user for the form.
+       */
+      $scope.actionNew = function () {
+        $scope.user = initialData;
+      };
+
+      /**
+       * The 'create' action.
+       * If there are validation errors on the server side, then populates the
+       * 'userErrors' scope variable with these errors.
+       */
+      $scope.actionCreate = function () {
+        $scope.pleaseWaitSvc.request();
+
+        $scope.user.$save(function (response) {
+          $scope.pleaseWaitSvc.release();
+          flash.set('success', 'User created.');
+
+          $location.path('users');
+        }, function (failureResponse) {
+          $scope.pleaseWaitSvc.release();
+          $scope.userErrors = failureResponse.data.errors;
+        });
       };
     }]);

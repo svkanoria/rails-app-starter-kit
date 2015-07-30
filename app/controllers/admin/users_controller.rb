@@ -3,6 +3,12 @@ class Admin::UsersController < Admin::ApplicationController
 
   respond_to :json
 
+  # See:
+  # * http://stackoverflow.com/questions/13850934/is-rails-creating-a-new-paramsmodel-hash
+  # * http://api.rubyonrails.org/classes/ActionController/ParamsWrapper.html
+  wrap_parameters include: User.attribute_names +
+                      %w(password password_confirmation)
+
   after_action :verify_authorized
 
   def index
@@ -17,7 +23,20 @@ class Admin::UsersController < Admin::ApplicationController
     respond_with @users_adapter
   end
 
+  def create
+    @user = User.new(user_params)
+    authorize @user
+
+    @user.save
+
+    respond_with @user, location: admin_users_url
+  end
+
   private
+
+  def user_params
+    params.required(:user).permit(:email, :password, :password_confirmation)
+  end
 
   # Builds custom conditions for the query builder in the index action.
   # See {QueryBuilder#initialize} for an understanding.

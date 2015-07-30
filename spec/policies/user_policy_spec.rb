@@ -36,8 +36,8 @@ describe UserPolicy do
 
     it { should permit(:index) }
     it { should_not permit(:show) }
-    it { should_not permit(:create) }
-    it { should_not permit(:new) }
+    it { should permit(:create) }
+    it { should permit(:new) }
     it { should_not permit(:update) }
     it { should_not permit(:edit) }
     it { should_not permit(:destroy) }

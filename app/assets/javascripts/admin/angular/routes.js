@@ -23,7 +23,17 @@ app.config([
       // User routes
       .when('/users', {
         templateUrl: 'admin/controllers/users/index.html',
-        controller: 'UsersCtrl'
+        controller: 'UsersCtrl',
+        resolve: {
+          initialData: R.initialData('UsersCtrl', 'index')
+        }
+      })
+      .when('/users/new', {
+        templateUrl: 'admin/controllers/users/new.html',
+        controller: 'UsersCtrl',
+        resolve: {
+          initialData: R.initialData('UsersCtrl', 'new')
+        }
       })
 
       // Error routes

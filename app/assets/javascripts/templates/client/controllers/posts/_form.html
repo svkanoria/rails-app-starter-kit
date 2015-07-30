@@ -2,7 +2,7 @@
 <form role="form" novalidate form-errors="postErrors">
   <div class="form-inputs">
     <div class="form-group" ng-class="{'has-error': postErrors['message']}">
-      <label for="message" class="control-label" >Message</label>
+      <label for="message" class="control-label">Message</label>
       <input type="text" name="message" class="form-control"
              ng-model="post.message"/>
 
@@ -25,6 +25,5 @@
     <button class="btn btn-danger" ng-click="actionDestroy()">
       Delete
     </button>
-  </div>
   </div>
 </form>
