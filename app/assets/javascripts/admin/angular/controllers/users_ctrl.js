@@ -25,6 +25,11 @@ angular.module('UsersCtrl', ['User'])
               render: function (data, type, row, meta) {
                 return moment(data).format('LLL');
               }
+            },
+            { data: 'confirmed_at' ,
+              render: function (data, type, row, meta) {
+                return (data) ? moment(data).format('LLL') : 'Pending';
+              }
             }
           ],
           stateSave: true, // Ensure table element has an id for this to work!
@@ -52,6 +57,7 @@ angular.module('UsersCtrl', ['User'])
               User.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
                 function (success) {
                   $scope.dataTableInstance.ajax.reload(); // Reload table data
+                  $scope.dataTableSelectedRows.length = 0;
                 },
                 function (failure) {
                   console.log(failure);

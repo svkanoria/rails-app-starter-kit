@@ -56,6 +56,7 @@ angular.module('PostsCtrl', ['Post'])
               Post.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
                 function (success) {
                   $scope.dataTableInstance.ajax.reload(); // Reload table data
+                  $scope.dataTableSelectedRows.length = 0;
                 },
                 function (failure) {
                   console.log(failure);
