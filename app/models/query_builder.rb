@@ -108,13 +108,16 @@ class QueryBuilder
   end
 
   def build_column_expr (column, column_type, op)
+    # To disambiguate the column in join queries
+    full_column = "#{@model_klass.table_name}.#{column}"
+
     case column_type
       when :integer, :float, :decimal
-        (op == 'contains') ? "CAST (#{column} AS text)" : column
+        (op == 'contains') ? "CAST (#{full_column} AS text)" : full_column
       when :datetime, :timestamp
-        "CAST (#{column} AS date)"
+        "CAST (#{full_column} AS date)"
       else
-        column
+        full_column
     end
   end
 

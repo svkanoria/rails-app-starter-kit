@@ -97,12 +97,14 @@ class DataTableAdapter
   # @return [String, nil] the search condition, if it makes semantic sense. A
   #   search of the id column for a non-number is pointless, for example.
   def build_column_search_condition (column_name, search_value)
+    full_column_name = "#{@model_klass.table_name}.#{column}"
+
     case Utils.column_type(@model_klass, column_name)
       when :string
-        "#{column_name} ILIKE '%#{search_value}%'"
+        "#{full_column_name} ILIKE '%#{search_value}%'"
       when :integer, :float, :decimal
         if Utils.is_numeric?(search_value)
-          "#{column_name} = #{search_value}"
+          "#{full_column_name} = #{search_value}"
         end
       else
         # TODO Support more data types in column search conditions

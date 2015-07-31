@@ -94,6 +94,13 @@ angular.module('UsersCtrl', ['User'])
                 { label: 'True', value: true },
                 { label: 'False', value: false }
               ]
+            },
+            // Another filter with a non database mapped column
+            {
+              name: 'role', label: 'Role', type: 'select',
+              options: [
+                { label: 'Admin', value: 'admin' }
+              ]
             }
           ],
           initialColumns: ['email', 'id'],
