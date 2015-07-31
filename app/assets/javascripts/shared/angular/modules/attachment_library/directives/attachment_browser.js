@@ -55,7 +55,7 @@ angular.module('AttachmentBrowser', [
                 { data: 'name', render: renderName },
                 { data: 'created_at',
                   render: function (data, type, row, meta) {
-                    return moment(data).format('LLL');
+                    return moment(data).format('lll');
                   }
                 }
               ],

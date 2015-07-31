@@ -3,7 +3,10 @@ class Admin::UsersController < Admin::ApplicationController
 
   respond_to :json
 
-  # See:
+  # Unlike for params corresponding to User DB columns, Rails will not
+  # automatically wrap non-column params within params[:user]. We fix this,
+  # because we need this behaviour for non-column params as well (needed for
+  # the users_param method below). For details, see:
   # * http://stackoverflow.com/questions/13850934/is-rails-creating-a-new-paramsmodel-hash
   # * http://api.rubyonrails.org/classes/ActionController/ParamsWrapper.html
   wrap_parameters include: User.attribute_names +

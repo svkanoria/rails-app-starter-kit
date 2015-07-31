@@ -23,12 +23,12 @@ angular.module('UsersCtrl', ['User'])
             { data: 'email' },
             { data: 'created_at',
               render: function (data, type, row, meta) {
-                return moment(data).format('LLL');
+                return moment(data).format('lll');
               }
             },
             { data: 'confirmed_at' ,
               render: function (data, type, row, meta) {
-                return (data) ? moment(data).format('LLL') : 'Pending';
+                return (data) ? moment(data).format('lll') : 'Pending';
               }
             }
           ],
