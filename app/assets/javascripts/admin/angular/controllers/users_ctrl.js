@@ -10,9 +10,14 @@ angular.module('UsersCtrl', ['User'])
           serverSide: true,
           ajax: {
             url: '/admin/users.json',
-            // Just add the query builder filters to all AJAX requests sent by
-            // the data table!
             data: function (d) {
+              // Delete the 'roles' column (at index 3) since it isn't a real
+              // column in the database. This is fine since the server returns
+              // roles anyway. All we need this column def for here, is to
+              // display the roles correctly.
+              d.columns.splice(3, 1);
+              // Just add the query builder filters to all AJAX requests sent by
+              // the data table!
               d.filters = $scope.queryBuilderFilters;
             }
           },
@@ -21,6 +26,14 @@ angular.module('UsersCtrl', ['User'])
           columns: [
             { data: 'id' },
             { data: 'email' },
+            { data: 'roles',
+              orderable: false, // Since it isn't a real column in the database
+              render: function (data, type, row, meta) {
+                return _.map(data, function (role) {
+                  return _.titleize(_.humanize(role));
+                }).join(',')
+              }
+            },
             { data: 'created_at',
               render: function (data, type, row, meta) {
                 return moment(data).format('lll');
