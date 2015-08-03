@@ -1,7 +1,7 @@
 angular.module('UsersCtrl', ['User'])
   .controller('UsersCtrl', [
-    '$scope', 'User',
-    function($scope, User) {
+    '$scope', '$location', 'flash', 'User', 'initialData',
+    function($scope, $location, flash, User, initialData) {
       /**
        * The 'index' action.
        */
@@ -10,9 +10,14 @@ angular.module('UsersCtrl', ['User'])
           serverSide: true,
           ajax: {
             url: '/admin/users.json',
-            // Just add the query builder filters to all AJAX requests sent by
-            // the data table!
             data: function (d) {
+              // Delete the 'roles' column (at index 3) since it isn't a real
+              // column in the database. This is fine since the server returns
+              // roles anyway. All we need this column def for here, is to
+              // display the roles correctly.
+              d.columns.splice(3, 1);
+              // Just add the query builder filters to all AJAX requests sent by
+              // the data table!
               d.filters = $scope.queryBuilderFilters;
             }
           },
@@ -21,9 +26,22 @@ angular.module('UsersCtrl', ['User'])
           columns: [
             { data: 'id' },
             { data: 'email' },
+            { data: 'roles',
+              orderable: false, // Since it isn't a real column in the database
+              render: function (data, type, row, meta) {
+                return _.map(data, function (role) {
+                  return _.titleize(_.humanize(role));
+                }).join(',')
+              }
+            },
             { data: 'created_at',
               render: function (data, type, row, meta) {
-                return moment(data).format('LLL');
+                return moment(data).format('lll');
+              }
+            },
+            { data: 'confirmed_at' ,
+              render: function (data, type, row, meta) {
+                return (data) ? moment(data).format('lll') : 'Pending';
               }
             }
           ],
@@ -52,6 +70,7 @@ angular.module('UsersCtrl', ['User'])
               User.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
                 function (success) {
                   $scope.dataTableInstance.ajax.reload(); // Reload table data
+                  $scope.dataTableSelectedRows.length = 0;
                 },
                 function (failure) {
                   console.log(failure);
@@ -75,6 +94,13 @@ angular.module('UsersCtrl', ['User'])
                 { label: 'True', value: true },
                 { label: 'False', value: false }
               ]
+            },
+            // Another filter with a non database mapped column
+            {
+              name: 'role', label: 'Role', type: 'select',
+              options: [
+                { label: 'Admin', value: 'admin' }
+              ]
             }
           ],
           initialColumns: ['email', 'id'],
@@ -82,5 +108,32 @@ angular.module('UsersCtrl', ['User'])
             $scope.dataTableInstance.ajax.reload();
           }
         };
+      };
+
+      /**
+       * The 'new' action.
+       * Builds an empty user for the form.
+       */
+      $scope.actionNew = function () {
+        $scope.user = initialData;
+      };
+
+      /**
+       * The 'create' action.
+       * If there are validation errors on the server side, then populates the
+       * 'userErrors' scope variable with these errors.
+       */
+      $scope.actionCreate = function () {
+        $scope.pleaseWaitSvc.request();
+
+        $scope.user.$save(function (response) {
+          $scope.pleaseWaitSvc.release();
+          flash.set('success', 'User created.');
+
+          $location.path('users');
+        }, function (failureResponse) {
+          $scope.pleaseWaitSvc.release();
+          $scope.userErrors = failureResponse.data.errors;
+        });
       };
     }]);

@@ -1,0 +1,51 @@
+<div class="row" ng-init="actionNew()">
+  <div class="col-sm-6 col-sm-offset-3">
+    <h2>New User</h2>
+
+    <form role="form" novalidate form-errors="userErrors">
+      <div class="form-inputs">
+        <div class="form-group" ng-class="{'has-error': userErrors['email']}">
+          <label for="email" class="control-label" >Email</label>
+          <input type="text" name="email" class="form-control"
+                 ng-model="user.email"/>
+
+          <p class="help-block" ng-show="userErrors['email']">
+            {{userErrors['email'][0]}}
+          </p>
+        </div>
+
+        <div class="form-group"
+             ng-class="{'has-error': userErrors['password']}">
+
+          <label for="password" class="control-label">Password</label>
+          <input type="password" name="password" class="form-control"
+                 ng-model="user.password"/>
+
+          <p class="help-block" ng-show="userErrors['password']">
+            {{userErrors['password'][0]}}
+          </p>
+        </div>
+
+        <div class="form-group"
+             ng-class="{'has-error': userErrors['password_confirmation']}">
+
+          <label for="password_confirmation"
+                 class="control-label">Password confirmation</label>
+
+          <input type="password" name="password_confirmation"
+                 class="form-control" ng-model="user.password_confirmation"/>
+
+          <p class="help-block" ng-show="userErrors['password_confirmation']">
+            {{userErrors['password_confirmation'][0]}}
+          </p>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" ng-click="actionCreate()">
+          Create
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

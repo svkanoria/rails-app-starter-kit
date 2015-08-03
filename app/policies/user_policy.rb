@@ -4,6 +4,10 @@ class UserPolicy < ApplicationPolicy
     user && user.has_role?(:admin)
   end
 
+  def create?
+    user && user.has_role?(:admin)
+  end
+
   def batch_destroy?
     user && user.has_role?(:admin)
   end
@@ -12,10 +16,6 @@ class UserPolicy < ApplicationPolicy
   # However, for completeness, we override them all to return false.
 
   def show?
-    false
-  end
-
-  def create?
     false
   end
 
