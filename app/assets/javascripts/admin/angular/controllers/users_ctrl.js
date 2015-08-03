@@ -56,8 +56,14 @@ angular.module('UsersCtrl', ['User'])
             },
             { data: 'actions',
               orderable: false,
+              className: 'dt-body-center',
               render: function (data, type, row, meta) {
-                return '<a href="/admin/#/users/' + row.id + '/edit">Edit</a>';
+                var html =
+                  '<a href="/admin/#/users/' + row.id + '/edit">'
+                    + '<span class="glyphicon glyphicon-pencil"></span>' +
+                  '</a>';
+
+                return html;
               }
             }
           ],
