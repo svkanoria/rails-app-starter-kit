@@ -17,9 +17,8 @@ class Admin::UsersController < Admin::ApplicationController
   def index
     authorize User
 
-    users_filter = QueryBuilder.new(User, params[:filters]) do |filter|
-      build_custom_condition(filter)
-    end
+    users_filter = QueryBuilder.new(User, params[:filters]) {
+        |filter, query| build_custom_logic(filter, query) }
 
     @users_adapter = DataTableAdapter.new(User, params, users_filter.query)
 
@@ -41,15 +40,17 @@ class Admin::UsersController < Admin::ApplicationController
     params.required(:user).permit(:email, :password, :password_confirmation)
   end
 
-  # Builds custom conditions for the query builder in the index action.
+  # Builds custom filter logic for the query builder in the index action.
   # See {QueryBuilder#initialize} for an understanding.
-  def build_custom_condition (filter)
+  def build_custom_logic (filter, query)
     column = filter[:column]
     values = filter[:values]
     op = filter[:op]
 
     if column == 'confirmed?'
       "confirmed_at IS #{(values[0] == 'true') ? 'NOT NULL' : 'NULL'}"
+    elsif column == 'role'
+      query.with_role(values[0])
     end
   end
 end

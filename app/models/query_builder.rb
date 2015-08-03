@@ -20,23 +20,25 @@ class QueryBuilder
 
   # Creates a new instance.
   #
-  # Can be passed a block/Proc that builds and returns a custom 'where'
-  # condition, given a filter. This allows great flexibility, especially for
-  # supporting and handling filters that are not directly mapped to database
-  # columns. See the documentation for {#build_condition} to better understand
-  # how to write such a block.
+  # Handles many types of filters out of the box.
+  # However, for handling complex/custom filters, you can optionally pass a
+  # block/Proc that accepts a filter and a query, and translates it into logic
+  # for augmenting the database query.
+  #
+  # The block/Proc can return anything that {#build_filter_logic} returns. See
+  # the latter's documentation for a complete understanding.
   #
   # @param model_klass [Class] the class of the model being queried
   # @param filters [Array] the filters sent via the HTTP request parameters
   # @param seed_query [ActiveRecord::Relation] the query to use as the "base"
   #   for building upon. If not provided, model_klass is used.
-  # @param build_custom_cond [Proc] an optional block/Proc for custom handling
+  # @param build_custom_logic [Proc] an optional block/Proc for custom handling
   #   of filters
-  def initialize (model_klass, filters, seed_query = nil, &build_custom_cond)
+  def initialize (model_klass, filters, seed_query = nil, &build_custom_logic)
     @model_klass = model_klass
     @filters = filters
     @query = seed_query || model_klass
-    @build_custom_cond = build_custom_cond
+    @build_custom_logic = build_custom_logic
 
     apply_filters
   end
@@ -72,23 +74,33 @@ class QueryBuilder
     return true unless values.present? && values.is_a?(Array)
     return true unless values[0].present?
 
-    condition = (@build_custom_cond && @build_custom_cond.call(filter)) ||
-        build_condition(filter)
+    filter_logic =
+        (@build_custom_logic && @build_custom_logic.call(filter, @query)) ||
+        build_filter_logic(filter)
 
-    return false unless condition
+    return false unless filter_logic
 
-    @query = @query.where(condition)
+    @query = filter_logic.is_a?(String) ?
+        @query.where(filter_logic) :
+        filter_logic
   end
 
-  # Builds a string suitable for a 'where' condition.
-  # At this point, the filter is guaranteed to have at least one value.
+  # Translates a filter into logic for augmenting the query.
+  #
+  # Can return any of the following:
+  # * a string suitable for a 'where' condition
+  # * the modified query object - this will REPLACE the current query in play
+  # * nil, if the filter does not make semantic sense
   #
   # @param filter [Hash] the filter, with a minimum format as follows:
-  #   { column: 'some-column-name', value: [val1, ...], op: 'some-op' }
+  #   { column: 'some-column-name', value: [val1, ...], op: 'some-op' }.
+  #   The filter is guaranteed to have at least one value
   #
-  # @return [String, nil] a string suitable for the 'where' condition, if it
-  #   makes semantic sense
-  def build_condition (filter)
+  # @return [String, ActiveRecord::Relation, nil] One of the following:
+  #   * a string suitable for the 'where' condition
+  #   * the modified query object - this will REPLACE the current query in play
+  #   * nil, if the filter does not make semantic sense
+  def build_filter_logic (filter)
     column = filter[:column]
     values = filter[:values]
     op = filter[:op]
