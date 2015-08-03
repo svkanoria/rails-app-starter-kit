@@ -19,8 +19,19 @@ angular.module('UsersCtrlInitSvc', ['User'])
         });
       };
 
+      /**
+       * Initial data for the 'edit' action.
+       *
+       * @returns {Object} The post corresponding to the current route, as a
+       * promise.
+       */
+      var actionEdit = function () {
+        return User.edit({ userId: $route.current.params.id }).$promise;
+      };
+
       // Return the service object
       return {
-        actionNew: actionNew
+        actionNew: actionNew,
+        actionEdit: actionEdit
       };
     }]);
