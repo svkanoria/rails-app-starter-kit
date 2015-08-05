@@ -18,16 +18,9 @@ angular.module('UsersCtrl', ['User'])
           serverSide: true,
           ajax: {
             url: '/admin/users.json',
+            // Just add the query builder filters to all AJAX requests sent by
+            // the data table!
             data: function (d) {
-              // Delete the 'roles' column (at index 3) since it isn't a real
-              // column in the database. This is fine since the server returns
-              // roles anyway. All we need this column def for here, is to
-              // display the roles correctly.
-              d.columns.splice(3, 1);
-              // Similarly, delete the 'actions' (last) column
-              d.columns.splice(-1, 1);
-              // Just add the query builder filters to all AJAX requests sent by
-              // the data table!
               d.filters = $scope.queryBuilderFilters;
             }
           },
@@ -37,7 +30,7 @@ angular.module('UsersCtrl', ['User'])
             { data: 'id' },
             { data: 'email' },
             { data: 'roles',
-              orderable: false, // Since it isn't a real column in the database
+              searchable: false, orderable: false,
               render: function (data, type, row, meta) {
                 return _.map(data, function (role) {
                   return _.titleize(_.humanize(role));
@@ -54,8 +47,8 @@ angular.module('UsersCtrl', ['User'])
                 return (data) ? moment(data).format('lll') : 'Pending';
               }
             },
-            { data: 'actions',
-              orderable: false,
+            { // data: 'actions', // Not really required for this column!
+              searchable: false, orderable: false,
               className: 'dt-body-center',
               render: function (data, type, row, meta) {
                 var html =
@@ -121,7 +114,8 @@ angular.module('UsersCtrl', ['User'])
             {
               name: 'role', label: 'Role', type: 'select',
               options: [
-                { label: 'Admin', value: 'admin' }
+                { label: 'Admin', value: 'admin' },
+                { label: 'Moderator', value: 'moderator' }
               ]
             }
           ],
