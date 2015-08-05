@@ -4,11 +4,19 @@
 
 http://rails-app-starter-kit.herokuapp.com
 
-Please treat any data (posts, users etc.) as transient. These may not be
-available after a certain period of time.
+Please treat any data (posts, users etc.) as transient, since these may be
+cleaned up from time to time.
+
+The app's admin console can be accessed at:
+http://rails-app-starter-kit.herokuapp.com/admin/
+
+To access the admin console, sign in with the following credentials:
+* Email: admin@rails-app-starter-kit.com
+* Password: admin123
 
 For accessing via native apps, the app access token is z23498f58959thf85.
-See the 'Access from Native Apps' section for details.
+See the 'Access from Native Apps' section for details. Note that you'll need to
+write your own app for this. We don't provide a sample.
 
 == About This Project
 
@@ -16,6 +24,7 @@ A starter kit for creating applications using the Postgres, Rails and Angular
 stack, with the following features built-in:
 
 1. Ruby 2.2.2, Rails 4.2.2, Angular ~1.3
+1. Multitenancy!! (see the multi-tenant branch)
 1. Puma web server
 1. Postgres support
 1. Complete user management, with authentication and role-based authorization
@@ -29,7 +38,7 @@ stack, with the following features built-in:
 1. Rails code testing using RSpec and other best practices
 1. Angular and JS code testing using Teaspoon
 1. Integration with the Bootstrap styling framework
-1. Admin app for administrators (coming soon)
+1. Full featured admin console (i.e. an admin app) for administrators
 1. Ready-to-deploy on Heroku
 
 Several ideas have been taken from http://angular-rails.com.
@@ -39,41 +48,6 @@ newer, for best results.
 
 If you wish to change the Ruby version, remember to also do so in the Gemfile
 (near the top).
-
-== Running the App (RubyMine)
-
-This section only applies if you are using RubyMine.
-
-Since we maintain a Procfile for declaratively running the app, we need to set
-up RubyMine to use this Procfile, by creating a custom run/debug configuration.
-The default RubyMine configuration does not pick up the Procfile.
-
-First, install the 'foreman' gem:
-
-  $ gem install foreman
-
-Note that if you have Heroku toolbelt installed, it is likely that foreman was
-installed with it. Even if this is the case, some older versions of foreman
-throw an error when loading the applications' YAML config files. In this case,
-do the following, to tget the latest version of foreman:
-
-  $ gem uninstall foreman
-  $ gem install foreman
-
-Then, set up RubyMine as follows:
-
-1. Click on Run > Edit Configurations
-1. Click on the '+' button, then select 'Gem Command'
-1. Enter the following: Name: Foreman, Gem name = foreman,
-   Executable name = foreman, Arguments = start
-
-As tested on RubyMine 7.1.3, this configuration works for both running and
-debugging. Be sure to set all environment variables on this configuration, NOT
-the default ones. Also set the environment variables on the 'Rails console: xxx'
-configuration, for the Rails console to work correctly!
-
-Running/Debugging via this configuration will start up both the web and worker
-for background jobs) processes.
 
 == Setting Up
 
@@ -99,7 +73,7 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
 
    Also change the production database details, either now, or before you wish
    to push your app to production. If you use Heroku, these details will be
-   overridden anyway, but its still a good idea to change them.
+   overridden anyway, but its still good to change them, for completeness.
 
 1. Run the following command:
 
@@ -150,16 +124,19 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
    * Comment out the 'controllers:...' line with the 'devise_for' directive in
      /config/routes.rb
 
+   Authentication via Google and others will be coming soon.
+
 1. If you wish to allow API-based access for native apps, set the following
    environment variable:
 
     APP_ACCESS_TOKEN=<Some random string>
 
-   You must then send this token with each request, in the 'X-App-Access-Token'
-   header.
+   From your native app, you must then send this token with each request, thru
+   the 'X-App-Access-Token' header.
 
-1. If you wish to user the attachment library, set the following environment
-   variables:
+1. If you wish to use the attachment library for handling and viewing uploads,
+   set the following environment variables. This requires some work, but is
+   worth it!
 
     AWS_ACCESS_KEY_ID=<Your AWS Access Key ID>
     AWS_SECRET_ACCESS_KEY=<Your AWS Secret Access Key>
@@ -176,7 +153,7 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
     DRAGONFLY_CDN=<The CDN used to serve Dragonfly (gem) processed images such
       as thumbnails etc.>
 
-   The origin of the Dragonfly CDN must be the domain name of your app.
+   The origin of the Dragonfly CDN must be set to the domain name of your app.
 
    We recommend you provision an AWS IAM user with limited permissions, so that
    all unrelated AWS data remains secure. These permissions must of course
@@ -194,7 +171,7 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
    download as a .pem file.
 
    Set AWS_CF_PRIVATE_KEY to the entire contents of the .pem file as one long
-   string, manually inserting '\n' at the end of each line.
+   string, manually inserting a '\\n' at the end of each line.
 
    For playing back video attachments, we provide JWPlayer (an HTML5 and Flash
    based video player) integration out of the box. If you haven't already, you
@@ -202,13 +179,48 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
    you can get an account token.
 
    If you want to use another player, you'll need to provide your own Angular
-   directive for it. In this case, you need not set the JW_PLAYER_ACCOUNT_TOKEN
-   environment variable.
+   directive for it (easy enough). In this case, you need not set the
+   JW_PLAYER_ACCOUNT_TOKEN environment variable.
+
+== Running the App (RubyMine)
+
+This section only applies if you are using RubyMine.
+
+Since we maintain a Procfile for declaratively running the app, we need to set
+up RubyMine to use this Procfile, by creating a custom run/debug configuration.
+The default RubyMine configuration does not pick up the Procfile.
+
+First, install the 'foreman' gem:
+
+ $ gem install foreman
+
+Note that if you have Heroku toolbelt installed, it is likely that foreman was
+installed with it. Even if this is the case, some older versions of foreman
+throw an error when loading the application's YAML config files. In this case,
+get the latest version of foreman by doing the following:
+
+ $ gem uninstall foreman
+ $ gem install foreman
+
+Then, set up RubyMine as follows:
+
+1. Click on Run > Edit Configurations
+1. Click on the '+' button, then select 'Gem Command'
+1. Enter the following: Name: Foreman, Gem name = foreman,
+   Executable name = foreman, Arguments = start
+
+As tested on RubyMine 7.1.3, this configuration works for both running and
+debugging. Be sure to set all environment variables on this configuration, NOT
+the default ones. Also set the environment variables on the 'Rails console: xxx'
+configuration, for the Rails console to work correctly!
+
+Running/Debugging via this configuration will start up both the web and worker
+(for background jobs) processes.
 
 == App Structure
 
 The application structure is similar to a standard Rails app, with certain
-additions, a sampling of which is shown below:
+additions, a mostly comprehensive sampling of which is shown below:
 
   app
    |- assets
@@ -247,7 +259,7 @@ The 'admin' folders contain files related to the admin app. This will be
 discussed towards the end of this README. Until then, the sections below are
 written from the point of view of the client (i.e. main or 'non-admin') part of
 the app. As it happens much of this information also holds true for the admin
-app!
+app.
 
 == Dev Tools
 
@@ -269,7 +281,7 @@ generally after you run a migration, as follows:
 
 Normally, Rails does asset management from within the (/app/lib/vendor)/assets
 folders. However, because we are supporting very 'front-end heavy' applications,
-we use Bower, which is the most widely used such tool. We use the 'bower-rails'
+we use Bower, which is a very widely used such tool. We use the 'bower-rails'
 gem for this purpose. See the following for more information:
 * http://bower.io
 * https://github.com/42dev/bower-rails
@@ -325,13 +337,13 @@ access to certain routes. See the following for more details:
 ==== Authentication via Facebook
 
 We also provide authentication with Facebook out of the box, as well as easy
-integration of other providers such as Google, Twitter and more.
+integration with other providers such as Google, Twitter and more.
 
 See the 'Setting Up' section for how to enable Facebook authentication.
 
 ==== Authentication via Other Providers
 
-COMING SOON...
+Coming Soon.
 
 === Authorization
 
@@ -344,21 +356,24 @@ Authorization in the Ruby code is done via two gems:
 Authorization policies are placed in /app/policies.
 
 In JS and Angular code, role-based authorization has been implemented to the
-extent of route access. See the Authentication section above.
+extent of route access. See the bottom of the Authentication section above.
 
 === Attachment Library
 
 Most applications need some way of:
-1. Storing files uploaded by users
+1. Storing and viewing files uploaded by users
 2. Associating these uploads with models (for example, an attachment to a post,
    a user profile pic etc.
 
 We provide a full featured, flexible solution right out of the box!
+This includes a server-side DSL for declaratively configuring models to accept
+attachments, and corresponding Angular directives for uploading, attaching and
+viewing them.
 
 The only catch is that we use FineUploader[http://fineuploader.com/] to carry
 out the actual uploads. If you're not developing an open-source application, a
 license must be purchased. The same goes for JWPlayer, an HTML5 and Flash based
-video player we use for playing back video attachments.
+video player we use for playing back video attachments. Neither is very costly.
 
 Attachments belong to users. Users only ever have access to their own
 attachments. Each attachment can be attached to multiple objects - there is a
@@ -487,7 +502,7 @@ follows:
     }
   }
 
-==== Authentication via Facebook (or Other Provider)
+==== Authentication via Facebook (or Other Providers)
 
 To authenticate a user via Facebook or another provider, send a request to the
 same endpoint, as follows:
@@ -551,8 +566,6 @@ Authorization policy tests are placed in /spec/policies.
 Coming soon.
 
 == Admin App for Administrators
-
-Coming soon.
 
 We have tried to keep the admin app as separate from the client (main) app as
 possible.
