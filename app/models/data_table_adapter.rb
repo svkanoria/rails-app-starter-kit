@@ -124,6 +124,15 @@ class DataTableAdapter
   end
 
   def apply_column_selection (extra_columns = nil)
-    @data = @data.select(@column_names + (extra_columns || []))
+    model_columns = @model_klass.column_names.sort
+
+    # Select only those requested columns that actually exist
+    valid_columns = @column_names.select do |requested_column|
+      found_column = model_columns.bsearch { |c| c >= requested_column }
+
+      found_column == requested_column
+    end
+
+    @data = @data.select(valid_columns + (extra_columns || []))
   end
 end

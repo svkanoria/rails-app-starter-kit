@@ -35,6 +35,13 @@ app.config([
           initialData: R.initialData('UsersCtrl', 'new')
         }
       })
+      .when('/users/:id/edit', {
+        templateUrl: 'admin/controllers/users/edit.html',
+        controller: 'UsersCtrl',
+        resolve: {
+          initialData: R.initialData('UsersCtrl', 'edit')
+        }
+      })
 
       // Error routes
       .when('/unauthorized', {

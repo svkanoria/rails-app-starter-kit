@@ -34,7 +34,7 @@ angular.module('PostsCtrlInitSvc', ['Post'])
        * promise.
        */
       var actionEdit = function () {
-        return Post.get({ postId: $route.current.params.id }).$promise;
+        return Post.edit({ postId: $route.current.params.id }).$promise;
       };
 
       // Return the service object

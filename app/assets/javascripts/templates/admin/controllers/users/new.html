@@ -39,6 +39,13 @@
             {{userErrors['password_confirmation'][0]}}
           </p>
         </div>
+
+        <div class="form-group">
+          <label>Roles</label>
+          <select multiple class="form-control" ng-model="user.roles"
+                  ng-options="r.value as r.label for r in userRoleOptions">
+          </select>
+        </div>
       </div>
 
       <div class="form-actions">

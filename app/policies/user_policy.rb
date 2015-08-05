@@ -4,26 +4,23 @@ class UserPolicy < ApplicationPolicy
     user && user.has_role?(:admin)
   end
 
+  def show?
+    false # n/a
+  end
+
   def create?
     user && user.has_role?(:admin)
   end
 
-  def batch_destroy?
+  def update?
     user && user.has_role?(:admin)
   end
 
-  # The methods below are not relevant for the controller.
-  # However, for completeness, we override them all to return false.
-
-  def show?
-    false
-  end
-
-  def update?
-    false
-  end
-
   def destroy?
-    false
+    false # n/a
+  end
+
+  def batch_destroy?
+    user && user.has_role?(:admin)
   end
 end

@@ -3,6 +3,14 @@ angular.module('UsersCtrl', ['User'])
     '$scope', '$location', 'flash', 'User', 'initialData',
     function($scope, $location, flash, User, initialData) {
       /**
+       * Allowed user roles.
+       */
+      var USER_ROLE_OPTIONS = [
+        { label: 'Admin', value: 'admin' },
+        { label: 'Moderator', value: 'moderator' }
+      ];
+
+      /**
        * The 'index' action.
        */
       $scope.actionIndex = function () {
@@ -10,14 +18,9 @@ angular.module('UsersCtrl', ['User'])
           serverSide: true,
           ajax: {
             url: '/admin/users.json',
+            // Just add the query builder filters to all AJAX requests sent by
+            // the data table!
             data: function (d) {
-              // Delete the 'roles' column (at index 3) since it isn't a real
-              // column in the database. This is fine since the server returns
-              // roles anyway. All we need this column def for here, is to
-              // display the roles correctly.
-              d.columns.splice(3, 1);
-              // Just add the query builder filters to all AJAX requests sent by
-              // the data table!
               d.filters = $scope.queryBuilderFilters;
             }
           },
@@ -27,11 +30,11 @@ angular.module('UsersCtrl', ['User'])
             { data: 'id' },
             { data: 'email' },
             { data: 'roles',
-              orderable: false, // Since it isn't a real column in the database
+              searchable: false, orderable: false,
               render: function (data, type, row, meta) {
                 return _.map(data, function (role) {
                   return _.titleize(_.humanize(role));
-                }).join(',')
+                }).join(', ')
               }
             },
             { data: 'created_at',
@@ -39,9 +42,21 @@ angular.module('UsersCtrl', ['User'])
                 return moment(data).format('lll');
               }
             },
-            { data: 'confirmed_at' ,
+            { data: 'confirmed_at',
               render: function (data, type, row, meta) {
                 return (data) ? moment(data).format('lll') : 'Pending';
+              }
+            },
+            { // data: 'actions', // Not really required for this column!
+              searchable: false, orderable: false,
+              className: 'dt-body-center',
+              render: function (data, type, row, meta) {
+                var html =
+                  '<a href="/admin/#/users/' + row.id + '/edit">'
+                    + '<span class="glyphicon glyphicon-pencil"></span>' +
+                  '</a>';
+
+                return html;
               }
             }
           ],
@@ -99,7 +114,8 @@ angular.module('UsersCtrl', ['User'])
             {
               name: 'role', label: 'Role', type: 'select',
               options: [
-                { label: 'Admin', value: 'admin' }
+                { label: 'Admin', value: 'admin' },
+                { label: 'Moderator', value: 'moderator' }
               ]
             }
           ],
@@ -116,6 +132,8 @@ angular.module('UsersCtrl', ['User'])
        */
       $scope.actionNew = function () {
         $scope.user = initialData;
+
+        $scope.userRoleOptions = USER_ROLE_OPTIONS;
       };
 
       /**
@@ -129,6 +147,34 @@ angular.module('UsersCtrl', ['User'])
         $scope.user.$save(function (response) {
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'User created.');
+
+          $location.path('users');
+        }, function (failureResponse) {
+          $scope.pleaseWaitSvc.release();
+          $scope.userErrors = failureResponse.data.errors;
+        });
+      };
+
+      /**
+       * The 'edit' action.
+       */
+      $scope.actionEdit = function () {
+        $scope.user = initialData;
+
+        $scope.userRoleOptions = USER_ROLE_OPTIONS;
+      };
+
+      /**
+       * The 'update' action.
+       * If there are validation errors on the server side, then populates the
+       * 'userErrors' scope variable with these errors.
+       */
+      $scope.actionUpdate = function () {
+        $scope.pleaseWaitSvc.request();
+
+        $scope.user.$update(function (response) {
+          $scope.pleaseWaitSvc.release();
+          flash.set('success', 'User updated.');
 
           $location.path('users');
         }, function (failureResponse) {

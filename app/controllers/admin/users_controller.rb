@@ -10,8 +10,9 @@ class Admin::UsersController < Admin::ApplicationController
   # * http://stackoverflow.com/questions/13850934/is-rails-creating-a-new-paramsmodel-hash
   # * http://api.rubyonrails.org/classes/ActionController/ParamsWrapper.html
   wrap_parameters include: User.attribute_names +
-                      %w(password password_confirmation)
+                      %w(password password_confirmation roles)
 
+  before_action :load_basics, except: [:index, :create]
   after_action :verify_authorized
 
   def index
@@ -29,7 +30,31 @@ class Admin::UsersController < Admin::ApplicationController
     @user = User.new(user_params)
     authorize @user
 
+    if (roles = params[:user][:roles])
+      roles.each { |role| @user.add_role role }
+    end
+
     @user.save
+
+    respond_with @user, location: admin_users_url
+  end
+
+  def edit
+    authorize @user
+
+    respond_with @user
+  end
+
+  def update
+    authorize @user
+
+    ActiveRecord::Base.transaction do
+      @user.roles = []
+
+      if (roles = params[:user][:roles])
+        roles.each { |role| @user.add_role role }
+      end
+    end
 
     respond_with @user, location: admin_users_url
   end
@@ -52,5 +77,9 @@ class Admin::UsersController < Admin::ApplicationController
     elsif column == 'role'
       query.with_role(values[0])
     end
+  end
+
+  def load_basics
+    @user = User.find(params[:id])
   end
 end
