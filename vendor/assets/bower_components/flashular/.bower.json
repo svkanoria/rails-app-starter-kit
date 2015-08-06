@@ -28,11 +28,11 @@
     "test",
     "tests"
   ],
-  "_release": "da67542e3f",
+  "_release": "a5bce58227",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "da67542e3f516b04b5f5ef85c54d3a0fe25e387c"
+    "commit": "a5bce582274f735588cca915e0732eefcf74957c"
   },
   "_source": "git://github.com/svkanoria/flashular.git",
   "_target": "master",
