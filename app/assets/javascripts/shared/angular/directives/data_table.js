@@ -292,6 +292,24 @@ angular.module('DataTable', [])
         $compile(bulkSelectionDiv)(scope);
       }
 
+      /**
+       * Enables cell HTML to contain directives.
+       * This addresses the common use case of the programmer wanting to use
+       * directives within the column definition 'render' property.
+       *
+       * @param {Object} scope - The scope passed to the link function.
+       */
+      function enableDirectivesInCells (scope) {
+        var origCreatedRow = scope.options.createdRow;
+
+        scope.options.createdRow = function (row, data, dataIndex) {
+          if (origCreatedRow) origCreatedRow(row, data, dataIndex);
+
+          // Compile in parent's scope (sort of like transclusion)
+          $compile(row)(scope.$parent);
+        };
+      }
+
       return {
         restrict: 'A',
 
@@ -305,12 +323,16 @@ angular.module('DataTable', [])
         link: function (scope, element, attrs) {
           scope.selectedAll = false;
 
+          if (!scope.options) scope.options = {};
+
+          enableDirectivesInCells(scope);
+
           if (scope.selectedRows !== undefined) {
             addRowSelectionUI(scope, element);
             addRowSelectionLogic(scope, element);
           }
 
-          var instance = $(element).DataTable(scope.options || {});
+          var instance = $(element).DataTable(scope.options);
 
           if (scope.selectedRows !== undefined) {
             addBulkSelectionToolbar(scope, element);

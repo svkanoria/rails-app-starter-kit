@@ -17,7 +17,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def destroy?
-    false # n/a
+    user && user.has_role?(:admin)
   end
 
   def batch_destroy?

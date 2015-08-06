@@ -59,6 +59,18 @@ class Admin::UsersController < Admin::ApplicationController
     respond_with @user, location: admin_users_url
   end
 
+  def destroy
+    authorize @user
+
+    if @user != current_user
+      @user.destroy
+
+      respond_with @user
+    else
+      render_op_error('users_controller.destroy', :cannot_delete_self)
+    end
+  end
+
   private
 
   def user_params

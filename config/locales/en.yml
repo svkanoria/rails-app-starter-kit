@@ -31,3 +31,9 @@ en:
 
         current_password: 'We need your current password to confirm your
           changes'
+
+  # Error messages for the 'render_op_error' method (see ApplicationController)
+  op_errors:
+    users_controller:
+      destroy:
+        cannot_delete_self: 'You cannot delete yourself from here!'

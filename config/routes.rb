@@ -36,7 +36,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :users, only: [:index, :create, :edit, :update] do
+    resources :users, except: [:show] do
       collection do
         post 'batch_destroy'
       end

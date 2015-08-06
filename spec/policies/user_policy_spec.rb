@@ -40,7 +40,7 @@ describe UserPolicy do
     it { should permit(:new) }
     it { should permit(:update) }
     it { should permit(:edit) }
-    it { should_not permit(:destroy) }
+    it { should permit(:destroy) }
     it { should permit(:batch_destroy) }
   end
 end

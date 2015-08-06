@@ -51,12 +51,17 @@ angular.module('UsersCtrl', ['User'])
               searchable: false, orderable: false,
               className: 'dt-body-center',
               render: function (data, type, row, meta) {
-                var html =
+                var editHtml =
                   '<a href="/admin/#/users/' + row.id + '/edit">'
                     + '<span class="glyphicon glyphicon-pencil"></span>' +
                   '</a>';
 
-                return html;
+                var deleteHtml =
+                  '<a ng-click="deleteUser(' + row.id + ')">'
+                    + '<span class="glyphicon glyphicon-remove"></span>' +
+                  '</a>';
+
+                return editHtml + '&nbsp;' + deleteHtml;
               }
             }
           ],
@@ -123,6 +128,30 @@ angular.module('UsersCtrl', ['User'])
           onSubmit: function () {
             $scope.dataTableInstance.ajax.reload();
           }
+        };
+
+        /**
+         * Deletes a user.
+         *
+         * @param {number} userId - The user id to delete.
+         */
+        $scope.deleteUser = function (userId) {
+          $scope.pleaseWaitSvc.request();
+          // When performing an operation on a single row, unselect all rows
+          // to avoid any ambiguity about the scope of the operation.
+          $scope.dataTableSelectedRows.length = 0;
+
+          User.remove({ userId: userId }, null,
+            function (response) {
+              $scope.pleaseWaitSvc.release();
+              flash.now.set('success', 'User deleted.');
+
+              $scope.dataTableInstance.ajax.reload();
+            }, function (failureResponse) {
+              $scope.pleaseWaitSvc.release();
+              flash.now.set('error',
+                failureResponse.data.error || 'Error deleting user.');
+            });
         };
       };
 
