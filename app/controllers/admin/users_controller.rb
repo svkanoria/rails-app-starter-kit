@@ -12,7 +12,8 @@ class Admin::UsersController < Admin::ApplicationController
   wrap_parameters include: User.attribute_names +
                       %w(password password_confirmation roles)
 
-  before_action :load_basics, except: [:index, :create]
+  before_action :load_basics, only: [:edit, :update, :destroy]
+  around_action :prevent_deleting_self, only: [:batch_destroy]
   after_action :verify_authorized
 
   def index
@@ -67,7 +68,7 @@ class Admin::UsersController < Admin::ApplicationController
 
       respond_with @user
     else
-      render_op_error('users_controller.destroy', :cannot_delete_self)
+      render_op_error('users_controller', :cannot_delete_self, :unauthorized)
     end
   end
 
@@ -77,7 +78,15 @@ class Admin::UsersController < Admin::ApplicationController
     params.required(:user).permit(:email, :password, :password_confirmation)
   end
 
-  # Builds custom filter logic for the query builder in the index action.
+  def prevent_deleting_self
+    if params[:ids].include? current_user.id.to_s
+      render_op_error('users_controller', :cannot_delete_self, :unauthorized)
+    else
+      yield
+    end
+  end
+
+  # Builds custom filter logic for the query builder used in the index action.
   # See {QueryBuilder#initialize} for an understanding.
   def build_custom_logic (filter, query)
     column = filter[:column]

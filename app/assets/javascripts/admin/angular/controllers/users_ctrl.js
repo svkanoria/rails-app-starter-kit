@@ -87,13 +87,20 @@ angular.module('UsersCtrl', ['User'])
           deleteAll: {
             name: 'Delete All',
             action: function () {
+              $scope.pleaseWaitSvc.request();
+
               User.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
-                function (success) {
+                function (response) {
+                  $scope.pleaseWaitSvc.release();
+                  flash.now.set('success', 'Users deleted.');
+
                   $scope.dataTableInstance.ajax.reload(); // Reload table data
                   $scope.dataTableSelectedRows.length = 0;
                 },
-                function (failure) {
-                  console.log(failure);
+                function (failureResponse) {
+                  $scope.pleaseWaitSvc.release();
+                  flash.now.set('error',
+                    failureResponse.data.error || 'Error deleting users.');
                 }
               )
             }
