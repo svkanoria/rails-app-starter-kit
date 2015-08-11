@@ -54,17 +54,13 @@ If you wish to change the Ruby version, remember to also do so in the Gemfile
 Pre-requisites: You must have Node, Bower and Ruby installed.
 
 1. Download or clone this repo
-1. Run the following commands in the application's root directory:
+1. Run the following command in the application's root directory:
 
     $ bundle install
 
    This should set up all the gems required. Note: Installing the pg gem can be
    a pain. See http://stackoverflow.com/questions/19262312/installing-pg-gem-failure-to-build-native-extension
    for help.
-
-    $ rake bower:install
-
-   This should set up all the front-end assets required.
 
 1. Create two databases named as follows, or edit /config/database.yml to suit
    your needs, and then create the appropriate databases:
@@ -79,7 +75,9 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
 
     $ rake db:migrate
 
-   This will set up the required tables in the database.
+   This will set up the required tables in the database. If a rake version
+   mismatch throws up an error, run the command (and all future rake commands)
+   in the bundler's context as follows: 'bundle exec rake db:migrate'.
 
 1. Change the session key in /config/initializers/session_store.rb to suit your
    application.
@@ -181,6 +179,16 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
    If you want to use another player, you'll need to provide your own Angular
    directive for it (easy enough). In this case, you need not set the
    JW_PLAYER_ACCOUNT_TOKEN environment variable.
+
+1. Run the Rails console, and create an admin user as follows:
+
+    > u = User.new email: 'some@email.com', password: 'somepassword'
+    > u.add_role :admin
+    > u.skip_confirmation!
+    > u.save!
+
+   For the moment you need to create the admin user manually. However, we will
+   be providing some seed data soon, which will include an admin user.
 
 == Running the App (RubyMine)
 
