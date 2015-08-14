@@ -14,4 +14,13 @@ class Admin::PostsController < Admin::ApplicationController
 
     respond_with @posts_adapter
   end
+
+  def destroy
+    @post = Post.find(params[:id])
+    authorize @post
+
+    @post.destroy
+
+    respond_with @post
+  end
 end

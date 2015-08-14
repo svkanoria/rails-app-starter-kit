@@ -1,7 +1,7 @@
 angular.module('PostsCtrl', ['Post'])
   .controller('PostsCtrl', [
-    '$scope', 'Post',
-    function($scope, Post) {
+    '$scope', 'flash', 'Post',
+    function($scope, flash, Post) {
       /**
        * The 'index' action.
        */
@@ -44,6 +44,37 @@ angular.module('PostsCtrl', ['Post'])
         // The 'raw' data table instance.
         // This is populated by the 'datatable' directive.
         $scope.dataTableInstance = null;
+
+        // For operations on a single row
+        $scope.dataTableRowOps = {
+          edit: {
+            icon: 'glyphicon-pencil',
+            link: function (rowId) {
+              return '/#/posts/' + rowId + '/edit';
+            }
+          },
+          delete: {
+            icon: 'glyphicon-remove',
+            action: function (rowId) {
+              $scope.pleaseWaitSvc.request();
+              // When performing an operation on a single row, unselect all rows
+              // to avoid any ambiguity about the scope of the operation.
+              $scope.dataTableSelectedRows.length = 0;
+
+              Post.remove({ postId: rowId }, null,
+                function (response) {
+                  $scope.pleaseWaitSvc.release();
+                  flash.now.set('success', 'Post deleted.');
+
+                  $scope.dataTableInstance.ajax.reload();
+                }, function (failureResponse) {
+                  $scope.pleaseWaitSvc.release();
+                  flash.now.set('error',
+                    failureResponse.data.error || 'Error deleting post.');
+                });
+            }
+          }
+        };
 
         // To enable row selection
         $scope.dataTableSelectedRows = [];
