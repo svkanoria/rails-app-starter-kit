@@ -39,8 +39,8 @@
       <p>
         Unhappy?
         <%= button_to 'Cancel My Account', registration_path(resource_name),
-                      data: { confirm: 'Are you sure?' }, method: :delete,
-                      class: 'btn btn-danger' %>
+                      data: { confirm: 'Really cancel your account?' },
+                      method: :delete, class: 'btn btn-danger' %>
       </p>
     </div>
   </div>

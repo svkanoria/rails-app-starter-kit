@@ -97,6 +97,8 @@ angular.module('UsersCtrl', ['User'])
           deleteAll: {
             name: 'Delete All',
             action: function () {
+              if (!window.confirm('Really delete selected users?')) return;
+
               $scope.pleaseWaitSvc.request();
 
               User.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
@@ -153,6 +155,8 @@ angular.module('UsersCtrl', ['User'])
          * @param {number} userId - The user id to delete.
          */
         $scope.deleteUser = function (userId) {
+          if (!window.confirm('Really delete user #' + userId + '?')) return;
+
           $scope.pleaseWaitSvc.request();
           // When performing an operation on a single row, unselect all rows
           // to avoid any ambiguity about the scope of the operation.
