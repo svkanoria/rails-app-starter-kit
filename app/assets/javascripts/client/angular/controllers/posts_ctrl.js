@@ -104,6 +104,8 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
        * The 'destroy' action.
        */
       $scope.actionDestroy = function () {
+        if (!window.confirm('Really delete this post?')) return;
+
         $scope.pleaseWaitSvc.request();
 
         $scope.post.$delete(function (response) {

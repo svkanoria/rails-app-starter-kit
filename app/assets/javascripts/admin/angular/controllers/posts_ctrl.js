@@ -56,6 +56,8 @@ angular.module('PostsCtrl', ['Post'])
           delete: {
             icon: 'glyphicon-remove',
             action: function (rowId) {
+              if (!window.confirm('Really delete post #' + rowId + '?')) return;
+
               $scope.pleaseWaitSvc.request();
               // When performing an operation on a single row, unselect all rows
               // to avoid any ambiguity about the scope of the operation.
@@ -84,13 +86,22 @@ angular.module('PostsCtrl', ['Post'])
           deleteAll: {
             name: 'Delete All',
             action: function () {
+              if (!window.confirm('Really delete selected posts?')) return;
+
+              $scope.pleaseWaitSvc.request();
+
               Post.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
-                function (success) {
+                function (response) {
+                  $scope.pleaseWaitSvc.release();
+                  flash.now.set('success', 'Posts deleted.');
+
                   $scope.dataTableInstance.ajax.reload(); // Reload table data
                   $scope.dataTableSelectedRows.length = 0;
                 },
-                function (failure) {
-                  console.log(failure);
+                function (failureResponse) {
+                  $scope.pleaseWaitSvc.release();
+                  flash.now.set('error',
+                    failureResponse.data.error || 'Error deleting posts.');
                 }
               )
             }
