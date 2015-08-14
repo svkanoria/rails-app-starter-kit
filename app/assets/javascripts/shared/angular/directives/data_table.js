@@ -9,26 +9,45 @@
  *   <table datatable
  *          ?options="Object expr",
  *          ?instance="Empty expr"
+ *          ?row-ops="Object expr"
  *          ?selected-rows="Array expr"
  *          ?bulk-ops="Object expr">
  *     :
  *   </table>
  *
  * The 'instance' expression is populated with the underlying 'raw' data table.
- * This exposes all of the DataTables functionality to the controller, but
- * should be used with care!
+ * This exposes the entire DataTables functionality to the controller. Using it
+ * for readonly operations without side effects is perfectly safe, but
+ * otherwise, use with care!
+ *
+ * Custom row operations (such as edit/delete), to be carried out on a single
+ * row, can be defined via the 'row-ops' attribute, as follows:
+ *
+ *   {
+ *     rowOpKey1: {
+ *       icon: 'glyphicon-something',
+ *       ?link: function (rowId) { // return a link (eg. to the edit page) },
+ *       ?action: function (rowId) { // Do some action (such as delete)... }
+ *     },
+ *     rowOpKey2: { ... },
+ *      :
+ *   }
+ *
+ * The icon provided must be a Glyphicon, for now.
+ * TODO Remove datatable directive's dependency on Glyphicons
+ * Either 'link' or 'action' must be provided, but not both.
  *
  * The 'selected-rows' expression, when provided, enables row selection, and is
  * 2-way bound with the currently selected rows. Row selection has certain
  * requirements: see 'addRowSelectionUI' documentation below.
  *
- * Custom bulk operations to be carried out on currently selected rows, can be
- * defined via the 'bulk-ops' attribute. The format is as follows:
+ * Custom bulk operations (such as bulk delete), to be carried out on currently
+ * selected rows, can be defined via the 'bulk-ops' attribute, as follows:
  *
  *   {
  *     bulkOpKey1: {
  *       name: 'some name',
- *       action: function () { // Perform some action... }
+ *       action: function () { // Do some action (such as bulk delete)... }
  *     },
  *     bulkOpKey2: { ... },
  *      :
@@ -38,6 +57,97 @@ angular.module('DataTable', [])
   .directive('datatable', [
     '$compile',
     function ($compile) {
+      /**
+       * Enables table cells to contain directives.
+       * This addresses the common use case of the programmer wanting to use
+       * directives within the column definition 'render' property.
+       *
+       * @param {Object} scope - The scope passed to the link function.
+       */
+      function enableDirectivesInCells (scope) {
+        var origCreatedRow = scope.options.createdRow;
+
+        scope.options.createdRow = function (row, data, dataIndex) {
+          if (origCreatedRow) origCreatedRow(row, data, dataIndex);
+
+          // Compile in parent's scope (sort of like transclusion)
+          $compile(row)(scope.$parent);
+        };
+      }
+
+      /**
+       * Appends a 'row ops' column to the datatable.
+       * This is done iff the 'row-ops' attribute is provided to the directive.
+       *
+       * @param {Object} scope - The scope passed to the link function.
+       * @param {Object} element - The element passed to the link function.
+       */
+      function addRowOpsColumnIfNeeded (scope, element) {
+        if (!scope.rowOps) return;
+
+        var options = scope.options;
+
+        // Append a 'row ops' column to the table HTML
+
+        var th = '<th class="dt-head-center">Actions</th>';
+
+        element.find('thead > tr').append(th);
+        element.find('tfoot > tr').append(th);
+
+        // Add a corresponding row ops column to the data table options
+
+        /**
+         * Perform a row operation (if found) defined within 'scope.rowOps'.
+         *
+         * ALERT: Attached to the parent scope. Why? Because:
+         * * It is called by the ng-click directive in the last column, and...
+         * * We compile all directives in data table rows in the parent scope
+         *   (see function 'enableDirectivesInCells' for more)
+         *
+         * TODO Don't attach __performRowOp to the parent scope - bad practice!
+         *
+         * @param rowOpKey - The key of the operation in the 'scope.rowOps'
+         *   hash.
+         */
+        scope.$parent.__performRowOp = function (rowOpKey, rowId) {
+          var rowOp = scope.rowOps[rowOpKey];
+
+          if (rowOp) rowOp.action(rowId);
+        };
+
+        var roColumnDef = {
+          searchable: false, orderable: false,
+          className: 'dt-body-center',
+          render: function (data, type, row, meta) {
+            var rowOpHtmls = [];
+
+            for (var rowOpKey in scope.rowOps) {
+              var rowOp = scope.rowOps[rowOpKey];
+
+              var aTagAttr = (rowOp.link)
+                ? 'href="' + rowOp.link(row.id) + '"'
+                : 'ng-click="__performRowOp(\'' + rowOpKey + '\', ' + row.id + ')"';
+
+              var rowOpHtml =
+                '<a ' + aTagAttr + '>'
+                  + '<span class="glyphicon ' + rowOp.icon + '"></span>' +
+                '</a>';
+
+              rowOpHtmls.push(rowOpHtml);
+            }
+
+            return rowOpHtmls.join('&nbsp;');
+          }
+        };
+
+        if (options.columns) {
+          options.columns.push(roColumnDef);
+        } else if (options.columnDefs) {
+          options.columnDefs.push(
+            _.extend(roColumnDef, { targets: options.columnDefs.length - 1 }));
+        }
+      }
+
       /**
        * Adds a 'row selection' checkbox column to the data table.
        * To do so, it manipulates
@@ -67,8 +177,7 @@ angular.module('DataTable', [])
         // Add a corresponding checkbox column to the data table options
 
         var cbColumnDef = {
-          searchable: false,
-          orderable: false,
+          searchable: false, orderable: false,
           className: 'dt-body-center',
           render: function (data, type, full, meta) {
             return '<input type="checkbox" class="select-row">';
@@ -292,30 +401,13 @@ angular.module('DataTable', [])
         $compile(bulkSelectionDiv)(scope);
       }
 
-      /**
-       * Enables cell HTML to contain directives.
-       * This addresses the common use case of the programmer wanting to use
-       * directives within the column definition 'render' property.
-       *
-       * @param {Object} scope - The scope passed to the link function.
-       */
-      function enableDirectivesInCells (scope) {
-        var origCreatedRow = scope.options.createdRow;
-
-        scope.options.createdRow = function (row, data, dataIndex) {
-          if (origCreatedRow) origCreatedRow(row, data, dataIndex);
-
-          // Compile in parent's scope (sort of like transclusion)
-          $compile(row)(scope.$parent);
-        };
-      }
-
       return {
         restrict: 'A',
 
         scope: {
           options: '=',
           instance: '=',
+          rowOps:'=',
           selectedRows: '=',
           bulkOps: '='
         },
@@ -326,6 +418,8 @@ angular.module('DataTable', [])
           if (!scope.options) scope.options = {};
 
           enableDirectivesInCells(scope);
+
+          addRowOpsColumnIfNeeded(scope, element);
 
           if (scope.selectedRows !== undefined) {
             addRowSelectionUI(scope, element);
