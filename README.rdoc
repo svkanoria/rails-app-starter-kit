@@ -594,14 +594,33 @@ controllers and views are separate.
 
 === jQuery DataTables
 
-DataTables forms an integral part of the admin app, giving admins the ability to
-filter, sort and edit data conveniently.
+The DataTables jQuery plugin forms an integral part of the admin app, giving
+admins the ability to filter, sort and operate on data conveniently.
 
 It is included directly from a CDN, and not through the asset pipeline, since
 the latter results in complications, and the former seems to suffice. See
 /app/views/layouts/admin/application.html.erb.
 
 For more on DataTables, see http://datatables.net.
+
+We've provided tight integration with Angular as well as Rails, and added many
+great custom features to the standard plugin:
+1. datatable Angular directive
+1. DataTableAdapter Ruby class for doing the grunt work of parsing data table
+1. Declarative single-row operations (such as edit/delete)
+1. Multi-row selection and custom bulk operations (such as bulk delete)
+1. The ability to render Angular directives within data table cells
+1. Advanced multi-condition data filtering when combined with the query-builder
+   directive - itself a highly flexible utility
+
+See the following relevant files:
+* /app/assets/javascripts/shared/angular/directives/data_table.js
+* /app/models/data_table_adapter.rb
+* /app/assets/javascripts/admin/angular/controllers/posts_ctrl.js
+* /app/assets/javascripts/admin/angular/controllers/users_ctrl.js
+* /app/assets/javascripts/templates/admin/controllers/posts/index.html
+* /app/assets/javascripts/templates/admin/controllers/users/index.html
+* /app/assets/javascripts/shared/angular/modules/query_builder/
 
 == Contributing/Using
 

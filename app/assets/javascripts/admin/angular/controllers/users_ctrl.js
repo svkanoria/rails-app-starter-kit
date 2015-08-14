@@ -47,6 +47,16 @@ angular.module('UsersCtrl', ['User'])
                 return (data) ? moment(data).format('lll') : 'Pending';
               }
             },
+            // An example of bypassing the datatable 'row-ops' functionality,
+            // and instead manually setting up some row operations. Why have we
+            // done this? To show you its easily possible. Why would you do it?
+            // If the standard 'row ops' functionality doesn't support what you
+            // want to do.
+            //
+            // Also see the corresponding Angular view at
+            // /app/assets/javascripts/templates/admin/controllers/users/index.html,
+            // where a 'row ops' column has been manually added, to accommodate
+            // this column definition.
             { // data: 'actions', // Not really required for this column!
               searchable: false, orderable: false,
               className: 'dt-body-center',
