@@ -35,6 +35,7 @@
 //= require flashular/dist/flashular.min
 //= require moment/moment
 //= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker
+//= require selectize/dist/js/standalone/selectize
 //
 // Files shared between client and admin apps
 //= require_tree ../shared

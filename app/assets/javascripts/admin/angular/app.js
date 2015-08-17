@@ -24,6 +24,7 @@ var app = angular.module('App', [
   'PleaseWait',
   'DataTable',
   'DateTimePicker',
+  'Selectize',
 
   // Filters
   'StringFilters',
