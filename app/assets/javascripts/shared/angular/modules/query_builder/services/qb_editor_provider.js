@@ -36,12 +36,19 @@ angular.module('QBEditorProvider', [])
        */
       var SELECT_EDITOR_HTML = function (column, op) {
         if (column.type === 'select') {
+          var selectizeOptions = {
+            options: column.options,
+            labelField: 'label', valueField: 'value'
+          };
+
+          var selectizeOptionsStr =
+            _.replaceAll(JSON.stringify(selectizeOptions), '"', "'");
+
           var editorHtml =
-            '<select class="filter-value form-control"'
+            '<selectize class="filter-value" '
               + 'ng-model="model.values[0]"'
-              + 'ng-options="o.value as o.label for o in column.options">'
-                + '<option value=""></option>' +
-            '</select>';
+              + 'options="' + selectizeOptionsStr + '">' +
+            '</selectize>';
 
           return editorHtml;
         }
