@@ -76,18 +76,18 @@ angular.module('QBFilter', ['QBEditorProvider'])
 
           /**
            * Sets the value editor, based on:
-           * * The type of the column selected
+           * * The column (from qbOptions) selected
            * * The operator selected
            *
-           * @param columnType {string} - A column type.
+           * @param column {Object} - A column.
            * @param op {string} - An operator.
            */
-          function setEditor (columnType, op) {
+          function setEditor (column, op) {
             var editorContainer = $(element).find('.filter-values');
 
             editorContainer.html('');
 
-            var editorHtml = QBEditor.getEditorHtml(columnType, op);
+            var editorHtml = QBEditor.getEditorHtml(column, op);
             editorContainer.html(editorHtml);
 
             // Note: We compile the control AFTER inserting into the DOM. This
@@ -139,7 +139,7 @@ angular.module('QBFilter', ['QBEditorProvider'])
                 // Load the value for the editor coming in
                 scope.model.values = editorCache[newValue[0]] || [];
 
-                setEditor(scope.column.type, newValue[1]);
+                setEditor(scope.column, newValue[1]);
               }
             }, true);
         }

@@ -38,8 +38,8 @@ app.config([
   'QBEditorProvider',
   function (QBEditorProvider) {
     QBEditorProvider.addEditorFactory({
-      createEditorHtml: function (columnType, op) {
-        if (columnType === 'date') {
+      createEditorHtml: function (column, op) {
+        if (column === 'date') {
           var editorHtml = '';
           var opArity = (op === 'range') ? 2 : 1;
 
