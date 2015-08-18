@@ -11,6 +11,14 @@ angular.module('UsersCtrl', ['User'])
       ];
 
       /**
+       * Configuration for the user role Selectize instance.
+       */
+      var USER_ROLE_SELECTIZE_OPTIONS = {
+        options: USER_ROLE_OPTIONS,
+        labelField: 'label', valueField: 'value'
+      };
+
+      /**
        * The 'index' action.
        */
       $scope.actionIndex = function () {
@@ -140,10 +148,7 @@ angular.module('UsersCtrl', ['User'])
             {
               name: 'role', label: 'Role', type: 'select',
               selectizeOptions: {
-                options: [
-                  { label: 'Admin', value: 'admin' },
-                  { label: 'Moderator', value: 'moderator' }
-                ]
+                options: USER_ROLE_OPTIONS
               }
             }
           ],
@@ -187,7 +192,7 @@ angular.module('UsersCtrl', ['User'])
       $scope.actionNew = function () {
         $scope.user = initialData;
 
-        $scope.userRoleOptions = USER_ROLE_OPTIONS;
+        $scope.userRoleSelectizeOptions = USER_ROLE_SELECTIZE_OPTIONS;
       };
 
       /**
@@ -215,7 +220,7 @@ angular.module('UsersCtrl', ['User'])
       $scope.actionEdit = function () {
         $scope.user = initialData;
 
-        $scope.userRoleOptions = USER_ROLE_OPTIONS;
+        $scope.userRoleSelectizeOptions = USER_ROLE_SELECTIZE_OPTIONS;
       };
 
       /**

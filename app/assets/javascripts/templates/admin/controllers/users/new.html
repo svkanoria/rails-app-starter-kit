@@ -42,9 +42,8 @@
 
         <div class="form-group">
           <label>Roles</label>
-          <select multiple class="form-control" ng-model="user.roles"
-                  ng-options="r.value as r.label for r in userRoleOptions">
-          </select>
+          <selectize ng-model="user.roles" options="userRoleSelectizeOptions">
+          </selectize>
         </div>
       </div>
 
