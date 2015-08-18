@@ -129,18 +129,22 @@ angular.module('UsersCtrl', ['User'])
             // See also app/controllers/admin/users_controller.rb.
             {
               name: 'confirmed?', label: 'Confirmed?', type: 'select',
-              options: [
-                { label: 'True', value: true },
-                { label: 'False', value: false }
-              ]
+              selectizeOptions: {
+                options: [
+                  { label: 'True', value: true },
+                  { label: 'False', value: false }
+                ]
+              }
             },
             // Another filter with a non database mapped column
             {
               name: 'role', label: 'Role', type: 'select',
-              options: [
-                { label: 'Admin', value: 'admin' },
-                { label: 'Moderator', value: 'moderator' }
-              ]
+              selectizeOptions: {
+                options: [
+                  { label: 'Admin', value: 'admin' },
+                  { label: 'Moderator', value: 'moderator' }
+                ]
+              }
             }
           ],
           initialColumns: ['email', 'id'],
