@@ -11,6 +11,14 @@ angular.module('UsersCtrl', ['User'])
       ];
 
       /**
+       * Configuration for the user role Selectize instance.
+       */
+      var USER_ROLE_SELECTIZE_OPTIONS = {
+        options: USER_ROLE_OPTIONS,
+        labelField: 'label', valueField: 'value'
+      };
+
+      /**
        * The 'index' action.
        */
       $scope.actionIndex = function () {
@@ -129,18 +137,19 @@ angular.module('UsersCtrl', ['User'])
             // See also app/controllers/admin/users_controller.rb.
             {
               name: 'confirmed?', label: 'Confirmed?', type: 'select',
-              options: [
-                { label: 'True', value: true },
-                { label: 'False', value: false }
-              ]
+              selectizeOptions: {
+                options: [
+                  { label: 'True', value: true },
+                  { label: 'False', value: false }
+                ]
+              }
             },
             // Another filter with a non database mapped column
             {
               name: 'role', label: 'Role', type: 'select',
-              options: [
-                { label: 'Admin', value: 'admin' },
-                { label: 'Moderator', value: 'moderator' }
-              ]
+              selectizeOptions: {
+                options: USER_ROLE_OPTIONS
+              }
             }
           ],
           initialColumns: ['email', 'id'],
@@ -183,7 +192,7 @@ angular.module('UsersCtrl', ['User'])
       $scope.actionNew = function () {
         $scope.user = initialData;
 
-        $scope.userRoleOptions = USER_ROLE_OPTIONS;
+        $scope.userRoleSelectizeOptions = USER_ROLE_SELECTIZE_OPTIONS;
       };
 
       /**
@@ -211,7 +220,7 @@ angular.module('UsersCtrl', ['User'])
       $scope.actionEdit = function () {
         $scope.user = initialData;
 
-        $scope.userRoleOptions = USER_ROLE_OPTIONS;
+        $scope.userRoleSelectizeOptions = USER_ROLE_SELECTIZE_OPTIONS;
       };
 
       /**

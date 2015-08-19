@@ -23,10 +23,19 @@
  * Normally it is best to use 'text', as it is the most flexible, and we won't
  * really care about validation.
  *
- * For a column of type 'select', provide an 'options' attribute in the column
- * definition as follows:
+ * For columns of type 'select', we use the excellent Selectize jQuery plugin
+ * instead of the standard, rather basic HTML select. In the column definition,
+ * you must provide a 'selectizeOptions' attribute, containing at a minimum the
+ * the options available for selection:
  *
- *   options: [{ label: 'something', value: something }, ...]
+ *   selectizeOptions: {
+ *     options: [{ label: 'something', value: something }, ...],
+ *       :
+ *   }
+ *
+ * 'selectizeOptions' can contain ANY option that Selectize accepts. This lets
+ * you configure Selectize on a per column basis, to exactly suit your needs.
+ * See http://brianreavis.github.io/selectize.js/ for more information.
  *
  * Presently we do not support custom operators. However, we will do so in
  * future.

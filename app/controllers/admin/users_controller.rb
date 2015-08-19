@@ -94,7 +94,9 @@ class Admin::UsersController < Admin::ApplicationController
     op = filter[:op]
 
     if column == 'confirmed?'
-      "confirmed_at IS #{(values[0] == 'true') ? 'NOT NULL' : 'NULL'}"
+      not_null = values[0] == 'true' || values[0] == '1'
+
+      "confirmed_at IS #{not_null ? 'NOT NULL' : 'NULL'}"
     elsif column == 'role'
       query.with_role(values[0])
     end

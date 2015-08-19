@@ -13,6 +13,7 @@
     "jquery-ui": "~1.11.x",
     "animate-css": "~3.2.x",
     "moment": "~2.10.x",
-    "eonasdan-bootstrap-datetimepicker": "~4.x.x"
+    "eonasdan-bootstrap-datetimepicker": "~4.x.x",
+    "selectize": "~0.12.x"
   }
 }

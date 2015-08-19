@@ -24,6 +24,7 @@ var app = angular.module('App', [
   'PleaseWait',
   'DataTable',
   'DateTimePicker',
+  'Selectize',
 
   // Filters
   'StringFilters',
@@ -37,8 +38,8 @@ app.config([
   'QBEditorProvider',
   function (QBEditorProvider) {
     QBEditorProvider.addEditorFactory({
-      createEditorHtml: function (columnType, op) {
-        if (columnType === 'date') {
+      createEditorHtml: function (column, op) {
+        if (column.type === 'date') {
           var editorHtml = '';
           var opArity = (op === 'range') ? 2 : 1;
 

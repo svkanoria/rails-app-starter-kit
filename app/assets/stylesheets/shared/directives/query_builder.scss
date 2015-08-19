@@ -33,6 +33,17 @@ $qb-filter-add-margin-bottom: $padding-small-vertical;
       margin-bottom: $qb-filter-margin-bottom;
       margin-right: $qb-filter-value-margin-right;
     }
+
+    // To match Selectize query builder editor styling to the other editors
+    .selectize-control {
+      display: inline-block;
+      vertical-align: middle;
+      margin-bottom: 0;
+
+      @media (max-width: $screen-sm-min) {
+        width: 100%;
+      }
+    }
   }
 
   > .filter-add {
