@@ -38,7 +38,7 @@
 //
 // From vendor:
 //= require angular/angular
-//= require angular-route/angular-route
+//= require ui-router/release/angular-ui-router.js
 //= require angular-resource/angular-resource
 //= require angular-animate/angular-animate
 //= require angular-rails-templates

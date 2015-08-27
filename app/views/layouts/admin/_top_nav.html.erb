@@ -10,14 +10,14 @@
         <span class="icon-bar"></span>
       </button>
       <%# Note the trailing slash in '/admin/' %>
-      <a class="navbar-brand" href="/admin/#/">Rails App Starter Kit - Admin</a>
+      <a class="navbar-brand" ui-sref="home">Rails App Starter Kit - Admin</a>
     </div>
 
     <%# Collect the nav links, forms and other content for toggling %>
     <div class="collapse navbar-collapse" id="top-nav-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="/admin/#/posts">Posts</a></li>
-        <li><a href="/admin/#/users">Users</a></li>
+        <li><a ui-sref="posts.list">Posts</a></li>
+        <li><a ui-sref="users.list">Users</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <authentication-links></authentication-links>

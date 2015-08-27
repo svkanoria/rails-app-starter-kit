@@ -1,0 +1,21 @@
+<div ng-init="actionList()">
+  <h2>Posts</h2>
+
+  <query-builder options="queryBuilderOptions"
+                 filters="queryBuilderFilters"></query-builder>
+
+  <table id="posts-table"
+         datatable options="dataTableOptions" instance="dataTableInstance"
+         row-ops="dataTableRowOps"
+         selected-rows="dataTableSelectedRows" bulk-ops="dataTableBulkOps"
+         class="display responsive no-wrap" width="100%">
+
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Message</th>
+      <th>Created At</th>
+    </tr>
+    </thead>
+  </table>
+</div>

@@ -3,55 +3,84 @@
  * Uses the 'app' variable defined in app.js, so must be loaded after it.
  */
 app.config([
-  '$routeProvider', 'ROUTE_UTILS',
-  function ($routeProvider, ROUTE_UTILS) {
+  '$stateProvider', '$urlRouterProvider', 'ROUTE_UTILS',
+  function ($stateProvider, $urlRouterProvider, ROUTE_UTILS) {
     var R = ROUTE_UTILS; // Shortcut
 
-    $routeProvider
+    $urlRouterProvider.otherwise('/');
+
+    $stateProvider
       // Home routes
-      .when('/', {
+      .state('home', {
+        url: '/',
         templateUrl: 'admin/controllers/home/index.html',
         controller: 'HomeCtrl'
       })
 
       // Post routes
-      .when('/posts', {
+      .state('posts', {
+        url: '/posts',
         templateUrl: 'admin/controllers/posts/index.html',
+        controller: 'PostsCtrl'
+      })
+      .state('posts.list', {
+        url: '/list',
+        templateUrl: 'admin/controllers/posts/list.html',
         controller: 'PostsCtrl'
       })
 
       // User routes
-      .when('/users', {
+      .state('users', {
+        url: '/users',
         templateUrl: 'admin/controllers/users/index.html',
         controller: 'UsersCtrl',
         resolve: {
-          initialData: R.initialData('UsersCtrl', 'index')
+          initialData: angular.noop
         }
       })
-      .when('/users/new', {
+      .state('users.list', {
+        url: '/list',
+        templateUrl: 'admin/controllers/users/list.html',
+        controller: 'UsersCtrl',
+        resolve: {
+          initialData: angular.noop
+        }
+      })
+      .state('users.new', {
+        url: '/new',
         templateUrl: 'admin/controllers/users/new.html',
         controller: 'UsersCtrl',
         resolve: {
-          initialData: R.initialData('UsersCtrl', 'new')
+          initialData: ['User', function (User) {
+            return new User({
+              // It is good practice to initialize to non-null values
+              email: '',
+              password: '',
+              password_confirmation: ''
+            })
+          }]
         }
       })
-      .when('/users/:id/edit', {
+      .state('users.edit', {
+        url: '/:id/edit',
         templateUrl: 'admin/controllers/users/edit.html',
         controller: 'UsersCtrl',
         resolve: {
-          initialData: R.initialData('UsersCtrl', 'edit')
+          initialData: ['$stateParams', 'User', function ($stateParams, User) {
+            return User.edit({ userId: $stateParams.id }).$promise;
+          }]
         }
       })
 
       // Error routes
-      .when('/unauthorized', {
+      .state('401', {
         templateUrl: 'shared/401.html'
       })
-      .when('/server_error', {
-        templateUrl: 'shared/500.html'
-      })
-      .otherwise({
+      .state('404', {
         templateUrl: 'shared/404.html'
+      })
+      .state('500', {
+        templateUrl: 'shared/500.html'
       });
   }]);
 

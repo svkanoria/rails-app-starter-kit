@@ -7,7 +7,7 @@
       <img class="attachment-thumb" ng-src="{{attachment.thumb}}">
 
       <span class="attachment-name">
-        <a href="/#/attachments/{{attachment.id}}" target="_blank"
+        <a ui-sref="attachments.show({ id: attachment.id })" target="_blank"
            title="{{attachment.name}}">
           {{attachment.id}}: {{attachment.name | truncate:35}}
           <span class="glyphicon glyphicon-new-window"></span></a>
