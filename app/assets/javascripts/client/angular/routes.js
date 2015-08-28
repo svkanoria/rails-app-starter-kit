@@ -3,70 +3,103 @@
  * Uses the 'app' variable defined in app.js, so must be loaded after it.
  */
 app.config([
-  '$routeProvider', 'ROUTE_UTILS',
-  function ($routeProvider, ROUTE_UTILS) {
+  '$stateProvider', '$urlRouterProvider', 'ROUTE_UTILS',
+  function ($stateProvider, $urlRouterProvider, ROUTE_UTILS) {
     var R = ROUTE_UTILS; // Shortcut
 
-    $routeProvider
+    $urlRouterProvider.otherwise('/');
+
+    $stateProvider
       // Home routes
-      .when('/', {
+      .state('home', {
+        url: '/',
         templateUrl: 'client/controllers/home/index.html',
         controller: 'HomeCtrl'
       })
 
       // Post routes
-      .when('/posts', {
+      .state('posts', {
+        url: '/posts',
         templateUrl: 'client/controllers/posts/index.html',
         controller: 'PostsCtrl',
         resolve: {
-          initialData: R.initialData('PostsCtrl', 'index')
+          initialData: angular.noop
         }
       })
-      .when('/posts/new', {
+      .state('posts.list', {
+        url: '/list',
+        templateUrl: 'client/controllers/posts/list.html',
+        controller: 'PostsCtrl',
+        resolve: {
+          initialData: angular.noop
+        }
+      })
+      .state('posts.new', {
+        url: '/new',
         templateUrl: 'client/controllers/posts/new.html',
         controller: 'PostsCtrl',
         resolve: {
           auth: R.requireSignIn(),
-          initialData: R.initialData('PostsCtrl', 'new')
+          initialData: ['Post', function (Post) {
+            // It is good practice to initialize to non-null values
+            return new Post({ message: '' });
+          }]
         }
       })
-      .when('/posts/:id', {
+      .state('posts.show', {
+        url: '/:id',
         templateUrl: 'client/controllers/posts/show.html',
         controller: 'PostsCtrl',
         resolve: {
-          initialData: R.initialData('PostsCtrl', 'show')
+          initialData: ['$stateParams', 'Post', function ($stateParams, Post) {
+            return Post.get({ postId: $stateParams.id }).$promise;
+          }]
         }
       })
-      .when('/posts/:id/edit', {
+      .state('posts.edit', {
+        url: '/:id/edit',
         templateUrl: 'client/controllers/posts/edit.html',
         controller: 'PostsCtrl',
         resolve: {
-          auth1: R.requireSignIn(),
-          auth2: R.requireServerAuth('/posts/:id/edit'),
-          initialData: R.initialData('PostsCtrl', 'edit')
+          initialData: ['$stateParams', 'Post', function ($stateParams, Post) {
+            return Post.edit({ postId: $stateParams.id }).$promise;
+          }]
         }
       })
 
       // Attachment routes
-      .when('/attachments/:id', {
-        templateUrl: 'client/controllers/attachments/show.html',
+      .state('attachments', {
+        url: '/attachments',
+        templateUrl: 'client/controllers/attachments/index.html',
         controller: 'AttachmentsCtrl',
         resolve: {
           auth1: R.requireSignIn(),
+          initialData: angular.noop
+        }
+      })
+      .state('attachments.show', {
+        url: '/:id',
+        templateUrl: 'client/controllers/attachments/show.html',
+        controller: 'AttachmentsCtrl',
+        resolve: {
           auth2: R.requireServerAuth('/attachments/:id'),
-          initialData: R.initialData('AttachmentsCtrl', 'show')
+          initialData: [
+            '$stateParams', 'Attachment',
+            function ($stateParams, Attachment) {
+              return Attachment.get({ attachmentId: $stateParams.id }).$promise;
+            }]
         }
       })
 
       // Error routes
-      .when('/unauthorized', {
+      .state('401', {
         templateUrl: 'shared/401.html'
       })
-      .when('/server_error', {
-        templateUrl: 'shared/500.html'
-      })
-      .otherwise({
+      .state('404', {
         templateUrl: 'shared/404.html'
+      })
+      .state('500', {
+        templateUrl: 'shared/500.html'
       });
   }]);
 

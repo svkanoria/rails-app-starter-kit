@@ -35,45 +35,8 @@ angular.module('RouteUtils', [])
      * @param serverRoute {string} - The server route to hit.
      */
     var requireServerAuth = function (serverRoute) {
-      return ['$route', 'AuthSvc', function ($route, AuthSvc) {
-        return AuthSvc.requireServerAuth(serverRoute, $route.current.params);
-      }];
-    };
-
-    /**
-     * Use within the 'resolve' property of a route.
-     * A convenience method for ensuring the presence of required initial data
-     * before navigating to a route.
-     *
-     * Assumes certain conventions:
-     * * If the controller name is 'SomeCtrl', there is a service called
-     *   'SomeCtrlInitSvc' that provides this initial data.
-     * * For every controller action requiring initial data, the service has a
-     *   method called 'actionSomeAction' that returns the initial data.
-     *   For example, 'actionIndex', 'actionShow' etc.
-     *
-     * Usage:
-     *   when('/some-route', {
-     *      :
-     *     resolve: { someProperty: initialData(ctrl, action) }
-     *   })
-     *
-     * @param ctrl {string} - The controller name.
-     * @param action {string} - The action name.
-     */
-    var initialData = function (ctrl, action) {
-      return ['$injector', function ($injector) {
-        var svc = $injector.get(ctrl + 'InitSvc');
-
-        if (svc) {
-          var actionMethod = svc['action' + _.capitalize(action)];
-
-          if (actionMethod) {
-            return actionMethod();
-          }
-        }
-
-        return null;
+      return ['$stateParams', 'AuthSvc', function ($stateParams, AuthSvc) {
+        return AuthSvc.requireServerAuth(serverRoute, $stateParams);
       }];
     };
 
@@ -92,8 +55,8 @@ angular.module('RouteUtils', [])
      * @type {*[]}
      */
     var onAppRun = [
-      '$rootScope', '$window', '$location', 'PleaseWaitSvc',
-      function($rootScope, $window, $location, PleaseWaitSvc) {
+      '$rootScope', '$window', '$location', '$state', 'PleaseWaitSvc',
+      function($rootScope, $window, $location, $state, PleaseWaitSvc) {
         // To show a 'Please Wait...' message between route changes
         $rootScope.$on('$routeChangeStart', function() {
           PleaseWaitSvc.request();
@@ -106,29 +69,40 @@ angular.module('RouteUtils', [])
          *
          * Also hides the 'Please Wait...' message requested above.
          */
-        $rootScope.$on('$routeChangeError', function(e, curr, prev, rejection) {
-          PleaseWaitSvc.releaseAll();
+        $rootScope.$on('$stateChangeError',
+          function(e, to, toParams, from, fromParams, rejection) {
+            PleaseWaitSvc.releaseAll();
 
-          switch (rejection) {
-            case 'NOT_SIGNED_IN':
-              $window.location.href = '/users/sign_in?x_return_to=' +
-              $location.path();
+            if (rejection.status) {
+              switch (rejection.status) {
+                case 401:
+                case 404:
+                  $state.go(rejection.status.toString());
+                  break;
+                default:
+                  $state.go('500');
+                  break;
+              }
+            } else {
+              switch (rejection) {
+                case 'NOT_SIGNED_IN':
+                  $window.location.href = '/users/sign_in?x_return_to=' +
+                    $location.path();
 
-              break;
-            case 'ROLE_NOT_AUTHORIZED':
-            case 'SERVER_DID_NOT_AUTH':
-              $location.path('/unauthorized').replace();
-
-              break;
-            default:
-              $location.path('/server_error').replace();
-
-              break;
-          }
-        });
+                  break;
+                case 'ROLE_NOT_AUTHORIZED':
+                case 'SERVER_DID_NOT_AUTH':
+                  $state.go('401');
+                  break;
+                default:
+                  $state.go('500');
+                  break;
+              }
+            }
+          });
 
         // This hides the 'Please Wait...' message requested above.
-        $rootScope.$on('$routeChangeSuccess', function() {
+        $rootScope.$on('$stateChangeSuccess', function() {
           PleaseWaitSvc.releaseAll();
         });
       }];
@@ -136,7 +110,6 @@ angular.module('RouteUtils', [])
     return {
       requireSignIn: requireSignIn,
       requireServerAuth: requireServerAuth,
-      initialData: initialData,
       onAppRun: onAppRun
     };
   }());

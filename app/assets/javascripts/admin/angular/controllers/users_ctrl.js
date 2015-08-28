@@ -1,7 +1,7 @@
 angular.module('UsersCtrl', ['User'])
   .controller('UsersCtrl', [
-    '$scope', '$location', 'flash', 'User', 'initialData',
-    function($scope, $location, flash, User, initialData) {
+    '$scope', '$state', 'flash', 'User', 'initialData',
+    function($scope, $state, flash, User, initialData) {
       /**
        * Allowed user roles.
        */
@@ -19,9 +19,9 @@ angular.module('UsersCtrl', ['User'])
       };
 
       /**
-       * The 'index' action.
+       * The 'list' action.
        */
-      $scope.actionIndex = function () {
+      $scope.actionList = function () {
         $scope.dataTableOptions = {
           serverSide: true,
           ajax: {
@@ -70,7 +70,7 @@ angular.module('UsersCtrl', ['User'])
               className: 'dt-body-center',
               render: function (data, type, row, meta) {
                 var editHtml =
-                  '<a href="/admin/#/users/' + row.id + '/edit">'
+                  '<a ui-sref="users.edit({ id: ' + row.id + ' })">'
                     + '<span class="glyphicon glyphicon-pencil"></span>' +
                   '</a>';
 
@@ -207,7 +207,7 @@ angular.module('UsersCtrl', ['User'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'User created.');
 
-          $location.path('users');
+          $state.go('users.list');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
           $scope.userErrors = failureResponse.data.errors;
@@ -235,7 +235,7 @@ angular.module('UsersCtrl', ['User'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'User updated.');
 
-          $location.path('users');
+          $state.go('users.list');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
           $scope.userErrors = failureResponse.data.errors;

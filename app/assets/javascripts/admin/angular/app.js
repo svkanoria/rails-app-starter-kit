@@ -1,6 +1,6 @@
 var app = angular.module('App', [
   'templates', // Used by angular-rails-templates
-  'ngRoute',
+  'ui.router',
   'ngAnimate',
   'ng-rails-csrf',
   'flashular',
@@ -10,7 +10,6 @@ var app = angular.module('App', [
   'RouteUtils',
   'Post',
   'User',
-  'UsersCtrlInitSvc',
 
   // Controllers
   'AppCtrl',
