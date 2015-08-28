@@ -66,5 +66,9 @@ module RailsAppStarterKit
 
     # MY NOTE: Tell ActiveJob to use DelayedJob as the background task queue
     config.active_job.queue_adapter = :delayed_job
+
+    # MY NOTE: Tell Rails to append a trailing slash when generating URLs, so
+    # that they still nice after Angular adds the '#/'.
+    config.action_controller.default_url_options = { trailing_slash: true }
   end
 end
