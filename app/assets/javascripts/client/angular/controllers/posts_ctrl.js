@@ -3,9 +3,9 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
     '$scope', '$state', 'flash', 'Post', 'initialData', 'AttachmentLibrarySvc',
     function ($scope, $state, flash, Post, initialData, AttachmentLibrarySvc) {
       /**
-       * The 'list' action.
+       * The 'index' action.
        */
-      $scope.actionList = function () {
+      $scope.actionIndex = function () {
         var postsQuery = null;
 
         // Debounce the posts retrieval.

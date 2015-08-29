@@ -1,1 +1,25 @@
-<div ui-view></div>
+<div ng-init="actionIndex()">
+  <h2>Users</h2>
+
+  <query-builder options="queryBuilderOptions"
+                 filters="queryBuilderFilters"></query-builder>
+
+  <table id="users-table"
+         datatable options="dataTableOptions" instance="dataTableInstance"
+         selected-rows="dataTableSelectedRows" bulk-ops="dataTableBulkOps"
+         class="display responsive no-wrap" width="100%">
+
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Email</th>
+      <th>Roles</th>
+      <th>Created At</th>
+      <th>Confirmed At</th>
+      <th class="dt-head-center">Actions</th>
+    </tr>
+    </thead>
+  </table>
+
+  <a href="#/users/new" class="btn btn-primary">New user</a>
+</div>
