@@ -23,7 +23,7 @@ app.config([
         url: '/posts',
         template: '<div ui-view></div>'
       })
-      .state('posts.list', {
+      .state('posts.index', {
         url: '',
         templateUrl: 'client/controllers/posts/index.html',
         controller: 'PostsCtrl',

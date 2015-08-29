@@ -207,7 +207,7 @@ angular.module('UsersCtrl', ['User'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'User created.');
 
-          $state.go('users.list');
+          $state.go('users.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
           $scope.userErrors = failureResponse.data.errors;
@@ -235,7 +235,7 @@ angular.module('UsersCtrl', ['User'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'User updated.');
 
-          $state.go('users.list');
+          $state.go('users.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
           $scope.userErrors = failureResponse.data.errors;
