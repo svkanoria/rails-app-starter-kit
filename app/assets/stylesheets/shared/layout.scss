@@ -4,7 +4,7 @@
   padding-bottom: 0;
 }
 
-.angular-view {
+[ui-view] {
   &.ng-enter {
     animation: fadeIn 0.5s;
   }

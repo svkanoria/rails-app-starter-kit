@@ -19,28 +19,25 @@ app.config([
 
       // Post routes
       .state('posts', {
+        abstract: true,
         url: '/posts',
-        templateUrl: 'admin/controllers/posts/index.html',
-        controller: 'PostsCtrl'
+        template: '<div ui-view></div>'
       })
-      .state('posts.list', {
-        url: '/list',
-        templateUrl: 'admin/controllers/posts/list.html',
+      .state('posts.index', {
+        url: '',
+        templateUrl: 'admin/controllers/posts/index.html',
         controller: 'PostsCtrl'
       })
 
       // User routes
       .state('users', {
+        abstract: true,
         url: '/users',
-        templateUrl: 'admin/controllers/users/index.html',
-        controller: 'UsersCtrl',
-        resolve: {
-          initialData: angular.noop
-        }
+        template: '<div ui-view></div>'
       })
-      .state('users.list', {
-        url: '/list',
-        templateUrl: 'admin/controllers/users/list.html',
+      .state('users.index', {
+        url: '',
+        templateUrl: 'admin/controllers/users/index.html',
         controller: 'UsersCtrl',
         resolve: {
           initialData: angular.noop

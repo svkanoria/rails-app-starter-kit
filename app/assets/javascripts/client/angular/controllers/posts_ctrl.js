@@ -3,9 +3,9 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
     '$scope', '$state', 'flash', 'Post', 'initialData', 'AttachmentLibrarySvc',
     function ($scope, $state, flash, Post, initialData, AttachmentLibrarySvc) {
       /**
-       * The 'list' action.
+       * The 'index' action.
        */
-      $scope.actionList = function () {
+      $scope.actionIndex = function () {
         var postsQuery = null;
 
         // Debounce the posts retrieval.
@@ -63,7 +63,7 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'Post created.');
 
-          $state.go('posts.list');
+          $state.go('posts.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
           $scope.postErrors = failureResponse.data.errors;
@@ -91,7 +91,7 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'Post updated.');
 
-          $state.go('posts.list');
+          $state.go('posts.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
           $scope.postErrors = failureResponse.data.errors;
@@ -110,7 +110,7 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'Post deleted.');
 
-          $state.go('posts.list');
+          $state.go('posts.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
           flash.set('error', 'Error deleting post.')

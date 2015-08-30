@@ -19,16 +19,13 @@ app.config([
 
       // Post routes
       .state('posts', {
+        abstract: true,
         url: '/posts',
-        templateUrl: 'client/controllers/posts/index.html',
-        controller: 'PostsCtrl',
-        resolve: {
-          initialData: angular.noop
-        }
+        template: '<div ui-view></div>'
       })
-      .state('posts.list', {
-        url: '/list',
-        templateUrl: 'client/controllers/posts/list.html',
+      .state('posts.index', {
+        url: '',
+        templateUrl: 'client/controllers/posts/index.html',
         controller: 'PostsCtrl',
         resolve: {
           initialData: angular.noop

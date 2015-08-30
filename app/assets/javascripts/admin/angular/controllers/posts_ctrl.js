@@ -3,9 +3,9 @@ angular.module('PostsCtrl', ['Post'])
     '$scope', 'flash', 'Post',
     function($scope, flash, Post) {
       /**
-       * The 'list' action.
+       * The 'index' action.
        */
-      $scope.actionList = function () {
+      $scope.actionIndex = function () {
         $scope.dataTableOptions = {
           serverSide: true,
           ajax: {
