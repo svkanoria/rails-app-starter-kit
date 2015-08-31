@@ -351,10 +351,10 @@ angular.module('DataTable', [])
        * @param {Object} element - The element passed to the link function.
        */
       function addBulkSelectionToolbar (scope, element) {
-        // Add the 'Un-select All' operation of our own accord
+        // Add the 'Un-select all' operation of our own accord
         var bulkOps = {
           unselectAll: {
-            name: 'Un-select All',
+            name: 'Un-select all',
             action: function () { scope.selectedRows.length = 0; }
           }
         };

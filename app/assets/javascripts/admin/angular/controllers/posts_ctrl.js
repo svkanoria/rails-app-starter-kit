@@ -84,7 +84,7 @@ angular.module('PostsCtrl', ['Post'])
         // For bulk operations on currently selected rows
         $scope.dataTableBulkOps = {
           deleteAll: {
-            name: 'Delete All',
+            name: 'Delete all',
             action: function () {
               if (!window.confirm('Really delete selected posts?')) return;
 
