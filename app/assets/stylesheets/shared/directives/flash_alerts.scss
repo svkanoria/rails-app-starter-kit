@@ -12,11 +12,13 @@ $flash-alert-padding: $padding-small-vertical $padding-small-horizontal;
   top: $flash-alerts-top;
   left: 0;
   width: 100%;
+  pointer-events: none; // Pass through pointer events down the z-index
   padding: $flash-alerts-padding;
   text-align: center;
 
   > .alert {
     display: inline-block;
+    pointer-events: auto; // Handle pointer events on the actual alert though
     padding: $flash-alert-padding;
 
     > .close {

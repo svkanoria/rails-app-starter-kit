@@ -70,6 +70,23 @@ angular.module('DateTimePicker', [])
             });
           });
 
+          ngModel.$parsers.push(function (viewValue) {
+            if (!viewValue) return null;
+
+            switch (dateTimePicker.granularity(dateTimePicker.format())) {
+              case 1: // Date only
+                return viewValue.format('YYYY-MM-DD');
+              case 2: // Time only
+                // Convoluted way to convert to UTC, but required
+                var viewValueUtc = moment(viewValue).utc();
+                return viewValueUtc.format('[T]hh:mm:ss.SSS[Z]');
+              case 3: // Both
+                return viewValue.toISOString();
+              default:
+                console.log('Invalid datetime granularity');
+            }
+          });
+
           ngModel.$formatters.push(function (modelValue) {
             var viewValue = null;
 
@@ -88,23 +105,6 @@ angular.module('DateTimePicker', [])
             if (!initialized) initialized = true;
 
             return viewValue;
-          });
-
-          ngModel.$parsers.push(function (viewValue) {
-            if (!viewValue) return null;
-
-            switch (dateTimePicker.granularity(dateTimePicker.format())) {
-              case 1: // Date only
-                return viewValue.format('YYYY-MM-DD');
-              case 2: // Time only
-                // Convoluted way to convert to UTC, but required
-                var viewValueUtc = moment(viewValue).utc();
-                return viewValueUtc.format('[T]hh:mm:ss.SSS[Z]');
-              case 3: // Both
-                return viewValue.toISOString();
-              default:
-                console.log('Invalid datetime granularity');
-            }
           });
 
           element.on('$destroy', function () {

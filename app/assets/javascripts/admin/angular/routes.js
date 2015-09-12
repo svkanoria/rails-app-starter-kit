@@ -33,15 +33,15 @@ app.config([
       .state('users', {
         abstract: true,
         url: '/users',
-        template: '<div ui-view></div>'
+        template: '<div ui-view></div>',
+        resolve: {
+          initialData: angular.noop
+        }
       })
       .state('users.index', {
         url: '',
         templateUrl: 'admin/controllers/users/index.html',
-        controller: 'UsersCtrl',
-        resolve: {
-          initialData: angular.noop
-        }
+        controller: 'UsersCtrl'
       })
       .state('users.new', {
         url: '/new',

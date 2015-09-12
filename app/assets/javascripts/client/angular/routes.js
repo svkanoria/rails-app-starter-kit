@@ -21,15 +21,15 @@ app.config([
       .state('posts', {
         abstract: true,
         url: '/posts',
-        template: '<div ui-view></div>'
+        template: '<div ui-view></div>',
+        resolve: {
+          initialData: angular.noop
+        }
       })
       .state('posts.index', {
         url: '',
         templateUrl: 'client/controllers/posts/index.html',
-        controller: 'PostsCtrl',
-        resolve: {
-          initialData: angular.noop
-        }
+        controller: 'PostsCtrl'
       })
       .state('posts.new', {
         url: '/new',
@@ -66,11 +66,11 @@ app.config([
 
       // Attachment routes
       .state('attachments', {
+        abstract: true,
         url: '/attachments',
-        templateUrl: 'client/controllers/attachments/index.html',
-        controller: 'AttachmentsCtrl',
+        template: '<div ui-view></div>',
         resolve: {
-          auth1: R.requireSignIn(),
+          auth: R.requireSignIn(),
           initialData: angular.noop
         }
       })

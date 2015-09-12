@@ -53,7 +53,7 @@ angular.module('FormErrors', [])
                 var camelizedKey = _.camelize(key);
 
                 _.each(fieldErrors, function (fieldError) {
-                  var field = form[camelizedKey];
+                  var field = form[key];
 
                   field.$dirty = true;
                   field.$setValidity(camelizedKey + 'Field', false);

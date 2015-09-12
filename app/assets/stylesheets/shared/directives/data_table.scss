@@ -1,8 +1,13 @@
 // Variables
 
 $data-tables-bulk-op-margin-left: $padding-small-horizontal;
+$data-tables-wrapper-padding-bottom: $padding-large-vertical;
 
 // Styles
+
+.dataTables_wrapper {
+  margin-bottom: $data-tables-wrapper-padding-bottom;
+}
 
 // Style adjusted to match what is applied by .dataTables_length
 .dataTables_bulk-selection {
