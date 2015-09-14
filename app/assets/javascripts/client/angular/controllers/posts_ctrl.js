@@ -1,7 +1,7 @@
 angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
   .controller('PostsCtrl', [
-    '$scope', '$state', 'flash', 'Post', 'initialData', 'AttachmentLibrarySvc',
-    function ($scope, $state, flash, Post, initialData, AttachmentLibrarySvc) {
+    '$scope', '$state', 'flash', 'Post', 'AttachmentLibrarySvc', 'initialData',
+    function ($scope, $state, flash, Post, AttachmentLibrarySvc, initialData) {
       /**
        * The 'index' action.
        */

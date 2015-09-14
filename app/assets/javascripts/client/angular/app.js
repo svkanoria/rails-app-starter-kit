@@ -32,6 +32,7 @@ var app = angular.module('App', [
 
   // Filters
   'StringFilters',
+  'DateFilters',
 
   // Modules
   'ResourceUtils',

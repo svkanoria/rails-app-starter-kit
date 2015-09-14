@@ -38,9 +38,12 @@ $qb-filter-add-margin-bottom: $padding-small-vertical;
     .selectize-control {
       display: inline-block;
       vertical-align: middle;
-      margin-bottom: 0;
 
       @media (max-width: $screen-sm-min) {
+        width: 100%;
+      }
+
+      > .selectize-input {
         width: 100%;
       }
     }

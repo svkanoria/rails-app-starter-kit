@@ -24,6 +24,14 @@ angular.module('Selectize', [])
 
           var selectize;
 
+          ngModel.$parsers.push(function (viewValue) {
+            return (options.maxItems === 1) ? viewValue[0] : viewValue;
+          });
+
+          ngModel.$formatters.push(function (modelValue) {
+            return (options.maxItems === 1) ? [modelValue] : modelValue;
+          });
+
           var origOnChange = options.onChange;
 
           options.onChange = function () {
@@ -38,6 +46,10 @@ angular.module('Selectize', [])
 
           $(element).selectize(options);
           selectize = element[0].selectize;
+
+          // To play well with Bootstrap forms
+          $(element).next('.selectize-control').find('.selectize-input')
+            .addClass('form-control');
 
           scope.$watchCollection('ngModel', function (value) {
             if (!angular.equals(selectize.items, value)) {

@@ -15,7 +15,8 @@ angular.module('UsersCtrl', ['User'])
        */
       var USER_ROLE_SELECTIZE_OPTIONS = {
         options: USER_ROLE_OPTIONS,
-        labelField: 'label', valueField: 'value'
+        labelField: 'label', valueField: 'value',
+        searchField: 'label'
       };
 
       /**
