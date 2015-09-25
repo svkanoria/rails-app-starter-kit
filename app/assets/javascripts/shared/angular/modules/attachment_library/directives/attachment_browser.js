@@ -28,7 +28,7 @@ angular.module('AttachmentBrowser', [
             function renderName (data, type, row, meta) {
               return '<span>'
                 + '<img src="' + row.thumb + '"> '
-                + '<a ui-sref="attachments.show({ id:' + row.id + ' })"'
+                + '<a ui-sref="app.attachments.show({ id:' + row.id + ' })"'
                     + ' target="_blank" title="' + data + '">'
                   + _.truncate(data, 35)
                   + ' <span class="glyphicon glyphicon-new-window"></span>'

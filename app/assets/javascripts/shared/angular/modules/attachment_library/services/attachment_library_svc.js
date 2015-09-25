@@ -124,7 +124,7 @@ angular.module('AttachmentLibrarySvc', [])
       // Hide by default.
       // To force show the library in some view, the view's controller should
       // call setVisible(true).
-      $rootScope.$on('$routeChangeStart', function () {
+      $rootScope.$on('$stateChangeStart', function () {
         AttachmentLibrarySvc.setVisible(false);
       });
     }]);

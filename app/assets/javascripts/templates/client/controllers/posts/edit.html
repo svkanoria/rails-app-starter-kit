@@ -1,5 +1,7 @@
 <div ng-init="actionEdit()">
-  <h2>Edit Post #{{post.id}}</h2>
+  <h2>
+    <a ui-sref="app.posts.show({ id: post.id })">Post #{{post.id}}</a> - Edit
+  </h2>
 
   <div ng-include="'client/controllers/posts/_form.html'">
   </div>

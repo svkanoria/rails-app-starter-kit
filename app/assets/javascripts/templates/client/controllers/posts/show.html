@@ -5,6 +5,6 @@
     {{post.message}}
   </p>
 
-  <a ui-sref="posts.edit({ id: post.id })" class="btn btn-primary"
+  <a ui-sref="app.posts.edit({ id: post.id })" class="btn btn-primary"
      ng-if="authSvc.currentUserIs(post.user_id)">Edit</a>
 </div>

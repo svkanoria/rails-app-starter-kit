@@ -58,13 +58,13 @@ angular.module('RouteUtils', [])
       '$rootScope', '$window', '$location', '$state', 'PleaseWaitSvc',
       function($rootScope, $window, $location, $state, PleaseWaitSvc) {
         // To show a 'Please Wait...' message between route changes
-        $rootScope.$on('$routeChangeStart', function() {
+        $rootScope.$on('$stateChangeStart', function() {
           PleaseWaitSvc.request();
         });
 
         /*
          * Works in conjunction with 'requireSignIn' and 'requireServerAuth'.
-         * If their promises do not resolve, we catch the $routeChangeError that
+         * If their promises do not resolve, we catch the $stateChangeError that
          * results, and redirect to the sign-in page.
          *
          * Also hides the 'Please Wait...' message requested above.

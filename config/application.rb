@@ -70,5 +70,8 @@ module RailsAppStarterKit
     # MY NOTE: Tell Rails to append a trailing slash when generating URLs, so
     # that they still nice after Angular adds the '#/'.
     config.action_controller.default_url_options = { trailing_slash: true }
+
+    # MY NOTE: Enable Lograge for more concise Rails logging
+    config.lograge.enabled = true
   end
 end

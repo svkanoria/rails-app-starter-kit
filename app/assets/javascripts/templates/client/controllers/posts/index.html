@@ -3,9 +3,9 @@
 
   <ul class="posts">
     <li class="post-item" ng-repeat="post in posts">
-      <a ui-sref="posts.show({ id: post.id })">{{post.message}}</a>
+      <a ui-sref="app.posts.show({ id: post.id })">{{post.message}}</a>
     </li>
   </ul>
 
-  <a ui-sref="posts.new" class="btn btn-primary">New Post</a>
+  <a ui-sref="app.posts.new" class="btn btn-primary">New Post</a>
 </div>
