@@ -10,27 +10,36 @@ app.config([
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
+      // App routes
+      // The 'top level' view corresponding to AppCtrl
+      .state('app', {
+        abstract: true,
+        url: '',
+        templateUrl: 'admin/controllers/app/index.html',
+        controller: 'AppCtrl'
+      })
+
       // Home routes
-      .state('home', {
+      .state('app.home', {
         url: '/',
         templateUrl: 'admin/controllers/home/index.html',
         controller: 'HomeCtrl'
       })
 
       // Post routes
-      .state('posts', {
+      .state('app.posts', {
         abstract: true,
         url: '/posts',
         template: '<div ui-view></div>'
       })
-      .state('posts.index', {
+      .state('app.posts.index', {
         url: '',
         templateUrl: 'admin/controllers/posts/index.html',
         controller: 'PostsCtrl'
       })
 
       // User routes
-      .state('users', {
+      .state('app.users', {
         abstract: true,
         url: '/users',
         template: '<div ui-view></div>',
@@ -38,12 +47,12 @@ app.config([
           initialData: angular.noop
         }
       })
-      .state('users.index', {
+      .state('app.users.index', {
         url: '',
         templateUrl: 'admin/controllers/users/index.html',
         controller: 'UsersCtrl'
       })
-      .state('users.new', {
+      .state('app.users.new', {
         url: '/new',
         templateUrl: 'admin/controllers/users/new.html',
         controller: 'UsersCtrl',
@@ -58,7 +67,7 @@ app.config([
           }]
         }
       })
-      .state('users.edit', {
+      .state('app.users.edit', {
         url: '/:id/edit',
         templateUrl: 'admin/controllers/users/edit.html',
         controller: 'UsersCtrl',
@@ -71,12 +80,15 @@ app.config([
 
       // Error routes
       .state('401', {
+        url: '/401',
         templateUrl: 'shared/401.html'
       })
       .state('404', {
+        url: '/404',
         templateUrl: 'shared/404.html'
       })
       .state('500', {
+        url: '/500',
         templateUrl: 'shared/500.html'
       });
   }]);

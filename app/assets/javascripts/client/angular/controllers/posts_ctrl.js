@@ -63,7 +63,7 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'Post created.');
 
-          $state.go('posts.index');
+          $state.go('app.posts.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
           $scope.postErrors = failureResponse.data.errors;
@@ -91,7 +91,7 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'Post updated.');
 
-          $state.go('posts.index');
+          $state.go('app.posts.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
           $scope.postErrors = failureResponse.data.errors;
@@ -110,7 +110,7 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'Post deleted.');
 
-          $state.go('posts.index');
+          $state.go('app.posts.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
           flash.set('error', 'Error deleting post.')

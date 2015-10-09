@@ -50,8 +50,9 @@ gem 'ng-rails-csrf'
 # For authentication.
 gem 'devise', '~> 3.5.0'
 
-# For authentication via Facebook
+# For authentication via 3rd party providers
 gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
 
 # For assigning roles to users
 gem 'rolify'
@@ -69,9 +70,9 @@ gem 'delayed_job_active_record'
 gem 'puma'
 
 # Bootstrap front-end framework.
-# We use the gem, rather than Bower, for the ease of integration as compared to
-# using Bower.
-gem 'bootstrap-sass', '~> 3.2.0'
+# We use the gem, rather than Bower, due to the former's ease of integration
+# over the latter.
+gem 'bootstrap-sass', '~> 3.3.0'
 
 # For Bootstrap compatible Rails form helpers
 gem 'bootstrap_form'
@@ -91,6 +92,13 @@ gem 'autoprefixer-rails'
 # For on-the-fly image manipulation (and subsequent caching, for efficiency).
 # Can do uploads too, but we don't use it for that.
 gem 'dragonfly', '~> 1.0.7'
+
+# Database backed key value store for app-wide or model specific data, such as
+# settings, flags etc.
+gem 'ledermann-rails-settings'
+
+# For more concise Rails logging
+gem 'lograge'
 
 # Use Unicorn as the app server
 # gem 'unicorn'

@@ -10,15 +10,24 @@ app.config([
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
+      // App routes
+      // The 'top level' view corresponding to AppCtrl
+      .state('app', {
+        abstract: true,
+        url: '',
+        templateUrl: 'client/controllers/app/index.html',
+        controller: 'AppCtrl'
+      })
+
       // Home routes
-      .state('home', {
+      .state('app.home', {
         url: '/',
         templateUrl: 'client/controllers/home/index.html',
         controller: 'HomeCtrl'
       })
 
       // Post routes
-      .state('posts', {
+      .state('app.posts', {
         abstract: true,
         url: '/posts',
         template: '<div ui-view></div>',
@@ -26,12 +35,12 @@ app.config([
           initialData: angular.noop
         }
       })
-      .state('posts.index', {
+      .state('app.posts.index', {
         url: '',
         templateUrl: 'client/controllers/posts/index.html',
         controller: 'PostsCtrl'
       })
-      .state('posts.new', {
+      .state('app.posts.new', {
         url: '/new',
         templateUrl: 'client/controllers/posts/new.html',
         controller: 'PostsCtrl',
@@ -43,7 +52,7 @@ app.config([
           }]
         }
       })
-      .state('posts.show', {
+      .state('app.posts.show', {
         url: '/:id',
         templateUrl: 'client/controllers/posts/show.html',
         controller: 'PostsCtrl',
@@ -53,11 +62,13 @@ app.config([
           }]
         }
       })
-      .state('posts.edit', {
+      .state('app.posts.edit', {
         url: '/:id/edit',
         templateUrl: 'client/controllers/posts/edit.html',
         controller: 'PostsCtrl',
         resolve: {
+          auth: R.requireSignIn(),
+          auth2: R.requireServerAuth('/posts/:id/edit'),
           initialData: ['$stateParams', 'Post', function ($stateParams, Post) {
             return Post.edit({ postId: $stateParams.id }).$promise;
           }]
@@ -65,7 +76,7 @@ app.config([
       })
 
       // Attachment routes
-      .state('attachments', {
+      .state('app.attachments', {
         abstract: true,
         url: '/attachments',
         template: '<div ui-view></div>',
@@ -74,7 +85,7 @@ app.config([
           initialData: angular.noop
         }
       })
-      .state('attachments.show', {
+      .state('app.attachments.show', {
         url: '/:id',
         templateUrl: 'client/controllers/attachments/show.html',
         controller: 'AttachmentsCtrl',
@@ -90,12 +101,15 @@ app.config([
 
       // Error routes
       .state('401', {
+        url: '/401',
         templateUrl: 'shared/401.html'
       })
       .state('404', {
+        url: '/404',
         templateUrl: 'shared/404.html'
       })
       .state('500', {
+        url: '/500',
         templateUrl: 'shared/500.html'
       });
   }]);

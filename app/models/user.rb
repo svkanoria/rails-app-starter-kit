@@ -41,10 +41,11 @@ class User < ActiveRecord::Base
          :recoverable,
          :rememberable,
          :trackable,
-         # Comment this out if you don't need Facebook and/or other providers.
+         # Comment this out if you don't need to authenticate via 3rd party
+         # providers.
          # Add/remove providers from the array to control which providers can
          # be used for authentication.
-         :omniauthable, omniauth_providers: [:facebook]
+         :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
 
   rolify
 
@@ -93,7 +94,8 @@ class User < ActiveRecord::Base
   # Returns a user matching the given Omniauth authentication data.
   # If no such user exists, attempts to create one.
   def self.from_omniauth (omniauth)
-    authentication = Authentication.find_by(omniauth.slice(:provider, :uid))
+    authentication = Authentication.find_by(provider: omniauth.provider,
+                                            uid: omniauth.uid)
 
     if authentication
       authentication.user

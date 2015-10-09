@@ -71,7 +71,7 @@ angular.module('UsersCtrl', ['User'])
               className: 'dt-body-center',
               render: function (data, type, row, meta) {
                 var editHtml =
-                  '<a ui-sref="users.edit({ id: ' + row.id + ' })">'
+                  '<a ui-sref="app.users.edit({ id: ' + row.id + ' })">'
                     + '<span class="glyphicon glyphicon-pencil"></span>' +
                   '</a>';
 
@@ -84,6 +84,7 @@ angular.module('UsersCtrl', ['User'])
               }
             }
           ],
+          order: [[2, 'asc']],
           stateSave: true, // Ensure table element has an id for this to work!
           // Save/load the query builder state along with the table state
           stateSaveParams: function (settings, data) {
@@ -208,7 +209,7 @@ angular.module('UsersCtrl', ['User'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'User created.');
 
-          $state.go('users.index');
+          $state.go('app.users.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
           $scope.userErrors = failureResponse.data.errors;
@@ -236,7 +237,7 @@ angular.module('UsersCtrl', ['User'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'User updated.');
 
-          $state.go('users.index');
+          $state.go('app.users.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
           $scope.userErrors = failureResponse.data.errors;

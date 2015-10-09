@@ -11,7 +11,7 @@ Rails.application.routes.draw do
                    sessions: 'sessions',
                    registrations: 'registrations',
                    # Comment this out if you don't want authentication via
-                   # Facebook and/or other providers.
+                   # 3rd party providers.
                    omniauth_callbacks: 'omniauth_callbacks'
                }
 
