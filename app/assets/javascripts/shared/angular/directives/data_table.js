@@ -76,6 +76,26 @@ angular.module('DataTable', [])
       }
 
       /**
+       * Optimizes for display on small screens.
+       * Uses the following logic:
+       * * If the table element has the class 'responsive', then leave alone
+       * * If the options provided specify 'scrollX = false', then leave alone
+       * * Else, set 'scrollX = true' to enable horizontal scrolling
+       *
+       * @param {Object} scope - The scope passed to the link function.
+       * @param {Object} element - The element passed to the link function.
+       */
+      function optimizeForSmallScreens (scope, element) {
+        if (!$(element).hasClass('responsive')) {
+          var options = scope.options;
+
+          if (!options.scrollX) {
+            options.scrollX = true;
+          }
+        }
+      }
+
+      /**
        * Appends a 'row ops' column to the datatable.
        * This is done iff the 'row-ops' attribute is provided to the directive.
        *
@@ -382,7 +402,7 @@ angular.module('DataTable', [])
 
           var bulkOpHtml =
             '<a href="" ng-click="performBulkOp(\'' + bulkOpKey + '\')">'
-              + bulkOp.name + '</a>';
+            + bulkOp.name + '</a>';
 
           bulkOpsDiv.append($(bulkOpHtml));
         }
@@ -394,7 +414,8 @@ angular.module('DataTable', [])
               + bulkOpsDiv[0].outerHTML +
             '</div>');
 
-        var lengthDiv = $(element).siblings('.dataTables_length');
+        var lengthDiv = $(element).closest('.dataTables_wrapper')
+          .find('.dataTables_length');
 
         lengthDiv.after(bulkSelectionDiv);
 
@@ -418,6 +439,8 @@ angular.module('DataTable', [])
           if (!scope.options) scope.options = {};
 
           enableDirectivesInCells(scope);
+
+          optimizeForSmallScreens(scope, element);
 
           addRowOpsColumnIfNeeded(scope, element);
 

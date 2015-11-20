@@ -23,6 +23,7 @@ var app = angular.module('App', [
   'AttachmentsCtrl',
 
   // Directives
+  'ngTranscludeReplace',
   'AuthenticationLinks',
   'FormErrors',
   'PleaseWait',

@@ -11,6 +11,7 @@ $flash-alert-padding: $padding-small-vertical $padding-small-horizontal;
   position: fixed;
   top: $flash-alerts-top;
   left: 0;
+  z-index: 3; // Trial and error
   width: 100%;
   pointer-events: none; // Pass through pointer events down the z-index
   padding: $flash-alerts-padding;

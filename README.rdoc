@@ -178,7 +178,8 @@ Pre-requisites: You must have Node, Bower and Ruby installed.
    download as a .pem file.
 
    Set AWS_CF_PRIVATE_KEY to the entire contents of the .pem file as one long
-   string, manually inserting a '\\n' at the end of each line.
+   string, manually inserting a '\\n' at the end of each line. If setting via
+   the command line, you should enclose the contents within double quotes.
 
    For playing back video attachments, we provide JWPlayer (an HTML5 and Flash
    based video player) integration out of the box. If you haven't already, you

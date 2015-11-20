@@ -80,7 +80,8 @@ class User < ActiveRecord::Base
   # Returns a user matching the given Omniauth authentication data.
   # If no such user exists, attempts to create one.
   def self.from_omniauth (omniauth)
-    authentication = Authentication.find_by(omniauth.slice(:provider, :uid))
+    authentication = Authentication.find_by(provider: omniauth.provider,
+                                            uid: omniauth.uid)
 
     if authentication
       authentication.user
