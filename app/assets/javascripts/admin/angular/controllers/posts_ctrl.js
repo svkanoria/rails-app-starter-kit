@@ -108,6 +108,11 @@ angular.module('PostsCtrl', ['Post'])
           }
         };
 
+        // For showing expanded row information
+        $scope.dataTableExpandedRowInfo = function () {
+          return 'Dummy expanded row text';
+        };
+
         $scope.queryBuilderOptions = {
           columns: [
             { name: 'message', label: 'Message', type: 'text' },

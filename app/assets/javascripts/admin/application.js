@@ -36,6 +36,8 @@
 //= require moment/moment
 //= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker
 //= require selectize/dist/js/standalone/selectize
+//= require datatables.net/js/jquery.dataTables
+//= require datatables-responsive/js/dataTables.responsive
 //
 // Files shared between client and admin apps
 //= require_tree ../shared

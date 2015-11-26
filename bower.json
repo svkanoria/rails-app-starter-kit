@@ -14,6 +14,9 @@
     "animate-css": "~3.2.x",
     "moment": "~2.10.x",
     "eonasdan-bootstrap-datetimepicker": "~4.x.x",
-    "selectize": "~0.12.x"
+    "selectize": "~0.12.x",
+    "datatables.net": "~1.10.x",
+    "datatables.net-dt": "~1.10.x",
+    "datatables-responsive": "~2.0.x"
   }
 }

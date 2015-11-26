@@ -1,9 +1,24 @@
 // Variables
 
+$dt-expand-row-padding: $padding-small-horizontal;
+$dt-expanded-row-margin-left: $padding-large-horizontal*1.5; // Trial and error
+$dt-expanded-row-padding-left: $padding-base-horizontal - 2; // Trial and error
+
 $data-tables-bulk-op-margin-left: $padding-small-horizontal;
 $data-tables-wrapper-padding-bottom: $padding-large-vertical;
 
 // Styles
+
+.dt-expand-row {
+  position: relative;
+  top: 2px; // Trial and error
+  padding: 0 $dt-expand-row-padding;
+}
+
+.dt-expanded-row {
+  margin-left: $dt-expanded-row-margin-left;
+  padding-left: $dt-expanded-row-padding-left;
+}
 
 .dataTables_wrapper {
   margin-bottom: $data-tables-wrapper-padding-bottom;
@@ -25,5 +40,30 @@ $data-tables-wrapper-padding-bottom: $padding-large-vertical;
     > a {
       margin-left: $data-tables-bulk-op-margin-left;
     }
+  }
+}
+
+// DataTables sorting images don't work out of the box if we add DataTables
+// using Bower. We do some overrides below, as well as copy over the images to
+// the '/app/assets/images/data-tables' directory, to work around this issue.
+table.dataTable thead {
+  .sorting {
+    background-image: asset-url("data-tables/sort_both.png");
+  }
+
+  .sorting_asc {
+    background-image: asset-url("data-tables/sort_asc.png");
+  }
+
+  .sorting_desc {
+    background-image: asset-url("data-tables/sort_desc.png");
+  }
+
+  .sorting_asc_disabled {
+    background-image: asset-url("data-tables/sort_asc_disabled.png");
+  }
+
+  .sorting_desc_disabled {
+    background-image: asset-url("data-tables/sort_desc_disabled.png");
   }
 }
