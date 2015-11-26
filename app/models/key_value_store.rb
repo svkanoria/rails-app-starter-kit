@@ -6,6 +6,7 @@
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  tenant_id  :integer          not null
 #
 
 # A global database backed key value store.

@@ -18,6 +18,7 @@ var app = angular.module('App', [
   'UsersCtrl',
 
   // Directives
+  'ngTranscludeReplace',
   'AuthenticationLinks',
   'FormErrors',
   'PleaseWait',

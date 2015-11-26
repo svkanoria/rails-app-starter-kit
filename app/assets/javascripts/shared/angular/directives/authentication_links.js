@@ -2,7 +2,11 @@
  * Sign-up/in/out links.
  *
  * Usage:
- *   <authentication-links></authentication-links>
+ *   <authentication-links>
+ *     <!-- Any additional links to show for *signed in* users -->
+ *     <li>...</li>
+ *       :
+ *   </authentication-links>
  */
 angular.module('AuthenticationLinks', [])
   .directive('authenticationLinks', [
@@ -12,6 +16,7 @@ angular.module('AuthenticationLinks', [])
         restrict: 'EA',
         templateUrl: 'shared/directives/authentication_links.html',
         replace: true,
+        transclude: true,
         scope: {},
 
         link: function (scope, element, attrs) {

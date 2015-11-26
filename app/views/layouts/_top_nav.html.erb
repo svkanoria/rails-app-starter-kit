@@ -19,7 +19,11 @@
         <li><a href="/#/posts">Posts</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <authentication-links></authentication-links>
+        <authentication-links>
+          <li ng-if="authSvc.hasRole('admin')">
+            <a href="/admin/#/">Admin Panel</a>
+          </li>
+        </authentication-links>
       </ul>
     </div>
   </div>
