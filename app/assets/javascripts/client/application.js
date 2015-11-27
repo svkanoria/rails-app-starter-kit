@@ -49,6 +49,8 @@
 //= require flashular/dist/flashular.min
 //= require moment/moment
 //= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker
+//= require datatables.net/js/jquery.dataTables
+//= require datatables-responsive/js/dataTables.responsive
 //
 // Files shared between client and admin apps
 //= require_tree ../shared

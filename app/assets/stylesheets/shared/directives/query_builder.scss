@@ -17,7 +17,7 @@ $qb-filter-add-margin-bottom: $padding-small-vertical;
     // The filter bottom margin is applied to each filter form control
     // individually, rather than directly to the parent filter element. This
     // approach automatically introduces spacing between controls when they
-    // stack up on small screens.
+    // stack up on small screens, or wrap around for lack of space.
 
     .filter-column {
       margin-bottom: $qb-filter-margin-bottom;

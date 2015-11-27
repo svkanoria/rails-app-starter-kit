@@ -60,6 +60,7 @@ $attachment-drag-helper-border-radius: $border-radius-small;
 .attachment-library-toggle {
   position: fixed;
   bottom: 0;
+  z-index: 2; // Trial and error
   margin: $attach-lib-panel-margin;
   padding: 10px 13px; // Trial and error
   border-radius: 50%;

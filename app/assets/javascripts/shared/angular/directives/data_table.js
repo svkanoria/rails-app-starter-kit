@@ -11,7 +11,8 @@
  *          ?instance="Empty expr"
  *          ?row-ops="Object expr"
  *          ?selected-rows="Array expr"
- *          ?bulk-ops="Object expr">
+ *          ?bulk-ops="Object expr"
+ *          ?expanded-row-info="Function expr">
  *     :
  *   </table>
  *
@@ -51,6 +52,17 @@
  *     },
  *     bulkOpKey2: { ... },
  *      :
+ *   }
+ *
+ * The 'expanded-row-info' expression, when provided, enables each row to expand
+ * and show any custom information desired. The expression must evaluate to
+ * a function, as follows:
+ *
+ *   function someName (data) { // where 'data' is the row data object
+ *     // The returned HTML can also contain directives. These directives are
+ *     // compiled using a newly constructed scope, which but one property, viz.
+ *     // 'data', that contains the row data.
+ *     return someHtmlConstructedFromData;
  *   }
  */
 angular.module('DataTable', [])
@@ -422,6 +434,66 @@ angular.module('DataTable', [])
         $compile(bulkSelectionDiv)(scope);
       }
 
+      /**
+       * Adds row expansion functionality.
+       * This is done iff the 'expanded-row-info' attribute is provided to the
+       * directive.
+       *
+       * @param {Object} scope - The scope passed to the link function.
+       * @param {Object} element - The element passed to the link function.
+       */
+      function addRowExpansionIfNeeded (scope, element) {
+        if (!scope.expandedRowInfo) return;
+
+        var options = scope.options;
+
+        var firstColumn = (options.columns)
+          ? options.columns[0]
+          : _.where(options.columnDefs, { targets: 0 });
+
+        var origRender = firstColumn.render;
+
+        firstColumn.render = function (data, type, row, meta) {
+          var togglerHtml =
+            '<a href="" class="dt-expand-row">'
+              + '<span class="glyphicon glyphicon-chevron-down"></span>' +
+            '</a>';
+
+          var origRenderedHtml = (origRender)
+            ? origRender(data, type, row, meta)
+            : data;
+
+          return togglerHtml + origRenderedHtml;
+        };
+
+        $(element).on('click', '.dt-expand-row', function () {
+          var tr = $(this).closest('tr');
+          var tableObj = $(element).DataTable();
+          var rowObj = tableObj.row(tr);
+
+          if (rowObj.child.isShown()) {
+            rowObj.child.hide();
+          } else {
+            var rowData = rowObj.data();
+            var expRowHtml =
+              '<div class="dt-expanded-row">'
+                + scope.expandedRowInfo(rowData) +
+              '</div>';
+
+            var expRowScope = scope.$new(true);
+            expRowScope.data = rowData;
+
+            var compiledExpRowHtml = $compile(expRowHtml)(expRowScope);
+
+            rowObj.child(compiledExpRowHtml).show();
+          }
+
+          $(this).find('span')
+            .toggleClass('glyphicon-chevron-up')
+            .toggleClass('glyphicon-chevron-down');
+        });
+      }
+
       return {
         restrict: 'A',
 
@@ -430,7 +502,8 @@ angular.module('DataTable', [])
           instance: '=',
           rowOps:'=',
           selectedRows: '=',
-          bulkOps: '='
+          bulkOps: '=',
+          expandedRowInfo: '='
         },
 
         link: function (scope, element, attrs) {
@@ -448,6 +521,8 @@ angular.module('DataTable', [])
             addRowSelectionUI(scope, element);
             addRowSelectionLogic(scope, element);
           }
+
+          addRowExpansionIfNeeded(scope, element);
 
           var instance = $(element).DataTable(scope.options);
 
