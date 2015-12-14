@@ -2,7 +2,7 @@
  * A solution for date and/or time user input, based on the
  * http://eonasdan.github.io/bootstrap-datetimepicker jQuery plugin.
  */
-angular.module('DateTimePicker', [])
+angular.module('DateTimePicker', ['DateTimeQuicker'])
   /*
    * A directive for selecting dates and/or times.
    *
@@ -17,7 +17,8 @@ angular.module('DateTimePicker', [])
    * * Just the time portion of the above string. Example: 'T12:11:17.139Z'
    */
   .directive('dateTimePicker', [
-    function () {
+    '$compile',
+    function ($compile) {
       return {
         restrict: 'E',
         templateUrl: 'shared/directives/date_time_picker.html',
@@ -26,7 +27,8 @@ angular.module('DateTimePicker', [])
         controller: 'DateTimePickerCtrl',
 
         scope: {
-          options: '='
+          options: '=',
+          ngModel: '=' // Needed only for use by date-time-quicker
         },
 
         link: function (scope, element, attrs, ctrls) {
@@ -36,6 +38,18 @@ angular.module('DateTimePicker', [])
           var input = $(element).find('input');
           var instance = input.datetimepicker(scope.options || {});
           var initialized = false;
+
+          // Integrate an instance of date-time-quicker, to provide useful
+          // shortcuts or 'macros' for entering dates and times.
+          instance.on('dp.show', function () {
+            var dateTimeQuickerHtml =
+              $('<date-time-quicker></date-time-quicker>');
+
+            $(element).find('.bootstrap-datetimepicker-widget')
+              .append(dateTimeQuickerHtml);
+
+            $compile(dateTimeQuickerHtml)(scope);
+          });
 
           // Respond when the user presses Enter, by:
           // 1. Updating the model. This is best achieved by the convoluted

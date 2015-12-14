@@ -1,5 +1,5 @@
 /*
- * Helpers for use while configuring routes with $routeProvider.
+ * Helpers for use while configuring routes with $stateProvider.
  * Merely inject into the app.config(...) block.
  */
 angular.module('RouteUtils', [])
@@ -57,7 +57,7 @@ angular.module('RouteUtils', [])
     var onAppRun = [
       '$rootScope', '$window', '$location', '$state', 'PleaseWaitSvc',
       function($rootScope, $window, $location, $state, PleaseWaitSvc) {
-        // To show a 'Please Wait...' message between route changes
+        // Shows a 'Please Wait...' indicator between route changes
         $rootScope.$on('$stateChangeStart', function() {
           PleaseWaitSvc.request();
         });
@@ -67,7 +67,7 @@ angular.module('RouteUtils', [])
          * If their promises do not resolve, we catch the $stateChangeError that
          * results, and redirect to the sign-in page.
          *
-         * Also hides the 'Please Wait...' message requested above.
+         * Also hides the 'Please Wait...' indicator requested above.
          */
         $rootScope.$on('$stateChangeError',
           function(e, to, toParams, from, fromParams, rejection) {
@@ -101,7 +101,7 @@ angular.module('RouteUtils', [])
             }
           });
 
-        // This hides the 'Please Wait...' message requested above.
+        // This hides the 'Please Wait...' indicator requested above
         $rootScope.$on('$stateChangeSuccess', function() {
           PleaseWaitSvc.releaseAll();
         });
