@@ -34,6 +34,24 @@ angular.module "flashular", []
 
   return flash
 
+# Helper directive for enabling the use of Angular directives in flash alerts.
+.directive "alertMsg", ($compile) ->
+  restrict: 'E'
+  replace: yes
+  scope:
+    content: "@"
+  template:
+    """
+    <span></span>
+    """
+  link: (scope, iElement, iAttrs) ->
+    scope.$watch 'content', (value) ->
+      if value
+        wrappedValue = "<span>#{value}</span>"
+        # Allow directives within flash messages
+        compiledValue = $compile(wrappedValue)(scope)
+        $(iElement).html(compiledValue)
+
 .directive "flashAlerts", (flash, $interpolate) ->
 
   restrict: "E"
@@ -46,7 +64,7 @@ angular.module "flashular", []
     <div ng-show="flash" class="alerts">
       <div ng-repeat="alertType in alertTypes" ng-show="flash.has(alertType)" class="alert alert-{{alertClass(alertType)}}">
         <button ng-if="closeable" type="button" class="close" ng-click="flash.remove(alertType)">&times;</button>
-        {{flash.has(alertType) ? preProcess({alert: flash.get(alertType)}) : ""}}
+        <alert-msg content="{{flash.has(alertType) ? preProcess({alert: flash.get(alertType)}) : ''}}"></alert-msg>
       </div>
     </div>
     """
@@ -56,7 +74,6 @@ angular.module "flashular", []
     scope.closeable = iAttrs.closeable ? no
     scope.preProcess = iAttrs.preProcess ? (alert) -> $interpolate("{{alert}}")(alert) # Fallback to a default function that does no processing.
 
+    # Map alert types to Bootstrap alert compatible CSS classes.
     alertClassMap = { alert: 'danger', error: 'danger' }
-
-    # Maps alert types to Boostrap alert compatible CSS classes.
     scope.alertClass = (alertType) -> alertClassMap[alertType] or alertType

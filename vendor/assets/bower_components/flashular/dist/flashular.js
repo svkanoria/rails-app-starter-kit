@@ -64,6 +64,25 @@
       }
     });
     return flash;
+  }).directive("alertMsg", function($compile) {
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {
+        content: "@"
+      },
+      template: "<span></span>",
+      link: function(scope, iElement, iAttrs) {
+        return scope.$watch('content', function(value) {
+          var compiledValue, wrappedValue;
+          if (value) {
+            wrappedValue = "<span>" + value + "</span>";
+            compiledValue = $compile(wrappedValue)(scope);
+            return $(iElement).html(compiledValue);
+          }
+        });
+      }
+    };
   }).directive("flashAlerts", function(flash, $interpolate) {
     return {
       restrict: "E",
@@ -72,7 +91,7 @@
         closeable: "&",
         preProcess: "&"
       },
-      template: "<div ng-show=\"flash\" class=\"alerts\">\n  <div ng-repeat=\"alertType in alertTypes\" ng-show=\"flash.has(alertType)\" class=\"alert alert-{{alertClass(alertType)}}\">\n    <button ng-if=\"closeable\" type=\"button\" class=\"close\" ng-click=\"flash.remove(alertType)\">&times;</button>\n    {{flash.has(alertType) ? preProcess({alert: flash.get(alertType)}) : \"\"}}\n  </div>\n</div>",
+      template: "<div ng-show=\"flash\" class=\"alerts\">\n  <div ng-repeat=\"alertType in alertTypes\" ng-show=\"flash.has(alertType)\" class=\"alert alert-{{alertClass(alertType)}}\">\n    <button ng-if=\"closeable\" type=\"button\" class=\"close\" ng-click=\"flash.remove(alertType)\">&times;</button>\n    <alert-msg content=\"{{flash.has(alertType) ? preProcess({alert: flash.get(alertType)}) : ''}}\"></alert-msg>\n  </div>\n</div>",
       link: function(scope, iElement, iAttrs) {
         var alertClassMap, _ref, _ref1;
         scope.flash = flash.now;

@@ -114,8 +114,13 @@ class User < ActiveRecord::Base
   # available by OmniAuth.
   def apply_omniauth (omniauth)
     self.skip_confirmation!
-    self.email = omniauth[:info][:email] if self.email.blank?
-    authentications.build provider: omniauth[:provider], uid: omniauth[:uid]
+
+    # Note that we use string keys (not symbols) for the 'omniauth' hash.
+    # This is because depending on where 'apply_omniauth' is called from (from
+    # 'from_omniauth' or 'new_with_session'), the hash provided may or may not
+    # accept symbols as keys, but it always accepts strings.
+    self.email = omniauth['info']['email'] if self.email.blank?
+    authentications.build provider: omniauth['provider'], uid: omniauth['uid']
   end
 
   private
