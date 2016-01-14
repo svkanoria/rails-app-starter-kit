@@ -16,6 +16,7 @@ describe AttachmentPolicy do
     it { should_not permit(:update) }
     it { should_not permit(:edit) }
     it { should_not permit(:destroy) }
+    it { should_not permit(:batch_destroy) }
   end
 
   context 'for a signed in user' do
@@ -31,6 +32,7 @@ describe AttachmentPolicy do
       it { should_not permit(:update) }
       it { should_not permit(:edit) }
       it { should_not permit(:destroy) }
+      it { should_not permit(:batch_destroy) }
     end
 
     context 'for an attachment created by the user' do
@@ -41,6 +43,7 @@ describe AttachmentPolicy do
       it { should permit(:update) }
       it { should permit(:edit) }
       it { should permit(:destroy) }
+      it { should permit(:batch_destroy) }
     end
   end
 end

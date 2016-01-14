@@ -31,8 +31,8 @@
  */
 angular.module('AttachmentDrop', ['AttachmentJoin'])
   .directive('attachmentDrop', [
-    'AttachmentJoin',
-    function (AttachmentJoin) {
+    '$rootScope', 'AttachmentJoin',
+    function ($rootScope, AttachmentJoin) {
       return {
         restrict: 'E',
         templateUrl: 'shared/directives/attachment_drop.html',
@@ -90,6 +90,14 @@ angular.module('AttachmentDrop', ['AttachmentJoin'])
               });
             }
           });
+
+          $rootScope.$on('attachment_library.attachments_deleted',
+            function (event, attachmentIds) {
+              scope.roleAttachments = _.reject(scope.roleAttachments,
+                function (attachment) {
+                  return _.contains(attachmentIds, attachment.id);
+                });
+            });
         }
       }
     }]);

@@ -13,8 +13,6 @@ var app = angular.module('App', [
   'AuthSvc',
   'RouteUtils',
   'Post',
-  'AttachmentJoin',
-  'Attachment',
 
   // Controllers
   'AppCtrl',

@@ -103,6 +103,20 @@ angular.module('AttachmentLibrarySvc', [])
         $rootScope.$emit('attachment_library.upload_successful');
       };
 
+      /**
+       * Emits the 'attachment_library.attachments_deleted' event on $rootScope
+       * with the ids of the attachments that were deleted.
+       *
+       * Listeners such as the attachment browser and attachment drop, can then
+       * update themselves accordingly.
+       *
+       * @param {number[]} attachmentIds - The ids of the deleted attachments.
+       */
+      var emitAttachmentsDeleted = function (attachmentIds) {
+        $rootScope.$emit('attachment_library.attachments_deleted',
+          attachmentIds);
+      };
+
       // Return the service object
       return {
         getVisible: getVisible,
@@ -113,7 +127,8 @@ angular.module('AttachmentLibrarySvc', [])
         setUploadsInProgress: setUploadsInProgress,
         getAlertCount: getAlertCount,
         incrementAlertCount: incrementAlertCount,
-        emitUploadSuccessful: emitUploadSuccessful
+        emitUploadSuccessful: emitUploadSuccessful,
+        emitAttachmentsDeleted: emitAttachmentsDeleted
       };
     }])
 

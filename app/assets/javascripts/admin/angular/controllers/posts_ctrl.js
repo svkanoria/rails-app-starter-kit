@@ -102,8 +102,7 @@ angular.module('PostsCtrl', ['Post'])
                   $scope.pleaseWaitSvc.release();
                   flash.now.set('error',
                     failureResponse.data.error || 'Error deleting posts.');
-                }
-              )
+                });
             }
           }
         };

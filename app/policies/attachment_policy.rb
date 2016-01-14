@@ -20,6 +20,10 @@ class AttachmentPolicy < ApplicationPolicy
     update?
   end
 
+  def batch_destroy?
+    update?
+  end
+
   class Scope
     attr_reader :user, :scope
 
