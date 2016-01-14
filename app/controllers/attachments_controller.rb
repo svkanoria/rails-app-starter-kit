@@ -1,5 +1,9 @@
 class AttachmentsController < ApplicationController
+  include BatchActions
+
   respond_to :json
+
+  before_action :load_basics, except: [:index, :create, :batch_destroy]
 
   after_action :verify_authorized
 
@@ -20,7 +24,6 @@ class AttachmentsController < ApplicationController
   end
 
   def show
-    @attachment = Attachment.find(params[:id])
     authorize @attachment
 
     respond_with @attachment
@@ -36,9 +39,21 @@ class AttachmentsController < ApplicationController
     respond_with @attachment
   end
 
+  def destroy
+    authorize @attachment
+
+    @attachment.destroy
+
+    respond_with @attachment
+  end
+
   private
 
   def attachment_params
     params.required(:attachment).permit(:url)
+  end
+
+  def load_basics
+    @attachment = Attachment.find(params[:id])
   end
 end

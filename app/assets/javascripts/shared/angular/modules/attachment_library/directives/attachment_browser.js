@@ -1,9 +1,13 @@
 // The attachment browser, for use within the attachment-library directive.
 angular.module('AttachmentBrowser', [
-  'QueryBuilder', 'DataTable', 'AttachmentLibrarySvc'])
+  'flashular', 'PleaseWait', 'QueryBuilder', 'DataTable', 'Attachment',
+  'AttachmentLibrarySvc'])
   .directive('attachmentBrowser', [
-    '$rootScope', 'AttachmentLibrarySvc',
-    function ($rootScope, AttachmentLibrarySvc) {
+    'flash', 'PleaseWaitSvc', '$rootScope', 'Attachment',
+    'AttachmentLibrarySvc',
+    function (flash, PleaseWaitSvc, $rootScope, Attachment,
+              AttachmentLibrarySvc) {
+
       return {
         restrict: 'E',
         templateUrl: 'shared/directives/attachment_browser.html',
@@ -96,8 +100,68 @@ angular.module('AttachmentBrowser', [
             // This is populated by the 'datatable' directive.
             scope.dataTableInstance = null;
 
+            // For operations on a single row
+            scope.dataTableRowOps = {
+              delete: {
+                icon: 'glyphicon-remove',
+                action: function (rowId) {
+                  if (!window.confirm(
+                      'Really delete attachment #' + rowId + '?')) return;
+
+                  PleaseWaitSvc.request();
+                  // When performing an operation on a single row, unselect all
+                  // rows to avoid any ambiguity about the scope of the
+                  // operation.
+                  scope.dataTableSelectedRows.length = 0;
+
+                  Attachment.remove({ attachmentId: rowId }, null,
+                    function (response) {
+                      PleaseWaitSvc.release();
+                      flash.now.set('success', 'Attachment deleted.');
+
+                      AttachmentLibrarySvc.emitAttachmentsDeleted([rowId]);
+                    }, function (failureResponse) {
+                      PleaseWaitSvc.release();
+                      flash.now.set('error',
+                        failureResponse.data.error || 'Error deleting attachment.');
+                    });
+                }
+              }
+            };
+
             // To enable row selection
             scope.dataTableSelectedRows = [];
+
+            // For bulk operations on currently selected rows
+            scope.dataTableBulkOps = {
+              deleteAll: {
+                name: 'Delete all',
+                action: function () {
+                  if (!window.confirm('Really delete selected attachments?')) {
+                    return;
+                  }
+
+                  PleaseWaitSvc.request();
+
+                  Attachment.batch_destroy({},
+                    { ids: scope.dataTableSelectedRows },
+                    function (response) {
+                      PleaseWaitSvc.release();
+                      flash.now.set('success', 'Attachments deleted.');
+
+                      AttachmentLibrarySvc.emitAttachmentsDeleted(
+                        response.success_ids);
+
+                      scope.dataTableSelectedRows.length = 0;
+                    },
+                    function (failureResponse) {
+                      PleaseWaitSvc.release();
+                      flash.now.set('error',
+                        failureResponse.data.error || 'Error deleting attachments.');
+                    });
+                }
+              }
+            };
 
             scope.queryBuilderOptions = {
               columns: [
@@ -120,7 +184,14 @@ angular.module('AttachmentBrowser', [
 
                 scope.dataTableInstance.ajax.reload();
               }
-            })
+            });
+
+            $rootScope.$on('attachment_library.attachments_deleted',
+              function () {
+                if (scope.dataTableInstance) {
+                  scope.dataTableInstance.ajax.reload();
+                }
+              });
           }
         }
       };

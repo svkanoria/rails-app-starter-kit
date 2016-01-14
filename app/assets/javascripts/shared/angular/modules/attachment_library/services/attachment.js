@@ -5,5 +5,12 @@ angular.module('Attachment', ['ResourceUtils'])
     function(CancelableResourceFactory) {
       return CancelableResourceFactory.createResource(
         '/attachments/:collectionAction/:attachmentId/:memberAction.json',
-        { attachmentId: '@id' });
+        { attachmentId: '@id' },
+        // Extra methods for compatibility with Rails, and our data format
+        {
+          batch_destroy: {
+            method: 'POST',
+            params: { collectionAction: 'batch_destroy' }
+          }
+        });
     }]);

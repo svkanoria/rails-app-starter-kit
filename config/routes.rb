@@ -20,7 +20,11 @@ Rails.application.routes.draw do
 
   resources :posts
 
-  resources :attachments
+  resources :attachments do
+    collection do
+      post 'batch_destroy'
+    end
+  end
 
   resources :attachment_joins, only: [:create, :destroy]
 

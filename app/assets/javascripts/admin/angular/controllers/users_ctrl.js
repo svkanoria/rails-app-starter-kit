@@ -123,8 +123,7 @@ angular.module('UsersCtrl', ['User'])
                   $scope.pleaseWaitSvc.release();
                   flash.now.set('error',
                     failureResponse.data.error || 'Error deleting users.');
-                }
-              )
+                });
             }
           }
         };

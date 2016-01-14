@@ -1,6 +1,8 @@
 // A complete attachment and uploads management solution.
 angular.module('AttachmentLibrary', [
   // Services
+  'Attachment',
+  'AttachmentJoin',
   'AttachmentLibrarySvc',
   'AttachmentViewerProvider',
 
