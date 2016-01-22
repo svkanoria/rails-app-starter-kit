@@ -2,7 +2,12 @@
   <div class="col-sm-6 col-sm-offset-3">
     <h2>New User</h2>
 
-    <form role="form" novalidate form-errors="userErrors">
+    <form role="form" novalidate fb-errors="userErrors">
+      <!--
+      Field created without the use of 'fb-field'.
+      This illustrates how fb-field is merely an optional convenience. If you
+      need to achieve something beyond its scope, just don't use it!
+      -->
       <div class="form-inputs">
         <div class="form-group" ng-class="{'has-error': userErrors['email']}">
           <label for="email" class="control-label" >Email*</label>
@@ -10,44 +15,20 @@
                  ng-model="user.email"/>
 
           <p class="help-block" ng-show="userErrors['email']">
-            {{userErrors['email'][0]}}
+            - {{userErrors['email'][0]}}
           </p>
         </div>
 
-        <div class="form-group"
-             ng-class="{'has-error': userErrors['password']}">
+        <fb-field type="password" hint="Minimum 8 characters" required="true"
+                  ng-model="user.password"></fb-field>
 
-          <label for="password" class="control-label">Password*</label>
-          <input type="password" name="password" class="form-control"
-                 ng-model="user.password"/>
+        <fb-field type="password" required="true"
+                  ng-model="user.password_confirmation"></fb-field>
 
-          <p class="help-block" ng-show="userErrors['password']">
-            {{userErrors['password'][0]}}
-          </p>
-          <p class="help-block" ng-hide="userErrors['password']">
-            Minimum 8 characters
-          </p>
-        </div>
-
-        <div class="form-group"
-             ng-class="{'has-error': userErrors['password_confirmation']}">
-
-          <label for="password_confirmation"
-                 class="control-label">Password confirmation*</label>
-
-          <input type="password" name="password_confirmation"
-                 class="form-control" ng-model="user.password_confirmation"/>
-
-          <p class="help-block" ng-show="userErrors['password_confirmation']">
-            {{userErrors['password_confirmation'][0]}}
-          </p>
-        </div>
-
-        <div class="form-group">
-          <label>Roles</label>
+        <fb-field ng-model="user.roles">
           <selectize ng-model="user.roles" options="userRoleSelectizeOptions">
           </selectize>
-        </div>
+        </fb-field>
       </div>
 
       <div class="form-actions">

@@ -427,8 +427,14 @@ may not always be possible, and you may choose to leave some validation
 exclusively on the server-side.
 
 We provide a clean integration between Angular form validation and server-side
-form validation via the 'formErrors' directive. See
-/app/assets/javascripts/shared/angular/directives/form_errors.js.
+form validation via the 'fbErrors' directive.
+
+We also provide 'fb-field', a directive for succinctly creating form fields.
+This integrates automatically with 'fb-errors' to display errors, while at the
+same time making the form HTML much less verbose and repetitive.
+
+For more information, see files in
+/app/assets/javascripts/shared/angular/modules/form_builder/directives.
 
 === Background Jobs
 

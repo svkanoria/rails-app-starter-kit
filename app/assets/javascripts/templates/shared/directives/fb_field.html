@@ -1,0 +1,11 @@
+<div class="form-group" ng-class="{'has-error': errors}">
+  <label for="{{name}}" class="control-label">{{adjLabel}}</label>
+  <input type="{{type}}" name="{{name}}" class="form-control"
+         ng-model="$parent.ngModel" ng-if="type">
+
+  <ng-transclude-replace></ng-transclude-replace>
+
+  <fb-hint ng-if="hint">{{hint}}</fb-hint>
+
+  <p class="help-block" ng-show="errors">- {{errors[0]}}</p>
+</div>
