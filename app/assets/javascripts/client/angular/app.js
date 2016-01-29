@@ -23,7 +23,6 @@ var app = angular.module('App', [
   // Directives
   'ngTranscludeReplace',
   'AuthenticationLinks',
-  'FormErrors',
   'PleaseWait',
   'DateTimePicker',
   'JWPlayer',
@@ -35,6 +34,7 @@ var app = angular.module('App', [
 
   // Modules
   'ResourceUtils',
+  'FormBuilder',
   'AttachmentLibrary'
 ]);
 

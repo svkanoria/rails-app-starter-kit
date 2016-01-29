@@ -1,15 +1,8 @@
 <!-- Common form for creating/updating a post -->
-<form role="form" novalidate form-errors="postErrors">
+<form role="form" novalidate fb-errors="postErrors">
   <div class="form-inputs">
-    <div class="form-group" ng-class="{'has-error': postErrors['message']}">
-      <label for="message" class="control-label">Message</label>
-      <input type="text" name="message" class="form-control"
-             ng-model="post.message"/>
-
-      <p class="help-block" ng-show="postErrors['message']">
-        {{postErrors['message'][0]}}
-      </p>
-    </div>
+    <fb-field type="text" hint="Minimum 10, maximum 140 characters"
+              required="true" ng-model="post.message"></fb-field>
   </div>
 
   <div class="form-actions" ng-if="!post.id">
