@@ -60,8 +60,10 @@ angular.module('FBErrors', [])
                   _.each(fieldErrors, function (fieldError) {
                     var field = form[key];
 
-                    field.$dirty = true;
-                    field.$setValidity(camelizedKey + 'Field', false);
+                    if (field) {
+                      field.$dirty = true;
+                      field.$setValidity(camelizedKey + 'Field', false);
+                    }
                   });
 
                   _.each(listeners[key], function (listener) {
