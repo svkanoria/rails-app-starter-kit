@@ -208,6 +208,7 @@ angular.module('UsersCtrl', ['User'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'User created.');
 
+          $scope.navConfirmationSvc.setConfirmNav(false);
           $state.go('app.users.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
@@ -236,6 +237,7 @@ angular.module('UsersCtrl', ['User'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'User updated.');
 
+          $scope.navConfirmationSvc.setConfirmNav(false);
           $state.go('app.users.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();

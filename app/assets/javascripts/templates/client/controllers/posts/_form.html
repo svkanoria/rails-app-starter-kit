@@ -1,5 +1,5 @@
 <!-- Common form for creating/updating a post -->
-<form role="form" novalidate fb-errors="postErrors">
+<form role="form" novalidate fb-errors="postErrors" confirm-dirty-form>
   <div class="form-inputs">
     <fb-field type="text" hint="Minimum 10, maximum 140 characters"
               required="true" ng-model="post.message"></fb-field>

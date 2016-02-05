@@ -32,6 +32,8 @@ stack, with the following features built-in:
 1. User authentication via Facebook, Google and other providers
 1. Front-end asset management using Bower
 1. Angular-based routing
+1. User confirmation before navigating away, such as from unsaved form fields
+   (works for Angular route changes, *and* when navigating to external URLs)
 1. Angular-based flash messages (can include HTML and even Angular directives)
 1. Angular interfacing with server CSRF protection and server form validation
 1. Secure API-based access for native apps
