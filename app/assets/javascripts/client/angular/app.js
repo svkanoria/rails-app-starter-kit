@@ -11,7 +11,6 @@ var app = angular.module('App', [
 
   // Services
   'AuthSvc',
-  'RouteUtils',
   'Post',
 
   // Controllers
@@ -33,6 +32,7 @@ var app = angular.module('App', [
   'DateFilters',
 
   // Modules
+  'RouteUtils',
   'ResourceUtils',
   'FormBuilder',
   'AttachmentLibrary'

@@ -2,7 +2,7 @@
  * Helpers for use while configuring routes with $stateProvider.
  * Merely inject into the app.config(...) block.
  */
-angular.module('RouteUtils', [])
+angular.module('RouteUtilsConst', [])
   .constant('ROUTE_UTILS', function () {
     /**
      * Use within the 'resolve' property of a route.
@@ -56,10 +56,17 @@ angular.module('RouteUtils', [])
      */
     var onAppRun = [
       '$rootScope', '$window', '$location', '$state', 'PleaseWaitSvc',
-      function($rootScope, $window, $location, $state, PleaseWaitSvc) {
-        // Shows a 'Please Wait...' indicator between route changes
-        $rootScope.$on('$stateChangeStart', function() {
-          PleaseWaitSvc.request();
+      'NavConfirmationSvc',
+      function($rootScope, $window, $location, $state, PleaseWaitSvc,
+               NavConfirmationSvc) {
+
+        $rootScope.$on('$stateChangeStart', function(event) {
+          if (!NavConfirmationSvc.isNavConfirmed()) {
+            event.preventDefault();
+          } else {
+            // Shows a 'Please Wait...' indicator when route changes
+            PleaseWaitSvc.request();
+          }
         });
 
         /*

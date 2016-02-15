@@ -63,6 +63,7 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'Post created.');
 
+          $scope.navConfirmationSvc.setConfirmNav(false);
           $state.go('app.posts.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
@@ -91,6 +92,7 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'Post updated.');
 
+          $scope.navConfirmationSvc.setConfirmNav(false);
           $state.go('app.posts.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
@@ -110,6 +112,7 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
           $scope.pleaseWaitSvc.release();
           flash.set('success', 'Post deleted.');
 
+          $scope.navConfirmationSvc.setConfirmNav(false);
           $state.go('app.posts.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();

@@ -4,12 +4,15 @@
  * Anything added to its scope will be available to all other controllers, and
  * subsequently views.
  */
-angular.module('AppCtrl', ['AuthSvc', 'PleaseWait'])
+angular.module('AppCtrl', ['AuthSvc', 'PleaseWait', 'RouteUtils'])
   .controller('AppCtrl', [
-    '$scope', 'AuthSvc', 'PleaseWaitSvc',
-    function($scope, AuthSvc, PleaseWaitSvc) {
+    '$scope', 'AuthSvc', 'PleaseWaitSvc', 'NavConfirmationSvc',
+    function($scope, AuthSvc, PleaseWaitSvc, NavConfirmationSvc) {
+      // Near-ubiquitous functionality, added to this scope to prevent
+      // repetition in each controller.
       $scope.authSvc = AuthSvc;
       $scope.pleaseWaitSvc = PleaseWaitSvc;
+      $scope.navConfirmationSvc = NavConfirmationSvc;
 
       // For the attachment library directive declared in the Rails application
       // layout.
@@ -29,7 +32,7 @@ angular.module('AppCtrl', ['AuthSvc', 'PleaseWait'])
           localBlankPagePath: '/upload_success.html'
         },
         retry: {
-          enableAuto: true // defaults to false
+          enableAuto: true // Defaults to false
         }
       };
     }]);
