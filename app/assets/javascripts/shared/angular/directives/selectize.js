@@ -10,6 +10,34 @@
 angular.module('Selectize', [])
   .directive('selectize', [
     function () {
+      /**
+       * Returns whether the model, when massaged (converted to an array of
+       * strings), is item-wise equal to the selected items as exposed by the
+       * Selectize API.
+       *
+       * @param items {string[]} - The array of selected items, as exposed by
+       * the 'items' property of the Selectize API.
+       * @param model {object|object[]} - The model as given to the 'ng-model'
+       * attribute.
+       *
+       * @returns {true|false}
+       */
+      function looselyEqual (items, model) {
+        var adjModel = null;
+
+        if (!model) {
+          adjModel = [];
+        } else if (Array.isArray(model)) {
+          adjModel = model;
+        } else {
+          adjModel = [model];
+        }
+
+        adjModel = _.map(adjModel, function (i) { return i.toString(); });
+
+        return angular.equals(items, adjModel);
+      }
+
       return {
         restrict: 'EA',
         require: '^ngModel',
@@ -35,7 +63,7 @@ angular.module('Selectize', [])
           var origOnChange = options.onChange;
 
           options.onChange = function () {
-            if (!angular.equals(selectize.items, scope.ngModel)) {
+            if (!looselyEqual(selectize.items, scope.ngModel)) {
               var value = angular.copy(selectize.items);
 
               ngModel.$setViewValue(value);
@@ -52,7 +80,7 @@ angular.module('Selectize', [])
             .addClass('form-control');
 
           scope.$watchCollection('ngModel', function (value) {
-            if (!angular.equals(selectize.items, value)) {
+            if (!looselyEqual(selectize.items, value)) {
               selectize.setValue(value);
             }
           });
