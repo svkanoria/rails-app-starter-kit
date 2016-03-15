@@ -1,0 +1,17 @@
+<h2>App Settings</h2>
+
+<div class="row">
+  <div class="col-sm-4 col-md-3">
+    <ul class="nav nav-pills nav-stacked">
+      <li ng-repeat="catDef in categories"
+          ng-class="{active: '{{catDef.category}}' === category}">
+
+        <a ui-sref="app.app_settings.show({ category: '{{catDef.category}}' })">
+          {{catDef.label}}</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-8 col-md-9">
+    <div ui-view></div>
+  </div>
+</div>

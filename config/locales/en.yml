@@ -31,6 +31,25 @@ en:
 
         current_password: 'We need your current password to confirm your
           changes'
+    errors:
+      models:
+        attachment_join:
+          attributes:
+            attachment_owner_type:
+              does_not_act_as_attachment_owner: 'Model does not accept
+                attachments'
+            role:
+              not_accepted: 'Role not accepted'
+              quota_exceeded: 'Maximum number reached'
+            attachment_id:
+              rejected_by_filter: 'Attachment does not meet criteria'
+  activemodel:
+    errors:
+      models:
+        app_settings/outgoing_email:
+          attributes:
+            base:
+              all_or_none_must_be_blank: 'Either all or none must be blank'
 
   # Error messages for the 'render_op_error' method (see ApplicationController)
   op_errors:

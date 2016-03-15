@@ -53,24 +53,24 @@ angular.module('FBErrors', [])
              *   }
              */
             this.validateForm = function (form, errors) {
-              if (errors) {
-                _.each(errors, function (fieldErrors, key) {
-                  var camelizedKey = _.camelize(key);
+              var fields = {};
 
-                  _.each(fieldErrors, function (fieldError) {
-                    var field = form[key];
+              _.each(form, function(value, key) {
+                if (typeof value === 'object' &&
+                  value.hasOwnProperty('$modelValue')) {
+                  fields[key] = value;
+                }
+              });
 
-                    if (field) {
-                      field.$dirty = true;
-                      field.$setValidity(camelizedKey + 'Field', false);
-                    }
-                  });
+              _.each(fields, function (field, key) {
+                var fieldErrors = (errors) ? errors[key] : null;
 
-                  _.each(listeners[key], function (listener) {
-                    listener(fieldErrors);
-                  });
+                field.$setValidity(_.camelize(key) + 'Field', !!fieldErrors);
+
+                _.each(listeners[key], function (listener) {
+                  listener(fieldErrors);
                 });
-              }
+              });
             };
 
             /**

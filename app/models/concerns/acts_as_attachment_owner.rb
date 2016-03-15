@@ -43,7 +43,7 @@ module ActsAsAttachmentOwner
 
     # Sets the attachment options.
     #
-    # @param opts [Hash] As follows (? indicates optional keys):
+    # @param opts [Hash] as follows (? indicates optional keys):
     #   {
     #     # If not specified, then all attachments are accepted
     #     accepts_roles (?): [

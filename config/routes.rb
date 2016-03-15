@@ -46,6 +46,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resource :app_settings, only: [:show, :update]
+
     root 'home#index'
   end
 

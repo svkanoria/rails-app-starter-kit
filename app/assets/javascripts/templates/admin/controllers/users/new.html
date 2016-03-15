@@ -26,8 +26,8 @@
                   ng-model="user.password_confirmation"></fb-field>
 
         <fb-field ng-model="user.roles">
-          <selectize ng-model="user.roles" options="userRoleSelectizeOptions">
-          </selectize>
+          <selectize name="roles" ng-model="user.roles"
+                     options="userRoleSelectizeOptions"></selectize>
         </fb-field>
       </div>
 
