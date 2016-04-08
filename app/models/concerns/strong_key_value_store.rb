@@ -95,7 +95,7 @@ module StrongKeyValueStore
     #
     # @return [KeyValueStore]
     def underlying_raw_kvs
-      @underlying_raw_kvs ||= KeyValueStore["__#{self.name}"]
+      KeyValueStore["__#{self.name}"]
     end
 
     # The singleton instance of this strong key value store.

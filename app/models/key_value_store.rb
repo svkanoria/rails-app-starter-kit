@@ -76,7 +76,7 @@ class KeyValueStore < ActiveRecord::Base
   def self.[] (name)
     name_str = name.to_s
 
-    @model = KeyValueStore.where(name: name_str).first_or_create(name: name_str)
+    KeyValueStore.where(name: name_str).first_or_create(name: name_str)
   end
 
   private
