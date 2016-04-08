@@ -73,7 +73,7 @@ module BatchActions
     # Sets the batch options.
     #
     # @param opts [Hash] as follows (? indicates optional keys):
-    #   {
+    #   !{
     #     # The model the controller corresponds to.
     #     # If not specified, it is inferred from the controller name.
     #     model (?): some_class,

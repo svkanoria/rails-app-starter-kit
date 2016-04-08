@@ -10,8 +10,8 @@
         </div>
 
         <fb-field ng-model="user.roles">
-          <selectize ng-model="user.roles" options="userRoleSelectizeOptions">
-          </selectize>
+          <selectize name="roles" ng-model="user.roles"
+                     options="userRoleSelectizeOptions"></selectize>
         </fb-field>
       </div>
 

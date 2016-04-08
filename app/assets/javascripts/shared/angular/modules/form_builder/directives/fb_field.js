@@ -21,7 +21,9 @@
  *
  * * The type can be any valid HTML input type. If none specified, the input
  *   mechanism's HTML must be explicitly provided nested within the <fb-field>
- *   tags. The two are mutually exclusive.
+ *   tags. The two are mutually exclusive. If providing nested HTML, be sure to
+ *   set the 'name' attribute on any Angular input elements (even select etc.)
+ *   within, for any corresponding 'fb-errors' errors to display correctly.
  * * If no label is specified, it is inferred from the ng-model path provided
  * * A hint can be given via either the 'hint' attribute, or an <fb-hint> tag.
  *   Only the latter can contain HTML. The two are mutually exclusive.

@@ -1,0 +1,77 @@
+<!--
+The enclosing row and column divs are optional. We use them here only for
+adjusting this form's width based on the screen size, to make it look good no
+matter the size.
+-->
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h3>Outgoing Email</h3>
+
+    <form role="form" novalidate fb-errors="settingsErrors" confirm-dirty-form>
+      <div class="form-inputs">
+        <h4>SMTP Settings</h4>
+
+        <p class="help-block">
+          Configure outgoing email delivery. Leaving ALL blank will try and
+          fall back on default SMTP settings. If you do provide ANY of these
+          fields, only your own (and NONE of the default) SMTP settings will be
+          used.
+        </p>
+
+        <fb-field type="text" label="Address"
+                  ng-model="settings.smtp_address"></fb-field>
+
+        <fb-field type="number" label="Port"
+                  ng-model="settings.smtp_port"></fb-field>
+
+        <fb-field type="text" label="Username"
+                  ng-model="settings.smtp_user_name"></fb-field>
+
+        <fb-field type="text" label="Password"
+                  ng-model="settings.smtp_password"></fb-field>
+
+        <fb-field label="Authentication"
+                  ng-model="settings.smtp_authentication">
+
+          <select class="form-control" name="smtp_authentication"
+                  ng-model="settings.smtp_authentication">
+            <option value=""></option>
+            <option value="plain">PLAIN</option>
+            <option value="login">LOGIN</option>
+            <option value="cram_md5">CRAM_MD5</option>
+          </select>
+        </fb-field>
+
+        <fb-field label="Enable STARTTLS auto"
+                  ng-model="settings.smtp_enable_starttls_auto">
+
+          <select class="form-control" name="smtp_enable_starttls_auto"
+                  ng-model="settings.smtp_enable_starttls_auto">
+            <option value=""></option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </fb-field>
+
+        <fb-field label="OpenSSL verify mode"
+                  ng-model="settings.smtp_openssl_verify_mode">
+
+          <select class="form-control" name="smtp_openssl_verify_mode"
+                  ng-model="settings.smtp_openssl_verify_mode">
+            <option value=""></option>
+            <option value="none">NONE</option>
+            <option value="peer">PEER</option>
+            <option value="client_once">CLIENT_ONCE</option>
+            <option value="fail_if_no_peer_cert">FAIL_IF_NO_PEER_CERT</option>
+          </select>
+        </fb-field>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" ng-click="updateSettings()">
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

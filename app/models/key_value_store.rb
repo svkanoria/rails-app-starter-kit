@@ -13,6 +13,9 @@
 #
 # Can store numbers, strings, booleans, date-times, arrays and hashes.
 #
+# For a "stronger" (permitted keys, validations) version of this key value
+# store, see the {StrongKeyValueStore} module.
+#
 # Usage:
 #   # Default store
 #   KeyValueStore.set(some_key: some-object, ...)
@@ -57,6 +60,16 @@ class KeyValueStore < ActiveRecord::Base
     settings(:default).update_attributes!(encoded_hash)
   end
 
+  # Clears any existing value(s), and sets the given one(s) instead.
+  #
+  # @param hash [Hash{Symbol => Object}] the keys and values to set, or nil or
+  #   {} to merely clear existing values
+  def clear_and_set (hash)
+    full_hash = get_all.transform_values! { |value| nil }.merge(hash || {})
+
+    set(full_hash)
+  end
+
   # Gets a named store, creating one first if it does not exist yet.
   # Note: Supplying :default will fetch the default store.
   #
@@ -66,7 +79,7 @@ class KeyValueStore < ActiveRecord::Base
   def self.[] (name)
     name_str = name.to_s
 
-    @model = KeyValueStore.where(name: name_str).first_or_create(name: name_str)
+    KeyValueStore.where(name: name_str).first_or_create(name: name_str)
   end
 
   private
@@ -113,5 +126,16 @@ class KeyValueStore < ActiveRecord::Base
   # @param hash [Hash{Symbol => Object}] the keys and values to set
   def self.set (hash)
     KeyValueStore[:default].set(hash)
+  end
+
+  # Clears any existing value(s), and sets the given one(s) instead.
+  # Operates on the default store.
+  #
+  # @param hash [Hash{Symbol => Object}] the keys and values to set, or nil or
+  #   {} to merely clear existing values
+  def self.clear_and_set (hash)
+    full_hash = get_all.transform_values! { |value| nil }.merge(hash || {})
+
+    set(full_hash)
   end
 end

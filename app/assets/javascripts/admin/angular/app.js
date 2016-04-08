@@ -13,6 +13,7 @@ var app = angular.module('App', [
   // Controllers
   'AppCtrl',
   'HomeCtrl',
+  'AppSettingsCtrl',
   'PostsCtrl',
   'UsersCtrl',
 

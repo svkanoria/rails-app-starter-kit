@@ -78,6 +78,31 @@ app.config([
         }
       })
 
+      // App settings routes
+      .state('app.app_settings', {
+        abstract: true,
+        url: '/app_settings/:category',
+        templateUrl: 'admin/controllers/app_settings/layout.html',
+        controller: 'AppSettingsCtrl',
+        resolve: {
+          initialData: ['$stateParams', function ($stateParams) {
+            return $stateParams.category;
+          }],
+          initialData2: ['$stateParams', '$http',
+            function ($stateParams, $http) {
+              return $http.get('/admin/app_settings.json?category=' +
+                $stateParams.category);
+            }]
+        }
+      })
+      .state('app.app_settings.show', {
+        url: '',
+        templateUrl: function ($stateParams) {
+          return 'admin/controllers/app_settings/' + $stateParams.category
+            + '.html';
+        }
+      })
+
       // Error routes
       .state('401', {
         url: '/401',
