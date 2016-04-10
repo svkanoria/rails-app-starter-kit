@@ -10,6 +10,12 @@ module ConfigurableDeliveryMailer
 
   SMTP_SETTINGS = AppSettings::OutgoingEmail::SMTP_SETTINGS
 
+  def sender
+    AppSettings.get(:outgoing_email, :sender) ||
+        Rails.application.secrets.outgoing_email_sender ||
+        "no-reply@#{Rails.application.secrets.application_host}"
+  end
+
   def app_smtp_settings
     AppSettings.get(:outgoing_email, *SMTP_SETTINGS)
   end
@@ -22,7 +28,7 @@ module ConfigurableDeliveryMailer
     SMTP_SETTINGS.any? { |s| app_smtp_settings[s].present? }
   end
 
-  def type_correct_settings (smtp_settings)
+  def type_correct_smtp_settings (smtp_settings)
     smtp_settings[:smtp_authentication] =
         smtp_settings[:smtp_authentication].to_sym
 
@@ -31,7 +37,7 @@ module ConfigurableDeliveryMailer
             smtp_settings[:smtp_enable_starttls_auto])
   end
 
-  def clean_up_settings_for_rails (smtp_settings)
+  def format_smtp_settings_for_rails (smtp_settings)
     smtp_settings.reject! { |k, v| v.blank? }
 
     # Remove the 'smtp_' prefix from each key
@@ -43,13 +49,15 @@ module ConfigurableDeliveryMailer
     result = default_smtp_settings unless use_app_smtp_settings?(result)
     result.merge!(smtp_domain: Rails.application.secrets.application_host)
 
-    type_correct_settings(result)
-    clean_up_settings_for_rails(result)
+    type_correct_smtp_settings(result)
+    format_smtp_settings_for_rails(result)
 
     result
   end
 
   def set_delivery_options
+    mail.from = sender
+
     mail.delivery_method.settings.merge!(final_smtp_settings)
   end
 end

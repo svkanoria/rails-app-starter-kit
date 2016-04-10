@@ -7,15 +7,25 @@ matter the size.
   <div class="col-md-8 col-md-offset-2">
     <h3>Outgoing Email</h3>
 
+    <p class="help-block">Configure outgoing email delivery.</p>
+
     <form role="form" novalidate fb-errors="settingsErrors" confirm-dirty-form>
       <div class="form-inputs">
+        <h4>Sender Info</h4>
+
+        <fb-field type="email" label="From address" ng-model="settings.sender">
+          <fb-hint>
+            The emails' 'from' field. Falls back to a default. CAUTION: Your
+            SMTP server may override it.
+          </fb-hint>
+        </fb-field>
+
         <h4>SMTP Settings</h4>
 
         <p class="help-block">
-          Configure outgoing email delivery. Leaving ALL blank will try and
-          fall back on default SMTP settings. If you do provide ANY of these
-          fields, only your own (and NONE of the default) SMTP settings will be
-          used.
+          Leaving ALL blank will try and fall back on default SMTP settings.
+          If you do provide ANY of these fields, only your own (and NONE of the
+          default) SMTP settings will be used.
         </p>
 
         <fb-field type="text" label="Address"
