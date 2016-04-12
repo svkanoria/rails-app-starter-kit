@@ -11,7 +11,7 @@ module ConfigurableDeliveryMailer
   SMTP_SETTINGS = AppSettings::OutgoingEmail::SMTP_SETTINGS
 
   def sender
-    AppSettings.get(:outgoing_email, :sender) ||
+    AppSettings.get(:outgoing_email, :sender).presence ||
         Rails.application.secrets.outgoing_email_sender ||
         "no-reply@#{Rails.application.secrets.application_host}"
   end

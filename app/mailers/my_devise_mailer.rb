@@ -21,7 +21,9 @@ class MyDeviseMailer < Devise::Mailer
   # code for automatically setting these fields does not work as desired.
   def headers_for (action, opts)
     headers = super(action, opts)
+
     headers[:from] = headers[:reply_to] = sender
+
     headers
   end
 end
