@@ -6,7 +6,7 @@ class AppSettings::OutgoingEmail
                    :smtp_user_name, :smtp_password, :smtp_authentication,
                    :smtp_enable_starttls_auto, :smtp_openssl_verify_mode]
 
-  strong_key_value_store keys: SMTP_SETTINGS
+  strong_key_value_store keys: [:sender] + SMTP_SETTINGS
 
   # We accept all settings as strings or numbers, even though ActionMailer
   # requires some as booleans and symbols. This makes it easy to fall back on
