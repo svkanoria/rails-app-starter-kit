@@ -3,9 +3,9 @@ var app = angular.module('App', [
   'ui.router',
   'ngAnimate',
   'ng-rails-csrf',
-  'flashular',
 
   // Services
+  'Flash',
   'AuthSvc',
   'Post',
   'User',

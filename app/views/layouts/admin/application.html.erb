@@ -16,10 +16,10 @@
 
   <div class="container" id="flash-container">
     <%# Server-side flash messages %>
-    <%= server_flash_alerts %>
+    <%= render 'layouts/shared/flash_alerts' %>
 
     <%# Client-side flash messages %>
-    <flash-alerts closeable="true"></flash-alerts>
+    <flash-alerts></flash-alerts>
   </div>
 
   <%= yield %>

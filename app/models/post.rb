@@ -18,10 +18,10 @@ class Post < ActiveRecord::Base
           { image: {
               count: 1,
               filter: lambda { |attachment, post|
-                attachment.user_id == post.user_id
+                attachment.user_id == post.user_id && attachment.web_image?
               }
           } },
-          :contributed_image
+          :contributed_attachment
       ])
 
   validates :message, presence: true, length: { minimum: 10, maximum: 140 }

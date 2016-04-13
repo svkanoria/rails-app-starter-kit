@@ -1,0 +1,13 @@
+<div ng-show="flash" class="alerts">
+  <div ng-repeat-start="item in flashItems"
+       class="alert alert-{{item.key}} alert-dismissible" role="alert">
+
+    <button type="button" class="close" aria-label="Close"
+            ng-click="flash.removeAt($index)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <span flash-alert="{{item.value}}"></span>
+  </div>
+  <br ng-repeat-end>
+</div>

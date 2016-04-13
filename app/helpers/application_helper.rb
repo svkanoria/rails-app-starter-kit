@@ -9,33 +9,20 @@ module ApplicationHelper
     end
   end
 
-  # Map for adapting Rails flash messages to Bootstrap alerts. Contains only
-  # those entries that do not map unchanged.
-  FLASH_TYPE_MAP = { notice: 'success', alert: 'danger', error: 'danger' }
+  # Mapping of Rails flash keys to Bootstrap alert contexts. Contains only the
+  # keys that do not map unchanged (i.e. keys that have no namesake Bootstrap
+  # alert contexts).
+  FLASH_KEY_MAP = { notice: 'success', alert: 'danger' }
 
-  # Server-side flash messages rendered as HTML.
-  # Created as a helper (rather than a view partial) for better performance.
+  # Maps Rails flash keys to appropriate Bootstrap alert contexts.
   #
-  # Take care to maintain similarity with client-side flash messages created
-  # via the 'flash-alerts' directive included in the flashular library.
-  def server_flash_alerts
-    return nil unless flash.any?
-
-    content_tag :div, class: 'alerts' do
-      flash.each do |type, message|
-        unless type == :timedout # Devise uses :timedout for its internal use
-          bootstrap_class = "alert-#{FLASH_TYPE_MAP[type.to_sym] || type}"
-
-          message_div = content_tag :div, class: "alert #{bootstrap_class}" do
-            concat message
-
-            concat content_tag :button, raw('&times;'), class: 'close',
-                               data: { dismiss: 'alert'}
-          end
-
-          concat message_div
-        end
-      end
-    end
+  # This is required because the most commonly used Rails flash keys (notice,
+  # alert) have no namesake Bootstrap alert contexts.
+  #
+  # @param flash_key [String, Symbol]
+  #
+  # @return [String]
+  def bootstrap_alert_context (flash_key)
+    FLASH_KEY_MAP[flash_key.to_sym] || flash_key
   end
 end

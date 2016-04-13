@@ -60,15 +60,15 @@
 			"name": "Antarctica",
 			"abbr": "AQ",
 			"zones": [
-				"Antarctica/Rothera",
-				"Antarctica/Palmer",
-				"Antarctica/Mawson",
-				"Antarctica/Davis",
 				"Antarctica/Casey",
-				"Antarctica/Vostok",
+				"Antarctica/Davis",
 				"Antarctica/DumontDUrville",
+				"Antarctica/Mawson",
+				"Antarctica/Palmer",
+				"Antarctica/Rothera",
 				"Antarctica/Syowa",
 				"Antarctica/Troll",
+				"Antarctica/Vostok",
 				"Pacific/Auckland"
 			]
 		},
@@ -236,7 +236,7 @@
 			]
 		},
 		"BQ": {
-			"name": "Caribbean Netherlands",
+			"name": "Caribbean NL",
 			"abbr": "BQ",
 			"zones": [
 				"America/Curacao"
@@ -314,11 +314,11 @@
 				"America/Thunder_Bay",
 				"America/Iqaluit",
 				"America/Pangnirtung",
-				"America/Resolute",
 				"America/Atikokan",
-				"America/Rankin_Inlet",
 				"America/Winnipeg",
 				"America/Rainy_River",
+				"America/Resolute",
+				"America/Rankin_Inlet",
 				"America/Regina",
 				"America/Swift_Current",
 				"America/Edmonton",
@@ -942,7 +942,7 @@
 			"name": "Cayman Islands",
 			"abbr": "KY",
 			"zones": [
-				"America/Cayman"
+				"America/Panama"
 			]
 		},
 		"KZ": {
@@ -1062,7 +1062,7 @@
 			]
 		},
 		"MF": {
-			"name": "St Martin (French part)",
+			"name": "St Martin (French)",
 			"abbr": "MF",
 			"zones": [
 				"America/Port_of_Spain"
@@ -1190,7 +1190,6 @@
 				"America/Ojinaga",
 				"America/Hermosillo",
 				"America/Tijuana",
-				"America/Santa_Isabel",
 				"America/Bahia_Banderas"
 			]
 		},
@@ -1441,10 +1440,13 @@
 				"Europe/Moscow",
 				"Europe/Simferopol",
 				"Europe/Volgograd",
+				"Europe/Astrakhan",
 				"Europe/Samara",
+				"Europe/Ulyanovsk",
 				"Asia/Yekaterinburg",
 				"Asia/Omsk",
 				"Asia/Novosibirsk",
+				"Asia/Barnaul",
 				"Asia/Novokuznetsk",
 				"Asia/Krasnoyarsk",
 				"Asia/Irkutsk",
@@ -1452,9 +1454,9 @@
 				"Asia/Yakutsk",
 				"Asia/Khandyga",
 				"Asia/Vladivostok",
-				"Asia/Sakhalin",
 				"Asia/Ust-Nera",
 				"Asia/Magadan",
+				"Asia/Sakhalin",
 				"Asia/Srednekolymsk",
 				"Asia/Kamchatka",
 				"Asia/Anadyr"
@@ -1594,7 +1596,7 @@
 			]
 		},
 		"SX": {
-			"name": "St Maarten (Dutch part)",
+			"name": "St Maarten (Dutch)",
 			"abbr": "SX",
 			"zones": [
 				"America/Curacao"
@@ -1777,10 +1779,10 @@
 				"America/Boise",
 				"America/Phoenix",
 				"America/Los_Angeles",
-				"America/Metlakatla",
 				"America/Anchorage",
 				"America/Juneau",
 				"America/Sitka",
+				"America/Metlakatla",
 				"America/Yakutat",
 				"America/Nome",
 				"America/Adak",
@@ -1949,32 +1951,14 @@
 			],
 			"comments": ""
 		},
-		"Antarctica/Rothera": {
-			"name": "Antarctica/Rothera",
-			"lat": -66.4333,
-			"long": -67.8667,
+		"Antarctica/Casey": {
+			"name": "Antarctica/Casey",
+			"lat": -65.7167,
+			"long": 110.5167,
 			"countries": [
 				"AQ"
 			],
-			"comments": "Rothera Station, Adelaide Island"
-		},
-		"Antarctica/Palmer": {
-			"name": "Antarctica/Palmer",
-			"lat": -63.2,
-			"long": -63.9,
-			"countries": [
-				"AQ"
-			],
-			"comments": "Palmer Station, Anvers Island"
-		},
-		"Antarctica/Mawson": {
-			"name": "Antarctica/Mawson",
-			"lat": -66.4,
-			"long": 62.8833,
-			"countries": [
-				"AQ"
-			],
-			"comments": "Mawson Station, Holme Bay"
+			"comments": "Casey"
 		},
 		"Antarctica/Davis": {
 			"name": "Antarctica/Davis",
@@ -1983,25 +1967,7 @@
 			"countries": [
 				"AQ"
 			],
-			"comments": "Davis Station, Vestfold Hills"
-		},
-		"Antarctica/Casey": {
-			"name": "Antarctica/Casey",
-			"lat": -65.7167,
-			"long": 110.5167,
-			"countries": [
-				"AQ"
-			],
-			"comments": "Casey Station, Bailey Peninsula"
-		},
-		"Antarctica/Vostok": {
-			"name": "Antarctica/Vostok",
-			"lat": -77.6,
-			"long": 106.9,
-			"countries": [
-				"AQ"
-			],
-			"comments": "Vostok Station, Lake Vostok"
+			"comments": "Davis"
 		},
 		"Antarctica/DumontDUrville": {
 			"name": "Antarctica/DumontDUrville",
@@ -2010,7 +1976,34 @@
 			"countries": [
 				"AQ"
 			],
-			"comments": "Dumont-d'Urville Station, Adélie Land"
+			"comments": "Dumont-d'Urville"
+		},
+		"Antarctica/Mawson": {
+			"name": "Antarctica/Mawson",
+			"lat": -66.4,
+			"long": 62.8833,
+			"countries": [
+				"AQ"
+			],
+			"comments": "Mawson"
+		},
+		"Antarctica/Palmer": {
+			"name": "Antarctica/Palmer",
+			"lat": -63.2,
+			"long": -63.9,
+			"countries": [
+				"AQ"
+			],
+			"comments": "Palmer"
+		},
+		"Antarctica/Rothera": {
+			"name": "Antarctica/Rothera",
+			"lat": -66.4333,
+			"long": -67.8667,
+			"countries": [
+				"AQ"
+			],
+			"comments": "Rothera"
 		},
 		"Antarctica/Syowa": {
 			"name": "Antarctica/Syowa",
@@ -2019,7 +2012,7 @@
 			"countries": [
 				"AQ"
 			],
-			"comments": "Syowa Station, E Ongul I"
+			"comments": "Syowa"
 		},
 		"Antarctica/Troll": {
 			"name": "Antarctica/Troll",
@@ -2028,7 +2021,16 @@
 			"countries": [
 				"AQ"
 			],
-			"comments": "Troll Station, Queen Maud Land"
+			"comments": "Troll"
+		},
+		"Antarctica/Vostok": {
+			"name": "Antarctica/Vostok",
+			"lat": -77.6,
+			"long": 106.9,
+			"countries": [
+				"AQ"
+			],
+			"comments": "Vostok"
 		},
 		"America/Argentina/Buenos_Aires": {
 			"name": "America/Argentina/Buenos_Aires",
@@ -2046,7 +2048,7 @@
 			"countries": [
 				"AR"
 			],
-			"comments": "most locations (CB, CC, CN, ER, FM, MN, SE, SF)"
+			"comments": "Argentina (most areas: CB, CC, CN, ER, FM, MN, SE, SF)"
 		},
 		"America/Argentina/Salta": {
 			"name": "America/Argentina/Salta",
@@ -2055,7 +2057,7 @@
 			"countries": [
 				"AR"
 			],
-			"comments": "(SA, LP, NQ, RN)"
+			"comments": "Salta (SA, LP, NQ, RN)"
 		},
 		"America/Argentina/Jujuy": {
 			"name": "America/Argentina/Jujuy",
@@ -2082,7 +2084,7 @@
 			"countries": [
 				"AR"
 			],
-			"comments": "Catamarca (CT), Chubut (CH)"
+			"comments": "Catamarca (CT); Chubut (CH)"
 		},
 		"America/Argentina/La_Rioja": {
 			"name": "America/Argentina/La_Rioja",
@@ -2182,7 +2184,7 @@
 			"countries": [
 				"AU"
 			],
-			"comments": "Tasmania - most locations"
+			"comments": "Tasmania (most areas)"
 		},
 		"Australia/Currie": {
 			"name": "Australia/Currie",
@@ -2191,7 +2193,7 @@
 			"countries": [
 				"AU"
 			],
-			"comments": "Tasmania - King Island"
+			"comments": "Tasmania (King Island)"
 		},
 		"Australia/Melbourne": {
 			"name": "Australia/Melbourne",
@@ -2209,7 +2211,7 @@
 			"countries": [
 				"AU"
 			],
-			"comments": "New South Wales - most locations"
+			"comments": "New South Wales (most areas)"
 		},
 		"Australia/Broken_Hill": {
 			"name": "Australia/Broken_Hill",
@@ -2218,7 +2220,7 @@
 			"countries": [
 				"AU"
 			],
-			"comments": "New South Wales - Yancowinna"
+			"comments": "New South Wales (Yancowinna)"
 		},
 		"Australia/Brisbane": {
 			"name": "Australia/Brisbane",
@@ -2227,7 +2229,7 @@
 			"countries": [
 				"AU"
 			],
-			"comments": "Queensland - most locations"
+			"comments": "Queensland (most areas)"
 		},
 		"Australia/Lindeman": {
 			"name": "Australia/Lindeman",
@@ -2236,7 +2238,7 @@
 			"countries": [
 				"AU"
 			],
-			"comments": "Queensland - Holiday Islands"
+			"comments": "Queensland (Whitsunday Islands)"
 		},
 		"Australia/Adelaide": {
 			"name": "Australia/Adelaide",
@@ -2263,7 +2265,7 @@
 			"countries": [
 				"AU"
 			],
-			"comments": "Western Australia - most locations"
+			"comments": "Western Australia (most areas)"
 		},
 		"Australia/Eucla": {
 			"name": "Australia/Eucla",
@@ -2272,7 +2274,7 @@
 			"countries": [
 				"AU"
 			],
-			"comments": "Western Australia - Eucla area"
+			"comments": "Western Australia (Eucla)"
 		},
 		"Asia/Baku": {
 			"name": "Asia/Baku",
@@ -2362,7 +2364,7 @@
 			"countries": [
 				"BR"
 			],
-			"comments": "Amapá, E Pará"
+			"comments": "Pará (east); Amapá"
 		},
 		"America/Fortaleza": {
 			"name": "America/Fortaleza",
@@ -2371,7 +2373,7 @@
 			"countries": [
 				"BR"
 			],
-			"comments": "NE Brazil (MA, PI, CE, RN, PB)"
+			"comments": "Brazil (northeast: MA, PI, CE, RN, PB)"
 		},
 		"America/Recife": {
 			"name": "America/Recife",
@@ -2416,7 +2418,7 @@
 			"countries": [
 				"BR"
 			],
-			"comments": "S & SE Brazil (GO, DF, MG, ES, RJ, SP, PR, SC, RS)"
+			"comments": "Brazil (southeast: GO, DF, MG, ES, RJ, SP, PR, SC, RS)"
 		},
 		"America/Campo_Grande": {
 			"name": "America/Campo_Grande",
@@ -2443,7 +2445,7 @@
 			"countries": [
 				"BR"
 			],
-			"comments": "W Pará"
+			"comments": "Pará (west)"
 		},
 		"America/Porto_Velho": {
 			"name": "America/Porto_Velho",
@@ -2470,7 +2472,7 @@
 			"countries": [
 				"BR"
 			],
-			"comments": "E Amazonas"
+			"comments": "Amazonas (east)"
 		},
 		"America/Eirunepe": {
 			"name": "America/Eirunepe",
@@ -2479,7 +2481,7 @@
 			"countries": [
 				"BR"
 			],
-			"comments": "W Amazonas"
+			"comments": "Amazonas (west)"
 		},
 		"America/Rio_Branco": {
 			"name": "America/Rio_Branco",
@@ -2533,7 +2535,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Newfoundland Time, including SE Labrador"
+			"comments": "Newfoundland; Labrador (southeast)"
 		},
 		"America/Halifax": {
 			"name": "America/Halifax",
@@ -2542,7 +2544,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Atlantic Time - Nova Scotia (peninsula), PEI"
+			"comments": "Atlantic - NS (most areas); PE"
 		},
 		"America/Glace_Bay": {
 			"name": "America/Glace_Bay",
@@ -2551,7 +2553,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Atlantic Time - Nova Scotia (Cape Breton)"
+			"comments": "Atlantic - NS (Cape Breton)"
 		},
 		"America/Moncton": {
 			"name": "America/Moncton",
@@ -2560,7 +2562,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Atlantic Time - New Brunswick"
+			"comments": "Atlantic - New Brunswick"
 		},
 		"America/Goose_Bay": {
 			"name": "America/Goose_Bay",
@@ -2569,7 +2571,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Atlantic Time - Labrador - most locations"
+			"comments": "Atlantic - Labrador (most areas)"
 		},
 		"America/Blanc-Sablon": {
 			"name": "America/Blanc-Sablon",
@@ -2578,7 +2580,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Atlantic Standard Time - Quebec - Lower North Shore"
+			"comments": "AST - QC (Lower North Shore)"
 		},
 		"America/Toronto": {
 			"name": "America/Toronto",
@@ -2587,7 +2589,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Eastern Time - Ontario & Quebec - most locations"
+			"comments": "Eastern - ON, QC (most areas)"
 		},
 		"America/Nipigon": {
 			"name": "America/Nipigon",
@@ -2596,7 +2598,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Eastern Time - Ontario & Quebec - places that did not observe DST 1967-1973"
+			"comments": "Eastern - ON, QC (no DST 1967-73)"
 		},
 		"America/Thunder_Bay": {
 			"name": "America/Thunder_Bay",
@@ -2605,7 +2607,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Eastern Time - Thunder Bay, Ontario"
+			"comments": "Eastern - ON (Thunder Bay)"
 		},
 		"America/Iqaluit": {
 			"name": "America/Iqaluit",
@@ -2614,7 +2616,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Eastern Time - east Nunavut - most locations"
+			"comments": "Eastern - NU (most east areas)"
 		},
 		"America/Pangnirtung": {
 			"name": "America/Pangnirtung",
@@ -2623,16 +2625,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Eastern Time - Pangnirtung, Nunavut"
-		},
-		"America/Resolute": {
-			"name": "America/Resolute",
-			"lat": 74.6956,
-			"long": -93.1708,
-			"countries": [
-				"CA"
-			],
-			"comments": "Central Time - Resolute, Nunavut"
+			"comments": "Eastern - NU (Pangnirtung)"
 		},
 		"America/Atikokan": {
 			"name": "America/Atikokan",
@@ -2641,16 +2634,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Eastern Standard Time - Atikokan, Ontario and Southampton I, Nunavut"
-		},
-		"America/Rankin_Inlet": {
-			"name": "America/Rankin_Inlet",
-			"lat": 62.8167,
-			"long": -91.9169,
-			"countries": [
-				"CA"
-			],
-			"comments": "Central Time - central Nunavut"
+			"comments": "EST - ON (Atikokan); NU (Coral H)"
 		},
 		"America/Winnipeg": {
 			"name": "America/Winnipeg",
@@ -2659,7 +2643,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Central Time - Manitoba & west Ontario"
+			"comments": "Central - ON (west); Manitoba"
 		},
 		"America/Rainy_River": {
 			"name": "America/Rainy_River",
@@ -2668,7 +2652,25 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Central Time - Rainy River & Fort Frances, Ontario"
+			"comments": "Central - ON (Rainy R, Ft Frances)"
+		},
+		"America/Resolute": {
+			"name": "America/Resolute",
+			"lat": 74.6956,
+			"long": -93.1708,
+			"countries": [
+				"CA"
+			],
+			"comments": "Central - NU (Resolute)"
+		},
+		"America/Rankin_Inlet": {
+			"name": "America/Rankin_Inlet",
+			"lat": 62.8167,
+			"long": -91.9169,
+			"countries": [
+				"CA"
+			],
+			"comments": "Central - NU (central)"
 		},
 		"America/Regina": {
 			"name": "America/Regina",
@@ -2677,7 +2679,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Central Standard Time - Saskatchewan - most locations"
+			"comments": "CST - SK (most areas)"
 		},
 		"America/Swift_Current": {
 			"name": "America/Swift_Current",
@@ -2686,7 +2688,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Central Standard Time - Saskatchewan - midwest"
+			"comments": "CST - SK (midwest)"
 		},
 		"America/Edmonton": {
 			"name": "America/Edmonton",
@@ -2695,7 +2697,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Mountain Time - Alberta, east British Columbia & west Saskatchewan"
+			"comments": "Mountain - AB; BC (E); SK (W)"
 		},
 		"America/Cambridge_Bay": {
 			"name": "America/Cambridge_Bay",
@@ -2704,7 +2706,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Mountain Time - west Nunavut"
+			"comments": "Mountain - NU (west)"
 		},
 		"America/Yellowknife": {
 			"name": "America/Yellowknife",
@@ -2713,7 +2715,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Mountain Time - central Northwest Territories"
+			"comments": "Mountain - NT (central)"
 		},
 		"America/Inuvik": {
 			"name": "America/Inuvik",
@@ -2722,7 +2724,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Mountain Time - west Northwest Territories"
+			"comments": "Mountain - NT (west)"
 		},
 		"America/Creston": {
 			"name": "America/Creston",
@@ -2731,7 +2733,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Mountain Standard Time - Creston, British Columbia"
+			"comments": "MST - BC (Creston)"
 		},
 		"America/Dawson_Creek": {
 			"name": "America/Dawson_Creek",
@@ -2740,7 +2742,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Mountain Standard Time - Dawson Creek & Fort Saint John, British Columbia"
+			"comments": "MST - BC (Dawson Cr, Ft St John)"
 		},
 		"America/Fort_Nelson": {
 			"name": "America/Fort_Nelson",
@@ -2749,7 +2751,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Mountain Standard Time - Fort Nelson, British Columbia"
+			"comments": "MST - BC (Ft Nelson)"
 		},
 		"America/Vancouver": {
 			"name": "America/Vancouver",
@@ -2758,7 +2760,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Pacific Time - west British Columbia"
+			"comments": "Pacific - BC (most areas)"
 		},
 		"America/Whitehorse": {
 			"name": "America/Whitehorse",
@@ -2767,7 +2769,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Pacific Time - south Yukon"
+			"comments": "Pacific - Yukon (south)"
 		},
 		"America/Dawson": {
 			"name": "America/Dawson",
@@ -2776,7 +2778,7 @@
 			"countries": [
 				"CA"
 			],
-			"comments": "Pacific Time - north Yukon"
+			"comments": "Pacific - Yukon (north)"
 		},
 		"Indian/Cocos": {
 			"name": "Indian/Cocos",
@@ -2833,7 +2835,7 @@
 			"countries": [
 				"CL"
 			],
-			"comments": "most locations"
+			"comments": "Chile (most areas)"
 		},
 		"Pacific/Easter": {
 			"name": "Pacific/Easter",
@@ -2945,7 +2947,7 @@
 			"countries": [
 				"DE"
 			],
-			"comments": "Berlin time"
+			"comments": "Germany (most areas)"
 		},
 		"Europe/Copenhagen": {
 			"name": "Europe/Copenhagen",
@@ -2981,7 +2983,7 @@
 			"countries": [
 				"EC"
 			],
-			"comments": "mainland"
+			"comments": "Ecuador (mainland)"
 		},
 		"Pacific/Galapagos": {
 			"name": "Pacific/Galapagos",
@@ -3026,7 +3028,7 @@
 			"countries": [
 				"ES"
 			],
-			"comments": "mainland"
+			"comments": "Spain (mainland)"
 		},
 		"Africa/Ceuta": {
 			"name": "Africa/Ceuta",
@@ -3035,7 +3037,7 @@
 			"countries": [
 				"ES"
 			],
-			"comments": "Ceuta & Melilla"
+			"comments": "Ceuta, Melilla"
 		},
 		"Atlantic/Canary": {
 			"name": "Atlantic/Canary",
@@ -3081,7 +3083,7 @@
 			"countries": [
 				"FM"
 			],
-			"comments": "Chuuk (Truk) and Yap"
+			"comments": "Chuuk/Truk, Yap"
 		},
 		"Pacific/Pohnpei": {
 			"name": "Pacific/Pohnpei",
@@ -3090,7 +3092,7 @@
 			"countries": [
 				"FM"
 			],
-			"comments": "Pohnpei (Ponape)"
+			"comments": "Pohnpei/Ponape"
 		},
 		"Pacific/Kosrae": {
 			"name": "Pacific/Kosrae",
@@ -3174,7 +3176,7 @@
 			"countries": [
 				"GL"
 			],
-			"comments": "most locations"
+			"comments": "Greenland (most areas)"
 		},
 		"America/Danmarkshavn": {
 			"name": "America/Danmarkshavn",
@@ -3183,7 +3185,7 @@
 			"countries": [
 				"GL"
 			],
-			"comments": "east coast, north of Scoresbysund"
+			"comments": "National Park (east coast)"
 		},
 		"America/Scoresbysund": {
 			"name": "America/Scoresbysund",
@@ -3192,7 +3194,7 @@
 			"countries": [
 				"GL"
 			],
-			"comments": "Scoresbysund / Ittoqqortoormiit"
+			"comments": "Scoresbysund/Ittoqqortoormiit"
 		},
 		"America/Thule": {
 			"name": "America/Thule",
@@ -3201,7 +3203,7 @@
 			"countries": [
 				"GL"
 			],
-			"comments": "Thule / Pituffik"
+			"comments": "Thule/Pituffik"
 		},
 		"Europe/Athens": {
 			"name": "Europe/Athens",
@@ -3301,7 +3303,7 @@
 			"countries": [
 				"ID"
 			],
-			"comments": "Java & Sumatra"
+			"comments": "Java, Sumatra"
 		},
 		"Asia/Pontianak": {
 			"name": "Asia/Pontianak",
@@ -3310,7 +3312,7 @@
 			"countries": [
 				"ID"
 			],
-			"comments": "west & central Borneo"
+			"comments": "Borneo (west, central)"
 		},
 		"Asia/Makassar": {
 			"name": "Asia/Makassar",
@@ -3319,7 +3321,7 @@
 			"countries": [
 				"ID"
 			],
-			"comments": "east & south Borneo, Sulawesi (Celebes), Bali, Nusa Tengarra, west Timor"
+			"comments": "Borneo (east, south); Sulawesi/Celebes, Bali, Nusa Tengarra; Timor (west)"
 		},
 		"Asia/Jayapura": {
 			"name": "Asia/Jayapura",
@@ -3328,7 +3330,7 @@
 			"countries": [
 				"ID"
 			],
-			"comments": "west New Guinea (Irian Jaya) & Malukus (Moluccas)"
+			"comments": "New Guinea (West Papua / Irian Jaya); Malukus/Moluccas"
 		},
 		"Europe/Dublin": {
 			"name": "Europe/Dublin",
@@ -3503,15 +3505,6 @@
 			],
 			"comments": ""
 		},
-		"America/Cayman": {
-			"name": "America/Cayman",
-			"lat": 19.3,
-			"long": -80.6167,
-			"countries": [
-				"KY"
-			],
-			"comments": ""
-		},
 		"Asia/Almaty": {
 			"name": "Asia/Almaty",
 			"lat": 43.25,
@@ -3519,7 +3512,7 @@
 			"countries": [
 				"KZ"
 			],
-			"comments": "most locations"
+			"comments": "Kazakhstan (most areas)"
 		},
 		"Asia/Qyzylorda": {
 			"name": "Asia/Qyzylorda",
@@ -3528,7 +3521,7 @@
 			"countries": [
 				"KZ"
 			],
-			"comments": "Qyzylorda (Kyzylorda, Kzyl-Orda)"
+			"comments": "Qyzylorda/Kyzylorda/Kzyl-Orda"
 		},
 		"Asia/Aqtobe": {
 			"name": "Asia/Aqtobe",
@@ -3537,7 +3530,7 @@
 			"countries": [
 				"KZ"
 			],
-			"comments": "Aqtobe (Aktobe)"
+			"comments": "Aqtobe/Aktobe"
 		},
 		"Asia/Aqtau": {
 			"name": "Asia/Aqtau",
@@ -3546,7 +3539,7 @@
 			"countries": [
 				"KZ"
 			],
-			"comments": "Atyrau (Atirau, Gur'yev), Mangghystau (Mankistau)"
+			"comments": "Atyrau/Atirau/Gur'yev, Mangghystau/Mankistau"
 		},
 		"Asia/Oral": {
 			"name": "Asia/Oral",
@@ -3654,7 +3647,7 @@
 			"countries": [
 				"MH"
 			],
-			"comments": "most locations"
+			"comments": "Marshall Islands (most areas)"
 		},
 		"Pacific/Kwajalein": {
 			"name": "Pacific/Kwajalein",
@@ -3681,7 +3674,7 @@
 			"countries": [
 				"MN"
 			],
-			"comments": "most locations"
+			"comments": "Mongolia (most areas)"
 		},
 		"Asia/Hovd": {
 			"name": "Asia/Hovd",
@@ -3753,7 +3746,7 @@
 			"countries": [
 				"MX"
 			],
-			"comments": "Central Time - most locations"
+			"comments": "Central Time"
 		},
 		"America/Cancun": {
 			"name": "America/Cancun",
@@ -3780,7 +3773,7 @@
 			"countries": [
 				"MX"
 			],
-			"comments": "Mexican Central Time - Coahuila, Durango, Nuevo León, Tamaulipas away from US border"
+			"comments": "Central Time - Durango; Coahuila, Nuevo León, Tamaulipas (most areas)"
 		},
 		"America/Matamoros": {
 			"name": "America/Matamoros",
@@ -3789,7 +3782,7 @@
 			"countries": [
 				"MX"
 			],
-			"comments": "US Central Time - Coahuila, Durango, Nuevo León, Tamaulipas near US border"
+			"comments": "Central Time US - Coahuila, Nuevo León, Tamaulipas (US border)"
 		},
 		"America/Mazatlan": {
 			"name": "America/Mazatlan",
@@ -3798,7 +3791,7 @@
 			"countries": [
 				"MX"
 			],
-			"comments": "Mountain Time - S Baja, Nayarit, Sinaloa"
+			"comments": "Mountain Time - Baja California Sur, Nayarit, Sinaloa"
 		},
 		"America/Chihuahua": {
 			"name": "America/Chihuahua",
@@ -3807,7 +3800,7 @@
 			"countries": [
 				"MX"
 			],
-			"comments": "Mexican Mountain Time - Chihuahua away from US border"
+			"comments": "Mountain Time - Chihuahua (most areas)"
 		},
 		"America/Ojinaga": {
 			"name": "America/Ojinaga",
@@ -3816,7 +3809,7 @@
 			"countries": [
 				"MX"
 			],
-			"comments": "US Mountain Time - Chihuahua near US border"
+			"comments": "Mountain Time US - Chihuahua (US border)"
 		},
 		"America/Hermosillo": {
 			"name": "America/Hermosillo",
@@ -3834,16 +3827,7 @@
 			"countries": [
 				"MX"
 			],
-			"comments": "US Pacific Time - Baja California near US border"
-		},
-		"America/Santa_Isabel": {
-			"name": "America/Santa_Isabel",
-			"lat": 30.3,
-			"long": -113.1333,
-			"countries": [
-				"MX"
-			],
-			"comments": "Mexican Pacific Time - Baja California away from US border"
+			"comments": "Pacific Time US - Baja California"
 		},
 		"America/Bahia_Banderas": {
 			"name": "America/Bahia_Banderas",
@@ -3852,7 +3836,7 @@
 			"countries": [
 				"MX"
 			],
-			"comments": "Mexican Central Time - Bahía de Banderas"
+			"comments": "Central Time - Bahía de Banderas"
 		},
 		"Asia/Kuala_Lumpur": {
 			"name": "Asia/Kuala_Lumpur",
@@ -3861,7 +3845,7 @@
 			"countries": [
 				"MY"
 			],
-			"comments": "peninsular Malaysia"
+			"comments": "Malaysia (peninsula)"
 		},
 		"Asia/Kuching": {
 			"name": "Asia/Kuching",
@@ -3870,7 +3854,7 @@
 			"countries": [
 				"MY"
 			],
-			"comments": "Sabah & Sarawak"
+			"comments": "Sabah, Sarawak"
 		},
 		"Africa/Maputo": {
 			"name": "Africa/Maputo",
@@ -3886,7 +3870,7 @@
 				"ZM",
 				"ZW"
 			],
-			"comments": "Central Africa Time (UTC+2)"
+			"comments": "Central Africa Time"
 		},
 		"Africa/Windhoek": {
 			"name": "Africa/Windhoek",
@@ -3931,7 +3915,7 @@
 				"GQ",
 				"NE"
 			],
-			"comments": "West Africa Time (UTC+1)"
+			"comments": "West Africa Time"
 		},
 		"America/Managua": {
 			"name": "America/Managua",
@@ -4012,7 +3996,8 @@
 			"lat": 8.9667,
 			"long": -78.4667,
 			"countries": [
-				"PA"
+				"PA",
+				"KY"
 			],
 			"comments": ""
 		},
@@ -4059,7 +4044,7 @@
 			"countries": [
 				"PG"
 			],
-			"comments": "most locations"
+			"comments": "Papua New Guinea (most areas)"
 		},
 		"Pacific/Bougainville": {
 			"name": "Pacific/Bougainville",
@@ -4149,7 +4134,7 @@
 			"countries": [
 				"PT"
 			],
-			"comments": "mainland"
+			"comments": "Portugal (mainland)"
 		},
 		"Atlantic/Madeira": {
 			"name": "Atlantic/Madeira",
@@ -4205,7 +4190,7 @@
 				"RE",
 				"TF"
 			],
-			"comments": "Réunion, Crozet Is, Scattered Is"
+			"comments": "Réunion, Crozet, Scattered Islands"
 		},
 		"Europe/Bucharest": {
 			"name": "Europe/Bucharest",
@@ -4237,7 +4222,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow-01 - Kaliningrad"
+			"comments": "MSK-01 - Kaliningrad"
 		},
 		"Europe/Moscow": {
 			"name": "Europe/Moscow",
@@ -4246,7 +4231,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+00 - west Russia"
+			"comments": "MSK+00 - Moscow area"
 		},
 		"Europe/Simferopol": {
 			"name": "Europe/Simferopol",
@@ -4255,7 +4240,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+00 - Crimea"
+			"comments": "MSK+00 - Crimea"
 		},
 		"Europe/Volgograd": {
 			"name": "Europe/Volgograd",
@@ -4264,7 +4249,16 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+00 - Caspian Sea"
+			"comments": "MSK+00 - Volgograd, Kirov, Saratov"
+		},
+		"Europe/Astrakhan": {
+			"name": "Europe/Astrakhan",
+			"lat": 46.35,
+			"long": 48.05,
+			"countries": [
+				"RU"
+			],
+			"comments": "MSK+01 - Astrakhan"
 		},
 		"Europe/Samara": {
 			"name": "Europe/Samara",
@@ -4273,7 +4267,16 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+00 (Moscow+01 after 2014-10-26) - Samara, Udmurtia"
+			"comments": "MSK+01 - Samara, Udmurtia"
+		},
+		"Europe/Ulyanovsk": {
+			"name": "Europe/Ulyanovsk",
+			"lat": 54.3333,
+			"long": 48.4,
+			"countries": [
+				"RU"
+			],
+			"comments": "MSK+01 - Ulyanovsk"
 		},
 		"Asia/Yekaterinburg": {
 			"name": "Asia/Yekaterinburg",
@@ -4282,7 +4285,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+02 - Urals"
+			"comments": "MSK+02 - Urals"
 		},
 		"Asia/Omsk": {
 			"name": "Asia/Omsk",
@@ -4291,7 +4294,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+03 - west Siberia"
+			"comments": "MSK+03 - Omsk"
 		},
 		"Asia/Novosibirsk": {
 			"name": "Asia/Novosibirsk",
@@ -4300,7 +4303,16 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+03 - Novosibirsk"
+			"comments": "MSK+03 - Novosibirsk, Tomsk"
+		},
+		"Asia/Barnaul": {
+			"name": "Asia/Barnaul",
+			"lat": 53.3667,
+			"long": 83.75,
+			"countries": [
+				"RU"
+			],
+			"comments": "MSK+04 - Altai"
 		},
 		"Asia/Novokuznetsk": {
 			"name": "Asia/Novokuznetsk",
@@ -4309,7 +4321,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+03 (Moscow+04 after 2014-10-26) - Kemerovo"
+			"comments": "MSK+04 - Kemerovo"
 		},
 		"Asia/Krasnoyarsk": {
 			"name": "Asia/Krasnoyarsk",
@@ -4318,7 +4330,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+04 - Yenisei River"
+			"comments": "MSK+04 - Krasnoyarsk area"
 		},
 		"Asia/Irkutsk": {
 			"name": "Asia/Irkutsk",
@@ -4327,7 +4339,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+05 - Lake Baikal"
+			"comments": "MSK+05 - Irkutsk, Buryatia"
 		},
 		"Asia/Chita": {
 			"name": "Asia/Chita",
@@ -4336,7 +4348,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+06 (Moscow+05 after 2014-10-26) - Zabaykalsky"
+			"comments": "MSK+06 - Zabaykalsky"
 		},
 		"Asia/Yakutsk": {
 			"name": "Asia/Yakutsk",
@@ -4345,7 +4357,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+06 - Lena River"
+			"comments": "MSK+06 - Lena River"
 		},
 		"Asia/Khandyga": {
 			"name": "Asia/Khandyga",
@@ -4354,7 +4366,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+06 - Tomponsky, Ust-Maysky"
+			"comments": "MSK+06 - Tomponsky, Ust-Maysky"
 		},
 		"Asia/Vladivostok": {
 			"name": "Asia/Vladivostok",
@@ -4363,16 +4375,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+07 - Amur River"
-		},
-		"Asia/Sakhalin": {
-			"name": "Asia/Sakhalin",
-			"lat": 46.9667,
-			"long": 142.7,
-			"countries": [
-				"RU"
-			],
-			"comments": "Moscow+07 - Sakhalin Island"
+			"comments": "MSK+07 - Amur River"
 		},
 		"Asia/Ust-Nera": {
 			"name": "Asia/Ust-Nera",
@@ -4381,7 +4384,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+07 - Oymyakonsky"
+			"comments": "MSK+07 - Oymyakonsky"
 		},
 		"Asia/Magadan": {
 			"name": "Asia/Magadan",
@@ -4390,7 +4393,16 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+08 (Moscow+07 after 2014-10-26) - Magadan"
+			"comments": "MSK+07 - Magadan"
+		},
+		"Asia/Sakhalin": {
+			"name": "Asia/Sakhalin",
+			"lat": 46.9667,
+			"long": 142.7,
+			"countries": [
+				"RU"
+			],
+			"comments": "MSK+08 - Sakhalin Island"
 		},
 		"Asia/Srednekolymsk": {
 			"name": "Asia/Srednekolymsk",
@@ -4399,7 +4411,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+08 - E Sakha, N Kuril Is"
+			"comments": "MSK+08 - Sakha (E); North Kuril Is"
 		},
 		"Asia/Kamchatka": {
 			"name": "Asia/Kamchatka",
@@ -4408,7 +4420,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+08 (Moscow+09 after 2014-10-26) - Kamchatka"
+			"comments": "MSK+09 - Kamchatka"
 		},
 		"Asia/Anadyr": {
 			"name": "Asia/Anadyr",
@@ -4417,7 +4429,7 @@
 			"countries": [
 				"RU"
 			],
-			"comments": "Moscow+08 (Moscow+09 after 2014-10-26) - Bering Sea"
+			"comments": "MSK+09 - Bering Sea"
 		},
 		"Asia/Riyadh": {
 			"name": "Asia/Riyadh",
@@ -4528,7 +4540,7 @@
 			"countries": [
 				"TF"
 			],
-			"comments": "Kerguelen, St Paul I, Amsterdam I"
+			"comments": "Kerguelen, St Paul Island, Amsterdam Island"
 		},
 		"Asia/Bangkok": {
 			"name": "Asia/Bangkok",
@@ -4540,7 +4552,7 @@
 				"LA",
 				"VN"
 			],
-			"comments": "most of Indochina"
+			"comments": "Indochina (most areas)"
 		},
 		"Asia/Dushanbe": {
 			"name": "Asia/Dushanbe",
@@ -4652,7 +4664,7 @@
 			"countries": [
 				"UA"
 			],
-			"comments": "most locations"
+			"comments": "Ukraine (most areas)"
 		},
 		"Europe/Uzhgorod": {
 			"name": "Europe/Uzhgorod",
@@ -4670,7 +4682,7 @@
 			"countries": [
 				"UA"
 			],
-			"comments": "Zaporozh'ye, E Lugansk / Zaporizhia, E Luhansk"
+			"comments": "Zaporozh'ye/Zaporizhia; Lugansk/Luhansk (east)"
 		},
 		"Pacific/Wake": {
 			"name": "Pacific/Wake",
@@ -4688,7 +4700,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Eastern Time"
+			"comments": "Eastern (most areas)"
 		},
 		"America/Detroit": {
 			"name": "America/Detroit",
@@ -4697,7 +4709,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Eastern Time - Michigan - most locations"
+			"comments": "Eastern - MI (most areas)"
 		},
 		"America/Kentucky/Louisville": {
 			"name": "America/Kentucky/Louisville",
@@ -4706,7 +4718,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Eastern Time - Kentucky - Louisville area"
+			"comments": "Eastern - KY (Louisville area)"
 		},
 		"America/Kentucky/Monticello": {
 			"name": "America/Kentucky/Monticello",
@@ -4715,7 +4727,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Eastern Time - Kentucky - Wayne County"
+			"comments": "Eastern - KY (Wayne)"
 		},
 		"America/Indiana/Indianapolis": {
 			"name": "America/Indiana/Indianapolis",
@@ -4724,7 +4736,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Eastern Time - Indiana - most locations"
+			"comments": "Eastern - IN (most areas)"
 		},
 		"America/Indiana/Vincennes": {
 			"name": "America/Indiana/Vincennes",
@@ -4733,7 +4745,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Eastern Time - Indiana - Daviess, Dubois, Knox & Martin Counties"
+			"comments": "Eastern - IN (Da, Du, K, Mn)"
 		},
 		"America/Indiana/Winamac": {
 			"name": "America/Indiana/Winamac",
@@ -4742,7 +4754,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Eastern Time - Indiana - Pulaski County"
+			"comments": "Eastern - IN (Pulaski)"
 		},
 		"America/Indiana/Marengo": {
 			"name": "America/Indiana/Marengo",
@@ -4751,7 +4763,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Eastern Time - Indiana - Crawford County"
+			"comments": "Eastern - IN (Crawford)"
 		},
 		"America/Indiana/Petersburg": {
 			"name": "America/Indiana/Petersburg",
@@ -4760,7 +4772,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Eastern Time - Indiana - Pike County"
+			"comments": "Eastern - IN (Pike)"
 		},
 		"America/Indiana/Vevay": {
 			"name": "America/Indiana/Vevay",
@@ -4769,7 +4781,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Eastern Time - Indiana - Switzerland County"
+			"comments": "Eastern - IN (Switzerland)"
 		},
 		"America/Chicago": {
 			"name": "America/Chicago",
@@ -4778,7 +4790,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Central Time"
+			"comments": "Central (most areas)"
 		},
 		"America/Indiana/Tell_City": {
 			"name": "America/Indiana/Tell_City",
@@ -4787,7 +4799,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Central Time - Indiana - Perry County"
+			"comments": "Central - IN (Perry)"
 		},
 		"America/Indiana/Knox": {
 			"name": "America/Indiana/Knox",
@@ -4796,7 +4808,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Central Time - Indiana - Starke County"
+			"comments": "Central - IN (Starke)"
 		},
 		"America/Menominee": {
 			"name": "America/Menominee",
@@ -4805,7 +4817,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Central Time - Michigan - Dickinson, Gogebic, Iron & Menominee Counties"
+			"comments": "Central - MI (Wisconsin border)"
 		},
 		"America/North_Dakota/Center": {
 			"name": "America/North_Dakota/Center",
@@ -4814,7 +4826,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Central Time - North Dakota - Oliver County"
+			"comments": "Central - ND (Oliver)"
 		},
 		"America/North_Dakota/New_Salem": {
 			"name": "America/North_Dakota/New_Salem",
@@ -4823,7 +4835,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Central Time - North Dakota - Morton County (except Mandan area)"
+			"comments": "Central - ND (Morton rural)"
 		},
 		"America/North_Dakota/Beulah": {
 			"name": "America/North_Dakota/Beulah",
@@ -4832,7 +4844,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Central Time - North Dakota - Mercer County"
+			"comments": "Central - ND (Mercer)"
 		},
 		"America/Denver": {
 			"name": "America/Denver",
@@ -4841,7 +4853,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Mountain Time"
+			"comments": "Mountain (most areas)"
 		},
 		"America/Boise": {
 			"name": "America/Boise",
@@ -4850,7 +4862,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Mountain Time - south Idaho & east Oregon"
+			"comments": "Mountain - ID (south); OR (east)"
 		},
 		"America/Phoenix": {
 			"name": "America/Phoenix",
@@ -4859,7 +4871,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Mountain Standard Time - Arizona (except Navajo)"
+			"comments": "MST - Arizona (except Navajo)"
 		},
 		"America/Los_Angeles": {
 			"name": "America/Los_Angeles",
@@ -4868,16 +4880,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Pacific Time"
-		},
-		"America/Metlakatla": {
-			"name": "America/Metlakatla",
-			"lat": 55.1269,
-			"long": -130.4236,
-			"countries": [
-				"US"
-			],
-			"comments": "Pacific Standard Time - Annette Island, Alaska"
+			"comments": "Pacific"
 		},
 		"America/Anchorage": {
 			"name": "America/Anchorage",
@@ -4886,7 +4889,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Alaska Time"
+			"comments": "Alaska (most areas)"
 		},
 		"America/Juneau": {
 			"name": "America/Juneau",
@@ -4895,7 +4898,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Alaska Time - Alaska panhandle"
+			"comments": "Alaska - Juneau area"
 		},
 		"America/Sitka": {
 			"name": "America/Sitka",
@@ -4904,7 +4907,16 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Alaska Time - southeast Alaska panhandle"
+			"comments": "Alaska - Sitka area"
+		},
+		"America/Metlakatla": {
+			"name": "America/Metlakatla",
+			"lat": 55.1269,
+			"long": -130.4236,
+			"countries": [
+				"US"
+			],
+			"comments": "Alaska - Annette Island"
 		},
 		"America/Yakutat": {
 			"name": "America/Yakutat",
@@ -4913,7 +4925,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Alaska Time - Alaska panhandle neck"
+			"comments": "Alaska - Yakutat"
 		},
 		"America/Nome": {
 			"name": "America/Nome",
@@ -4922,7 +4934,7 @@
 			"countries": [
 				"US"
 			],
-			"comments": "Alaska Time - west Alaska"
+			"comments": "Alaska (west)"
 		},
 		"America/Adak": {
 			"name": "America/Adak",
@@ -4941,7 +4953,7 @@
 				"US",
 				"UM"
 			],
-			"comments": "Hawaii time"
+			"comments": "Hawaii"
 		},
 		"America/Montevideo": {
 			"name": "America/Montevideo",
@@ -4959,7 +4971,7 @@
 			"countries": [
 				"UZ"
 			],
-			"comments": "west Uzbekistan"
+			"comments": "Uzbekistan (west)"
 		},
 		"Asia/Tashkent": {
 			"name": "Asia/Tashkent",
@@ -4968,7 +4980,7 @@
 			"countries": [
 				"UZ"
 			],
-			"comments": "east Uzbekistan"
+			"comments": "Uzbekistan (east)"
 		},
 		"America/Caracas": {
 			"name": "America/Caracas",
@@ -4986,7 +4998,7 @@
 			"countries": [
 				"VN"
 			],
-			"comments": "south Vietnam"
+			"comments": "Vietnam (south)"
 		},
 		"Pacific/Efate": {
 			"name": "Pacific/Efate",

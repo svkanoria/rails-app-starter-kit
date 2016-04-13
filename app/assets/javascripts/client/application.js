@@ -45,8 +45,6 @@
 //= require ng-rails-csrf
 //= require underscore/underscore
 //= require underscore.string/dist/underscore.string
-// Note the 'min'. This is needed since flashular.js does not minify correctly.
-//= require flashular/dist/flashular.min
 //= require moment/moment
 //= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker
 //= require datatables.net/js/jquery.dataTables

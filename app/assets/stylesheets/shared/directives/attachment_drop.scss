@@ -11,6 +11,9 @@ $attachment-drop-area-color: $gray-light;
 
 $attachment-drop-area-active-bg: darken($attachment-drop-area-bg, 15%);
 
+$attachment-drop-area-disabled-bg: $gray-lighter;
+$attachment-drop-area-disabled-color: $gray-light;
+
 // Styles
 
 .dropped-attachments {
@@ -37,4 +40,11 @@ $attachment-drop-area-active-bg: darken($attachment-drop-area-bg, 15%);
 
 .attachment-drop-area-active {
   background: $attachment-drop-area-active-bg;
+}
+
+.attachment-drop-area-disabled {
+  padding: $attachment-drop-area-padding;
+  background: $attachment-drop-area-disabled-bg;
+  border-radius: $dropped-attachment-border-radius;
+  color: $attachment-drop-area-disabled-color;
 }

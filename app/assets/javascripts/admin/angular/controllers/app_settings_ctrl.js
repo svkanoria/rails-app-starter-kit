@@ -16,8 +16,8 @@
  */
 angular.module('AppSettingsCtrl', [])
   .controller('AppSettingsCtrl', [
-    '$scope', '$http', '$state', 'flash', 'initialData', 'initialData2',
-    function($scope, $http, $state, flash, initialData, initialData2) {
+    '$scope', '$http', '$state', 'Flash', 'initialData', 'initialData2',
+    function($scope, $http, $state, Flash, initialData, initialData2) {
       $scope.category = initialData;
       $scope.settings = initialData2.data;
 
@@ -31,7 +31,7 @@ angular.module('AppSettingsCtrl', [])
           category: $scope.category,
           settings: $scope.settings
         }).then(function (response) {
-          flash.now.set('success', 'Settings updated.');
+          Flash.now.push('success', 'Settings updated.');
           $scope.pleaseWaitSvc.release();
           $scope.settingsErrors = null;
 

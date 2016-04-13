@@ -1,11 +1,11 @@
 // The attachment browser, for use within the attachment-library directive.
 angular.module('AttachmentBrowser', [
-  'flashular', 'PleaseWait', 'QueryBuilder', 'DataTable', 'Attachment',
+  'Flash', 'PleaseWait', 'QueryBuilder', 'DataTable', 'Attachment',
   'AttachmentLibrarySvc'])
   .directive('attachmentBrowser', [
-    'flash', 'PleaseWaitSvc', '$rootScope', 'Attachment',
+    'Flash', 'PleaseWaitSvc', '$rootScope', 'Attachment',
     'AttachmentLibrarySvc',
-    function (flash, PleaseWaitSvc, $rootScope, Attachment,
+    function (Flash, PleaseWaitSvc, $rootScope, Attachment,
               AttachmentLibrarySvc) {
 
       return {
@@ -117,12 +117,12 @@ angular.module('AttachmentBrowser', [
                   Attachment.remove({ attachmentId: rowId }, null,
                     function (response) {
                       PleaseWaitSvc.release();
-                      flash.now.set('success', 'Attachment deleted.');
+                      Flash.now.push('success', 'Attachment deleted.');
 
                       AttachmentLibrarySvc.emitAttachmentsDeleted([rowId]);
                     }, function (failureResponse) {
                       PleaseWaitSvc.release();
-                      flash.now.set('error',
+                      Flash.now.push('danger',
                         failureResponse.data.error || 'Error deleting attachment.');
                     });
                 }
@@ -147,7 +147,7 @@ angular.module('AttachmentBrowser', [
                     { ids: scope.dataTableSelectedRows },
                     function (response) {
                       PleaseWaitSvc.release();
-                      flash.now.set('success', 'Attachments deleted.');
+                      Flash.now.push('success', 'Attachments deleted.');
 
                       AttachmentLibrarySvc.emitAttachmentsDeleted(
                         response.success_ids);
@@ -156,7 +156,7 @@ angular.module('AttachmentBrowser', [
                     },
                     function (failureResponse) {
                       PleaseWaitSvc.release();
-                      flash.now.set('error',
+                      Flash.now.push('danger',
                         failureResponse.data.error || 'Error deleting attachments.');
                     });
                 }
