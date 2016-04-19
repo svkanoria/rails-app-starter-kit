@@ -33,6 +33,12 @@ angular.module('AppCtrl', ['AuthSvc', 'PleaseWait', 'RouteUtils'])
         },
         retry: {
           enableAuto: true // Defaults to false
+        },
+        chunking: {
+          enabled: true
+        },
+        resume: {
+          enabled: true
         }
       };
     }]);

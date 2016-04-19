@@ -1,7 +1,7 @@
 angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
   .controller('PostsCtrl', [
-    '$scope', '$state', 'flash', 'Post', 'AttachmentLibrarySvc', 'initialData',
-    function ($scope, $state, flash, Post, AttachmentLibrarySvc, initialData) {
+    '$scope', '$state', 'Flash', 'Post', 'AttachmentLibrarySvc', 'initialData',
+    function ($scope, $state, Flash, Post, AttachmentLibrarySvc, initialData) {
       /**
        * The 'index' action.
        */
@@ -61,7 +61,7 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
 
         $scope.post.$save(function (response) {
           $scope.pleaseWaitSvc.release();
-          flash.set('success', 'Post created.');
+          Flash.push('success', 'Post created.');
 
           $scope.navConfirmationSvc.setConfirmNav(false);
           $state.go('app.posts.index');
@@ -90,7 +90,7 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
 
         $scope.post.$update(function (response) {
           $scope.pleaseWaitSvc.release();
-          flash.set('success', 'Post updated.');
+          Flash.push('success', 'Post updated!!');
 
           $scope.navConfirmationSvc.setConfirmNav(false);
           $state.go('app.posts.index');
@@ -110,13 +110,14 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
 
         $scope.post.$delete(function (response) {
           $scope.pleaseWaitSvc.release();
-          flash.set('success', 'Post deleted.');
+          Flash.push('success', 'Post deleted.');
 
           $scope.navConfirmationSvc.setConfirmNav(false);
           $state.go('app.posts.index');
         }, function (failureResponse) {
           $scope.pleaseWaitSvc.release();
-          flash.set('error', 'Error deleting post.')
+          Flash.push('danger',
+            failureResponse.data.error || 'Error deleting post.');
         });
       };
     }]);

@@ -10,7 +10,11 @@ class FineUploaderController < ApplicationController
   def s3_signature
     authorize :fine_uploader, :s3_signature?
 
-    render json: AwsUtils.s3_sign_policy_document(params[:fine_uploader])
+    if (headers = params[:fine_uploader][:headers])
+      render json: { signature: AwsUtils.s3_signature(headers) }
+    else
+      render json: AwsUtils.s3_sign_policy_document(params[:fine_uploader])
+    end
   end
 
   def s3_upload_success

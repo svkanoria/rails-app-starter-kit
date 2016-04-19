@@ -8,7 +8,8 @@
  *   <attachment-drop attachments="Object expr"
  *                    attachment-owner-id="some id"
  *                    attachment-owner-type="some server model class"
- *                    role="some role">
+ *                    role="some role"
+ *                    ?count="number expr">
  *   </attachment-drop>
  *
  * The 'attachments' attribute must be provided in the following format:
@@ -29,17 +30,18 @@
  * within the 'attachments' object. Thus, note that you need one directive per
  * role.
  */
-angular.module('AttachmentDrop', ['AttachmentJoin'])
+angular.module('AttachmentDrop', ['Flash', 'AttachmentJoin'])
   .directive('attachmentDrop', [
-    '$rootScope', 'AttachmentJoin',
-    function ($rootScope, AttachmentJoin) {
+    '$rootScope', 'Flash', 'AttachmentJoin',
+    function ($rootScope, Flash, AttachmentJoin) {
       return {
         restrict: 'E',
         templateUrl: 'shared/directives/attachment_drop.html',
         replace: true,
 
         scope: {
-          attachments: '='
+          attachments: '=',
+          count: '@?'
         },
 
         link: function (scope, element, attrs) {
@@ -49,6 +51,22 @@ angular.module('AttachmentDrop', ['AttachmentJoin'])
 
           // The array of attachments of the provided role
           scope.roleAttachments = scope.attachments[attrs.role];
+
+          /*
+           * Computes how many more attachments can be added before the limit
+           * is reached. See /app/models/concerns/acts_as_attachment_owner.rb -
+           * it is possible to cap the number of attachments for a given role.
+           *
+           * The 'count' attribute to this directive can and should be used to
+           * reflect any cap set at the server end.
+           */
+          function computeCountRemaining () {
+            scope.countRemaining = (scope.count)
+              ? (parseInt(scope.count) - scope.roleAttachments.length)
+              : Number.POSITIVE_INFINITY;
+          }
+
+          computeCountRemaining();
 
           /**
            * Detaches an attachment from a server resource.
@@ -62,9 +80,11 @@ angular.module('AttachmentDrop', ['AttachmentJoin'])
             AttachmentJoin.delete({attachmentJoinId: joinId},
               function (response) {
                 scope.roleAttachments.splice(index, 1);
+                scope.countRemaining += 1;
               },
               function (failureResponse) {
-                // Do something on failure
+                Flash.now.push('danger',
+                  failureResponse.data.error || 'Error removing attachment.');
               });
           };
 
@@ -85,8 +105,19 @@ angular.module('AttachmentDrop', ['AttachmentJoin'])
 
               AttachmentJoin.save(attachmentAttrs, function (response) {
                 scope.roleAttachments.push(response);
+                scope.countRemaining -= 1;
               }, function (failureResponse) {
-                // Do something on failure
+                var errors = failureResponse.data.errors;
+
+                if (errors) {
+                  var firstError = errors[Object.keys(errors)[0]];
+
+                  Flash.now.push('danger',
+                    'Error adding attachment: ' + firstError + '.');
+                } else {
+                  Flash.now.push('danger',
+                    failureResponse.data.error || 'Error adding attachment.');
+                }
               });
             }
           });
@@ -97,6 +128,8 @@ angular.module('AttachmentDrop', ['AttachmentJoin'])
                 function (attachment) {
                   return _.contains(attachmentIds, attachment.id);
                 });
+
+              computeCountRemaining();
             });
         }
       }

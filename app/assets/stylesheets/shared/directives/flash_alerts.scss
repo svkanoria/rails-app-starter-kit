@@ -1,9 +1,10 @@
 // Variables
 
 $flash-alerts-top: $navbar-height + $padding-small-vertical;
-$flash-alerts-padding: 0 $padding-small-horizontal;
 
-$flash-alert-padding: $padding-small-vertical $padding-small-horizontal;
+$flash-alert-bottom-margin: $padding-base-vertical;
+$flash-alert-padding: $padding-small-vertical; // Trial and error
+$flash-alert-close-right: 0; // Trial and error
 
 // Styles
 
@@ -13,17 +14,15 @@ $flash-alert-padding: $padding-small-vertical $padding-small-horizontal;
   left: 0;
   z-index: 3; // Trial and error
   width: 100%;
-  pointer-events: none; // Pass through pointer events down the z-index
-  padding: $flash-alerts-padding;
   text-align: center;
 
   > .alert {
     display: inline-block;
-    pointer-events: auto; // Handle pointer events on the actual alert though
+    margin-bottom: $flash-alert-bottom-margin;
     padding: $flash-alert-padding;
 
-    > .close {
-      line-height: 0.9; // Trial and error
-    }
+    // Changing the alert margins necessitates a change here, otherwise the
+    // close button goes too far to the right.
+    > .close { right: $flash-alert-close-right; }
   }
 }

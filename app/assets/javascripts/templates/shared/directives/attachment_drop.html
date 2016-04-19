@@ -15,8 +15,14 @@
     </li>
   </ul>
 
-  <div class="attachment-drop-area">
+  <div class="attachment-drop-area" ng-show="countRemaining > 0">
     <span class="glyphicon glyphicon-paperclip"></span>
     Drop attachments here...
+    {{(count) ? '(' + countRemaining + ' of ' + count + ' remaining)' : ''}}
+  </div>
+  <div class="attachment-drop-area-disabled" ng-show="countRemaining <= 0">
+    <span class="glyphicon glyphicon-paperclip"></span>
+    Drop attachments here...
+    (0 of {{count}} remaining)
   </div>
 </div>

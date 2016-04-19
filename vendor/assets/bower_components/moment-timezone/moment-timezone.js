@@ -1,5 +1,5 @@
 //! moment-timezone.js
-//! version : 0.4.1
+//! version : 0.5.3
 //! author : Tim Wood
 //! license : MIT
 //! github.com/moment/moment-timezone
@@ -10,7 +10,7 @@
 	/*global define*/
 	if (typeof define === 'function' && define.amd) {
 		define(['moment'], factory);                 // AMD
-	} else if (typeof exports === 'object') {
+	} else if (typeof module === 'object' && module.exports) {
 		module.exports = factory(require('moment')); // Node
 	} else {
 		factory(root.moment);                        // Browser
@@ -24,10 +24,12 @@
 		return moment;
 	}
 
-	var VERSION = "0.4.1",
+	var VERSION = "0.5.3",
 		zones = {},
 		links = {},
 		names = {},
+		guesses = {},
+		cachedGuess,
 
 		momentVersion = moment.version.split('.'),
 		major = +momentVersion[0],
@@ -120,10 +122,11 @@
 		intToUntil(untils, indices.length);
 
 		return {
-			name    : data[0],
-			abbrs   : mapIndices(data[1].split(' '), indices),
-			offsets : mapIndices(offsets, indices),
-			untils  : untils
+			name       : data[0],
+			abbrs      : mapIndices(data[1].split(' '), indices),
+			offsets    : mapIndices(offsets, indices),
+			untils     : untils,
+			population : data[5] | 0
 		};
 	}
 
@@ -139,10 +142,11 @@
 
 	Zone.prototype = {
 		_set : function (unpacked) {
-			this.name    = unpacked.name;
-			this.abbrs   = unpacked.abbrs;
-			this.untils  = unpacked.untils;
-			this.offsets = unpacked.offsets;
+			this.name       = unpacked.name;
+			this.abbrs      = unpacked.abbrs;
+			this.untils     = unpacked.untils;
+			this.offsets    = unpacked.offsets;
+			this.population = unpacked.population;
 		},
 
 		_index : function (timestamp) {
@@ -193,6 +197,170 @@
 	};
 
 	/************************************
+		Current Timezone
+	************************************/
+
+	function OffsetAt(at) {
+		var timeString = at.toTimeString();
+		var abbr = timeString.match(/\([a-z ]+\)/i);
+		if (abbr && abbr[0]) {
+			// 17:56:31 GMT-0600 (CST)
+			// 17:56:31 GMT-0600 (Central Standard Time)
+			abbr = abbr[0].match(/[A-Z]/g);
+			abbr = abbr ? abbr.join('') : undefined;
+		} else {
+			// 17:56:31 CST
+			// 17:56:31 GMT+0800 (台北標準時間)
+			abbr = timeString.match(/[A-Z]{3,5}/g);
+			abbr = abbr ? abbr[0] : undefined;
+		}
+
+		if (abbr === 'GMT') {
+			abbr = undefined;
+		}
+
+		this.at = +at;
+		this.abbr = abbr;
+		this.offset = at.getTimezoneOffset();
+	}
+
+	function ZoneScore(zone) {
+		this.zone = zone;
+		this.offsetScore = 0;
+		this.abbrScore = 0;
+	}
+
+	ZoneScore.prototype.scoreOffsetAt = function (offsetAt) {
+		this.offsetScore += Math.abs(this.zone.offset(offsetAt.at) - offsetAt.offset);
+		if (this.zone.abbr(offsetAt.at).match(/[A-Z]/g).join('') !== offsetAt.abbr) {
+			this.abbrScore++;
+		}
+	};
+
+	function findChange(low, high) {
+		var mid, diff;
+
+		while ((diff = ((high.at - low.at) / 12e4 | 0) * 6e4)) {
+			mid = new OffsetAt(new Date(low.at + diff));
+			if (mid.offset === low.offset) {
+				low = mid;
+			} else {
+				high = mid;
+			}
+		}
+
+		return low;
+	}
+
+	function userOffsets() {
+		var startYear = new Date().getFullYear() - 2,
+			last = new OffsetAt(new Date(startYear, 0, 1)),
+			offsets = [last],
+			change, next, i;
+
+		for (i = 1; i < 48; i++) {
+			next = new OffsetAt(new Date(startYear, i, 1));
+			if (next.offset !== last.offset) {
+				change = findChange(last, next);
+				offsets.push(change);
+				offsets.push(new OffsetAt(new Date(change.at + 6e4)));
+			}
+			last = next;
+		}
+
+		for (i = 0; i < 4; i++) {
+			offsets.push(new OffsetAt(new Date(startYear + i, 0, 1)));
+			offsets.push(new OffsetAt(new Date(startYear + i, 6, 1)));
+		}
+
+		return offsets;
+	}
+
+	function sortZoneScores (a, b) {
+		if (a.offsetScore !== b.offsetScore) {
+			return a.offsetScore - b.offsetScore;
+		}
+		if (a.abbrScore !== b.abbrScore) {
+			return a.abbrScore - b.abbrScore;
+		}
+		return b.zone.population - a.zone.population;
+	}
+
+	function addToGuesses (name, offsets) {
+		var i, offset;
+		arrayToInt(offsets);
+		for (i = 0; i < offsets.length; i++) {
+			offset = offsets[i];
+			guesses[offset] = guesses[offset] || {};
+			guesses[offset][name] = true;
+		}
+	}
+
+	function guessesForUserOffsets (offsets) {
+		var offsetsLength = offsets.length,
+			filteredGuesses = {},
+			out = [],
+			i, j, guessesOffset;
+
+		for (i = 0; i < offsetsLength; i++) {
+			guessesOffset = guesses[offsets[i].offset] || {};
+			for (j in guessesOffset) {
+				if (guessesOffset.hasOwnProperty(j)) {
+					filteredGuesses[j] = true;
+				}
+			}
+		}
+
+		for (i in filteredGuesses) {
+			if (filteredGuesses.hasOwnProperty(i)) {
+				out.push(names[i]);
+			}
+		}
+
+		return out;
+	}
+
+	function rebuildGuess () {
+
+		// use Intl API when available and returning valid time zone
+		try {
+			var intlName = Intl.DateTimeFormat().resolvedOptions().timeZone;
+			var name = names[normalizeName(intlName)];
+			if (name) {
+				return name;
+			}
+			logError("Moment Timezone found " + intlName + " from the Intl api, but did not have that data loaded.");
+		} catch (e) {
+			// Intl unavailable, fall back to manual guessing.
+		}
+
+		var offsets = userOffsets(),
+			offsetsLength = offsets.length,
+			guesses = guessesForUserOffsets(offsets),
+			zoneScores = [],
+			zoneScore, i, j;
+
+		for (i = 0; i < guesses.length; i++) {
+			zoneScore = new ZoneScore(getZone(guesses[i]), offsetsLength);
+			for (j = 0; j < offsetsLength; j++) {
+				zoneScore.scoreOffsetAt(offsets[j]);
+			}
+			zoneScores.push(zoneScore);
+		}
+
+		zoneScores.sort(sortZoneScores);
+
+		return zoneScores.length > 0 ? zoneScores[0].zone.name : undefined;
+	}
+
+	function guess (ignoreCache) {
+		if (!cachedGuess || ignoreCache) {
+			cachedGuess = rebuildGuess();
+		}
+		return cachedGuess;
+	}
+
+	/************************************
 		Global Methods
 	************************************/
 
@@ -201,17 +369,21 @@
 	}
 
 	function addZone (packed) {
-		var i, name, normalized;
+		var i, name, split, normalized;
 
 		if (typeof packed === "string") {
 			packed = [packed];
 		}
 
 		for (i = 0; i < packed.length; i++) {
-			name = packed[i].split('|')[0];
+			split = packed[i].split('|');
+			name = split[0];
 			normalized = normalizeName(name);
 			zones[normalized] = packed[i];
 			names[normalized] = name;
+			if (split[5]) {
+				addToGuesses(normalized, split[2].split(' '));
+			}
 		}
 	}
 
@@ -328,6 +500,7 @@
 	tz.load         = loadData;
 	tz.zone         = getZone;
 	tz.zoneExists   = zoneExists; // deprecated in 0.1.0
+	tz.guess        = guess;
 	tz.names        = getNames;
 	tz.Zone         = Zone;
 	tz.unpack       = unpack;

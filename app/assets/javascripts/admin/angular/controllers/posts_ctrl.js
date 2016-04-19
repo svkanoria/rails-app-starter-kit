@@ -1,7 +1,7 @@
 angular.module('PostsCtrl', ['Post'])
   .controller('PostsCtrl', [
-    '$scope', 'flash', 'Post',
-    function($scope, flash, Post) {
+    '$scope', 'Flash', 'Post',
+    function($scope, Flash, Post) {
       /**
        * The 'index' action.
        */
@@ -66,12 +66,12 @@ angular.module('PostsCtrl', ['Post'])
               Post.remove({ postId: rowId }, null,
                 function (response) {
                   $scope.pleaseWaitSvc.release();
-                  flash.now.set('success', 'Post deleted.');
+                  Flash.now.push('success', 'Post deleted.');
 
                   $scope.dataTableInstance.ajax.reload();
                 }, function (failureResponse) {
                   $scope.pleaseWaitSvc.release();
-                  flash.now.set('error',
+                  Flash.now.push('danger',
                     failureResponse.data.error || 'Error deleting post.');
                 });
             }
@@ -93,14 +93,14 @@ angular.module('PostsCtrl', ['Post'])
               Post.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
                 function (response) {
                   $scope.pleaseWaitSvc.release();
-                  flash.now.set('success', 'Posts deleted.');
+                  Flash.now.push('success', 'Posts deleted.');
 
                   $scope.dataTableInstance.ajax.reload(); // Reload table data
                   $scope.dataTableSelectedRows.length = 0;
                 },
                 function (failureResponse) {
                   $scope.pleaseWaitSvc.release();
-                  flash.now.set('error',
+                  Flash.now.push('danger',
                     failureResponse.data.error || 'Error deleting posts.');
                 });
             }

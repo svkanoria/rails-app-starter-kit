@@ -53,7 +53,7 @@
     "tag": "v0.12.1",
     "commit": "3dc07d40047cd98de8a8f8beacca06a73970139d"
   },
-  "_source": "git://github.com/brianreavis/selectize.js.git",
+  "_source": "https://github.com/brianreavis/selectize.js.git",
   "_target": "~0.12.x",
   "_originalSource": "selectize"
 }

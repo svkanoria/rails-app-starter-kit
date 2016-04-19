@@ -52,6 +52,19 @@ class AwsUtils
     raise ArgumentError, "URL must look like #{S3_URL}/bucket/key"
   end
 
+  # The signature for anything.
+  #
+  # @param obj [Object] the thing to sign
+  #
+  # @return [String] the signature
+  def self.s3_signature (obj)
+    Base64.encode64(
+        OpenSSL::HMAC.digest(
+            OpenSSL::Digest.new('sha1'),
+            Rails.application.secrets.aws_secret_access_key, obj)
+    ).gsub("\n",'')
+  end
+
   # Returns a signed AWS S3 policy document.
   #
   # @param policy_document [Hash] the policy document, extracted from the
@@ -62,13 +75,7 @@ class AwsUtils
     # Note the double-quotes around \n. This is important.
     policy = Base64.encode64(policy_document.to_json).gsub("\n", '')
 
-    signature = Base64.encode64(
-        OpenSSL::HMAC.digest(
-            OpenSSL::Digest.new('sha1'),
-            Rails.application.secrets.aws_secret_access_key, policy)
-    ).gsub("\n",'')
-
-    { policy: policy, signature: signature }
+    { policy: policy, signature: s3_signature(policy) }
   end
 
   # Initiates a request to delete an object at a given URL.

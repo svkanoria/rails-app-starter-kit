@@ -1,7 +1,7 @@
 angular.module('UsersCtrl', ['User'])
   .controller('UsersCtrl', [
-    '$scope', '$state', 'flash', 'User', 'initialData',
-    function($scope, $state, flash, User, initialData) {
+    '$scope', '$state', 'Flash', 'User', 'initialData',
+    function($scope, $state, Flash, User, initialData) {
       /**
        * Allowed user roles.
        */
@@ -114,14 +114,14 @@ angular.module('UsersCtrl', ['User'])
               User.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
                 function (response) {
                   $scope.pleaseWaitSvc.release();
-                  flash.now.set('success', 'Users deleted.');
+                  Flash.now.push('success', 'Users deleted.');
 
                   $scope.dataTableInstance.ajax.reload(); // Reload table data
                   $scope.dataTableSelectedRows.length = 0;
                 },
                 function (failureResponse) {
                   $scope.pleaseWaitSvc.release();
-                  flash.now.set('error',
+                  Flash.now.push('danger',
                     failureResponse.data.error || 'Error deleting users.');
                 });
             }
@@ -175,12 +175,12 @@ angular.module('UsersCtrl', ['User'])
           User.remove({ userId: userId }, null,
             function (response) {
               $scope.pleaseWaitSvc.release();
-              flash.now.set('success', 'User deleted.');
+              Flash.now.push('success', 'User deleted.');
 
               $scope.dataTableInstance.ajax.reload();
             }, function (failureResponse) {
               $scope.pleaseWaitSvc.release();
-              flash.now.set('error',
+              Flash.now.push('danger',
                 failureResponse.data.error || 'Error deleting user.');
             });
         };
@@ -206,7 +206,7 @@ angular.module('UsersCtrl', ['User'])
 
         $scope.user.$save(function (response) {
           $scope.pleaseWaitSvc.release();
-          flash.set('success', 'User created.');
+          Flash.push('success', 'User created.');
 
           $scope.navConfirmationSvc.setConfirmNav(false);
           $state.go('app.users.index');
@@ -235,7 +235,7 @@ angular.module('UsersCtrl', ['User'])
 
         $scope.user.$update(function (response) {
           $scope.pleaseWaitSvc.release();
-          flash.set('success', 'User updated.');
+          Flash.push('success', 'User updated.');
 
           $scope.navConfirmationSvc.setConfirmNav(false);
           $state.go('app.users.index');
