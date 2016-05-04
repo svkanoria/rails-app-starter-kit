@@ -19,7 +19,11 @@ FactoryGirl.define do
   #   FactoryGirl.create(:attachment, user: some_user)
   factory :attachment do
     name 'attachment'
-    url 'protocol//path/to/attachment'
+    # Note the '.jpg' extension. This is to satisfy the filter of the 'image'
+    # role of the Post model. Of course it can be set dynamically when getting
+    # an instance from factory, but it helps to have a file name that passes our
+    # tests by default!
+    url 'protocol//path/to/attachment.jpg'
     user
   end
 end
