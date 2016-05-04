@@ -29,21 +29,23 @@ development:
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is the same name
   # as the operating system user that initialized the database.
-  #username: rails-app-starter-kit
+  # MY NOTE: Uncommented, since our machine requires an explicit username. If
+  # yours does not, then comment it out.
+  username: postgres
 
   # The password associated with the postgres role (username).
-  #password:
+  # MY NOTE: Uncommented, since our machine requires an explicit password. If
+  # yours does not, then comment it out.
+  password: password
 
   # Connect on a TCP socket. Omitted by default since the client uses a domain
   # socket that doesn't need configuration. Windows does not have domain
   # sockets, so uncomment these lines.
-  # MY NOTE: Un-commented this since our dev machines need it; yours may not.
-  host: localhost
+  #host: localhost
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
-  # MY NOTE: Un-commented this since our dev machines need it; yours may not.
-  port: 5432
+  #port: 5432
 
   # Schema search path. The server defaults to $user,public.
   #schema_search_path: myapp,sharedapp,public
@@ -61,10 +63,9 @@ test:
   <<: *default
   database: rails-app-starter-kit_test
 
-  # MY NOTE: Comment these lines if you've done so in the 'development' section
-  # above.
-  host: localhost
-  port: 5432
+  # MY NOTE: Added these. See 'development' section above.
+  username: postgres
+  password: password
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is ever
@@ -91,9 +92,7 @@ test:
 production:
   <<: *default
   database: rails-app-starter-kit_production
-  username: rails-app-starter-kit
-  password: <%= ENV['RAILS_APP_STARTER_KIT_DATABASE_PASSWORD'] %>
 
-  # MY NOTE: Comment these lines if you've done so in the sections above
-  host: <%= ENV['RAILS_APP_STARTER_KIT_DATABASE_HOST'] %>
-  port: <%= ENV['RAILS_APP_STARTER_KIT_DATABASE_PORT'] %>
+  # MY NOTE: Safely remove these if you don't plan on using them.
+  username: <%= ENV['RAILS_APP_STARTER_KIT_DATABASE_USERNAME'] %>
+  password: <%= ENV['RAILS_APP_STARTER_KIT_DATABASE_PASSWORD'] %>

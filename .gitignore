@@ -12,11 +12,20 @@
 /log/*.log
 /tmp
 
-# Ignore all RubyMine specific files.
-# MY NOTE: Feel free to remove this if you are not using RubyMine as your IDE.
-/.idea
+# Ignore the .env file. It contains sensitive info!
+.env
 
 # Ignore all documentation files. They can be generated using YARD locally if
 # desired: type 'yard' on the command line, in the project root directory.
 /doc
 /.yardoc
+
+# Ignore all RubyMine specific files.
+# MY NOTE: Feel free to remove this if you are not using RubyMine as your IDE.
+/.idea
+
+# Ignore all OS X specific .DS_Store files.
+# MY NOTE: Ideally, you should ignore this globally if you are on OS X. However,
+# It is easy enough to forget, so we include it here. Feel free to remove if you
+# are not on OS X, or have ignored it globally.
+**/*.DS_Store

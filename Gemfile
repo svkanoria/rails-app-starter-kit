@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # For Heroku to be able to use the desired Ruby version
-ruby '2.2.2'
+ruby '2.2.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.2'
@@ -113,7 +113,9 @@ end
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger
   # console
-  gem 'byebug'
+  # MY NOTE: Since we're using the RubyMine debugger on our machine, we comment
+  # this out, as it interferes. Otherwise, uncomment it!
+  #gem 'byebug'
 
   # Access an IRB console on exceptions page and /console in development
   gem 'web-console', '~> 2.0.0.beta2'
