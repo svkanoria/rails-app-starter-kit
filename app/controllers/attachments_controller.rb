@@ -30,11 +30,19 @@ class AttachmentsController < ApplicationController
   end
 
   def create
-    @attachment = Attachment.new(attachment_params)
+    @attachment = Attachment.new(attachment_create_params)
     authorize @attachment
 
     @attachment.user = current_user
     @attachment.save
+
+    respond_with @attachment
+  end
+
+  def update
+    authorize @attachment
+
+    @attachment.update_attributes attachment_update_params
 
     respond_with @attachment
   end
@@ -49,8 +57,12 @@ class AttachmentsController < ApplicationController
 
   private
 
-  def attachment_params
+  def attachment_create_params
     params.required(:attachment).permit(:url)
+  end
+
+  def attachment_update_params
+    params.required(:attachment).permit(:name)
   end
 
   def load_basics

@@ -1,4 +1,4 @@
-angular.module('AttachmentsCtrl', [])
+angular.module('AttachmentsCtrl', ['Attachment'])
   .controller('AttachmentsCtrl', [
     '$scope', 'Attachment', 'initialData',
     function ($scope, Attachment, initialData) {

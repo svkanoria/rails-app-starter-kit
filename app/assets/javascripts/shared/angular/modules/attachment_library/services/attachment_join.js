@@ -1,9 +1,9 @@
 // Manages the AttachmentJoin resource on the server.
-angular.module('AttachmentJoin', ['ResourceUtils'])
+angular.module('AttachmentJoin', [])
   .factory('AttachmentJoin', [
-    'CancelableResourceFactory',
-    function(CancelableResourceFactory) {
-      return CancelableResourceFactory.createResource(
+    '$resource',
+    function($resource) {
+      return $resource(
         '/attachment_joins/:collectionAction/:attachmentJoinId/:memberAction.json',
         { attachmentJoinId: '@id' });
     }]);

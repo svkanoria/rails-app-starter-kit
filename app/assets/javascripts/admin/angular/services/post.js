@@ -1,9 +1,9 @@
 // Manages the Post resource on the server.
-angular.module('Post', ['ResourceUtils'])
+angular.module('Post', [])
   .factory('Post', [
-    'CancelableResourceFactory',
-    function(CancelableResourceFactory) {
-      return CancelableResourceFactory.createResource(
+    '$resource',
+    function($resource) {
+      return $resource(
         '/admin/posts/:collectionAction/:postId/:memberAction.json',
         { postId: '@id' },
         // Extra methods for compatibility with Rails, and our data format

@@ -1,11 +1,11 @@
 // The attachment browser, for use within the attachment-library directive.
 angular.module('AttachmentBrowser', [
-  'Flash', 'PleaseWait', 'QueryBuilder', 'DataTable', 'Attachment',
-  'AttachmentLibrarySvc'])
+  'angularModalService', 'Flash', 'PleaseWait', 'DataTable', 'QueryBuilder',
+  'Attachment', 'AttachmentLibrarySvc', 'AttachmentEditorCtrl'])
   .directive('attachmentBrowser', [
-    'Flash', 'PleaseWaitSvc', '$rootScope', 'Attachment',
+    '$rootScope', 'ModalService', 'Flash', 'PleaseWaitSvc', 'Attachment',
     'AttachmentLibrarySvc',
-    function (Flash, PleaseWaitSvc, $rootScope, Attachment,
+    function ($rootScope, ModalService, Flash, PleaseWaitSvc, Attachment,
               AttachmentLibrarySvc) {
 
       return {
@@ -102,6 +102,25 @@ angular.module('AttachmentBrowser', [
 
             // For operations on a single row
             scope.dataTableRowOps = {
+              edit: {
+                icon: 'glyphicon-pencil',
+                action: function (rowId) {
+                  var rowData = scope.dataTableInstance.row('#' + rowId).data();
+
+                  // For angular-modal-service usage, see
+                  // https://github.com/dwmkerr/angular-modal-service.
+                  ModalService.showModal({
+                    templateUrl: 'shared/controllers/attachment_editor.html',
+                    controller: 'AttachmentEditorCtrl',
+                    inputs: {
+                      attachment: rowData
+                    }
+                  }).then(function(modal) {
+                    // It's a Bootstrap element, use 'modal' to show it
+                    modal.element.modal();
+                  });
+                }
+              },
               delete: {
                 icon: 'glyphicon-remove',
                 action: function (rowId) {
@@ -185,12 +204,16 @@ angular.module('AttachmentBrowser', [
                 scope.dataTableInstance.ajax.reload();
               }
             });
-
-            $rootScope.$on('attachment_library.attachments_deleted',
-              function () {
-                if (scope.dataTableInstance) {
-                  scope.dataTableInstance.ajax.reload();
-                }
+            
+            _.each([
+              'attachment_library.attachment_updated',
+              'attachment_library.attachments_deleted'],
+              function (event) {
+                $rootScope.$on(event, function () {
+                  if (scope.dataTableInstance) {
+                    scope.dataTableInstance.ajax.reload();
+                  }
+                });
               });
           }
         }

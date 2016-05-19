@@ -1,9 +1,9 @@
 // Manages the User resource on the server.
-angular.module('User', ['ResourceUtils'])
+angular.module('User', [])
   .factory('User', [
-    'CancelableResourceFactory',
-    function(CancelableResourceFactory) {
-      return CancelableResourceFactory.createResource(
+    '$resource',
+    function($resource) {
+      return $resource(
         '/admin/users/:collectionAction/:userId/:memberAction.json',
         { userId: '@id' },
         // Extra methods for compatibility with Rails, and our data format

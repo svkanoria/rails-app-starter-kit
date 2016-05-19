@@ -8,7 +8,7 @@
  *       :
  *   </authentication-links>
  */
-angular.module('AuthenticationLinks', [])
+angular.module('AuthenticationLinks', ['AuthSvc'])
   .directive('authenticationLinks', [
     '$location', 'AuthSvc',
     function ($location, AuthSvc) {

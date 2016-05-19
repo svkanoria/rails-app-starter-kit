@@ -1,10 +1,13 @@
 var app = angular.module('App', [
   'templates', // Used by angular-rails-templates
   'ui.router',
+  'ngResource',
   'ngAnimate',
   'ng-rails-csrf',
+  'angularModalService',
 
   // Services
+  'ArrayMetadataResponseAdapter',
   'Flash',
   'AuthSvc',
   'Post',
@@ -31,7 +34,6 @@ var app = angular.module('App', [
 
   // Modules
   'RouteUtils',
-  'ResourceUtils',
   'FormBuilder',
   'QueryBuilder'
 ]);

@@ -1,4 +1,4 @@
-angular.module('PostsCtrl', ['Post'])
+angular.module('PostsCtrl', ['Flash', 'Post'])
   .controller('PostsCtrl', [
     '$scope', 'Flash', 'Post',
     function($scope, Flash, Post) {

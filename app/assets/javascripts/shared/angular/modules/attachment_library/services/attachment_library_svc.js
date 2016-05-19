@@ -1,4 +1,4 @@
-// The service behind the attachment-library directive.
+// The service behind the attachment-library and associated directives.
 angular.module('AttachmentLibrarySvc', [])
   .factory('AttachmentLibrarySvc', [
     '$rootScope',
@@ -104,6 +104,19 @@ angular.module('AttachmentLibrarySvc', [])
       };
 
       /**
+       * Emits the 'attachment_library.attachment_updated' event on $rootScope
+       * with the details of the attachment that was updated.
+       *
+       * Listeners such as the attachment browser and attachment drop, can then
+       * update themselves accordingly.
+       *
+       * @param {Object} attachment - the details of the updated attachment.
+       */
+      var emitAttachmentUpdated = function (attachment) {
+        $rootScope.$emit('attachment_library.attachment_updated', attachment);
+      };
+
+      /**
        * Emits the 'attachment_library.attachments_deleted' event on $rootScope
        * with the ids of the attachments that were deleted.
        *
@@ -128,6 +141,7 @@ angular.module('AttachmentLibrarySvc', [])
         getAlertCount: getAlertCount,
         incrementAlertCount: incrementAlertCount,
         emitUploadSuccessful: emitUploadSuccessful,
+        emitAttachmentUpdated: emitAttachmentUpdated,
         emitAttachmentsDeleted: emitAttachmentsDeleted
       };
     }])
@@ -139,7 +153,7 @@ angular.module('AttachmentLibrarySvc', [])
       // Hide by default.
       // To force show the library in some view, the view's controller should
       // call setVisible(true).
-      $rootScope.$on('$stateChangeStart', function () {
+      $rootScope.$on('$stateChangeSuccess', function () {
         AttachmentLibrarySvc.setVisible(false);
       });
     }]);

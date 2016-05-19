@@ -14,7 +14,7 @@
  *   available on the 'settingsErrors' scope variable.
  * * Insert the appropriate entry into the 'categories' scope variable below
  */
-angular.module('AppSettingsCtrl', [])
+angular.module('AppSettingsCtrl', ['Flash'])
   .controller('AppSettingsCtrl', [
     '$scope', '$http', '$state', 'Flash', 'initialData', 'initialData2',
     function($scope, $http, $state, Flash, initialData, initialData2) {
