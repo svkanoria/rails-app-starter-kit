@@ -36,7 +36,7 @@ development:
   # The password associated with the postgres role (username).
   # MY NOTE: Uncommented, since our machine requires an explicit password. If
   # yours does not, then comment it out.
-  password: password
+  password: postgres
 
   # Connect on a TCP socket. Omitted by default since the client uses a domain
   # socket that doesn't need configuration. Windows does not have domain
@@ -65,7 +65,7 @@ test:
 
   # MY NOTE: Added these. See 'development' section above.
   username: postgres
-  password: password
+  password: postgres
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is ever
