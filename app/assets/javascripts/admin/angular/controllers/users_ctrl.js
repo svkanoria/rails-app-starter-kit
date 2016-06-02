@@ -1,4 +1,4 @@
-angular.module('UsersCtrl', ['User'])
+angular.module('UsersCtrl', ['Flash', 'User'])
   .controller('UsersCtrl', [
     '$scope', '$state', 'Flash', 'User', 'initialData',
     function($scope, $state, Flash, User, initialData) {

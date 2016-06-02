@@ -36,6 +36,7 @@
 //= require selectize/dist/js/standalone/selectize
 //= require datatables.net/js/jquery.dataTables
 //= require datatables-responsive/js/dataTables.responsive
+//= require angular-modal-service/dst/angular-modal-service
 //
 // Files shared between client and admin apps
 //= require_tree ../shared

@@ -6,6 +6,9 @@ angular.module('AttachmentLibrary', [
   'AttachmentLibrarySvc',
   'AttachmentViewerProvider',
 
+  // Controllers
+  'AttachmentEditorCtrl',
+
   // Directives
   'AttachmentLibraryDirective',
   'AttachmentBrowser',

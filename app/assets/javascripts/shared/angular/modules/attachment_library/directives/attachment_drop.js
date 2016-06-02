@@ -122,6 +122,16 @@ angular.module('AttachmentDrop', ['Flash', 'AttachmentJoin'])
             }
           });
 
+          $rootScope.$on('attachment_library.attachment_updated',
+            function (event, updatedAttachment) {
+              scope.roleAttachments = _.map(scope.roleAttachments,
+                function (attachment) {
+                  return (attachment.id === updatedAttachment.id)
+                    ? updatedAttachment
+                    : attachment;
+                });
+            });
+
           $rootScope.$on('attachment_library.attachments_deleted',
             function (event, attachmentIds) {
               scope.roleAttachments = _.reject(scope.roleAttachments,

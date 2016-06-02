@@ -1,0 +1,30 @@
+<div class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="close()"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Edit Attachment</h4>
+      </div>
+
+      <div class="modal-body">
+        <form role="form" novalidate fb-errors="attachmentErrors"
+              confirm-dirty-form>
+
+          <fb-field type="text" hint="Leave blank to auto-infer name"
+                    required="true" ng-model="attachment.name"></fb-field>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="close()">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary"
+                ng-click="updateAndClose()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>

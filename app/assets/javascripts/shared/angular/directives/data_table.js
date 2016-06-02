@@ -60,7 +60,7 @@
  *
  *   function someName (data) { // where 'data' is the row data object
  *     // The returned HTML can also contain directives. These directives are
- *     // compiled using a newly constructed scope, which but one property, viz.
+ *     // compiled using a newly constructed scope, with just one property, viz.
  *     // 'data', that contains the row data.
  *     return someHtmlConstructedFromData;
  *   }

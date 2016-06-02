@@ -12,6 +12,14 @@
 /log/*.log
 /tmp
 
+# Ignore RVM/Ruby version manager config files. These are only for auto-
+# selecting the correct Ruby and gemset locally. It is a good idea to generate
+# these files for yourself. If using RVM, do so by typing this on the command
+# line, in the project root directory:
+# rvm --ruby-version use some-ruby-version@some-gemset
+.ruby-version
+.ruby-gemset
+
 # Ignore the .env file. It contains sensitive info!
 .env
 

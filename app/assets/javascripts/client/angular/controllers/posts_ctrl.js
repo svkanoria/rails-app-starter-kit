@@ -1,4 +1,4 @@
-angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
+angular.module('PostsCtrl', ['Flash', 'Post', 'AttachmentLibrarySvc'])
   .controller('PostsCtrl', [
     '$scope', '$state', 'Flash', 'Post', 'AttachmentLibrarySvc', 'initialData',
     function ($scope, $state, Flash, Post, AttachmentLibrarySvc, initialData) {
@@ -29,7 +29,7 @@ angular.module('PostsCtrl', ['Post', 'AttachmentLibrarySvc'])
         // This code is merely illustrative. In the case of this particular
         // action, no cancelling is required.
         if (postsQuery) {
-          postsQuery.cancel();
+          postsQuery.$cancelRequest();
           postsQuery = null;
         }
 
