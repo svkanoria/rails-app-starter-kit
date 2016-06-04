@@ -50,8 +50,17 @@ class AttachmentJoin < ActiveRecord::Base
       filter = role_def[:filter]
 
       # Lastly, filter must "pass" the attachment
-      if filter && !filter.call(attachment, attachment_owner)
-        errors.add(:attachment_id, :rejected_by_filter) and return
+      if filter
+        filter_result = filter.call(attachment, attachment_owner)
+
+        if !filter_result
+          errors.add(:attachment_id, :rejected_by_filter)
+        elsif filter_result.is_a?(Symbol)
+          errors.add(:attachment_id,
+                     "rejected_by_filter_because.#{filter_result}".to_sym)
+        end
+
+        return
       end
     end
   end

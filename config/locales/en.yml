@@ -28,7 +28,6 @@ en:
         password_new: '%{minimum_password_length} characters minimum'
         # For the user edit form
         password_update: "Leave blank if you don't want to change it"
-
         current_password: 'We need your current password to confirm your
           changes'
     errors:
@@ -43,6 +42,10 @@ en:
               quota_exceeded: 'Maximum number reached'
             attachment_id:
               rejected_by_filter: 'Attachment does not meet criteria'
+              rejected_by_filter_because:
+                not_owned: 'You must own this resource to attach something to
+                  it'
+                not_an_image: 'Attachment must be an image'
 
   # Error messages for the 'render_op_error' method (see ApplicationController)
   op_errors:

@@ -53,7 +53,15 @@ module ActsAsAttachmentOwner
     #       { some_role: {
     #           count (?): some number (unlimited by default),
     #           filter (?): lambda { |attachment, owner|
-    #             true/false # Whether or not the attachment is acceptable
+    #             # Return whether or not the attachment is acceptable:
+    #             # true => acceptable
+    #             # false/nil => not acceptable. A default error msg will be
+    #             #   shown to the user
+    #             # :some_symbol => not acceptable. A custom error msg will be
+    #             #   shown to the user. This message will be looked for in the
+    #             #   appropriate i18n file, in the following key:
+    #             #   'errors.models.attachment_join.attributes.attachment_id.
+    #             #     rejected_by_filter_because.some_symbol'
     #           }
     #       } },
     #       # To accept attachments without roles:
