@@ -21,7 +21,13 @@ class Post < ActiveRecord::Base
           { image: {
               count: 1,
               filter: lambda { |attachment, post|
-                attachment.user_id == post.user_id && attachment.web_image?
+                if attachment.user_id != post.user_id
+                  :not_owned
+                elsif !attachment.web_image?
+                  :not_an_image
+                else
+                  true
+                end
               }
           } },
           :contributed_attachment
