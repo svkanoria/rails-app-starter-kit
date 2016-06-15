@@ -12,6 +12,38 @@
 #  access_expires_at :datetime
 #
 
+# An attachment is an object "pointing" via a URL to a file stored somewhere,
+# in some backing store.
+#
+# Attachments belong to users, i.e., each user can build and manage their own
+# "attachment library".
+#
+# Attachments can be associated with models that are designed to accept them.
+# For example, a {Post} may accept a single image (*only* from the creator of
+# the post), and also accept zero or more files (images or anything else)
+# contributed by users at large.
+#
+# These associations are made using the {AttachmentJoin} join model, allowing
+# many-to-many associations between attachments and things accepting them.
+#
+# Configuring a model to accept attachments (such as described in the scenario/
+# constraints above) can be done by including in it the {ActsAsAttachmentOwner}
+# concern (see its documentation for usage details).
+#
+# This class also provides some useful class and instance methods for working
+# with attachments. These are:
+# * {.backing_store}: Infers the backing store name (if possible), given a URL
+# * {.delete_from_store}: Initiates a request to delete an attachment from the
+#   backing store
+# * {#access_url}: Returns a protected access URL. Always prefer this over the
+#   raw URL, as there is no guarantee the latter will work (depending on backing
+#   store security settings)
+# * {#web_viewer_type}: The browser viewer type (if any) to use for viewing this
+#   attachment
+#
+# To add support for additional backing stores, modify the code in these
+# methods. Their documentation and comments within the code provide sufficient
+# guidance for doing so.
 class Attachment < ActiveRecord::Base
   validates :url, presence: true
   validates :user_id, presence: true
@@ -21,6 +53,39 @@ class Attachment < ActiveRecord::Base
 
   belongs_to :user
   has_many :attachment_joins, dependent: :destroy
+
+  # Infers the backing store name (if possible), given a URL.
+  #
+  # @param url [String] the URL
+  #
+  # @return [Symbol, nil] the store name, or nil if not recognized
+  def self.backing_store (url)
+    s3_bucket_url =
+        "#{AwsUtils::S3_URL}/#{Rails.application.secrets.aws_s3_bucket}"
+
+    # Add more conditions as and when supported
+    case
+      when url.start_with?(s3_bucket_url) then :own_aws_s3
+      when url.start_with?(AwsUtils::S3_URL) then :other_aws_s3
+      when url.start_with?('https://youtube.com') then :youtube
+      when url.start_with?('https://docs.google.com') then :g_docs
+      else nil
+    end
+  end
+
+  # Initiates a request to delete an attachment from the backing store.
+  #
+  # Extracted out into a class method, so that it can be used to delete
+  # just-uploaded files whose corresponding Attachment models were not created
+  # successfully.
+  #
+  # @param url [String] the attachment URL
+  def self.delete_from_store (url)
+    # Add more conditions as and when supported
+    case Attachment.backing_store(url)
+      when :own_aws_s3 then AwsUtils.s3_delete(url)
+    end
+  end
 
   # The backing store for this attachment (AWS, YouTube etc.).
   #
@@ -175,38 +240,5 @@ class Attachment < ActiveRecord::Base
   # In turn, this calls Attachment.delete_from_store.
   def delete_from_store
     Attachment.delete_from_store(url)
-  end
-
-  # Infers the backing store name (if possible), given a URL.
-  #
-  # @param url [String] the URL
-  #
-  # @return [Symbol, nil] the store name, or nil if not recognized
-  def self.backing_store (url)
-    s3_bucket_url =
-        "#{AwsUtils::S3_URL}/#{Rails.application.secrets.aws_s3_bucket}"
-
-    # Add more conditions as and when supported
-    case
-      when url.start_with?(s3_bucket_url) then :own_aws_s3
-      when url.start_with?(AwsUtils::S3_URL) then :other_aws_s3
-      when url.start_with?('https://youtube.com') then :youtube
-      when url.start_with?('https://docs.google.com') then :g_docs
-      else nil
-    end
-  end
-
-  # Initiates a request to delete an attachment from the backing store.
-  #
-  # Extracted out into a class method, so that it can be used to delete
-  # just-uploaded files whose corresponding Attachment models were not created
-  # successfully.
-  #
-  # @param url [String] the attachment URL
-  def self.delete_from_store (url)
-    # Add more conditions as and when supported
-    case Attachment.backing_store(url)
-      when :own_aws_s3 then AwsUtils.s3_delete(url)
-    end
   end
 end
