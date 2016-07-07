@@ -5,7 +5,7 @@
  * Angular forms with server-side validation).
  *
  * Usage:
- *   <form ...>
+ *   <form ?fb-errors="Object expr" ...>
  *     <fb-field ?type="{{String expr}}"
  *               ?label="{{String expr}}"
  *               ?hint="{{String expr}}"

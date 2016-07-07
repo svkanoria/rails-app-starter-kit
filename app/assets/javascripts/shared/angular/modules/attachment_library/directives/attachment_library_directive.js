@@ -7,7 +7,7 @@
  *
  * The uploader options are passed to the uploader directive.
  * We provide one uploader (which we then use by default): The 'fine-uploader'
- * directive. However, you can create you own if you wish.
+ * directive. However, you can create your own uploader directive if you wish.
  *
  * To create your own uploader, refer to fine_uploader.js for guidance.
  * In particular, take care to do the following:
