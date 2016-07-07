@@ -12,9 +12,9 @@
 Welcome to the Rails App Starter Kit!
 
 This is a starter project for creating applications using the Postgres, Rails
-and Angular stack, *on steroids*.
+and Angular stack, *on* *steroids*.
 
-It has the following, and *much more*, built in:
+It has the following, and *much* *more*, built in:
 * Comprehensive Angular integration
 * A number of useful dev tools, DSLs and libraries for productive development
 * Authentication and authorization
