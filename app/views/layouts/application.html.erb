@@ -18,10 +18,6 @@
   <please-wait></please-wait>
 
   <div class="container" id="flash-container">
-    <%# Server-side flash messages %>
-    <%= render 'layouts/shared/flash_alerts' %>
-
-    <%# Client-side flash messages %>
     <flash-alerts></flash-alerts>
   </div>
 
@@ -33,7 +29,7 @@
 
   <%= render 'layouts/fine_uploader_tmpl' %>
 
-  <%= render 'layouts/global_js_vars' %>
+  <%= render 'layouts/shared/global_js_vars' %>
 
   <% if Rails.application.secrets.jw_player_account_token %>
     <script src="//jwpsrv.com/library/<%= Rails.application.secrets.jw_player_account_token %>.js">
