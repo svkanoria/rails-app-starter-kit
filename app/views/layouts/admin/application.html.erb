@@ -15,10 +15,6 @@
   <please-wait></please-wait>
 
   <div class="container" id="flash-container">
-    <%# Server-side flash messages %>
-    <%= render 'layouts/shared/flash_alerts' %>
-
-    <%# Client-side flash messages %>
     <flash-alerts></flash-alerts>
   </div>
 
@@ -26,13 +22,6 @@
 
   <%= render 'layouts/admin/footer' %>
 
-  <%# Set currently signed in user details, if any %>
-  <script type="application/javascript">
-    <% if (c = current_user_json) %>
-    var CurrentUser = <%= raw c %>;
-    <% else %>
-    var CurrentUser = null;
-    <% end %>
-  </script>
+  <%= render 'layouts/shared/global_js_vars' %>
 </body>
 </html>

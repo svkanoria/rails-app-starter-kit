@@ -9,6 +9,15 @@
     var CurrentUser = null;
   <% end %>
 
+  <%# Communicate any server side flash messages to the Angular 'Flash'
+    # service, to be seamlessly unified with client side flash messages.
+    # %>
+  <% if flash.any? %>
+    var ServerFlash = <%= raw flash.to_hash.except(:timedout).to_json %>;
+  <% else %>
+    var ServerFlash = null;
+  <% end %>
+
   <%# Set info that may be useful on the client side.
     # For example, the media library uploader requires some AWS details set
     # using environment variables.

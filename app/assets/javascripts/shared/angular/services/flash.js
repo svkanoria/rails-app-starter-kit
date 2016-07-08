@@ -64,11 +64,26 @@ angular.module('Flash', [])
       var flash = new Flash();
       flash.now = new Flash();
 
+      // Maps Rails flash keys to Bootstrap alert types
+      var FLASH_KEY_MAP = { notice: 'success', alert: 'danger' };
+
       $rootScope.$on(eventName, function (event, args) {
+        // Push any server side flash messages (available through the
+        // ServerFlash global variable), into the flash.
+        if (ServerFlash) {
+          for (var key in ServerFlash) {
+            flash.push(FLASH_KEY_MAP[key] || key, ServerFlash[key]);
+          }
+        }
+
         if (!args.redirectTo) { // To preserve flash across redirects
           flash.now.clear();
           flash.now.concat(flash.getItems());
           flash.clear();
+
+          if (ServerFlash) {
+            ServerFlash = null;
+          }
         }
       });
 
