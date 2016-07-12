@@ -48,8 +48,8 @@ class QueryBuilder
   # Augments the model class or seed query, by applying all filters.
   # This augmented query can be retrieved via the 'query' method.
   #
-  # If any of the filters is invalid and would lead to no results, the entire
-  # query is modified to return no results.
+  # If any of the filters is invalid (i.e. has no meaning), and therefore would
+  # lead to no results, the entire query is modified to return no results.
   #
   # A filter is deemed invalid if the 'apply_filter' method returns false.
   def apply_filters
@@ -78,28 +78,37 @@ class QueryBuilder
         (@build_custom_logic && @build_custom_logic.call(filter, @query)) ||
         build_filter_logic(filter)
 
-    return false unless filter_logic
-
-    @query = filter_logic.is_a?(String) ?
-        @query.where(filter_logic) :
-        filter_logic
+    if filter_logic.nil?
+      true # "Pass", and return anything but false
+    elsif filter_logic.is_a?(String)
+      @query = @query.where(filter_logic)
+    elsif filter_logic.is_a?(Hash)
+      apply_filter(filter_logic)
+    elsif filter_logic == 0
+      false
+    else
+      # Assume filter_logic is a query object, so replace the query in play
+      @query = filter_logic
+    end
   end
 
   # Translates a filter into logic for augmenting the query.
   #
   # Can return any of the following:
-  # * a string suitable for a 'where' condition
+  # * a string suitable for a 'where' condition, to add to the query in play
   # * the modified query object - this will REPLACE the current query in play
-  # * nil, if the filter does not make semantic sense
+  # * the modified filter object - this will REPLACE the current filter in play
+  # * nil, to "pass" but let the flow of filter application continue as normal
+  # * 0, if the filter is invalid (i.e. has no meaning), and therefore would
+  #   lead to no results. This stops filter application forthwith, and modifies
+  #   the entire query to return no results.
   #
   # @param filter [Hash] the filter, with a minimum format as follows:
   #   { column: 'some-column-name', value: [val1, ...], op: 'some-op' }.
   #   The filter is guaranteed to have at least one value
   #
-  # @return [String, ActiveRecord::Relation, nil] One of the following:
-  #   * a string suitable for the 'where' condition
-  #   * the modified query object - this will REPLACE the current query in play
-  #   * nil, if the filter does not make semantic sense
+  # @return [String, ActiveRecord::Relation, nil, false] See write-up above for
+  #   details
   def build_filter_logic (filter)
     column = filter[:column]
     values = filter[:values]
@@ -108,13 +117,13 @@ class QueryBuilder
     column_type = Utils.column_type(@model_klass, column)
 
     values_expr = build_values_expr(values, column_type, op)
-    return nil unless values_expr
+    return 0 unless values_expr
 
     column_expr = build_column_expr(column, column_type, op)
-    return nil unless column_expr
+    return 0 unless column_expr
 
     op_expr = build_op_expr(op)
-    return nil unless op_expr
+    return 0 unless op_expr
 
     "#{column_expr} #{op_expr} #{values_expr}"
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151006163722) do
+ActiveRecord::Schema.define(version: 20160712051414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,12 +27,13 @@ ActiveRecord::Schema.define(version: 20151006163722) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "name"
-    t.string   "url",               limit: 1024
+    t.string   "url",                    limit: 1024
     t.integer  "user_id"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.string   "access_url",        limit: 1024
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.string   "access_url",             limit: 1024
     t.datetime "access_expires_at"
+    t.integer  "attachment_joins_count",              default: 0, null: false
   end
 
   add_index "attachments", ["user_id"], name: "index_attachments_on_user_id", using: :btree

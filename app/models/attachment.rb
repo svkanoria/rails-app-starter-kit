@@ -19,9 +19,8 @@
 # "attachment library".
 #
 # Attachments can be associated with models that are designed to accept them.
-# For example, a {Post} may accept a single image (*only* from the creator of
-# the post), and also accept zero or more files (images or anything else)
-# contributed by users at large.
+# For example, a {Post} may accept a single 'main' image, and also accept zero
+# or more files (images or anything else) as additional attachments.
 #
 # These associations are made using the {AttachmentJoin} join model, allowing
 # many-to-many associations between attachments and things accepting them.

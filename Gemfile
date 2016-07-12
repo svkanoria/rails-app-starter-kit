@@ -97,6 +97,10 @@ gem 'ledermann-rails-settings'
 # For more concise Rails logging
 gem 'lograge'
 
+# To make finding the number of objects that belong to an ActiveRecord object
+# more efficient.
+gem 'counter_culture', '~> 0.2'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
