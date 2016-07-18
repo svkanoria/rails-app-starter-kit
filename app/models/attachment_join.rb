@@ -21,6 +21,8 @@ class AttachmentJoin < ActiveRecord::Base
   validate :owner_accepts_attachment
 
   belongs_to :attachment
+  counter_culture :attachment
+
   belongs_to :attachment_owner, polymorphic: true
 
   private

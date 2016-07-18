@@ -30,10 +30,11 @@
  * within the 'attachments' object. Thus, note that you need one directive per
  * role.
  */
-angular.module('AttachmentDrop', ['Flash', 'AttachmentJoin'])
+angular.module('AttachmentDrop', [
+  'Flash', 'AttachmentJoin', 'AttachmentLibrarySvc'])
   .directive('attachmentDrop', [
-    '$rootScope', 'Flash', 'AttachmentJoin',
-    function ($rootScope, Flash, AttachmentJoin) {
+    '$rootScope', 'Flash', 'AttachmentJoin', 'AttachmentLibrarySvc',
+    function ($rootScope, Flash, AttachmentJoin, AttachmentLibrarySvc) {
       return {
         restrict: 'E',
         templateUrl: 'shared/directives/attachment_drop.html',
@@ -75,12 +76,14 @@ angular.module('AttachmentDrop', ['Flash', 'AttachmentJoin'])
            *   scope.roleAttachments
            */
           scope.detachAttachmentAt = function (index) {
-            var joinId = scope.roleAttachments[index].join_id;
+            var attachment = scope.roleAttachments[index];
 
-            AttachmentJoin.delete({attachmentJoinId: joinId},
+            AttachmentJoin.delete({ attachmentJoinId: attachment.join_id },
               function (response) {
                 scope.roleAttachments.splice(index, 1);
                 scope.countRemaining += 1;
+
+                AttachmentLibrarySvc.emitAttachmentsDetached([attachment.id]);
               },
               function (failureResponse) {
                 Flash.now.push('danger',
@@ -94,7 +97,7 @@ angular.module('AttachmentDrop', ['Flash', 'AttachmentJoin'])
             accept: '.droppable-attachment',
             hoverClass: 'attachment-drop-area-active',
             drop: function (event, ui) {
-              var attachmentId = ui.helper.text().split(';')[0];
+              var attachmentId = ui.helper.text().split(':')[0];
 
               var attachmentAttrs = {
                 attachment_id: attachmentId,
@@ -106,6 +109,8 @@ angular.module('AttachmentDrop', ['Flash', 'AttachmentJoin'])
               AttachmentJoin.save(attachmentAttrs, function (response) {
                 scope.roleAttachments.push(response);
                 scope.countRemaining -= 1;
+
+                AttachmentLibrarySvc.emitAttachmentsAttached([attachmentId]);
               }, function (failureResponse) {
                 var errors = failureResponse.data.errors;
 

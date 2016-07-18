@@ -39,6 +39,43 @@ angular.module('AttachmentBrowser', [
                 + '</a></span>';
             }
 
+            /**
+             * Updates desired usage counts in the data table.
+             *
+             * Designed to work off local data only, in the interests of speed.
+             * The easiest way would have been to do an AJAX reload, to get the
+             * latest usage counts, but would need a trip to the server.
+             *
+             * Update: It so happens that the 'draw' function in the DataTables
+             * API (which we rely on to draw the data table after updating its
+             * data) also triggers a server request, so we're back to square
+             * one! However, we keep the extra work intact, in the hope that
+             * DataTables will fix this issue some day soon - after all, its
+             * '.ajax.reload()' call already does the same thing as '.draw()'!!
+             *
+             * @param {number[]} attachmentIds - The ids of the attachments for
+             * which to updated usage counts.
+             * @param {number} usageCountDelta - The amount to adjust the usage
+             * counts by (should generally be 1 or -1).
+             */
+            function updateUsageCounts (attachmentIds, usageCountDelta) {
+              if (scope.dataTableInstance) {
+                _.each(attachmentIds, function (attachmentId) {
+                  var row = scope.dataTableInstance.row('#' + attachmentId);
+                  var rowData = row.data();
+
+                  if (rowData) {
+                    rowData.joins_count += usageCountDelta;
+
+                    // 'full-hold' means that current sorting, filtering and
+                    // paging will 1) not be lost, and 2) be recomputed to take
+                    // into account updated data.
+                    scope.dataTableInstance.draw('full-hold');
+                  }
+                });
+              }
+            }
+
             //////////////////////
             // Procedural Stuff //
             //////////////////////
@@ -62,7 +99,8 @@ angular.module('AttachmentBrowser', [
                   render: function (data, type, row, meta) {
                     return moment(data).format('lll');
                   }
-                }
+                },
+                { data: 'joins_count' }
               ],
               // Ensure table element has an id for this to work!
               stateSave: true,
@@ -187,7 +225,8 @@ angular.module('AttachmentBrowser', [
                 { name: 'name', label: 'Name', type: 'text' },
                 // See query-builder for why 'id' column has type 'text'
                 { name: 'id', label: 'ID', type: 'text' },
-                { name: 'created_at', label: 'Created At', type: 'date' }
+                { name: 'created_at', label: 'Created At', type: 'date' },
+                { name: 'joins_count', label: '# Usages', type: 'number' }
               ],
               onSubmit: function () {
                 scope.dataTableInstance.ajax.reload(); // Reload the data table
@@ -214,6 +253,16 @@ angular.module('AttachmentBrowser', [
                     scope.dataTableInstance.ajax.reload();
                   }
                 });
+              });
+
+            $rootScope.$on('attachment_library.attachments_attached',
+              function (event, data) {
+                updateUsageCounts(data, 1);
+              });
+
+            $rootScope.$on('attachment_library.attachments_detached',
+              function (event, data) {
+                updateUsageCounts(data, -1);
               });
           }
         }

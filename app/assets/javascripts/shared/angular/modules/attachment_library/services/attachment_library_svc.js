@@ -130,6 +130,36 @@ angular.module('AttachmentLibrarySvc', [])
           attachmentIds);
       };
 
+      /**
+       * Emits the 'attachment_library.attachments_attached' event on $rootScope
+       * with the ids of the attachments that were attached (to some model).
+       *
+       * Listeners such as the attachment browser (which shows how many times an
+       * attachment has been attached, i.e. "used") can then update themselves
+       * accordingly.
+       *
+       * @param {number[]} attachmentIds - The ids of the attached attachments.
+       */
+      var emitAttachmentsAttached = function (attachmentIds) {
+        $rootScope.$emit('attachment_library.attachments_attached',
+          attachmentIds);
+      };
+
+      /**
+       * Emits the 'attachment_library.attachments_detached' event on $rootScope
+       * with the ids of the attachments that were detached (from some model).
+       *
+       * Listeners such as the attachment browser (which shows how many times an
+       * attachment has been attached, i.e. "used") can then update themselves
+       * accordingly.
+       *
+       * @param {number[]} attachmentIds - The ids of the detached attachments.
+       */
+      var emitAttachmentsDetached = function (attachmentIds) {
+        $rootScope.$emit('attachment_library.attachments_detached',
+          attachmentIds);
+      };
+
       // Return the service object
       return {
         getVisible: getVisible,
@@ -142,7 +172,9 @@ angular.module('AttachmentLibrarySvc', [])
         incrementAlertCount: incrementAlertCount,
         emitUploadSuccessful: emitUploadSuccessful,
         emitAttachmentUpdated: emitAttachmentUpdated,
-        emitAttachmentsDeleted: emitAttachmentsDeleted
+        emitAttachmentsDeleted: emitAttachmentsDeleted,
+        emitAttachmentsAttached: emitAttachmentsAttached,
+        emitAttachmentsDetached: emitAttachmentsDetached
       };
     }])
 

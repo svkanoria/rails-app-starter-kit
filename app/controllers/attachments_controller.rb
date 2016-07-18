@@ -3,22 +3,23 @@ class AttachmentsController < ApplicationController
 
   respond_to :json
 
-  before_action :load_basics, except: [:index, :create, :batch_destroy]
+  before_action :load_basics, only: [:show, :update, :destroy]
 
   after_action :verify_authorized
 
   def index
     authorize Attachment
 
-    attachments_filter = QueryBuilder.new(policy_scope(Attachment),
-                                          params[:filters])
+    attachments_filter =
+        QueryBuilder.new(policy_scope(Attachment), params[:filters]) {
+            |filter, query| build_custom_logic(filter, query) }
 
     # We need to select some additional columns (see the last argument) for
     # including the results of certain Attachment methods in the rendered JSON
     # (see the corresponding JBuilder file).
     @attachments_adapter = DataTableAdapter.new(
         Attachment, params, attachments_filter.query,
-        %w(url access_url access_expires_at))
+        %w(url access_url access_expires_at attachment_joins_count))
 
     respond_with @attachments_adapter
   end
@@ -63,6 +64,16 @@ class AttachmentsController < ApplicationController
 
   def attachment_update_params
     params.required(:attachment).permit(:name)
+  end
+
+  # Builds custom filter logic for the query builder used in the index action.
+  # See {QueryBuilder#initialize} for an understanding.
+  def build_custom_logic (filter, query)
+    if filter[:column] == 'joins_count'
+      filter[:column] = 'attachment_joins_count'
+
+      filter
+    end
   end
 
   def load_basics

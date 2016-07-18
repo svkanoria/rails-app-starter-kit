@@ -22,7 +22,7 @@ $attachment-drag-helper-border-radius: $border-radius-small;
 .attachment-library-panel {
   position: fixed;
   bottom: $attach-lib-panel-bottom;
-  width: 100%;
+  width: 97%; // Trial and error
   max-height: $attach-lib-panel-max-height;
   overflow-y: scroll;
   margin: $attach-lib-panel-margin;
@@ -33,8 +33,13 @@ $attachment-drag-helper-border-radius: $border-radius-small;
 
   // For anything but the smallest screens, set a fixed width. This seems to
   // work best visually.
+
   @media (min-width: $screen-sm-min) {
     width: $screen-sm-min/1.1;
+  }
+
+  @media (min-width: $screen-md-min) {
+    width: $screen-md-min/1.1;
   }
 
   &.ng-hide-add {
