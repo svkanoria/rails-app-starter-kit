@@ -21,6 +21,9 @@ $flash-alert-close-right: 0; // Trial and error
     margin-bottom: $flash-alert-bottom-margin;
     padding: $flash-alert-padding;
 
+    &.ng-enter { animation: fadeIn 0.3s; }
+    &.ng-leave { animation: fadeOut 0.3s; }
+
     // Changing the alert margins necessitates a change here, otherwise the
     // close button goes too far to the right.
     > .close { right: $flash-alert-close-right; }

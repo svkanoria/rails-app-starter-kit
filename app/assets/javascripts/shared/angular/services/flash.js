@@ -15,8 +15,8 @@
  */
 angular.module('Flash', [])
   .factory('Flash', [
-    '$rootScope',
-    function ($rootScope) {
+    '$rootScope', '$timeout',
+    function ($rootScope, $timeout) {
       function Flash () {
         var items = [];
 
@@ -24,7 +24,21 @@ angular.module('Flash', [])
           return items;
         };
 
+        /**
+         * Pushes a {key, value} into the flash.
+         * Beware that it keeps only the 3 most recent items!
+         * TODO Remove hard-coded Angular flash message limit
+         *
+         * @param key {string} - The key to insert.
+         * @param value {string} - The value to insert.
+         */
         this.push = function (key, value) {
+          if (items.length === 3) {
+            $timeout(function () {
+              items.shift();
+            }, 300);
+          }
+
           items.push({ key: key, value: value });
         };
 
