@@ -4,7 +4,7 @@
  * When adding a new category of settings, you need to do the following:
  * * Add it on the server side (of course!)
  * * Create a template file named after the category in the
- *   /app/assets/javascripts/templates/admin/angular/controllers/app_settings
+ *   /app/assets/javascripts/templates/admin/controllers/app_settings
  *   directory, for displaying its settings on screen. For example, for a
  *   category called 'outgoing_email', create a template file called
  *   'outgoing_email.html'.
@@ -47,6 +47,7 @@ angular.module('AppSettingsCtrl', ['Flash'])
       // not having to manually repeat the boilerplate HTML for every category
       // added.
       $scope.categories = [
-        { category: 'outgoing_email', label: 'Outgoing Email' }
+        { category: 'outgoing_email', label: 'Outgoing Email' },
+        { category: 'security', label: 'Security' }
       ];
     }]);
