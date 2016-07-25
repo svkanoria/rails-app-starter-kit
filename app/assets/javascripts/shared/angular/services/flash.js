@@ -26,14 +26,14 @@ angular.module('Flash', [])
 
         /**
          * Pushes a {key, value} into the flash.
-         * Beware that it keeps only the 3 most recent items!
+         * Beware that it keeps only the most recent item!
          * TODO Remove hard-coded Angular flash message limit
          *
          * @param key {string} - The key to insert.
          * @param value {string} - The value to insert.
          */
         this.push = function (key, value) {
-          if (items.length === 3) {
+          if (items.length === 1) {
             $timeout(function () {
               items.shift();
             }, 300);

@@ -1,0 +1,27 @@
+<%# This layout is used for all Devise views. By default, if Devise finds a
+  # layout of this name, it uses it instead of the application layout.
+  #
+  # We provide this because we want the Devise views to be plain vanilla Rails
+  # views, without the use of Angular. After much trial and error, we've found
+  # that this design decision results in the tidiest overall user experience.
+  #%>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rails App Starter Kit</title>
+
+  <%= stylesheet_link_tag 'client/application', media: 'all' %>
+
+  <%= javascript_include_tag 'client/application' %>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div id="devise-top">
+    <%= link_to 'Rails App Starter Kit', root_path %>
+  </div>
+
+  <%= yield %>
+</body>
+</html>

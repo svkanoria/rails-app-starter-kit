@@ -81,9 +81,9 @@ class ApplicationController < ActionController::Base
   # Sets where Devise should redirect on sign-in.
   # Works in conjunction with the 'authLinks' directive.
   def set_sign_in_redirect
-    if (hash = params[:x_return_to]).present?
+    if (hash = params[:return_to]).present?
       session[:user_return_to] =
-          "#{request.protocol}#{request.host_with_port}/##{hash}"
+          "#{request.protocol}#{request.host_with_port}#{hash}"
     end
   end
 

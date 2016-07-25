@@ -3,9 +3,13 @@
  * Uses the 'app' variable defined in app.js, so must be loaded after it.
  */
 app.config([
-  '$stateProvider', '$urlRouterProvider', 'ROUTE_UTILS',
-  function ($stateProvider, $urlRouterProvider, ROUTE_UTILS) {
+  '$stateProvider', '$locationProvider', '$urlRouterProvider', 'ROUTE_UTILS',
+  function ($stateProvider, $locationProvider, $urlRouterProvider,
+            ROUTE_UTILS) {
+
     var R = ROUTE_UTILS; // Shortcut
+
+    $locationProvider.html5Mode(true);
 
     $urlRouterProvider.otherwise('/');
 

@@ -11,7 +11,7 @@
 
   <%# Communicate any server side flash messages to the Angular 'Flash'
     # service, to be seamlessly unified with client side flash messages.
-    # %>
+    #%>
   <% if flash.any? %>
     var ServerFlash = <%= raw flash.to_hash.except(:timedout).to_json %>;
   <% else %>

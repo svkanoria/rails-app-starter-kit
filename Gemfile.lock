@@ -163,6 +163,7 @@ GEM
     pundit (0.3.0)
       activesupport (>= 3.0.0)
     rack (1.6.4)
+    rack-rewrite (1.5.1)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.2)
@@ -285,6 +286,7 @@ DEPENDENCIES
   pg
   puma
   pundit
+  rack-rewrite
   rails (= 4.2.2)
   rails-html-sanitizer (~> 1.0)
   rails_12factor
