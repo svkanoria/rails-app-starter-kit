@@ -1,8 +1,8 @@
 // Contains all Devise related styling
 
-$devise-top-margin-top: $padding-large-vertical*4;
-$devise-top-margin-bottom: $padding-large-vertical;
-$devise-top-font-size: 1.3em;
+$devise-top-margin-top: $padding-large-vertical*2;
+$devise-top-margin-bottom: 100px; // Trial and error
+$devise-top-font-size: 1.4em;
 
 #devise-top {
   margin: $devise-top-margin-top 0 $devise-top-margin-bottom 0;

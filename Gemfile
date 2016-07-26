@@ -101,6 +101,10 @@ gem 'lograge'
 # more efficient.
 gem 'counter_culture', '~> 0.2'
 
+# To support Angular HTML5 mode. For a detailed discussion, see
+# http://mbell697.github.io/2014/02/04/yeoman-angular-rails-html5mode.
+# Also take a look within /config/application.rb (search for 'rewrite'), for
+# code and comments that help explain the server support this feature requires.
 gem 'rack-rewrite'
 
 # Use Unicorn as the app server
