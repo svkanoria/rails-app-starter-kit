@@ -21,7 +21,7 @@ angular.module('PostsCtrl', ['Flash', 'Post'])
           columns: [
             { data: 'id',
               render: function (data, type, row, meta) {
-                return '<a href="/#/posts/' + data + '">' + data + '</a>';
+                return '<a href="/posts/' + data + '">' + data + '</a>';
               }
             },
             { data: 'message' },
@@ -50,7 +50,7 @@ angular.module('PostsCtrl', ['Flash', 'Post'])
           edit: {
             icon: 'glyphicon-pencil',
             link: function (rowId) {
-              return '/#/posts/' + rowId + '/edit';
+              return '/posts/' + rowId + '/edit';
             }
           },
           delete: {

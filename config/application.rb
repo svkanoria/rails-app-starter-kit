@@ -79,5 +79,34 @@ module RailsAppStarterKit
 
     # MY NOTE: Enable Lograge for more concise Rails logging
     config.lograge.enabled = true
+
+    # MY NOTE: Configure the server to support Angular's HTML5 mode. As HTML5
+    # mode uses regular server style URLs instead of "hash-bang" ones, we need
+    # to clearly delineate URL routing responsibilities between Angular and the
+    # server. Otherwise there is confusion between the two, resulting in broken
+    # navigation.
+    config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
+      # Ignore all requests with a '.' anywhere. Assets and AJAX requests all
+      # have some '.', and we don't want to rewrite them.
+      rewrite %r{^(.*\..*)$}, '/$1'
+
+      # Ignore all requests to '/user*', since these correspond to Devise views
+      # that are rendered by the server, and not by Angular.
+      rewrite %r{^/users(.*)$}, '/users$1'
+
+      # Ignore all requests sent by the FineUploader library to the FineUploader
+      # controller. Even though these are AJAX requests, they probably have no
+      # '.', and hence sneak through the first rewrite rule above.
+      rewrite %r{^/fine_uploader(.*)}, '/fine_uploader$1'
+
+      # Ignore all API calls
+      rewrite %r{^/admin/api/(.*)$}, '/admin/api/$1'
+      rewrite %r{^/api/(.*)$}, '/api/$1'
+
+      # Rewrite all other requests to the admin and main ('client') apps to the
+      # root, thus leaving the responsibility of in-app routing to Angular.
+      rewrite %r{^/admin(.*)$}, '/admin'
+      rewrite %r{^(.*)$}, '/'
+    end
   end
 end

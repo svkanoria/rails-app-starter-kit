@@ -99,7 +99,7 @@ angular.module('RouteUtilsConst', [])
                     signInRedirectUrl = signInRedirectUrl.substring(1);
                   }
 
-                  $window.location.href = '/users/sign_in?x_return_to=' +
+                  $window.location.href = '/users/sign_in?return_to=' +
                     signInRedirectUrl;
 
                   break;

@@ -1,5 +1,15 @@
 // Contains all Devise related styling
 
+$devise-top-margin-top: $padding-large-vertical*4;
+$devise-top-margin-bottom: $padding-large-vertical;
+$devise-top-font-size: 1.3em;
+
+#devise-top {
+  margin: $devise-top-margin-top 0 $devise-top-margin-bottom 0;
+  text-align: center;
+  font-size: $devise-top-font-size;
+}
+
 #devise-links {
   padding-top: $line-height-computed;
 }

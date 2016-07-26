@@ -104,6 +104,8 @@ gem 'lograge'
 # more efficient.
 gem 'counter_culture', '~> 0.2'
 
+gem 'rack-rewrite'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
