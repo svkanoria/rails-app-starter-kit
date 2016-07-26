@@ -18,6 +18,10 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="container" id="flash-container">
+    <%= render 'layouts/shared/flash_alerts' %>
+  </div>
+
   <div id="devise-top">
     <%= link_to 'Rails App Starter Kit', root_path %>
   </div>
