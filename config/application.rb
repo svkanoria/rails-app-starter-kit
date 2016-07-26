@@ -88,7 +88,7 @@ module RailsAppStarterKit
     config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
       # Ignore all requests with a '.' anywhere. Assets and AJAX requests all
       # have some '.', and we don't want to rewrite them.
-      rewrite %r{^(.*\..*)$}, '/$1'
+      rewrite %r{^(.*\..*)$}, '$1'
 
       # Ignore all requests to '/user*', since these correspond to Devise views
       # that are rendered by the server, and not by Angular.
