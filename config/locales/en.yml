@@ -32,6 +32,10 @@ en:
           changes'
     errors:
       models:
+        user:
+          attributes:
+            email:
+              not_in_sign_up_whitelist: 'is not in the sign up whitelist'
         attachment_join:
           attributes:
             attachment_owner_type:

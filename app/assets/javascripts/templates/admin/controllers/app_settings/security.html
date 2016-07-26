@@ -1,0 +1,41 @@
+<!--
+The enclosing row and column divs are optional. We use them here only for
+adjusting this form's width based on the screen size, to make it look good no
+matter the size.
+-->
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h3>Security</h3>
+
+    <p class="help-block">Configure security settings.</p>
+
+    <form role="form" novalidate fb-errors="settingsErrors" confirm-dirty-form>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="settings.force_sign_in">
+          Force users to sign in
+        </label>
+        <fb-hint>
+          Force users to sign in to access the application
+        </fb-hint>
+      </div>
+
+      <div class="form-inputs">
+        <fb-field type="text" label="Sign up whitelist"
+                  ng-model="settings.sign_up_whitelist">
+
+          <fb-hint>
+            Only allow emails from comma separated domains to sign up.
+            Leave blank to allow any email.
+          </fb-hint>
+        </fb-field>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" ng-click="updateSettings()">
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

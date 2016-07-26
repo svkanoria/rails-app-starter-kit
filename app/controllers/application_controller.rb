@@ -19,7 +19,8 @@ class ApplicationController < ActionController::Base
 
   before_action :require_tenant_if_subdomain,
                 :authenticate_user_from_token,
-                :set_sign_in_redirect
+                :set_sign_in_redirect,
+                :force_sign_in_if_required
 
   rescue_from Pundit::NotAuthorizedError, with: :deny_access
 
@@ -95,10 +96,21 @@ class ApplicationController < ActionController::Base
   # Sets where Devise should redirect on sign-in.
   # Works in conjunction with the 'authLinks' directive.
   def set_sign_in_redirect
-    if (hash = params[:x_return_to]).present?
+    if (hash = params[:return_to]).present?
       session[:user_return_to] =
-          "#{request.protocol}#{request.host_with_port}/##{hash}"
+          "#{request.protocol}#{request.host_with_port}#{hash}"
     end
+  end
+
+  # Forces users to sign in to access the application, iff an app admin has
+  # configured the app to do.
+  #
+  # Unfortunately, upon sign-in the user will be redirected to the root page,
+  # i.e. the hash portion of the URL will be ignored. This is a limitation of
+  # keeping a server view based authentication UI, despite having an SPA. For
+  # now, we'll just learn to live with it!
+  def force_sign_in_if_required
+    authenticate_user! if AppSettings.get(:security, :force_sign_in)
   end
 
   # Responds with a 401 (:unauthorized) HTTP status code.
