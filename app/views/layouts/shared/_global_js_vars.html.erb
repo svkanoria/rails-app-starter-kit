@@ -2,6 +2,13 @@
   # Keep these to a minimum, as they pollute the global namespace!
   #%>
 <script type="application/javascript">
+  <%# Set tenant's details, if any %>
+  <% if (c = tenant_json) %>
+    var Tenant = <%= raw c %>;
+  <% else %>
+    var Tenant = null;
+  <% end %>
+
   <%# Set currently signed in user's details, if any %>
   <% if (c = current_user_json) %>
     var CurrentUser = <%= raw c %>;

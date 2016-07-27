@@ -1,4 +1,12 @@
 module ApplicationHelper
+  # Tenant details (if any) to be passed to the client-side JS code.
+  def tenant_json
+    if (current_tenant = ActsAsTenant.current_tenant)
+      { id: current_tenant.id,
+        subdomain: current_tenant.subdomain }.to_json
+    end
+  end
+
   # Currently signed in user details (if any) to be passed to the client-side
   # JS code.
   def current_user_json
