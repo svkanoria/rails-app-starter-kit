@@ -31,6 +31,16 @@ angular.module('AppCtrl', ['AuthSvc', 'PleaseWait', 'RouteUtils'])
         iframeSupport: {
           localBlankPagePath: '/upload_success.html'
         },
+        objectProperties: {
+          key: function (id) {
+            var prefix = (AuthSvc.currentUser())
+              ? 'uploads/users/' + AuthSvc.currentUser().id
+              : 'uploads/common';
+
+            // 'getUuid' and 'getName' are part of the FineUploader API
+            return prefix + '/' + this.getUuid(id) + '_' + this.getName(id);
+          }
+        },
         retry: {
           enableAuto: true // Defaults to false
         },
