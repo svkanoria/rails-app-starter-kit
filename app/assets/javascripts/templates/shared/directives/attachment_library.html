@@ -5,8 +5,11 @@
     <attachment-browser ng-if="alSvc.getVisible()"></attachment-browser>
 
     <fine-uploader options="uploaderOptions"></fine-uploader>
-    <div>- or -</div>
-    <url-referrer></url-referrer>
+
+    <div class="attachment-library-panel-extras" ng-if="alSvc.getVisible()">
+      <div>- or -</div>
+      <url-referrer></url-referrer>
+    </div>
   </div>
 
   <div class="attachment-library-toggle btn btn-primary"
