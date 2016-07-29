@@ -31,7 +31,7 @@ cleaned up from time to time.
 
 The app's admin console can be accessed at:
 
-http://rails-app-starter-kit.herokuapp.com/admin/
+http://rails-app-starter-kit.herokuapp.com/admin
 
 To access the admin console, sign in with the following credentials:
 * Email: admin@rails-app-starter-kit.com

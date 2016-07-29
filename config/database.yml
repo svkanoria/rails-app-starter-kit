@@ -23,7 +23,7 @@ default: &default
 
 development:
   <<: *default
-  database: rails-app-starter-kit_development
+  database: rask-dev
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -61,7 +61,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: rails-app-starter-kit_test
+  database: rask-test
 
   # MY NOTE: Added these. See 'development' section above.
   username: postgres
@@ -91,7 +91,7 @@ test:
 # properly filled, for completeness.
 production:
   <<: *default
-  database: rails-app-starter-kit_production
+  database: rask-prod
 
   # MY NOTE: Safely remove these if you don't plan on using them.
   username: <%= ENV['RAILS_APP_STARTER_KIT_DATABASE_USERNAME'] %>
