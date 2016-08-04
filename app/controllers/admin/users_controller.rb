@@ -68,7 +68,8 @@ class Admin::UsersController < Admin::ApplicationController
 
       respond_with @user
     else
-      render_op_error('users_controller', :cannot_delete_self, :unauthorized)
+      render_op_error('admin.users_controller', :cannot_delete_self,
+                      :unauthorized)
     end
   end
 
@@ -80,7 +81,8 @@ class Admin::UsersController < Admin::ApplicationController
 
   def prevent_deleting_self
     if params[:ids].include? current_user.id.to_s
-      render_op_error('users_controller', :cannot_delete_self, :unauthorized)
+      render_op_error('admin.users_controller', :cannot_delete_self,
+                      :unauthorized)
     else
       yield
     end

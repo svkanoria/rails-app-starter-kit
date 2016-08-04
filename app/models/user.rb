@@ -129,8 +129,12 @@ class User < ActiveRecord::Base
   def email_in_sign_up_whitelist
     whitelist = AppSettings.get(:security, :sign_up_whitelist)
 
-    if whitelist.present? && !email.end_with?(*whitelist.split(/\s*,\s*/))
-      errors.add(:email, :not_in_sign_up_whitelist)
+    if whitelist.present?
+      whitelist_items = whitelist.split(/\s*,\s*/).delete_if(&:blank?)
+
+      unless email.end_with?(*whitelist_items)
+        errors.add(:email, :not_in_sign_up_whitelist)
+      end
     end
   end
 

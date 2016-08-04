@@ -51,5 +51,10 @@ en:
 
   # Error messages for the 'render_op_error' method (see ApplicationController)
   op_errors:
-    users_controller:
-      cannot_delete_self: 'You cannot delete yourself from here!'
+    admin:
+      users_controller:
+        cannot_delete_self: 'You cannot delete yourself from here!'
+    api:
+      users:
+        third_party_sign_in_disabled: '3rd party sign-in/up has been disabled'
+        sign_up_disabled: 'Contact an app administrator to sign up'

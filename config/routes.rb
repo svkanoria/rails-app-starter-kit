@@ -2,9 +2,16 @@ Rails.application.routes.draw do
   get 'home/index'
 
   devise_for :users,
-             # Comment this out if you don't want authentication via 3rd party
-             # providers.
-             controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+             # Comment the 'omniauth_callbacks: ...' line if you don't want
+             # authentication via 3rd party providers.
+             controllers: {
+                 confirmations: 'users/confirmations',
+                 omniauth_callbacks: 'users/omniauth_callbacks',
+                 passwords: 'users/passwords',
+                 registrations: 'users/registrations',
+                 sessions: 'users/sessions',
+                 unlocks: 'users/unlocks'
+             }
 
   namespace :api do
     namespace :users do
