@@ -17,6 +17,7 @@
     "datatables.net": "~1.10.x",
     "datatables.net-dt": "~1.10.x",
     "datatables-responsive": "~2.0.x",
-    "angular-modal-service": "~0.9.x"
+    "angular-modal-service": "~0.10.x",
+    "angular-translate": "~2.11.x"
   }
 }

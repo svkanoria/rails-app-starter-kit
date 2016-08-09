@@ -49,7 +49,9 @@
 //= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker
 //= require datatables.net/js/jquery.dataTables
 //= require datatables-responsive/js/dataTables.responsive
-//= require angular-modal-service/dst/angular-modal-service
+// Directly using the minified version, for the only reason that using the
+// non-minified version causes Chrome to spit out 'Failed to parse SourceMap'.
+//= require angular-modal-service/dst/angular-modal-service.min
 //
 // Files shared between client and admin apps
 //= require_tree ../shared
