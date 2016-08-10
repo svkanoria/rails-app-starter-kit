@@ -23,6 +23,7 @@
     # using environment variables.
     # %>
   var CommonInfo = {
+    locale: '<%= I18n.locale %>',
     environment: '<%= Rails.env %>',
     aws_s3_bucket: '<%= Rails.application.secrets.aws_s3_bucket %>',
     aws_access_key_id: '<%= Rails.application.secrets.aws_access_key_id %>'

@@ -10,13 +10,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">Rails App Starter Kit</a>
+      <a class="navbar-brand" l-href="/:locale">Rails App Starter Kit</a>
     </div>
 
     <%# Collect the nav links, forms and other content for toggling %>
     <div class="collapse navbar-collapse" id="top-nav-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="/posts">Posts</a></li>
+        <li><a href="posts">Posts</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <authentication-links>
@@ -26,7 +26,7 @@
               # causes a history change within the client app, instead of doing
               # a round-trip from the server.
               #%>
-            <a href="/admin" target="_self">Admin Panel</a>
+            <a l-href="/admin/:locale" target="_self">Admin Panel</a>
           </li>
         </authentication-links>
       </ul>

@@ -9,6 +9,7 @@ var app = angular.module('App', [
   'ngAnimate',
   'ng-rails-csrf',
   'angularModalService',
+  'pascalprecht.translate',
 
   // Services
   'ArrayMetadataResponseAdapter',
@@ -35,14 +36,17 @@ var app = angular.module('App', [
   'DateFilters',
 
   // Modules
+  'I18n',
   'RouteUtils',
   'FormBuilder',
   'AttachmentLibrary'
 ]);
 
 app.config([
-  'QBEditorProvider', 'AttachmentViewerProvider',
-  function (QBEditorProvider, AttachmentViewerProvider) {
+  'I18nProvider', 'QBEditorProvider', 'AttachmentViewerProvider',
+  function (I18nProvider, QBEditorProvider, AttachmentViewerProvider) {
+    I18nProvider.setLocale(CommonInfo.locale);
+
     QBEditorProvider.addEditorFactory({
       createEditorHtml: function (column, op) {
         if (column.type === 'date') {

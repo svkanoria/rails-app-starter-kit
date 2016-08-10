@@ -1,0 +1,281 @@
+hi:
+  # Taken as-is from
+  # https://github.com/svenfuchs/rails-i18n/blob/master/rails/locale/hi.yml.
+  # Note that the latest version was for Rails 5. We chose a suitable commit
+  # that supported Rails 4.
+  # Another option would be to directly include the rails-i18n gem into this
+  # project - then we would not need to manually add these translations.
+  date:
+    abbr_day_names:
+    - रवि
+    - सोम
+    - मंगल
+    - बुध
+    - गुरु
+    - शुक्र
+    - शनि
+    abbr_month_names:
+    -
+    - जन
+    - फर
+    - मार्च
+    - अप्रै
+    - मई
+    - जून
+    - जुला
+    - अग
+    - सितं
+    - अक्टू
+    - नवं
+    - दिस
+    day_names:
+    - रविवार
+    - सोमवार
+    - मंगलवार
+    - बुधवार
+    - गुरुवार
+    - शुक्रवार
+    - शनिवार
+    formats:
+      default: "%d-%m-%Y"
+      long: "%B %d, %Y"
+      short: "%b %d"
+    month_names:
+    -
+    - जनवरी
+    - फरवरी
+    - मार्च
+    - अप्रैल
+    - मई
+    - जून
+    - जुलाई
+    - अगस्त
+    - सितंबर
+    - अक्टूबर
+    - नवंबर
+    - दिसंबर
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: लगभग एक घंटा
+        other: लगभग %{count} घंटा
+      about_x_months:
+        one: लगभग 1 महीना
+        other: लगभग %{count} महीना
+      about_x_years:
+        one: लगभग 1 साल
+        other: लगभग %{count} साल
+      almost_x_years:
+        one: लगभग एक साल
+        other: लगभग %{count} साल
+      half_a_minute: एक आधा मिनट
+      less_than_x_minutes:
+        one: एक मिनट से कम
+        other: "%{count} मिनट से कम"
+      less_than_x_seconds:
+        one: एक सेकेंड से कम
+        other: "%{count}  सेकेंड से कम"
+      over_x_years:
+        one: एक साल के ऊपर
+        other: "%{count} साल से अधिक"
+      x_days:
+        one: एक दिन
+        other: "%{count} दिन"
+      x_minutes:
+        one: एक मिनट
+        other: "%{count} मिनट"
+      x_months:
+        one: एक महीना
+        other: "%{count} महीना"
+      x_seconds:
+        one: एक सेकेंड
+        other: "%{count} सेकेंड"
+    prompts:
+      day: दिन
+      hour: घंटा
+      minute: मिनट
+      month: माह
+      second: सेकेंड
+      year: वर्ष
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: स्वीकार किया जाना जरूरी
+      blank: खाली नहीं रह सकता है
+      confirmation: पुष्टिकरण मेल नहीं खाता
+      empty: रिक्त नहीं रह सकता है
+      equal_to: "%{count} के लिए बराबर होना चाहिए"
+      even: सम होना चाहिए
+      exclusion: आरक्षित है
+      greater_than: "%{count} से अधिक होना चाहिए"
+      greater_than_or_equal_to: "%{count} से बड़ा या बराबर होना आवश्यक है"
+      inclusion: सूची में शामिल नहीं है
+      invalid: अवैध है
+      less_than: "%{count} से कम होना चाहिए"
+      less_than_or_equal_to: "%{count} से कम या बराबर होना आवश्यक है"
+      not_a_number: कोई संख्या नहीं है
+      not_an_integer: एक पूर्णांक होना चाहिए
+      odd: विसम होना चाहिए
+      record_invalid: 'सत्यापन विफल: %{errors}'
+      taken: पहले ही ले लिया गया है
+      too_long: अत्यधिक लंबा है (अधिकतम %{count} वर्ण हैं)
+      too_short: अत्यधिक छोटा है (न्यूनतम %{count} वर्ण हैं)
+      wrong_length: गलत लंबाई है (%{count} वर्ण युक्त होना चाहिए)
+    template:
+      body: 'निम्नलिखित क्षेत्रों के साथ समस्या थी:'
+      header:
+        one: इस %{model} को सहेजे जाना एक त्रुटि के कारण नहीं हुआ
+        other: इस %{model} को सहेजे जाना %{count} त्रुटि के कारण नहीं हुआ
+  helpers:
+    select:
+      prompt: कृपया चुनें
+    submit:
+      create: "%{model} बनाएँ"
+      submit: "%{model} सौंपें"
+      update: "%{model} अद्यतन"
+  number:
+    currency:
+      format:
+        delimiter: ","
+        format: "%u%n"
+        precision: 2
+        separator: "."
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "₹"
+    format:
+      delimiter: ","
+      precision: 3
+      separator: "."
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion: अरब
+          million: दस करोड़
+          quadrillion: करोड़ शंख
+          thousand: हज़ार
+          trillion: खरब
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ''
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: ", और "
+      two_words_connector: " और "
+      words_connector: ", "
+  time:
+    am: पूर्वाह्न
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      long: "%B %d, %Y %H:%M"
+      short: "%d %b %H:%M"
+    pm: अपराह्न
+  # End of rails-i18n copied stuff
+
+  activerecord:
+    models:
+      user: 'यूज़र'
+    attributes:
+      user:
+        email: 'ईमेल'
+        password: 'पासवर्ड'
+        password_confirmation: 'पासवर्ड पुष्टि'
+        current_password: 'वर्तमान पासवर्ड'
+        remember_me: 'मुझे याद रखना'
+    # rails-bootstrap-forms help messages
+    help:
+      user:
+        # For the sign up form
+        password_new: '%{minimum_password_length} अक्षर न्यूनतम'
+        # For the user edit form
+        password_update: 'आप इसे बदलना नही चाहते तो खाली छोड़ दें'
+        current_password: 'हम अपने वर्तमान पासवर्ड की जरूरत है अपने परिवर्तनों की पुष्टि करने के लिए'
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              not_in_sign_up_whitelist: 'साइन अप श्वेत सूची में नहीं है'
+        attachment_join:
+          attributes:
+            attachment_owner_type:
+              does_not_act_as_attachment_owner: 'मॉडल अटॅचमेंट को स्वीकार नहीं करता'
+            role:
+              not_accepted: 'रोल स्वीकार नहीं'
+              quota_exceeded: 'अधिकतम संख्या प्राप्त'
+            attachment_id:
+              rejected_by_filter: 'अटॅचमेंट मानदंड को पूरा नहीं करता'
+              rejected_by_filter_because:
+                not_an_image: 'अटॅचमेंट एक छवि होनी चाहिए'
+
+  users:
+    confirmations:
+      new:
+        resend_instructions: 'पुष्टि निर्देश पुनः भेजें'
+    passwords:
+      edit:
+        new_password: 'नया पासवर्ड'
+        change_password: 'पासवर्ड बदलें'
+      new:
+        send_instructions: 'पासवर्ड रीसेट निर्देश भेजें'
+    registrations:
+      new:
+        sign_up: 'साइन अप'
+      edit:
+        cancel_my_account: 'अकाउंट मिटा दें'
+        cancel_my_account_confirmation: 'वाकई अकाउंट मिटा दें?'
+        unhappy: 'अप्रसन्न?'
+    sessions:
+      new:
+        sign_in: 'साइन इन'
+    shared:
+      links:
+        sign_in: 'साइन इन'
+        sign_in_with: '%{provider} द्वारा साइन इन'
+        sign_up: 'साइन अप'
+        forgot_your_password: 'पासवर्ड भूल गए?'
+        didnt_receive_confirmation_instructions: 'पुष्टि निर्देश प्राप्त नहीं किया?'
+        didnt_receive_unlock_instructions: 'अनलॉक निर्देश प्राप्त नहीं किया?'
+    unlocks:
+      new:
+        resend_instructions: 'अनलॉक निर्देश पुन: भेजें'
+
+  providers:
+    facebook: 'Facebook'
+    google_oauth2: 'Google'
+
+  # Error messages for the 'render_op_error' method (see ApplicationController)
+  op_errors:
+    admin:
+      users_controller:
+        cannot_delete_self: 'आप अपने आप को मिटा नहीं सकते!'
+    api:
+      users:
+        third_party_sign_in_disabled: 'तीसरी पार्टी द्वारा साइन अप निष्क्रिय कर दिया गया'
+        sign_up_disabled: 'साइन अप करने के लिए एक अप्लिकेशन व्यवस्थापक से संपर्क करें'

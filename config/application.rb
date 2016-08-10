@@ -31,6 +31,11 @@ module RailsAppStarterKit
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    # MY NOTE: Added a list of available locales. We need to make this explicit
+    # to Rails, otherwise by default, it throws an 'I18n::InvalidLocale' upon
+    # encountering an unsupported locale.
+    config.i18n.available_locales = [:en, :hi]
+
     # For not swallow errors in after_commit/after_rollback callbacks
     config.active_record.raise_in_transactional_callbacks = true
 
@@ -92,21 +97,21 @@ module RailsAppStarterKit
 
       # Ignore all requests to '/user*', since these correspond to Devise views
       # that are rendered by the server, and not by Angular.
-      rewrite %r{^/users(.*)$}, '/users$1'
+      rewrite %r{^(/?\w*)/users(.*)$}, '$1/users$2'
 
       # Ignore all requests sent by the FineUploader library to the FineUploader
       # controller. Even though these are AJAX requests, they probably have no
       # '.', and hence sneak through the first rewrite rule above.
-      rewrite %r{^/fine_uploader(.*)}, '/fine_uploader$1'
+      rewrite %r{^(/?\w*)/fine_uploader(.*)$}, '$1/fine_uploader$2'
 
       # Ignore all API calls
-      rewrite %r{^/admin/api/(.*)$}, '/admin/api/$1'
-      rewrite %r{^/api/(.*)$}, '/api/$1'
+      rewrite %r{^/admin(/?\w*)/api/(.*)$}, '/admin/$1/api/$2'
+      rewrite %r{^(/?\w*)/api/(.*)$}, '$1/api/$2'
 
       # Rewrite all other requests to the admin and main ('client') apps to the
       # root, thus leaving the responsibility of in-app routing to Angular.
-      rewrite %r{^/admin(.*)$}, '/admin'
-      rewrite %r{^(.*)$}, '/'
+      rewrite %r{^/admin(/?\w*)(.*)$}, '/admin/$1'
+      rewrite %r{^(/?\w*)(.*)$}, '$1/'
     end
   end
 end

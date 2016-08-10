@@ -32,16 +32,20 @@ angular.module('RouteUtilsConst', [])
      *     resolve: { someProperty: requireServerAuth(serverRoute) }
      *   })
      *
-     * @param serverRoute {string} - The server route to hit.
+     * @param serverRoute {string} - The server route to hit. It can contain a
+     * ':locale' substring; this is replaced by the current locale, if any.
      */
     var requireServerAuth = function (serverRoute) {
-      return ['$stateParams', 'AuthSvc', function ($stateParams, AuthSvc) {
-        return AuthSvc.requireServerAuth(serverRoute, $stateParams);
-      }];
+      return ['$stateParams', 'I18n', 'AuthSvc',
+        function ($stateParams, I18n, AuthSvc) {
+          var localizedServerRoute = I18n.l(serverRoute);
+
+          return AuthSvc.requireServerAuth(localizedServerRoute, $stateParams);
+        }];
     };
 
     /**
-     * Sets up logic for handling route change errors, and for hiding the
+     * Sets up logic for handling route change errors, and also for hiding the
      * please-wait directive on route change.
      *
      * Usage:
@@ -55,9 +59,9 @@ angular.module('RouteUtilsConst', [])
      * @type {*[]}
      */
     var onAppRun = [
-      '$rootScope', '$window', '$location', '$state', 'PleaseWaitSvc',
+      '$rootScope', '$window', '$location', '$state', 'I18n', 'PleaseWaitSvc',
       'NavConfirmationSvc',
-      function($rootScope, $window, $location, $state, PleaseWaitSvc,
+      function($rootScope, $window, $location, $state, I18n, PleaseWaitSvc,
                NavConfirmationSvc) {
 
         $rootScope.$on('$stateChangeStart', function(event) {
@@ -93,10 +97,12 @@ angular.module('RouteUtilsConst', [])
             } else {
               switch (rejection) {
                 case 'NOT_SIGNED_IN':
-                  var signInRedirectUrl = $state.href(to.name, toParams);
+                  var signInRedirectUrl =
+                    $state.href(to.name, toParams, { absolute: true });
 
-                  $window.location.href = '/users/sign_in?return_to=' +
-                    signInRedirectUrl;
+                  $window.location.href =
+                    I18n.l('/:locale/users/sign_in?return_to='
+                      + signInRedirectUrl);
 
                   break;
                 case 'ROLE_NOT_AUTHORIZED':

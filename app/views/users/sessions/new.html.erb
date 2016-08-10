@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
-      <h2>Sign In</h2>
+      <h2><%= t '.sign_in' %></h2>
 
       <%= bootstrap_form_for resource, as: resource_name,
                              url: session_path(resource_name) do |f| %>
@@ -16,7 +16,7 @@
         </div>
 
         <div class="form-actions">
-          <%= f.submit 'Sign In', class: 'btn btn-primary' %>
+          <%= f.submit t('.sign_in'), class: 'btn btn-primary' %>
         </div>
       <% end %>
 

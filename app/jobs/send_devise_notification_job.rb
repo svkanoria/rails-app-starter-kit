@@ -6,6 +6,8 @@ class SendDeviseNotificationJob < ActiveJob::Base
   #   converted to a string. Symbols are not serializable by ActiveJob
   # @param args other arguments
   def perform (user, notification_str, *args)
-    user.orig_send_devise_notification(notification_str.to_sym, *args)
+    I18n.with_locale (user.locale || I18n.default_locale) do
+      user.orig_send_devise_notification(notification_str.to_sym, *args)
+    end
   end
 end

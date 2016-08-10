@@ -21,7 +21,7 @@
 
 en:
   activerecord:
-   # rails-bootstrap-forms help messages
+    # rails-bootstrap-forms help messages
     help:
       user:
         # For the sign up form
@@ -48,6 +48,43 @@ en:
               rejected_by_filter: 'Attachment does not meet criteria'
               rejected_by_filter_because:
                 not_an_image: 'Attachment must be an image'
+
+  users:
+    confirmations:
+      new:
+        resend_instructions: 'Resend Confirmation Instructions'
+    passwords:
+      edit:
+        new_password: 'New password'
+        change_password: 'Change Password'
+      new:
+        send_instructions: 'Send Password Reset Instructions'
+    registrations:
+      edit:
+        cancel_my_account: 'Cancel My Account'
+        cancel_my_account_confirmation: 'Really cancel your account?'
+        unhappy: 'Unhappy?'
+      new:
+        sign_up: 'Sign Up'
+    sessions:
+      new:
+        sign_in: 'Sign In'
+    shared:
+      links:
+        sign_in: 'Sign in'
+        sign_in_with: 'Sign in with %{provider}'
+        sign_up: 'Sign up'
+        forgot_your_password: 'Forgot your password?'
+        didnt_receive_confirmation_instructions: "Didn't receive confirmation
+          instructions?"
+        didnt_receive_unlock_instructions: "Didn't receive unlock instructions?"
+    unlocks:
+      new:
+        resend_instructions: 'Resend Unlock Instructions'
+
+  providers:
+    facebook: 'Facebook'
+    google_oauth2: 'Google'
 
   # Error messages for the 'render_op_error' method (see ApplicationController)
   op_errors:

@@ -1,11 +1,14 @@
 // Manages the Attachment resource on the server.
-angular.module('Attachment', [])
+angular.module('Attachment', ['I18n'])
   .factory('Attachment', [
-    '$resource',
-    function($resource) {
+    '$resource', 'I18n',
+    function($resource, I18n) {
       return $resource(
-        '/attachments/:collectionAction/:attachmentId/:memberAction.json',
-        { attachmentId: '@id' },
+        '/:locale/attachments/:collectionAction/:attachmentId/:memberAction.json',
+        {
+          attachmentId: '@id',
+          locale: function () { return I18n.getLocale(); }
+        },
         // Extra methods for compatibility with Rails, and our data format
         {
           update: {

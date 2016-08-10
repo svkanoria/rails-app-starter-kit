@@ -1,11 +1,14 @@
 // Manages the User resource on the server.
-angular.module('User', [])
+angular.module('User', ['I18n'])
   .factory('User', [
-    '$resource',
-    function($resource) {
+    '$resource', 'I18n',
+    function($resource, I18n) {
       return $resource(
-        '/admin/users/:collectionAction/:userId/:memberAction.json',
-        { userId: '@id' },
+        '/admin/:locale/users/:collectionAction/:userId/:memberAction.json',
+        {
+          userId: '@id',
+          locale: function () { return I18n.getLocale(); }
+        },
         // Extra methods for compatibility with Rails, and our data format
         {
           edit: {

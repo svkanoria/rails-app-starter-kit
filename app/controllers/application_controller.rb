@@ -15,7 +15,8 @@ class ApplicationController < ActionController::Base
   # * Makes it safe for the web app to operate over plain HTTP
   skip_before_action :verify_authenticity_token, if: :valid_app_access_token?
 
-  before_action :authenticate_user_from_token,
+  before_action :set_locale,
+                :authenticate_user_from_token,
                 :set_sign_in_redirect,
                 :force_sign_in_if_required
 
@@ -64,6 +65,17 @@ class ApplicationController < ActionController::Base
     token.present? && token == Rails.application.secrets.app_access_token
   end
 
+  # Sets the locale from the URL.
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
+
+  # Automatically adds the current locale to the hash of parameters sent to
+  # Rails' 'url_for' method, so that URL helpers take i18n into account.
+  def default_url_options (options = {})
+    options.merge({ locale: I18n.locale })
+  end
+
   # Authenticates a user from the email and authentication supplied via the
   # 'X-User-Email' and 'X-User-Authentication-Token' headers.
   def authenticate_user_from_token
@@ -79,12 +91,16 @@ class ApplicationController < ActionController::Base
   end
 
   # Sets where Devise should redirect on sign-in.
-  # Works in conjunction with the 'authLinks' directive.
+  # Works in conjunction with the 'authentication-links' directive.
   def set_sign_in_redirect
-    if (hash = params[:return_to]).present?
-      session[:user_return_to] =
-          "#{request.protocol}#{request.host_with_port}#{hash}"
+    if (url = params[:return_to]).present?
+      session[:user_return_to] = url
     end
+  end
+
+  # Sets where Devise should redirect on sign-out.
+  def after_sign_out_path_for (resource_or_scope)
+    localized_root_url
   end
 
   # Forces users to sign in to access the application, iff an app admin has

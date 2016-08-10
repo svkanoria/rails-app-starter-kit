@@ -14,6 +14,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       raise ActionController::RoutingError.new('Not Found') # Triggers a 500
     end
 
+    # Use the session locale set in {#passthru_localized}, or else the default.
+    I18n.locale = session[:omniauth_locale] || I18n.default_locale
+
     omniauth = request.env['omniauth.auth']
     @user = User.from_omniauth(omniauth)
 
@@ -32,6 +35,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
   alias_method :facebook, :all
   alias_method :google_oauth2, :all
+
+  # Just saves the current locale in the session (for recall during the callback
+  # stage), and continues with OmniAuth as normal.
+  def passthru_localized
+    session[:omniauth_locale] = I18n.locale
+
+    redirect_to user_omniauth_authorize_path(params[:provider])
+  end
 
   # You should configure your model like this:
   # devise :omniauthable, omniauth_providers: [:twitter]

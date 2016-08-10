@@ -65,10 +65,30 @@
  *     return someHtmlConstructedFromData;
  *   }
  */
-angular.module('DataTable', [])
+angular.module('DataTable', ['I18n'])
   .directive('datatable', [
-    '$compile',
-    function ($compile) {
+    '$compile', 'I18n',
+    function ($compile, I18n) {
+      /**
+       * Instructs the data table to use the current locale, if set.
+       *
+       * The data table then requests the translations file from
+       * /public/data_tables/locales/locale-id.json,
+       * where 'locale-id' is something like 'en', 'hi' etc. So, ensure the
+       * existence of such a file for each locale to be supported.
+       *
+       * @param {Object} scope - The scope passed to the link function.
+       */
+      function setLocaleIfPresent (scope) {
+        var locale = I18n.getLocale();
+
+        if (locale) {
+          scope.options.language = {
+            url: '/data_tables/locales/' + locale + '.json'
+          };
+        }
+      }
+
       /**
        * Enables table cells to contain directives.
        * This addresses the common use case of the programmer wanting to use
@@ -510,6 +530,8 @@ angular.module('DataTable', [])
           scope.selectedAll = false;
 
           if (!scope.options) scope.options = {};
+
+          setLocaleIfPresent(scope);
 
           enableDirectivesInCells(scope);
 

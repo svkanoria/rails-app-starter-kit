@@ -1,9 +1,12 @@
 // Manages the AttachmentJoin resource on the server.
-angular.module('AttachmentJoin', [])
+angular.module('AttachmentJoin', ['I18n'])
   .factory('AttachmentJoin', [
-    '$resource',
-    function($resource) {
+    '$resource', 'I18n',
+    function($resource, I18n) {
       return $resource(
-        '/attachment_joins/:collectionAction/:attachmentJoinId/:memberAction.json',
-        { attachmentJoinId: '@id' });
+        '/:locale/attachment_joins/:collectionAction/:attachmentJoinId/:memberAction.json',
+        {
+          attachmentJoinId: '@id',
+          locale: function () { return I18n.getLocale(); }
+        });
     }]);

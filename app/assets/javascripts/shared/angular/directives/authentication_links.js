@@ -23,7 +23,7 @@ angular.module('AuthenticationLinks', ['AuthSvc'])
           scope.currentUser = AuthSvc.currentUser();
 
           scope.$on('$locationChangeSuccess', function () {
-            scope.signInRedirectUrl = $location.url();
+            scope.signInRedirectUrl = $location.absUrl();
           });
         }
       };

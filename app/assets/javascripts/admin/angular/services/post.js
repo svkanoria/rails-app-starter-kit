@@ -1,11 +1,14 @@
 // Manages the Post resource on the server.
-angular.module('Post', [])
+angular.module('Post', ['I18n'])
   .factory('Post', [
-    '$resource',
-    function($resource) {
+    '$resource', 'I18n',
+    function($resource, I18n) {
       return $resource(
-        '/admin/posts/:collectionAction/:postId/:memberAction.json',
-        { postId: '@id' },
+        '/admin/:locale/posts/:collectionAction/:postId/:memberAction.json',
+        {
+          postId: '@id',
+          locale: function () { return I18n.getLocale(); }
+        },
         // Extra methods for compatibility with Rails, and our data format
         {
           batch_destroy: {

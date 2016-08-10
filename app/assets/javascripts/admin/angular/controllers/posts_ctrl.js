@@ -1,7 +1,7 @@
-angular.module('PostsCtrl', ['Flash', 'Post'])
+angular.module('PostsCtrl', ['I18n', 'Flash', 'Post'])
   .controller('PostsCtrl', [
-    '$scope', 'Flash', 'Post',
-    function($scope, Flash, Post) {
+    '$scope', 'I18n', 'Flash', 'Post',
+    function($scope, I18n, Flash, Post) {
       /**
        * The 'index' action.
        */
@@ -9,7 +9,7 @@ angular.module('PostsCtrl', ['Flash', 'Post'])
         $scope.dataTableOptions = {
           serverSide: true,
           ajax: {
-            url: '/admin/posts.json',
+            url: I18n.l('/admin/:locale/posts.json'),
             // Just add the query builder filters to all AJAX requests sent by
             // the data table!
             data: function (d) {
@@ -21,7 +21,9 @@ angular.module('PostsCtrl', ['Flash', 'Post'])
           columns: [
             { data: 'id',
               render: function (data, type, row, meta) {
-                return '<a href="/posts/' + data + '">' + data + '</a>';
+                var postUrl = I18n.l('/:locale/posts/' + data);
+
+                return '<a href="' + postUrl + '">' + data + '</a>';
               }
             },
             { data: 'message' },
@@ -50,7 +52,7 @@ angular.module('PostsCtrl', ['Flash', 'Post'])
           edit: {
             icon: 'glyphicon-pencil',
             link: function (rowId) {
-              return '/posts/' + rowId + '/edit';
+              return I18n.l('/:locale/posts/' + rowId + '/edit');
             }
           },
           delete: {

@@ -5,6 +5,7 @@ var app = angular.module('App', [
   'ngAnimate',
   'ng-rails-csrf',
   'angularModalService',
+  'pascalprecht.translate',
 
   // Services
   'ArrayMetadataResponseAdapter',
@@ -33,14 +34,17 @@ var app = angular.module('App', [
   'DateFilters',
 
   // Modules
+  'I18n',
   'RouteUtils',
   'FormBuilder',
   'QueryBuilder'
 ]);
 
 app.config([
-  'QBEditorProvider',
-  function (QBEditorProvider) {
+  'I18nProvider', 'QBEditorProvider',
+  function (I18nProvider, QBEditorProvider) {
+    I18nProvider.setLocale(CommonInfo.locale);
+
     QBEditorProvider.addEditorFactory({
       createEditorHtml: function (column, op) {
         if (column.type === 'date') {

@@ -9,7 +9,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/admin">Rails App Starter Kit - Admin</a>
+      <a class="navbar-brand" l-href="/admin/:locale">
+        Rails App Starter Kit - Admin</a>
     </div>
 
     <%# Collect the nav links, forms and other content for toggling %>
@@ -25,7 +26,7 @@
             # client '_top_nav' partial). We don't need a "_self" target here.
             # Not completely sure why not, but for now we won't question it!
             #%>
-          <li><a href="/">Main App</a></li>
+          <li><a l-href="/:locale">Main App</a></li>
         </authentication-links>
       </ul>
     </div>

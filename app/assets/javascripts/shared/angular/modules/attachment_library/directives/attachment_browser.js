@@ -1,11 +1,11 @@
 // The attachment browser, for use within the attachment-library directive.
 angular.module('AttachmentBrowser', [
-  'angularModalService', 'Flash', 'PleaseWait', 'DataTable', 'QueryBuilder',
-  'Attachment', 'AttachmentLibrarySvc', 'AttachmentEditorCtrl'])
+  'angularModalService', 'I18n', 'Flash', 'PleaseWait', 'DataTable',
+  'QueryBuilder', 'Attachment', 'AttachmentLibrarySvc', 'AttachmentEditorCtrl'])
   .directive('attachmentBrowser', [
-    '$rootScope', 'ModalService', 'Flash', 'PleaseWaitSvc', 'Attachment',
-    'AttachmentLibrarySvc',
-    function ($rootScope, ModalService, Flash, PleaseWaitSvc, Attachment,
+    '$rootScope', 'ModalService', 'I18n', 'Flash', 'PleaseWaitSvc',
+    'Attachment', 'AttachmentLibrarySvc',
+    function ($rootScope, ModalService, I18n, Flash, PleaseWaitSvc, Attachment,
               AttachmentLibrarySvc) {
 
       return {
@@ -83,7 +83,7 @@ angular.module('AttachmentBrowser', [
             scope.dataTableOptions = {
               serverSide: true,
               ajax: {
-                url: '/attachments.json',
+                url: I18n.l('/:locale/attachments.json'),
                 data: function (d) {
                   // Just add the query builder filters to all AJAX requests
                   // sent by the data table!

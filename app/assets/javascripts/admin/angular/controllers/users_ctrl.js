@@ -1,7 +1,7 @@
-angular.module('UsersCtrl', ['Flash', 'User'])
+angular.module('UsersCtrl', ['I18n', 'Flash', 'User'])
   .controller('UsersCtrl', [
-    '$scope', '$state', 'Flash', 'User', 'initialData',
-    function($scope, $state, Flash, User, initialData) {
+    '$scope', '$state', 'I18n', 'Flash', 'User', 'initialData',
+    function($scope, $state, I18n, Flash, User, initialData) {
       /**
        * Allowed user roles.
        */
@@ -26,7 +26,7 @@ angular.module('UsersCtrl', ['Flash', 'User'])
         $scope.dataTableOptions = {
           serverSide: true,
           ajax: {
-            url: '/admin/users.json',
+            url: I18n.l('/admin/:locale/users.json'),
             // Just add the query builder filters to all AJAX requests sent by
             // the data table!
             data: function (d) {

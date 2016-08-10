@@ -72,7 +72,7 @@ app.config([
         controller: 'PostsCtrl',
         resolve: {
           auth: R.requireSignIn(),
-          auth2: R.requireServerAuth('/posts/:id/edit'),
+          auth2: R.requireServerAuth('/:locale/posts/:id/edit'),
           initialData: ['$stateParams', 'Post', function ($stateParams, Post) {
             return Post.edit({ postId: $stateParams.id }).$promise;
           }]
@@ -94,7 +94,7 @@ app.config([
         templateUrl: 'client/controllers/attachments/show.html',
         controller: 'AttachmentsCtrl',
         resolve: {
-          auth2: R.requireServerAuth('/attachments/:id'),
+          auth2: R.requireServerAuth('/:locale/attachments/:id'),
           initialData: [
             '$stateParams', 'Attachment',
             function ($stateParams, Attachment) {
