@@ -36,7 +36,14 @@ angular.module('DateTimePicker', ['I18n', 'DateTimeQuicker'])
           var ngModel = ctrls[1];
 
           var input = $(element).find('input');
-          var instance = input.datetimepicker(scope.options || {});
+
+          var options = scope.options || {};
+
+          if (I18n.getLocale() && !options.locale) {
+            options.locale = I18n.getLocale();
+          }
+
+          var instance = input.datetimepicker(options);
           var initialized = false;
 
           // Integrate an instance of date-time-quicker, to provide useful

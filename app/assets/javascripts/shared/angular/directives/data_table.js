@@ -48,7 +48,8 @@
  *   {
  *     bulkOpKey1: {
  *       name: 'some name',
- *       action: function () { // Do some action (such as bulk delete)... }
+ *       action: function () { // Do some action (such as bulk delete)... },
+ *       ?translation_id: 'see i18n information below'
  *     },
  *     bulkOpKey2: { ... },
  *      :
@@ -64,16 +65,45 @@
  *     // 'data', that contains the row data.
  *     return someHtmlConstructedFromData;
  *   }
+ *
+ * Translations for columns and all strings displayed (messages, bulk op names
+ * etc.) can be provided as follows:
+ *
+ * Columns:
+ *   Translation ids are constructed as follows:
+ *
+ *     "some-table-id-or-'data_table'.columns.data-prop-of-column-or-def"
+ *
+ *   These can also be overridden. For a complete understanding of the rules of
+ *   construction, see the 'translateTableHeadFoots' function documentation.
+ *   
+ * Messages:
+ *   The following translation ids are available:
+ *
+ *     * 'data_table.total_rows_selected'
+ *
+ * Bulk operation names:
+ *   Translation ids are constructed as follows:
+ *
+ *     'data_table.key-in-object-passed-to-directive-thru-bulk-ops-attr'
+ *
+ *   The 'selectAll' bulk op is included by default. Other bulk ops are to be
+ *   defined by you, the programmer. Such an id is constructed for each one.
+ *
+ *   It is possible to override the translation id, either partially or fully,
+ *   on a per-bulk-op basis, by specifying a 'translation_id' property as shown
+ *   further up. If the value of the property begins with a '.', it replaces
+ *   only the 'key-in-object...' portion, otherwise it overrides it completely.
  */
 angular.module('DataTable', ['I18n'])
   .directive('datatable', [
-    '$compile', 'I18n',
-    function ($compile, I18n) {
+    '$compile', '$q', 'I18n',
+    function ($compile, $q, I18n) {
       /**
        * Instructs the data table to use the current locale, if set.
        *
        * The data table then requests the translations file from
-       * /public/data_tables/locales/locale-id.json,
+       * /public/locales/data_table.locale-id.json,
        * where 'locale-id' is something like 'en', 'hi' etc. So, ensure the
        * existence of such a file for each locale to be supported.
        *
@@ -84,7 +114,7 @@ angular.module('DataTable', ['I18n'])
 
         if (locale) {
           scope.options.language = {
-            url: '/data_tables/locales/' + locale + '.json'
+            url: '/locales/data_table.' + locale + '.json'
           };
         }
       }
@@ -141,7 +171,11 @@ angular.module('DataTable', ['I18n'])
 
         // Append a 'row ops' column to the table HTML
 
-        var th = '<th class="dt-head-center">Actions</th>';
+        var th =
+          '<th class="dt-head-center"'
+              + ' translation-id="data_table.columns.actions">'
+            + 'Actions' +
+          '</th>';
 
         element.find('thead > tr').append(th);
         element.find('tfoot > tr').append(th);
@@ -426,32 +460,51 @@ angular.module('DataTable', ['I18n'])
           if (bulkOp) bulkOp.action();
         };
 
-        var bulkOpsDiv =
-          $('<div class="bulk-ops" ng-show="selectedRows.length > 0"></div>');
+        var translationItems = _.chain(bulkOps)
+          .mapObject(function (v, k) {
+            v['__key'] = '.' + k;
+            return v;
+          })
+          .values()
+          .value();
+        
+        I18n.ts({
+          items: translationItems,
+          idExtractor: '__key',
+          translationPath: 'data_table.bulk_ops',
+          success: function (item, result) {
+            item.name = result;
+          }
+        }).then(function () {
+          var bulkOpsDiv =
+            $('<div class="bulk-ops" ng-show="selectedRows.length > 0"></div>');
 
-        for (var bulkOpKey in bulkOps) {
-          var bulkOp = bulkOps[bulkOpKey];
+          for (var bulkOpKey in bulkOps) {
+            var bulkOp = bulkOps[bulkOpKey];
 
-          var bulkOpHtml =
-            '<a href="" ng-click="performBulkOp(\'' + bulkOpKey + '\')">'
-              + bulkOp.name + '</a>';
+            var bulkOpHtml =
+              '<a href="" ng-click="performBulkOp(\'' + bulkOpKey + '\')">'
+                + bulkOp.name + '</a>';
 
-          bulkOpsDiv.append($(bulkOpHtml));
-        }
+            bulkOpsDiv.append($(bulkOpHtml));
+          }
 
-        var bulkSelectionDiv =
-          $('<div class="dataTables_bulk-selection"'
-                + 'id="' + $(element).attr('id') + '">'
-              + 'Total {{selectedRows.length}} rows selected'
-              + bulkOpsDiv[0].outerHTML +
-            '</div>');
+          var bulkSelectionDiv =
+            $('<div class="dataTables_bulk-selection"'
+                  + 'id="' + $(element).attr('id') + '">'
+                + '<span translate="data_table.total_rows_selected"'
+                  + 'translate-default="Total # of rows selected:"></span>'
+                + '&nbsp;{{selectedRows.length}}'
+                + bulkOpsDiv[0].outerHTML +
+              '</div>');
 
-        var lengthDiv = $(element).closest('.dataTables_wrapper')
-          .find('.dataTables_length');
+          var lengthDiv = $(element).closest('.dataTables_wrapper')
+            .find('.dataTables_length');
 
-        lengthDiv.after(bulkSelectionDiv);
+          lengthDiv.after(bulkSelectionDiv);
 
-        $compile(bulkSelectionDiv)(scope);
+          $compile(bulkSelectionDiv)(scope);
+        });
       }
 
       /**
@@ -514,6 +567,81 @@ angular.module('DataTable', ['I18n'])
         });
       }
 
+      /**
+       * Translates column names within headers and footers.
+       *
+       * This is a helper function called by 'translateTableHeadFoots'.
+       *
+       * @param {Object[]} elements - A collection of elements (given via a
+       * jQuery selector) to attempt translating.
+       * @param {Object} options - The data table's config options passed via
+       * the 'options' property on this directive's scope.
+       * @param {string} [tableId] - The id of the underlying 'table' element
+       *
+       * @returns {Promise} A promise, as returned by the 'I18n.ts' function.
+       */
+      function translateColNameElems (elements, options, tableId) {
+        return I18n.ts({
+          items: elements,
+          idExtractor: function (item, index) {
+            var translationId = $(item).attr('translation-id');
+
+            if (!translationId) {
+              if (options.columns) {
+                translationId = options.columns[index].data;
+              } else if (options.columnDefs) {
+                translationId =
+                  _.findWhere(options.columnDefs, { targets: index }).data;
+              }
+
+              if (translationId) {
+                translationId = '.' + translationId;
+              }
+            }
+
+            return translationId;
+          },
+          translationPath: (tableId || 'data_table') + '.columns',
+          success: function (item, result) {
+            $(item).html(result);
+          }
+        });
+      }
+
+      /**
+       * Translates column names present in the underlying 'table' element's
+       * headers and footers.
+       *
+       * Translation ids are computed from the 'columns' or 'columnDefs'
+       * properties in the data table configuration options, whenever possible,
+       * as follows:
+       *
+       *   "some-table-id-or-'data_table'.columns.data-prop-of-column-or-def"
+       *
+       * To override or set these explicitly, add a 'translation-id' attribute
+       * on each desired 'th' element within 'thead' or 'tfoot'. If this begins
+       * with a '.', only the 'data-prop...' part is replaced. Else, the entire
+       * translation id is replaced.
+       *
+       * @param {Object} scope - The scope passed to the link function.
+       * @param {Object} element - The element passed to the link function.
+       *
+       * @returns {Promise} A promise that is never rejected, and resolves when
+       * all header and footer translation attempts have been completed.
+       */
+      function translateTableHeadFoots (scope, element) {
+        var options = scope.options;
+        var tableId = $(element).attr('id');
+
+        var p1 =
+          translateColNameElems($(element).find('thead th'), options, tableId);
+
+        var p2 =
+          translateColNameElems($(element).find('tfoot th'), options, tableId);
+
+        return $q.all([p1, p2]);
+      }
+
       return {
         restrict: 'A',
 
@@ -546,15 +674,21 @@ angular.module('DataTable', ['I18n'])
 
           addRowExpansionIfNeeded(scope, element);
 
-          var instance = $(element).DataTable(scope.options);
+          $(element).on('preInit.dt', function () {
+            if (scope.selectedRows !== undefined) {
+              addBulkSelectionToolbar(scope, element);
+            }
 
-          if (scope.selectedRows !== undefined) {
-            addBulkSelectionToolbar(scope, element);
-          }
+            scope.$apply();
+          });
 
-          if (scope.instance !== undefined) {
-            scope.instance = instance;
-          }
+          translateTableHeadFoots(scope, element).then(function () {
+            var instance = $(element).DataTable(scope.options);
+
+            if (scope.instance !== undefined) {
+              scope.instance = instance;
+            }
+          });
         }
       };
     }]);

@@ -31,10 +31,10 @@
  * role.
  */
 angular.module('AttachmentDrop', [
-  'Flash', 'AttachmentJoin', 'AttachmentLibrarySvc'])
+  'I18n', 'Flash', 'AttachmentJoin', 'AttachmentLibrarySvc'])
   .directive('attachmentDrop', [
-    '$rootScope', 'Flash', 'AttachmentJoin', 'AttachmentLibrarySvc',
-    function ($rootScope, Flash, AttachmentJoin, AttachmentLibrarySvc) {
+    '$rootScope', 'I18n', 'Flash', 'AttachmentJoin', 'AttachmentLibrarySvc',
+    function ($rootScope, I18n, Flash, AttachmentJoin, AttachmentLibrarySvc) {
       return {
         restrict: 'E',
         templateUrl: 'shared/directives/attachment_drop.html',
@@ -86,8 +86,14 @@ angular.module('AttachmentDrop', [
                 AttachmentLibrarySvc.emitAttachmentsDetached([attachment.id]);
               },
               function (failureResponse) {
-                Flash.now.push('danger',
-                  failureResponse.data.error || 'Error removing attachment.');
+                if (failureResponse.data.error) {
+                  // We assume messages from the server are localized, so we
+                  // don't need to provide a translation id.
+                  Flash.now.push('danger', failureResponse.data.error);
+                } else {
+                  Flash.now.push('danger', 'Error removing attachment.',
+                    'attachment_drop.error_removing_attachment');
+                }
               });
           };
 
@@ -117,11 +123,20 @@ angular.module('AttachmentDrop', [
                 if (errors) {
                   var firstError = errors[Object.keys(errors)[0]];
 
-                  Flash.now.push('danger',
-                    'Error adding attachment: ' + firstError + '.');
+                  I18n.t('.error_adding_attachment_prefix',
+                    'attachment_drop', 'Error adding attachment:'
+                  ).then(function (result) {
+                    Flash.now.push('danger', result + ' ' + firstError);
+                  });
                 } else {
-                  Flash.now.push('danger',
-                    failureResponse.data.error || 'Error adding attachment.');
+                  if (failureResponse.data.error) {
+                    // We assume messages from the server are localized, so we
+                    // don't need to provide a translation id.
+                    Flash.now.push('danger', failureResponse.data.error);
+                  } else {
+                    Flash.now.push('danger', 'Error adding attachment.',
+                      'attachment_drop.error_adding_attachment');
+                  }
                 }
               });
             }

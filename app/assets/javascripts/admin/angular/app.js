@@ -43,7 +43,7 @@ var app = angular.module('App', [
 app.config([
   'I18nProvider', 'QBEditorProvider',
   function (I18nProvider, QBEditorProvider) {
-    I18nProvider.setLocale(CommonInfo.locale);
+    I18nProvider.setLocale(Static.locale);
 
     QBEditorProvider.addEditorFactory({
       createEditorHtml: function (column, op) {

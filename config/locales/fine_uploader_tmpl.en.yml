@@ -1,0 +1,17 @@
+# Translations for the FineUploader UI template.
+#
+# There is another piece to the FineUploader localization puzzle, i.e. the
+# messages supplied via configuration options. For these, see
+# /public/locales/fine_uploader_opts.XX.yml.
+en:
+  layouts:
+    fine_uploader_tmpl:
+      drop_files_here: 'Drop files here to upload'
+      upload_a_file: 'Upload a file'
+      processing_dropped_files: 'Processing dropped files...'
+      hide: 'Hide'
+      cancel: 'Cancel'
+      retry: 'Retry'
+      delete: 'Delete'
+      pause: 'Pause'
+      continue: 'Continue'

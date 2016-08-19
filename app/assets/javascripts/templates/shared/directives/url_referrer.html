@@ -1,11 +1,13 @@
 <div class="url-referrer">
   <div class="input-group">
     <input type="text" class="form-control" ng-model="url"
-           placeholder="Enter a URL">
+           placeholder="{{::enterAUrl}}">
 
     <span class="input-group-btn">
       <button class="btn btn-primary" ng-click="createAttachment()">
-        Add to Library</button>
+        <span translate="url_referrer.add_to_library"
+              translate-default="Add to Library"></span>
+      </button>
     </span>
   </div>
 </div>

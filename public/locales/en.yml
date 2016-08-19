@@ -1,0 +1,42 @@
+# Forms
+
+forms:
+  post_form:
+    hints:
+      message: 'Minimum 10, maximum 140 characters'
+  app_settings_outgoing_email_form:
+    labels:
+      sender: 'From address'
+      smtp_address: 'Address'
+      smtp_port: 'Port'
+      smtp_user_name: 'Username'
+      smtp_password: 'Password'
+      smtp_authentication: 'Authentication'
+      smtp_enable_starttls_auto: 'Enable STARTTLS auto'
+      smtp_openssl_verify_mode: 'OpenSSL verify mode'
+    hints:
+      sender: "The emails' 'from' field. Falls back to a default. CAUTION: Your
+        SMTP server may override it."
+  app_settings_security_form:
+    labels:
+      sign_up_whitelist: 'Sign up whitelist'
+    hints:
+      sign_up_whitelist: 'Only allow emails from comma separated domains to sign
+        up. Leave blank to allow any email.'
+
+# Strings too long for raw treatment
+
+outgoing_email_hint: 'Configure outgoing email delivery.'
+smtp_settings_hint: 'Leaving ALL blank will try and fall back on default SMTP
+  settings. If you do provide ANY of these fields, only your own (and NONE of
+  the default) SMTP settings will be used.'
+
+security_hint: 'Configure security settings.'
+force_sign_in_hint: 'Force users to sign in to access the application.'
+disable_3rd_party_sign_in_hint: 'Disable sign in via third party authentication
+  providers such as Facebook, Google etc.'
+disable_users_from_signing_up_hint: 'Users must ask an app administrator to
+  create an account for them. Note that 3rd party sign in is also disabled.'
+
+app_name: 'Rails App Starter Kit'
+admin_app_name: 'Rails App Starter Kit - Admin'

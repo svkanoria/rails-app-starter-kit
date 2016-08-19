@@ -21,6 +21,8 @@
 
 en:
   activerecord:
+    models:
+      user: 'User'
     # rails-bootstrap-forms help messages
     help:
       user:
@@ -48,6 +50,11 @@ en:
               rejected_by_filter: 'Attachment does not meet criteria'
               rejected_by_filter_because:
                 not_an_image: 'Attachment must be an image'
+
+  # Common view related strings
+  views:
+    resources:
+      edit: 'Edit %{model}'
 
   users:
     confirmations:

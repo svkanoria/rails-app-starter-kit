@@ -136,7 +136,7 @@ hi:
     submit:
       create: "%{model} बनाएँ"
       submit: "%{model} सौंपें"
-      update: "%{model} अद्यतन"
+      update: "%{model} अद्यतन करें"
   number:
     currency:
       format:
@@ -234,6 +234,11 @@ hi:
               rejected_by_filter_because:
                 not_an_image: 'अटॅचमेंट एक छवि होनी चाहिए'
 
+  # Common view related strings
+  views:
+    resources:
+      edit: '%{model} परिवर्तन'
+
   users:
     confirmations:
       new:
@@ -248,8 +253,8 @@ hi:
       new:
         sign_up: 'साइन अप'
       edit:
-        cancel_my_account: 'अकाउंट मिटा दें'
-        cancel_my_account_confirmation: 'वाकई अकाउंट मिटा दें?'
+        cancel_my_account: 'अकाउंट मिटाएं'
+        cancel_my_account_confirmation: 'वाकई अकाउंट मिटाएं?'
         unhappy: 'अप्रसन्न?'
     sessions:
       new:
@@ -278,4 +283,4 @@ hi:
     api:
       users:
         third_party_sign_in_disabled: 'तीसरी पार्टी द्वारा साइन अप निष्क्रिय कर दिया गया'
-        sign_up_disabled: 'साइन अप करने के लिए एक अप्लिकेशन व्यवस्थापक से संपर्क करें'
+        sign_up_disabled: 'साइन अप करने के लिए एक अप्लिकेशन प्रशासक से संपर्क करें'

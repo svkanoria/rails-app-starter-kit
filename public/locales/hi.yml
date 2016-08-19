@@ -1,5 +1,220 @@
-# Directives
+# Directives and services
+
+attachment_browser:
+  really_delete_attachment_id: 'वाकई अटैचमेंट #{{id}} मिटाएं?'
+  really_delete_attachments: 'वाकई अटैचमेंटों को मिटाएं?'
+  attachment_deleted: 'अटैचमेंट सफलतापूर्वक मिटाया गया।'
+  attachments_deleted: 'अटैचमेंट सफलतापूर्वक मिटाये गये।'
+  error_deleting_attachment: 'अटैचमेंट मिटाते समय त्रुटि।'
+  error_deleting_attachments: 'अटैचमेंटों को मिटाते समय त्रुटि।'
+  columns:
+    created_at: '@:Created At'
+    id: '@:ID'
+    name: '@:Name'
+    num_usages: '@:# Usages'
+
+attachment_drop:
+  drop_attachments_here: 'अटैचमेंट यहाँ डालें...'
+  error_adding_attachment: 'अटैचमेंट जोड़ते समय त्रुटि।'
+  error_adding_attachment_prefix: 'अटैचमेंट जोड़ते समय त्रुटि:'
+  error_removing_attachment: 'अटैचमेंट हटाते समय त्रुटि।'
+  count_remaining: '({{count}} में से {{countRemaining}} शेष)'
+
+attachment_editor:
+  edit_attachment: 'अटैचमेंट परिवर्तन'
+  close: 'बंद करें'
+  update_attachment: 'अटैचमेंट अद्यतन करें'
+
 authentication_links:
   sign_in: 'साइन इन'
   my_account: 'मेरा अकाउंट'
   sign_out: 'साइन आउट'
+
+confirm_dialog:
+  are_you_sure: 'वाकई यह करना चाहते हैं?'
+
+data_table:
+  total_rows_selected: 'कुल # चुनी प्रविष्टियां:'
+  bulk_ops:
+    deleteAll: 'सब मिटाएं'
+    unselectAll: 'सब अचयनित करें'
+  columns:
+    actions: 'निदेश'
+
+date_time_quicker:
+  quick_options: 'त्वरित विकल्प'
+  week: 'सप्ताह'
+  month: 'महीना'
+  start: 'प्रारंभ'
+  end: 'अंत'
+
+query_builder:
+  add_filter: 'फ़िल्टर जोडें'
+  apply_filters: 'फ़िल्टर लाघु करें'
+  columns:
+    "confirmed?": '@:Confirmed?'
+    created_at: '@:Created At'
+    email: '@:Email'
+    id: '@:ID'
+    message: '@:Message'
+    name: '@:Name'
+    role: '@:Role'
+    joins_count: '@:# Usages'
+  operators:
+    contains: 'अंतर्गत'
+    range: 'सीमा'
+
+url_referrer:
+  enter_a_url: 'यू.आर.एल दर्ज करें'
+  add_to_library: 'लाइब्रेरी में डालें'
+
+# Forms
+
+forms:
+  attachment_editor_form:
+    labels:
+      name: '@:Name'
+    hints:
+      name: 'नाम अनुमानित करने के लिए खाली छोड़ दें'
+  post_form:
+    labels:
+      message: '@:Message'
+    hints:
+      message: 'न्यूनतम 10, अधिकतम 140 वर्ण'
+  admin_edit_user_form:
+    labels:
+      roles: '@:Roles'
+  app_settings_outgoing_email_form:
+    labels:
+      sender: "'फ्रॉम' एड्रेस"
+      smtp_address: '@:Address'
+      smtp_port: '@:Port'
+      smtp_user_name: '@:Username'
+      smtp_password: '@:Password'
+      smtp_authentication: 'ऑथेंटिकेशन'
+      smtp_enable_starttls_auto: 'इनेबल STARTTLS ऑटो'
+      smtp_openssl_verify_mode: 'OpenSSL वेरीफाई मोड'
+    hints:
+      sender: "ईमेल का 'फ्रॉम' क्षेत्र। खाली छोड़ने पर पर्याय का प्रयोग किया जाएगा। सावधान: आपका SMTP
+        सर्वर इसे प्रत्यादिष्ट कर सकता है।"
+  app_settings_security_form:
+    labels:
+      sign_up_whitelist: 'साइन उप श्वेत सूची'
+    hints:
+      sign_up_whitelist: "सिर्फ इन्ही (',' से अलग) डोमेनों से ईमेल स्वीकार करें। किसी भी ईमेल को
+        स्वीकार करने के लिए खाली छोडें।"
+
+# Controllers and views
+
+posts-table:
+  columns:
+    created_at: '@:Created At'
+    id: '@:ID'
+    message: '@:Message'
+
+users-table:
+  columns:
+    confirmed_at: '@:Confirmed At'
+    created_at: '@:Created At'
+    email: '@:Email'
+    id: '@:ID'
+    message: '@:Message'
+    roles: '@:Roles'
+
+# PostsCtrl flash messages
+post_created: 'पोस्ट सफलतापूर्वक बनाया गया।'
+post_updated: 'पोस्ट का सफलतापूर्वक अद्यतन।'
+really_delete_post: 'वाकई पोस्ट मिटाएं?'
+really_delete_post_id: 'वाकई पोस्ट #{{id}} मिटाएं?'
+really_delete_posts: 'वाकई पोस्टों को मिटाएं?'
+post_deleted: 'पोस्ट सफलतापूर्वक मिटाया गया।'
+posts_deleted: 'पोस्ट सफलतापूर्वक मिटाये गये।'
+error_deleting_post: 'पोस्ट मिटाते समय त्रुटि।'
+error_deleting_posts: 'पोस्टों को मिटाते समय त्रुटि।'
+
+# UsersCtrl flash messages
+user_created: 'यूज़र सफलतापूर्वक बनाया गया।'
+user_updated: 'यूज़र का सफलतापूर्वक अद्यतन।'
+really_delete_user_id: 'वाकई यूज़र #{{id}} मिटाएं?'
+really_delete_users: 'वाकई यूज़रों को मिटाएं?'
+user_deleted: 'यूज़र सफलतापूर्वक मिटाया गया।'
+users_deleted: 'यूज़र सफलतापूर्वक मिटाये गये।'
+error_deleting_user: 'यूज़र मिटाते समय त्रुटि।'
+error_deleting_users: 'यूज़रों को मिटाते समय त्रुटि।'
+
+# Strings too long for raw treatment
+
+outgoing_email_hint: 'ईमेल वितरण कॉन्फ़िगर करें।'
+smtp_settings_hint: 'तमाम क्षेत्रों खली छोड़ने से पर्याय SMTP सेटिंग्स का प्रयोग किया जाएगा। किसी भी क्षेत्र
+  को भरने से सिर्फ आपके SMTP सेटिंग्स (और कोई पर्याय नहीं) को प्रयोग किया जाएगा।'
+
+security_hint: 'सिक्योरिटी सेटिंग्स कॉन्फ़िगर करें।'
+force_sign_in_hint: 'एप्लीकेशन में प्रवेश करने से पहले यूजर को साइन इन के लिए मजबूर करें।'
+disable_3rd_party_sign_in_hint: 'Facebook, Google जैसी थर्ड पार्टियों द्वारा साइन इन निर्योग करें।'
+disable_users_from_signing_up_hint: 'यूज़र को अकाउंट बनाने के लिए प्रशासक से संपर्क करना होगा।
+  ध्यान दें की थर्ड पार्टी साइन इन बे निर्योग हो जाएगा।'
+
+app_name: 'Rails App Starter Kit'
+admin_app_name: 'Rails App Starter Kit - प्रशासन'
+
+admin: 'प्रशासक'
+moderator: 'मध्यस्थ'
+
+# Raw strings
+
+Post: 'पोस्ट'
+Posts: 'पोस्ट'
+"New Post": 'नया पोस्ट'
+"Create Post": 'पोस्ट बनायें'
+"Edit Post": 'पोस्ट परिवर्तन'
+"Update Post": 'पोस्ट अद्यतन करें'
+"Delete Post": 'पोस्ट मिटाएं'
+
+Image: 'छवि'
+Others: 'अन्य'
+
+User: 'यूज़र'
+Users: 'यूज़र'
+"New User": 'नया यूज़र'
+"Update User": 'यूज़र अद्यतन करें'
+
+"App Settings": 'ऍप सेटिंग्स'
+"Update Settings": 'सेटिंग्स अद्यतन करें'
+
+"Outgoing Email": 'ईमेल भेजना'
+"Sender Info": 'प्रेषक की जानकारी'
+"SMTP Settings": 'SMTP सेटिंग्स'
+
+"Security": 'सिक्योरिटी'
+"Sign In Settings": 'साइन इन सेटिंग्स'
+"Force users to sign in": 'यूजर को साइन इन के लिए मजबूर करें'
+"Disable 3rd party sign in": 'थर्ड पार्टी साइन इन निर्योग करें'
+"Sign Up Settings": 'साइन उप सेटिंग्स'
+"Disable users from signing up": 'यूजर साइन उप निर्योग करें'
+
+Address: 'एड्रेस'
+Port: 'पोर्ट'
+Username: 'यूज़रनेम'
+Password: 'पासवर्ड'
+
+"Main App": 'मुख्य ऍप'
+"Hello, World!": 'नमस्ते, दुनिया!'
+"Admin Panel": 'प्रशासक सूची'
+"Hello, Admin World!": 'नमस्ते, प्रशासक दुनिया!'
+
+"Confirmed?": 'पुष्टीकृत?'
+"Confirmed At": 'कब पुष्टीकृत'
+"Created At": 'कब बना'
+Email: 'ईमेल'
+ID: 'ई.डी.'
+Message: 'संदेश'
+Name: 'नाम'
+Role: 'भूमिका'
+Roles: 'भूमिकाएं'
+Pending: 'अपूर्ण'
+"# Usages": '# उपयोग'
+
+Edit: 'अद्यतन'
+
+"yes": 'हाँ'
+"no": 'नहीं'

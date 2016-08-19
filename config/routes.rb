@@ -55,11 +55,13 @@ Rails.application.routes.draw do
     end
 
     resources :attachment_joins, only: [:create, :destroy]
+  end
 
-    scope 'fine_uploader' do
-      post 's3_signature' => 'fine_uploader#s3_signature'
-      post 's3_upload_success' => 'fine_uploader#s3_upload_success'
-    end
+  # We don't anticipate that the FineUploaderController will ever need to be
+  # localized, so we keep this outside the `scope ':locale' ...` block above.
+  scope 'fine_uploader' do
+    post 's3_signature' => 'fine_uploader#s3_signature'
+    post 's3_upload_success' => 'fine_uploader#s3_upload_success'
   end
 
   namespace :admin do

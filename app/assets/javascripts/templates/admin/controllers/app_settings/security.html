@@ -5,21 +5,23 @@ matter the size.
 -->
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <h3>Security</h3>
+    <h3 translate="Security"></h3>
 
-    <p class="help-block">Configure security settings.</p>
+    <p class="help-block" translate="security_hint"></p>
 
-    <form role="form" novalidate fb-errors="settingsErrors" confirm-dirty-form>
+    <form name="app_settings_security_form" role="form" novalidate
+          fb-errors="settingsErrors" confirm-dirty-form>
+
       <div class="form-inputs">
-        <h4>Sign In Settings</h4>
+        <h4 translate="Sign In Settings"></h4>
 
         <div class="checkbox">
           <label>
             <input type="checkbox" ng-model="settings.force_sign_in">
-            Force users to sign in
+            <span translate="Force users to sign in"></span>
           </label>
           <fb-hint>
-            Force users to sign in to access the application
+            <span translate="force_sign_in_hint"></span>
           </fb-hint>
         </div>
 
@@ -29,44 +31,34 @@ matter the size.
                    ng-model="settings.disable_3rd_party_sign_in"
                    ng-disabled="settings.force_sign_up_via_admin">
 
-            Disable 3rd party sign in
+            <span translate="Disable 3rd party sign in"></span>
           </label>
           <fb-hint>
-            Disable sign in via third party authentication providers such as
-            Facebook, Google etc.
+            <span translate="disable_3rd_party_sign_in_hint"></span>
           </fb-hint>
         </div>
 
-        <h4>Sign Up Settings</h4>
+        <h4 translate="Sign Up Settings"></h4>
 
-        <fb-field label="Sign up whitelist"
-                  ng-model="settings.sign_up_whitelist">
-
+        <fb-field ng-model="settings.sign_up_whitelist">
           <input type="text" name="sign_up_whitelist" class="form-control"
                  ng-model="settings.sign_up_whitelist">
-
-          <fb-hint>
-            Only allow emails from comma separated domains to sign up.
-            Leave blank to allow any email.
-          </fb-hint>
         </fb-field>
 
         <div class="checkbox">
           <label>
             <input type="checkbox" ng-model="settings.force_sign_up_via_admin">
-            Disable users from signing up
+            <span translate="Disable users from signing up"></span>
           </label>
           <fb-hint>
-            Users must ask an app administrator to create an account for them.
-            Note that 3rd party sign in is also disabled.
+            <span translate="disable_users_from_signing_up_hint"></span>
           </fb-hint>
         </div>
       </div>
 
       <div class="form-actions">
-        <button class="btn btn-primary" ng-click="updateSettings()">
-          Update
-        </button>
+        <button class="btn btn-primary" ng-click="updateSettings()"
+                translate="Update Settings"></button>
       </div>
     </form>
   </div>

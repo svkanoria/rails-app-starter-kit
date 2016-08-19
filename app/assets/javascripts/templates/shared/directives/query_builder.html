@@ -1,4 +1,6 @@
-<form class="query-builder form-inline" novalidate ng-submit="submit()">
+<form class="query-builder form-inline" novalidate ng-submit="submit()"
+      ng-show="translationComplete">
+
   <div class="filter" ng-repeat="filter in filters track by filter._id">
     <a href="" class="filter-remove" ng-click="removeFilter($index)">
       <span class="glyphicon glyphicon-remove-circle"></span></a>
@@ -8,11 +10,14 @@
 
   <a href="" class="filter-add" ng-click="addFilter()">
     <span class="glyphicon glyphicon-plus-sign"></span>
-    Add filter
+    <span translate="query_builder.add_filter"
+          translate-default="Add filter"></span>
   </a>
   <br/>
 
-  <input type="submit" class="btn"
-         ng-class="{'btn-primary': form.$dirty, 'btn-default': form.$pristine}"
-         value="Apply Filters">
+  <button type="submit" class="btn"
+          ng-class="{'btn-primary': form.$dirty, 'btn-default': form.$pristine}">
+    <span translate="query_builder.apply_filters"
+          translate-default="Apply Filters"></span>
+  </button>
 </form>

@@ -12,7 +12,7 @@ for an understanding of why this is required.
 
 <select class="filter-op form-control"
         ng-model="model.op"
-        ng-options="op as op for op in ops">
+        ng-options="o.name as o.label for o in ops">
 </select>
 
 <span class="filter-values">

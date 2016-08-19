@@ -9,6 +9,15 @@ module ApplicationHelper
     end
   end
 
+  # A partial or full dictionary of FineUploader messages; needed to override
+  # the defaults (for localization).
+  def fine_uploader_messages_json
+    translations = File.expand_path(
+        "../../../public/locales/fine_uploader_opts.#{locale}.yml", __FILE__)
+
+    YAML::load(File.read(translations)).to_json
+  end
+
   # Maps Rails flash keys to Bootstrap alert types.
   FLASH_KEY_MAP = { notice: 'success', alert: 'danger' }
 

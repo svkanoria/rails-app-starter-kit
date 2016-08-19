@@ -1,13 +1,13 @@
 angular.module('UsersCtrl', ['I18n', 'Flash', 'User'])
   .controller('UsersCtrl', [
-    '$scope', '$state', 'I18n', 'Flash', 'User', 'initialData',
-    function($scope, $state, I18n, Flash, User, initialData) {
+    '$scope', '$filter', '$state', 'I18n', 'Flash', 'User', 'initialData',
+    function($scope, $filter, $state, I18n, Flash, User, initialData) {
       /**
        * Allowed user roles.
        */
       var USER_ROLE_OPTIONS = [
-        { label: 'Admin', value: 'admin' },
-        { label: 'Moderator', value: 'moderator' }
+        { label: 'Admin', value: 'admin', translation_id: 'admin' },
+        { label: 'Moderator', value: 'moderator', translation_id: 'moderator' }
       ];
 
       /**
@@ -42,7 +42,7 @@ angular.module('UsersCtrl', ['I18n', 'Flash', 'User'])
               searchable: false, orderable: false,
               render: function (data, type, row, meta) {
                 return _.map(data, function (role) {
-                  return _.titleize(_.humanize(role));
+                  return $filter('translate')(role);
                 }).join(', ')
               }
             },
@@ -53,7 +53,9 @@ angular.module('UsersCtrl', ['I18n', 'Flash', 'User'])
             },
             { data: 'confirmed_at',
               render: function (data, type, row, meta) {
-                return (data) ? moment(data).format('lll') : 'Pending';
+                return (data)
+                  ? moment(data).format('lll')
+                  : $filter('translate')('Pending');
               }
             },
             // An example of bypassing the datatable 'row-ops' functionality,
@@ -107,23 +109,33 @@ angular.module('UsersCtrl', ['I18n', 'Flash', 'User'])
           deleteAll: {
             name: 'Delete all',
             action: function () {
-              if (!window.confirm('Really delete selected users?')) return;
+              I18n.confirm('Really delete users?',
+                'really_delete_users').then(function () {
 
-              $scope.pleaseWaitSvc.request();
+                $scope.pleaseWaitSvc.request();
 
-              User.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
-                function (response) {
-                  $scope.pleaseWaitSvc.release();
-                  Flash.now.push('success', 'Users deleted.');
+                User.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
+                  function (response) {
+                    $scope.pleaseWaitSvc.release();
+                    Flash.now.push('success', 'Users deleted.',
+                      'users_deleted');
 
-                  $scope.dataTableInstance.ajax.reload(); // Reload table data
-                  $scope.dataTableSelectedRows.length = 0;
-                },
-                function (failureResponse) {
-                  $scope.pleaseWaitSvc.release();
-                  Flash.now.push('danger',
-                    failureResponse.data.error || 'Error deleting users.');
-                });
+                    $scope.dataTableInstance.ajax.reload(); // Reload table data
+                    $scope.dataTableSelectedRows.length = 0;
+                  },
+                  function (failureResponse) {
+                    $scope.pleaseWaitSvc.release();
+
+                    if (failureResponse.data.error) {
+                      // We assume messages from the server are localized, so we
+                      // don't need to provide a translation id.
+                      Flash.now.push('danger', failureResponse.data.error);
+                    } else {
+                      Flash.now.push('danger', 'Error deleting users.',
+                        'error_deleting_users');
+                    }
+                  });
+              });
             }
           }
         };
@@ -140,17 +152,15 @@ angular.module('UsersCtrl', ['I18n', 'Flash', 'User'])
               name: 'confirmed?', label: 'Confirmed?', type: 'select',
               selectizeOptions: {
                 options: [
-                  { label: 'True', value: true },
-                  { label: 'False', value: false }
+                  { label: 'Yes', value: true, translation_id: 'yes' },
+                  { label: 'No', value: false, translation_id: 'no' }
                 ]
               }
             },
             // Another filter with a non database mapped column
             {
               name: 'role', label: 'Role', type: 'select',
-              selectizeOptions: {
-                options: USER_ROLE_OPTIONS
-              }
+              selectizeOptions: USER_ROLE_SELECTIZE_OPTIONS
             }
           ],
           initialColumns: ['email', 'id'],
@@ -165,24 +175,31 @@ angular.module('UsersCtrl', ['I18n', 'Flash', 'User'])
          * @param {number} userId - The user id to delete.
          */
         $scope.deleteUser = function (userId) {
-          if (!window.confirm('Really delete user #' + userId + '?')) return;
+          I18n.confirm('Really delete user #' + userId + '?',
+            'really_delete_user_id', { id: userId }).then(function () {
+            
+            $scope.pleaseWaitSvc.request();
+            // When performing an operation on a single row, unselect all rows
+            // to avoid any ambiguity about the scope of the operation.
+            $scope.dataTableSelectedRows.length = 0;
 
-          $scope.pleaseWaitSvc.request();
-          // When performing an operation on a single row, unselect all rows
-          // to avoid any ambiguity about the scope of the operation.
-          $scope.dataTableSelectedRows.length = 0;
+            User.remove({ userId: userId }, null,
+              function (response) {
+                $scope.pleaseWaitSvc.release();
+                Flash.now.push('success', 'User deleted.', 'user_deleted');
 
-          User.remove({ userId: userId }, null,
-            function (response) {
-              $scope.pleaseWaitSvc.release();
-              Flash.now.push('success', 'User deleted.');
+                $scope.dataTableInstance.ajax.reload();
+              }, function (failureResponse) {
+                $scope.pleaseWaitSvc.release();
 
-              $scope.dataTableInstance.ajax.reload();
-            }, function (failureResponse) {
-              $scope.pleaseWaitSvc.release();
-              Flash.now.push('danger',
-                failureResponse.data.error || 'Error deleting user.');
-            });
+                if (failureResponse.data.error) {
+                  Flash.now.push('danger', failureResponse.data.error);
+                } else {
+                  Flash.now.push('danger', 'Error deleting user.',
+                    'error_deleting_user');
+                }
+              });
+          });
         };
       };
 

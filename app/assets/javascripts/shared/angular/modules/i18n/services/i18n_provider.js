@@ -8,13 +8,19 @@
  *   // Set the locale. If you don't want or need to set one, skip it.
  *   // Consequently, the locale will remain null.
  *   //
- *   // You only need to set it here, and leave it unchanged thereafter. We
- *   // believe that a locale change is addressed most easily and flexibly by
- *   // reloading the page completely. This obviates the need for any $watches
- *   // on the locale, and also gives the server more control over handling
- *   // locales.
+ *   // Note that here, setting the locale is not semantically equivalent to
+ *   // "switching" locales. It just "informs" the Angular code of the locale
+ *   // being used, so that the UI can be rendered appropriately.
+ *   //
+ *   // We believe the actual switching of locales should be left in the hands
+ *   // of the server. The server can then "seed" the locale to be used in the
+ *   // form of a JS variable, which can then be retrieved by the Angular code.
+ *   //
+ *   // Thus, switching locales needs to require a complete reload of the page.
+ *   // This obviates the need for any $watches on the locale, and also gives
+ *   // the server more control over handling locales.
  *   app.config(['I18nProvider', function (I18nProvider) {
- *     I18nProvider.setLocale(someLocale);
+ *     I18nProvider.setLocale(someLocaleSeededByServer);
  *   }]);
  *
  * Usage:
@@ -22,15 +28,24 @@
  *   // service.
  *   I18n.getLocale();
  *
- *   // Localize a URL: Done using the 'l' function; see its documentation.
+ *   // Localize a URL: Done using the 'l' function; see its documentation
+ *
+ *   // Perform translations: See documentation for the 't' and 'ts' functions
+ *
+ *   // Pop up an internationalized 'window.confirm' dialog: See documentation
+ *   // for the 'confirm' function.
  */
 angular.module('I18nProvider', ['pascalprecht.translate'])
   .provider('I18n', [
     '$translateProvider',
     function ($translateProvider) {
       // For security reasons. For details, see
-      // https://angular-translate.github.io/docs/#/guide/19_security
-      $translateProvider.useSanitizeValueStrategy('escape');
+      // https://angular-translate.github.io/docs/#/guide/19_security.
+      //
+      // There are safer strategies available, but because we want to support
+      // HTML in translations, and because the safest strategy for this, i.e.
+      // 'sanitize' does not seem to work, we use this strategy instead.
+      $translateProvider.useSanitizeValueStrategy('escapeParameters');
 
       var locale = null;
 
@@ -45,6 +60,8 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
         if (locale) {
           $translateProvider.useUrlLoader('/i18n/translations.json');
           $translateProvider.preferredLanguage(locale);
+
+          moment.locale(locale);
         }
       }
 
@@ -63,18 +80,18 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
        * locale.
        *
        * If the current locale is null, then it removes the ':locale' and any
-       * trailing slash altogether. This behaviour is designed to be consistent
-       * with how Angular's very own ngResource service rewrites dynamic URLs.
+       * trailing slash altogether. This behaviour is carefully designed to be
+       * consistent with how Angular's own ngResource service rewrites dynamic
+       * URLs.
        *
        * Always returns a new string.
        *
        * This is useful for constructing localized server URLs, and for cases
-       * where using UI Router's states or state to URL conversion tools is not
+       * where using UI Router's states or state-to-URL conversion tools is not
        * a solution, or is not possible.
        *
-       * Note that we also provide an 'l-href' directive for constructing
-       * localized URLs, which itself uses this function. If you need such a
-       * URL in a view, prefer using the directive instead.
+       * Note that for constructing localized URLs in views, we also provide a
+       * 'l-href' directive, which itself uses this function.
        *
        * Usage:
        *   // Assuming the current locale is 'en', this returns
@@ -100,16 +117,226 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
           : url.replace(/:locale\/?/, '');
       }
 
+      // The service factory
+      var serviceFactory = [
+        '$q', '$translate',
+        function ($q, $translate) {
+          /**
+           * A function for translating an item.
+           *
+           * Builds on angular-translate's '$translate' service, by adding a
+           * concept of 'relative' and 'absolute' translation ids. This turns
+           * out to be a surprisingly useful concept.
+           *
+           * An id starting with a '.' is considered relative, and is appended
+           * to the 'translationPath' to yield an absolute translation id. One
+           * not starting with '.' is absolute anyway. This absolute id is used
+           * to find a translation.
+           *
+           * If found, the returned promise is resolved with the result. If not
+           * then if a 'defaultValue' is provided, the promise is resolved with
+           * it, else the promise is rejected with the translation id used. In
+           * the edge case that a null 'id' is passed, the promise is rejected
+           * with null, and the '$translate' service is not even called.
+           *
+           * @param {String} id - The 'relative' or 'absolute' translation id.
+           * @param {String} [translationPath] - The path to prepend to any
+           * relative id.
+           * @param {String} [defaultValue] - The default value to use in case
+           * no translation is found.
+           * @param {Object} [vars] - A map containing values for the variables
+           * (if any) to be interpolated. Note that interpolation is only done
+           * on successful translation, and *not* if the default value is used.
+           *
+           * @returns {Promise}
+           */
+          function t (id, translationPath, defaultValue, vars) {
+            var deferred = $q.defer();
+
+            if (!id) {
+              deferred.reject(null);
+            } else {
+              var absTranslationId = (id[0] === '.')
+                ? translationPath + id
+                : id;
+
+              $translate(absTranslationId, vars).then(function (result) {
+                deferred.resolve(result);
+              }, function (rejection) {
+                if (defaultValue) {
+                  deferred.resolve(defaultValue);
+                } else {
+                  deferred.reject(rejection);
+                }
+              });
+            }
+
+            return deferred.promise;
+          }
+
+          /**
+           * A function for translating a collection of items.
+           *
+           * Builds on angular-translate's '$translate' service, and handles a
+           * wide variety of use cases.
+           *
+           * Performs the following steps:
+           * 1. Takes an array of "things" to be translated
+           * 1. Immediately returns a promise that is never rejected, and only
+           *    resolves once all translations have been attempted.
+           * 1. If 'skipTranslation' is true, immediately resolves the promise
+           *    and then does nothing else.
+           * 1. For each thing, extracts a translation id using an 'extractor':
+           *   * If the extractor is:
+           *     * null: The thing itself is the translation id
+           *     * a string: The thing contains a property of this name, whose
+           *       value is the transaction id. The extractor may start with a
+           *       '.'. This is a marker, to denote that the extracted value is
+           *       to be treated as a 'relative' id.
+           *
+           *       Furthermore, if the thing contains the property
+           *       'translation_id', then the value of this property supersedes
+           *       the value of the property denoted by the extractor.
+           *     * a function: The function must accept an item (and optionally
+           *       an index), and return a translation id.
+           * 1. Once the translation id has been computed, if it is a relative
+           *    one (i.e. starts with a '.'), then it is appended to the
+           *    'translationPath' to yield an absolute translation id.
+           * 1. Attempts to retrieve a translation for the translation id. Then:
+           *    * On success, calls success(thing, result_string)
+           *    * On failure, calls failure(thing, translation_id_used)
+           *
+           * @param {Object} opts - A hash of options, in the following format:
+           *   {
+           *     items: array_of_strings_or_objects,
+           *     idExtractor: ?string_or_function,
+           *     translationPath: ?some_translation_id_prefix,
+           *     skipTranslation: ?true|false,
+           *     success: ?function (item, result_string) { ... }
+           *     failure: ?function (item, translation_id_used) { ... }
+           *   }
+           *
+           * @returns {Promise}
+           */
+          function ts (opts) {
+            var o = _.extend({
+              items: null, // Only for completeness
+              idExtractor: null,
+              translationPath: '',
+              skipTranslation: false,
+              success: null,
+              failure: null
+            }, opts);
+
+            if (o.skipTranslation) {
+              return $q(function (resolve, reject) {
+                resolve();
+              });
+            }
+
+            var promises = [];
+
+            _.each(o.items, function (item, index) {
+              var translationId = null;
+
+              if (!o.idExtractor) {
+                translationId = item;
+              } else if (typeof o.idExtractor === 'string') {
+                translationId = item.translation_id;
+
+                if (!translationId) {
+                  if (o.idExtractor[0] === '.') {
+                    translationId = '.' + item[o.idExtractor.substring(1)];
+                  } else {
+                    translationId = item[o.idExtractor];
+                  }
+                }
+              } else if (typeof o.idExtractor === 'function') {
+                translationId = o.idExtractor(item, index);
+              }
+
+              if (!translationId) {
+                if (o.failure) o.failure(item, null);
+              } else {
+                var absTranslationId = (translationId[0] === '.')
+                  ? o.translationPath + translationId
+                  : translationId;
+
+                var deferred = $q.defer();
+                promises.push(deferred.promise);
+
+                $translate(absTranslationId).then(function (result) {
+                  if (o.success) o.success(item, result);
+
+                  deferred.resolve();
+                }, function (rejection) {
+                  if (o.failure) o.failure(item, rejection);
+
+                  deferred.resolve();
+                });
+              }
+            });
+
+            return $q.all(promises);
+          }
+
+          /**
+           * Pops up an internationalized 'window.confirm' dialog.
+           *
+           * No argument is mandatory. These are the defaults:
+           * * If no 'message' is supplied, it defaults to 'Are you sure?'
+           * * If no 'translationId' is supplied, it defaults to
+           *   'confirm_dialog.are_you_sure?' *iff no message is supplied*!
+           *   Otherwise, it remains undefined.
+           *
+           * Translations for the message can be provided via 'translationId'.
+           * If the translation id begins with '.', then 'confirm_dialog.' is
+           * prepended to it.
+           *
+           * @param {String} [message] - The confirmatory message.
+           * @param {String} [translationId] - The translation id
+           * @param {Object} [vars] - A map containing values for the variables
+           * (if any) to be interpolated. Note that interpolation is only done
+           * on successful translation, and *not* if 'message' is used.
+           *
+           * @returns {Promise} A promise that resolves if 'OK' was pressed and
+           * rejects if 'Cancel' was pressed.
+           */
+          function confirm (message, translationId, vars) {
+            var adjMessage = message || 'Are you sure?';
+            var adjTranslationId =
+              translationId || (!message && '.are_you_sure?');
+
+            var deferred = $q.defer();
+
+            t(adjTranslationId, 'confirm_dialog', adjMessage, vars)
+              .then(function (result) {
+                if (window.confirm(result)) {
+                  deferred.resolve();
+                } else {
+                  deferred.reject();
+                }
+              });
+
+            return deferred.promise;
+          }
+
+          // Return the service object
+          return {
+            getLocale: getLocale,
+            l: l,
+            t: t,
+            ts: ts,
+            confirm: confirm
+          };
+        }];
+
       // Return the provider object
       return {
         setLocale: setLocale,
+        getLocale: getLocale,
+        l: l,
 
-        // The service object
-        $get: function () {
-          return {
-            getLocale: getLocale,
-            l: l
-          };
-        }
+        $get: serviceFactory
       };
     }]);

@@ -6,12 +6,13 @@
                 aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Edit Attachment</h4>
+        <h4 class="modal-title" translate="attachment_editor.edit_attachment"
+            translate-default="Edit Attachment"></h4>
       </div>
 
       <div class="modal-body">
-        <form role="form" novalidate fb-errors="attachmentErrors"
-              confirm-dirty-form>
+        <form name="attachment_editor_form" role="form" novalidate
+              fb-errors="attachmentErrors" confirm-dirty-form>
 
           <fb-field type="text" hint="Leave blank to auto-infer name"
                     required="true" ng-model="attachment.name"></fb-field>
@@ -19,11 +20,13 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="close()">
-          Close
+        <button type="button" class="btn btn-default" ng-click="close()"
+                translate="attachment_editor.close" translate-default="Close">
         </button>
         <button type="button" class="btn btn-primary"
-                ng-click="updateAndClose()">Update</button>
+                ng-click="updateAndClose()"
+                translate="attachment_editor.update_attachment"
+                translate-default="Update Attachment"></button>
       </div>
     </div>
   </div>

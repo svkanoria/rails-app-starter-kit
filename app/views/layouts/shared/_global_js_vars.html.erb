@@ -2,30 +2,32 @@
   # Keep these to a minimum, as they pollute the global namespace!
   #%>
 <script type="application/javascript">
-  <%# Set currently signed in user's details, if any %>
-  <% if (c = current_user_json) %>
-    var CurrentUser = <%= raw c %>;
-  <% else %>
-    var CurrentUser = null;
-  <% end %>
-
-  <%# Communicate any server side flash messages to the Angular 'Flash'
-    # service, to be seamlessly unified with client side flash messages.
+  <%# Any basic 'static' info to be shared with the client side. By static, we
+    # mean that it will not change, except maybe in case of a full page reload.
+    # So it makes sense to embed it right here, rather than have the client ask
+    # for it through a needless Ajax request.
     #%>
-  <% if flash.any? %>
-    var ServerFlash = <%= raw flash.to_hash.except(:timedout).to_json %>;
-  <% else %>
-    var ServerFlash = null;
-  <% end %>
-
-  <%# Set info that may be useful on the client side.
-    # For example, the media library uploader requires some AWS details set
-    # using environment variables.
-    # %>
-  var CommonInfo = {
+  var Static = {
     locale: '<%= I18n.locale %>',
     environment: '<%= Rails.env %>',
     aws_s3_bucket: '<%= Rails.application.secrets.aws_s3_bucket %>',
-    aws_access_key_id: '<%= Rails.application.secrets.aws_access_key_id %>'
+    aws_access_key_id: '<%= Rails.application.secrets.aws_access_key_id %>',
+    fine_uploader_messages: <%= raw fine_uploader_messages_json %>
   };
+
+  <%# Add the currently signed in user's details, if any %>
+  <% if (c = current_user_json) %>
+    Static.current_user = <%= raw c %>;
+  <% else %>
+    Static.current_user = null;
+  <% end %>
+
+  <%# Communicate any server side flash messages to the Angular 'Flash' service
+    # to be seamlessly integrated with client side flash messages.
+    #%>
+  <% if flash.any? %>
+    Static.server_flash = <%= raw flash.to_hash.except(:timedout).to_json %>;
+  <% else %>
+    Static.server_flash = null;
+  <% end %>
 </script>

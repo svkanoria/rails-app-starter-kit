@@ -24,7 +24,7 @@ angular.module('AuthSvc', [])
        * @returns {?Object} Signed in user details, or null.
        */
       var currentUser = function () {
-        return CurrentUser;
+        return Static.current_user;
       };
 
       /**
@@ -37,11 +37,11 @@ angular.module('AuthSvc', [])
        * @returns {boolean}
        */
       var currentUserIs = function (userOrId) {
-        if (CurrentUser) {
+        if (Static.current_user) {
           if (typeof(userOrId) === 'number') {
-            return CurrentUser.id === userOrId;
+            return Static.current_user.id === userOrId;
           } else {
-            return CurrentUser.id === userOrId.id;
+            return Static.current_user.id === userOrId.id;
           }
         }
 

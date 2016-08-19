@@ -46,6 +46,7 @@
 //= require underscore/underscore
 //= require underscore.string/dist/underscore.string
 //= require moment/moment
+//= require moment_locale_hi
 //= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker
 //= require datatables.net/js/jquery.dataTables
 //= require datatables-responsive/js/dataTables.responsive

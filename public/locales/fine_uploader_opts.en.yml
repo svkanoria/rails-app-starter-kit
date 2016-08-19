@@ -1,0 +1,6 @@
+# We override no FineUploader option-based messages by default.
+# To do so, take a look at the Hindi (hi) locale file for reference.
+#
+# There is another piece to the FineUploader localization puzzle, i.e. the
+# messages shown by the UI template. For these, see
+# /config/locales/fine_uploader_tmpl.XX.yml.

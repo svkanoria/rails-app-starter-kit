@@ -162,26 +162,35 @@ angular.module('AttachmentBrowser', [
               delete: {
                 icon: 'glyphicon-remove',
                 action: function (rowId) {
-                  if (!window.confirm(
-                      'Really delete attachment #' + rowId + '?')) return;
+                  I18n.confirm('Really delete attachment #' + rowId + '?',
+                    'attachment_browser.really_delete_attachment_id',
+                    { id: rowId }
+                  ).then(function () {
+                    PleaseWaitSvc.request();
+                    // When performing an operation on a single row, unselect
+                    // all rows to avoid any ambiguity about the scope of the
+                    // operation.
+                    scope.dataTableSelectedRows.length = 0;
 
-                  PleaseWaitSvc.request();
-                  // When performing an operation on a single row, unselect all
-                  // rows to avoid any ambiguity about the scope of the
-                  // operation.
-                  scope.dataTableSelectedRows.length = 0;
+                    Attachment.remove({ attachmentId: rowId }, null,
+                      function (response) {
+                        PleaseWaitSvc.release();
+                        Flash.now.push('success', 'Attachment deleted.',
+                          'attachment_browser.attachment_deleted');
 
-                  Attachment.remove({ attachmentId: rowId }, null,
-                    function (response) {
-                      PleaseWaitSvc.release();
-                      Flash.now.push('success', 'Attachment deleted.');
-
-                      AttachmentLibrarySvc.emitAttachmentsDeleted([rowId]);
-                    }, function (failureResponse) {
-                      PleaseWaitSvc.release();
-                      Flash.now.push('danger',
-                        failureResponse.data.error || 'Error deleting attachment.');
-                    });
+                        AttachmentLibrarySvc.emitAttachmentsDeleted([rowId]);
+                      }, function (failureResponse) {
+                        PleaseWaitSvc.release();
+                        if (failureResponse.data.error) {
+                          // We assume messages from the server are localized,
+                          // so we don't need to provide a translation id.
+                          Flash.now.push('danger', failureResponse.data.error);
+                        } else {
+                          Flash.now.push('danger', 'Error deleting attachment.',
+                            'attachment_browser.error_deleting_attachment');
+                        }
+                      });
+                  });
                 }
               }
             };
@@ -194,39 +203,52 @@ angular.module('AttachmentBrowser', [
               deleteAll: {
                 name: 'Delete all',
                 action: function () {
-                  if (!window.confirm('Really delete selected attachments?')) {
-                    return;
-                  }
+                  I18n.confirm('Really delete attachments?',
+                    'really_delete_attachments').then(function () {
 
-                  PleaseWaitSvc.request();
+                    PleaseWaitSvc.request();
 
-                  Attachment.batch_destroy({},
-                    { ids: scope.dataTableSelectedRows },
-                    function (response) {
-                      PleaseWaitSvc.release();
-                      Flash.now.push('success', 'Attachments deleted.');
+                    Attachment.batch_destroy({},
+                      { ids: scope.dataTableSelectedRows },
+                      function (response) {
+                        PleaseWaitSvc.release();
+                        Flash.now.push('success', 'Attachments deleted.',
+                          'attachment_browser.attachments_deleted');
 
-                      AttachmentLibrarySvc.emitAttachmentsDeleted(
-                        response.success_ids);
+                        AttachmentLibrarySvc.emitAttachmentsDeleted(
+                          response.success_ids);
 
-                      scope.dataTableSelectedRows.length = 0;
-                    },
-                    function (failureResponse) {
-                      PleaseWaitSvc.release();
-                      Flash.now.push('danger',
-                        failureResponse.data.error || 'Error deleting attachments.');
-                    });
+                        scope.dataTableSelectedRows.length = 0;
+                      },
+                      function (failureResponse) {
+                        PleaseWaitSvc.release();
+
+                        if (failureResponse.data.error) {
+                          // We assume messages from the server are localized,
+                          // so we don't need to provide a translation id.
+                          Flash.now.push('danger', failureResponse.data.error);
+                        } else {
+                          Flash.now.push('danger',
+                            'Error deleting attachments.',
+                            'attachment_browser.error_deleting_attachments');
+                        }
+                      });
+                  });
                 }
               }
             };
 
             scope.queryBuilderOptions = {
               columns: [
-                { name: 'name', label: 'Name', type: 'text' },
+                { name: 'name', label: 'Name', type: 'text',
+                  translation_id: 'attachment_browser.columns.name' },
                 // See query-builder for why 'id' column has type 'text'
-                { name: 'id', label: 'ID', type: 'text' },
-                { name: 'created_at', label: 'Created At', type: 'date' },
-                { name: 'joins_count', label: '# Usages', type: 'number' }
+                { name: 'id', label: 'ID', type: 'text',
+                  translation_id: 'attachment_browser.columns.id' },
+                { name: 'created_at', label: 'Created At', type: 'date',
+                  translation_id: 'attachment_browser.columns.created_at' },
+                { name: 'joins_count', label: '# Usages', type: 'number',
+                  translation_id: 'attachment_browser.columns.num_usages' }
               ],
               onSubmit: function () {
                 scope.dataTableInstance.ajax.reload(); // Reload the data table

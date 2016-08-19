@@ -58,24 +58,33 @@ angular.module('PostsCtrl', ['I18n', 'Flash', 'Post'])
           delete: {
             icon: 'glyphicon-remove',
             action: function (rowId) {
-              if (!window.confirm('Really delete post #' + rowId + '?')) return;
+              I18n.confirm('Really delete post #' + rowId + '?',
+                'really_delete_post_id', { id: rowId }
+              ).then(function () {
+                $scope.pleaseWaitSvc.request();
+                // When performing an operation on a single row, unselect all
+                // rows to avoid any ambiguity about the scope of the operation.
+                $scope.dataTableSelectedRows.length = 0;
 
-              $scope.pleaseWaitSvc.request();
-              // When performing an operation on a single row, unselect all rows
-              // to avoid any ambiguity about the scope of the operation.
-              $scope.dataTableSelectedRows.length = 0;
+                Post.remove({ postId: rowId }, null,
+                  function (response) {
+                    $scope.pleaseWaitSvc.release();
+                    Flash.now.push('success', 'Post deleted.', 'post_deleted');
 
-              Post.remove({ postId: rowId }, null,
-                function (response) {
-                  $scope.pleaseWaitSvc.release();
-                  Flash.now.push('success', 'Post deleted.');
+                    $scope.dataTableInstance.ajax.reload();
+                  }, function (failureResponse) {
+                    $scope.pleaseWaitSvc.release();
 
-                  $scope.dataTableInstance.ajax.reload();
-                }, function (failureResponse) {
-                  $scope.pleaseWaitSvc.release();
-                  Flash.now.push('danger',
-                    failureResponse.data.error || 'Error deleting post.');
-                });
+                    if (failureResponse.data.error) {
+                      // We assume messages from the server are localized, so we
+                      // don't need to provide a translation id.
+                      Flash.now.push('danger', failureResponse.data.error);
+                    } else {
+                      Flash.now.push('danger', 'Error deleting post.',
+                        'error_deleting_post');
+                    }
+                  });
+              });
             }
           }
         };
@@ -88,23 +97,33 @@ angular.module('PostsCtrl', ['I18n', 'Flash', 'Post'])
           deleteAll: {
             name: 'Delete all',
             action: function () {
-              if (!window.confirm('Really delete selected posts?')) return;
+              I18n.confirm('Really delete posts?',
+                'really_delete_posts').then(function () {
 
-              $scope.pleaseWaitSvc.request();
+                $scope.pleaseWaitSvc.request();
 
-              Post.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
-                function (response) {
-                  $scope.pleaseWaitSvc.release();
-                  Flash.now.push('success', 'Posts deleted.');
+                Post.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
+                  function (response) {
+                    $scope.pleaseWaitSvc.release();
+                    Flash.now.push('success', 'Posts deleted.',
+                      'posts_deleted');
 
-                  $scope.dataTableInstance.ajax.reload(); // Reload table data
-                  $scope.dataTableSelectedRows.length = 0;
-                },
-                function (failureResponse) {
-                  $scope.pleaseWaitSvc.release();
-                  Flash.now.push('danger',
-                    failureResponse.data.error || 'Error deleting posts.');
-                });
+                    $scope.dataTableInstance.ajax.reload(); // Reload table data
+                    $scope.dataTableSelectedRows.length = 0;
+                  },
+                  function (failureResponse) {
+                    $scope.pleaseWaitSvc.release();
+
+                    if (failureResponse.data.error) {
+                      // We assume messages from the server are localized, so we
+                      // don't need to provide a translation id.
+                      Flash.now.push('danger', failureResponse.data.error);
+                    } else {
+                      Flash.now.push('danger', 'Error deleting posts.',
+                        'error_deleting_posts');
+                    }
+                  });
+              });
             }
           }
         };
