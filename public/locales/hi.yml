@@ -1,0 +1,5 @@
+# Directives
+authentication_links:
+  sign_in: 'साइन इन'
+  my_account: 'मेरा अकाउंट'
+  sign_out: 'साइन आउट'

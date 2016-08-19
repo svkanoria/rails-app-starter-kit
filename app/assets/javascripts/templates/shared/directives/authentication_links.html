@@ -1,6 +1,8 @@
 <li ng-class="{dropdown: currentUser}">
   <a l-href="/:locale/users/sign_in?return_to={{signInRedirectUrl}}"
-     target="_self" ng-if="!currentUser">Sign In</a>
+     target="_self" ng-if="!currentUser"
+     translate="authentication_links.sign_in"
+     translate-default="Sign In"></a>
 
   <a href="" class="dropdown-toggle" data-toggle="dropdown"
      ng-if="currentUser">
@@ -8,10 +10,15 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu" ng-if="currentUser">
-    <li><a l-href="/:locale/users/edit" target="_self">My Account</a></li>
     <li>
-      <a l-href="/:locale/users/sign_out" data-method="delete" target="_self">
-        Sign Out</a>
+      <a l-href="/:locale/users/edit" target="_self"
+         translate="authentication_links.my_account"
+         translate-default="My Account"></a>
+    </li>
+    <li>
+      <a l-href="/:locale/users/sign_out" data-method="delete" target="_self"
+         translate="authentication_links.sign_out"
+         translate-default="Sign Out"></a>
     </li>
 
     <ng-transclude-replace></ng-transclude-replace>

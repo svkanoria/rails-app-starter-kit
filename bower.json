@@ -2,6 +2,8 @@
   "name": "app",
   "private": true,
   "dependencies": {
+    "jquery": "~2.x.x",
+    "jquery-ui": "~1.11.x",
     "angular": "~1.5.x",
     "ui-router": "~0.2.x",
     "angular-resource": "~1.5.x",
@@ -9,7 +11,6 @@
     "angular-mocks": "~1.5.x",
     "underscore": "~1.8.x",
     "underscore.string": "~3.0.x",
-    "jquery-ui": "~1.11.x",
     "animate-css": "~3.2.x",
     "moment": "~2.10.x",
     "eonasdan-bootstrap-datetimepicker": "~4.x.x",

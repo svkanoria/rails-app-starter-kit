@@ -41,6 +41,7 @@
 // to parse SourceMap'.
 //= require angular-modal-service/dst/angular-modal-service.min
 //= require angular-translate/angular-translate
+//= require angular-translate-loader-url/angular-translate-loader-url
 //
 // Files shared between client and admin apps
 //= require_tree ../shared

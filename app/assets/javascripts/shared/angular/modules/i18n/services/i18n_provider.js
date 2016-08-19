@@ -1,6 +1,9 @@
 /*
  * To configure and retrieve i18n details.
  *
+ * Also sets up angular-translate to fetch the required translations from
+ * '/i18n/translations.json?lang=some_locale', iff a locale is set.
+ *
  * Configuration:
  *   // Set the locale. If you don't want or need to set one, skip it.
  *   // Consequently, the locale will remain null.
@@ -21,9 +24,14 @@
  *
  *   // Localize a URL: Done using the 'l' function; see its documentation.
  */
-angular.module('I18nProvider', [])
+angular.module('I18nProvider', ['pascalprecht.translate'])
   .provider('I18n', [
-    function () {
+    '$translateProvider',
+    function ($translateProvider) {
+      // For security reasons. For details, see
+      // https://angular-translate.github.io/docs/#/guide/19_security
+      $translateProvider.useSanitizeValueStrategy('escape');
+
       var locale = null;
 
       /**
@@ -33,6 +41,11 @@ angular.module('I18nProvider', [])
        */
       function setLocale (locale_) {
         locale = locale_;
+
+        if (locale) {
+          $translateProvider.useUrlLoader('/i18n/translations.json');
+          $translateProvider.preferredLanguage(locale);
+        }
       }
 
       /**

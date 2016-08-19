@@ -83,6 +83,8 @@ Rails.application.routes.draw do
     root 'home#index'
   end
 
+  get '/i18n/translations' => 'i18n#translations'
+
   get '/:locale' => 'home#index', as: :localized_root
   root 'home#index'
 

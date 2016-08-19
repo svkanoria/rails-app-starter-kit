@@ -2,7 +2,7 @@
  * A solution for date and/or time user input, based on the
  * http://eonasdan.github.io/bootstrap-datetimepicker jQuery plugin.
  */
-angular.module('DateTimePicker', ['DateTimeQuicker'])
+angular.module('DateTimePicker', ['I18n', 'DateTimeQuicker'])
   /*
    * A directive for selecting dates and/or times.
    *
@@ -17,8 +17,8 @@ angular.module('DateTimePicker', ['DateTimeQuicker'])
    * * Just the time portion of the above string. Example: 'T12:11:17.139Z'
    */
   .directive('dateTimePicker', [
-    '$compile',
-    function ($compile) {
+    '$compile', 'I18n',
+    function ($compile, I18n) {
       return {
         restrict: 'E',
         templateUrl: 'shared/directives/date_time_picker.html',
