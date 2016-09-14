@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
-  # Only allow access via a subdomain.
-  # Routes that do not need a subdomain should be placed outside these
-  # constraints.
+  # Only allow access to these routes when:
+  #  * A subdomain exists, and
+  #  * It is NOT 'www'
+  # In other words, all routes requiring tenanted access must go here.
   constraints lambda { |r| r.subdomain.present? && r.subdomain != 'www' } do
-    get 'home/index'
-
     devise_for :users,
                controllers: {
                    # Custom controllers needed to support multitenancy
@@ -63,8 +62,20 @@ Rails.application.routes.draw do
     root 'home#index'
   end
 
-  resources :tenants, only: [:create]
-  resource :tenant, only: [:destroy]
+  # Only allow access to these routes when:
+  # * There is no subdomain, or
+  # * The subdomain is 'www'
+  # In other words, all routes requiring un-tenanted access must go here.
+  constraints subdomain: /\A\z|\Awww\z/ do
+    resources :tenants, only: [:create]
+    resource :tenant, only: [:destroy]
+
+    get '/' => 'rails/welcome#index'
+
+    # Note that we cannot use 'root' here since we already do so in the block
+    # above! So we need to be careful not to use the 'root_path' or 'root_url'
+    # helpers.
+  end
 
   # Priority is based on order of creation: first created => highest priority.
   # See how all your routes lay out with "rake routes".
