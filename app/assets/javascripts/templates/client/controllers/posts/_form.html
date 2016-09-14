@@ -1,22 +1,21 @@
 <!-- Common form for creating/updating a post -->
-<form role="form" novalidate fb-errors="postErrors" confirm-dirty-form>
+<form name="post_form" role="form" novalidate fb-errors="postErrors"
+      confirm-dirty-form>
+
   <div class="form-inputs">
-    <fb-field type="text" hint="Minimum 10, maximum 140 characters"
-              required="true" ng-model="post.message"></fb-field>
+    <fb-field type="text" required="true" ng-model="post.message"></fb-field>
   </div>
 
   <div class="form-actions" ng-if="!post.id">
-    <button class="btn btn-primary" ng-click="actionCreate()">
-      Create
-    </button>
+    <button class="btn btn-primary" ng-click="actionCreate()"
+            translate="Create Post"></button>
   </div>
 
   <div class="form-actions" ng-if="post.id">
-    <button class="btn btn-primary" ng-click="actionUpdate()">
-      Update
-    </button>
-    <button class="btn btn-danger" ng-click="actionDestroy()">
-      Delete
-    </button>
+    <button class="btn btn-primary" ng-click="actionUpdate()"
+            translate="Update Post"></button>
+
+    <button class="btn btn-danger" ng-click="actionDestroy()"
+            translate="Delete Post"></button>
   </div>
 </form>

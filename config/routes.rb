@@ -4,77 +4,117 @@ Rails.application.routes.draw do
   #  * It is NOT 'www'
   # In other words, all routes requiring tenanted access must go here.
   constraints lambda { |r| r.subdomain.present? && r.subdomain != 'www' } do
+    # The OmniAuth callback routes need to be independent of any dynamic scope
+    # (such as the `scope ':locale'` below). See
+    # https://github.com/plataformatec/devise/wiki/How-To:-OmniAuth-inside-localized-scope
+    # for more. All Other Devise routes work perfectly fine with dynamic scopes.
     devise_for :users,
+               skip: [:confirmations, :passwords, :registrations, :sessions,
+                      :unlocks],
                controllers: {
-                   # Custom controllers needed to support multitenancy
-                   sessions: 'sessions',
-                   registrations: 'registrations',
-                   # Comment this out if you don't want authentication via
-                   # 3rd party providers.
-                   omniauth_callbacks: 'omniauth_callbacks'
+                   omniauth_callbacks: 'users/omniauth_callbacks'
                }
 
-    namespace :api do
-      namespace :users do
-        # Devise API routes are set up to mirror default Devise routes
-        devise_scope :user do
-          post 'sign_in' => 'sessions#create'
+    scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do
+      # We define a route inside the locale scope that just saves the current
+      # locale in the session (for later recall), and continues with OmniAuth as
+      # normal.
+      devise_scope :user do
+        get '/users/auth/:provider' =>
+                'users/omniauth_callbacks#passthru_localized',
+            as: :user_omniauth_authorize_localized
+      end
 
-          post 'sign_up' => 'registrations#create'
-          delete '/' => 'registrations#destroy'
+      devise_for :users,
+                 skip: [:omniauth_callbacks],
+                 # Comment the 'omniauth_callbacks: ...' line if you don't want
+                 # authentication via 3rd party providers.
+                 controllers: {
+                     confirmations: 'users/confirmations',
+                     omniauth_callbacks: 'users/omniauth_callbacks',
+                     passwords: 'users/passwords',
+                     registrations: 'users/registrations',
+                     sessions: 'users/sessions',
+                     unlocks: 'users/unlocks'
+                 }
+
+      namespace :api do
+        namespace :users do
+          # Devise API routes are set up to mirror default Devise routes. Try to
+          # always keep the two in sync, for a coherent developer experience.
+          devise_scope :user do
+            post 'sign_in' => 'sessions#create'
+
+            post 'sign_up' => 'registrations#create'
+            delete '/' => 'registrations#destroy'
+          end
         end
       end
-    end
 
-    resources :posts
+      resources :posts
 
-    resources :attachments do
-      collection do
-        post 'batch_destroy'
+      resources :attachments do
+        collection do
+          post 'batch_destroy'
+        end
       end
+
+      resources :attachment_joins, only: [:create, :destroy]
     end
 
-    resources :attachment_joins, only: [:create, :destroy]
-
+    # We don't anticipate that the FineUploaderController will ever need to be
+    # localized, so we keep this outside the `scope ':locale' ...` block above.
     scope 'fine_uploader' do
       post 's3_signature' => 'fine_uploader#s3_signature'
       post 's3_upload_success' => 'fine_uploader#s3_upload_success'
     end
 
     namespace :admin do
-      resources :posts, only: [:index, :destroy] do
-        collection do
-          post 'batch_destroy'
+      scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do
+        resources :posts, only: [:index, :destroy] do
+          collection do
+            post 'batch_destroy'
+          end
         end
+
+        resources :users, except: [:show] do
+          collection do
+            post 'batch_destroy'
+          end
+        end
+
+        resource :app_settings, only: [:show, :update]
       end
 
-      resources :users, except: [:show] do
-        collection do
-          post 'batch_destroy'
-        end
-      end
-
-      resource :app_settings, only: [:show, :update]
-
+      get '/(:locale)' => 'home#index', as: :localized_root
       root 'home#index'
     end
 
+    get '/i18n/translations' => 'i18n#translations'
+
+    get '/(:locale)' => 'home#index', as: :localized_root
     root 'home#index'
   end
+
 
   # Only allow access to these routes when:
   # * There is no subdomain, or
   # * The subdomain is 'www'
   # In other words, all routes requiring un-tenanted access must go here.
   constraints subdomain: /\A\z|\Awww\z/ do
-    resources :tenants, only: [:create]
-    resource :tenant, only: [:destroy]
+    scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do
+      resources :tenants, only: [:create]
+      resource :tenant, only: [:destroy]
 
+      get '/' => 'rails/welcome#index'
+
+      # Note that we cannot use 'root' here since we already do so in the block
+      # above! So we need to be careful not to use the 'root_path' or 'root_url'
+      # helpers.
+    end
+
+    get '/(:locale)' => 'rails/welcome#index'
     get '/' => 'rails/welcome#index'
-
-    # Note that we cannot use 'root' here since we already do so in the block
-    # above! So we need to be careful not to use the 'root_path' or 'root_url'
-    # helpers.
   end
 
   # Priority is based on order of creation: first created => highest priority.

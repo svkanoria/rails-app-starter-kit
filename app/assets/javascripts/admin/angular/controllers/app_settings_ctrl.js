@@ -14,10 +14,10 @@
  *   available on the 'settingsErrors' scope variable.
  * * Insert the appropriate entry into the 'categories' scope variable below
  */
-angular.module('AppSettingsCtrl', ['Flash'])
+angular.module('AppSettingsCtrl', ['I18n', 'Flash'])
   .controller('AppSettingsCtrl', [
-    '$scope', '$http', '$state', 'Flash', 'initialData', 'initialData2',
-    function($scope, $http, $state, Flash, initialData, initialData2) {
+    '$scope', '$http', '$state', 'I18n', 'Flash', 'initialData', 'initialData2',
+    function($scope, $http, $state, I18n, Flash, initialData, initialData2) {
       $scope.category = initialData;
       $scope.settings = initialData2.data;
 
@@ -27,7 +27,7 @@ angular.module('AppSettingsCtrl', ['Flash'])
       $scope.updateSettings = function () {
         $scope.pleaseWaitSvc.request();
 
-        $http.put('/admin/app_settings.json', {
+        $http.put(I18n.l('/admin/:locale/app_settings.json'), {
           category: $scope.category,
           settings: $scope.settings
         }).then(function (response) {

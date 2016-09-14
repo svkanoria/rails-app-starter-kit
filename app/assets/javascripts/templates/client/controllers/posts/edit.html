@@ -1,12 +1,14 @@
 <div ng-init="actionEdit()">
   <h2>
-    <a ui-sref="app.posts.show({ id: post.id })">Post #{{post.id}}</a> - Edit
+    <a ui-sref="app.posts.show({ id: post.id })">
+      <span translate="Post"></span> #{{post.id}}</a> -
+    <span translate="Edit"></span>
   </h2>
 
   <div ng-include="'client/controllers/posts/_form.html'">
   </div>
 
-  <h3>Image</h3>
+  <h3 translate="Image"></h3>
 
   <div class="row">
     <div class="col-sm-6 col-lg-5">
@@ -17,7 +19,7 @@
     </div>
   </div>
 
-  <h3>Others</h3>
+  <h3 translate="Others"></h3>
 
   <div class="row">
     <div class="col-sm-6 col-lg-5">

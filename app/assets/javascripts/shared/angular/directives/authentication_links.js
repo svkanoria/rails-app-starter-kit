@@ -8,7 +8,7 @@
  *       :
  *   </authentication-links>
  */
-angular.module('AuthenticationLinks', ['AuthSvc'])
+angular.module('AuthenticationLinks', ['I18n', 'AuthSvc'])
   .directive('authenticationLinks', [
     '$location', 'AuthSvc',
     function ($location, AuthSvc) {
@@ -23,7 +23,7 @@ angular.module('AuthenticationLinks', ['AuthSvc'])
           scope.currentUser = AuthSvc.currentUser();
 
           scope.$on('$locationChangeSuccess', function () {
-            scope.signInRedirectUrl = $location.url();
+            scope.signInRedirectUrl = $location.absUrl();
           });
         }
       };

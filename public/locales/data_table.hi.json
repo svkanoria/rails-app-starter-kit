@@ -1,0 +1,24 @@
+{
+  "decimal":        "",
+  "emptyTable":     "तालिका में आंकड़े उपलब्ध नहीं",
+  "info":           "_TOTAL_ में से‍ _START_ से _END_ प्रविष्टियां दिखा रहे हैं",
+  "infoEmpty":      "0 में से 0 से 0 प्रविष्टियां दिखा रहे हैं",
+  "infoFiltered":   "(_MAX_ कुल प्रविष्टियों में से छठा हुआ)",
+  "infoPostFix":    "",
+  "thousands":      ",",
+  "lengthMenu":     "_MENU_ प्रविष्टियां दिखाएं",
+  "loadingRecords": "लोडिंग...",
+  "processing":     "प्रगति पर है...",
+  "search":         "खोजें:",
+  "zeroRecords":    "रिकॉर्ड्स का मेल नहीं मिला",
+  "paginate": {
+    "first":      "प्रथम",
+    "last":       "अंतिम",
+    "next":       "अगला",
+    "previous":   "पिछला"
+  },
+  "aria": {
+    "sortAscending":  ": activate to sort column ascending",
+    "sortDescending": ": activate to sort column descending"
+  }
+}

@@ -1,0 +1,67 @@
+# Message keys to be specified as configuration options, taken from the
+# FineUploader documentation.
+#
+# There is another piece to the FineUploader localization puzzle, i.e. the
+# messages shown by the UI template. For these, see
+# /config/locales/fine_uploader_tmpl.XX.yml.
+messages:
+  # Core messages
+  # See http://docs.fineuploader.com/branch/master/api/options.html#messages
+  emptyError: '{file} खली है, कृपया इसके बिना पुनः चुनें।'
+  maxHeightImageError: 'छवि अत्यधिक ऊँची है।'
+  maxWidthImageError: 'छवि अत्यधिक चौड़ी है।'
+  mixHeightImageError: 'छवि की ऊँचाई पर्याप्त नहीं।'
+  mixWidthImageError: 'छवि की चौड़ाई पर्याप्त नहीं।'
+  minSizeError: '{file} अत्यधिक छोटा है, न्यूनतम {minSizeLimit} होना चाहिए.'
+  noFilesError: 'अपलोड के लिए कोई फ़ाइल नहीं।'
+  onLeave: 'फ़ाइल अपलोड प्रगति पर है, अभी विदाई लेने से रद्द कर दिया जाएगा।'
+  retryFailTooManyItemsError: 'पुनः प्रयास विफल, फ़ाइल संख्या सीमा तक पहुँच चुकी है।'
+  sizeError: '{file} अत्यधिक बड़ा है, अधितकतम {sizeLimit} होना चाहिए।'
+  tooManyItemsError: 'अत्यधिक आइटमें ({netItems}) अपलोड हो जाएँगी, आइटम संख्या की सीमा
+    {itemLimit} है।'
+  typeError: '{file} एक्सटेंशन अमान्य है, मान्य एक्सटेंशन: {extensions}।'
+  unsupportedBrowserIos8Safari: 'घातक त्रुटि - iOS8 सफारी ब्राउज़र से अपलोड नहीं होगा। कृपिया
+    iOS8 क्रोम का उपयोग करें।'
+
+  # UI messages
+  # See http://docs.fineuploader.com/branch/master/api/options-ui.html#messages
+  tooManyFilesError: 'सिर्फ एक फ़ाइल डालें।'
+  unsupportedBrowser: 'घातक त्रुटि - इस ब्राउज़र से किसी भी प्रकार का अपलोड मना है।'
+
+scaling:
+  # Core messages
+  # See http://docs.fineuploader.com/branch/master/api/options.html#scaling
+  failureText: 'स्केल असफल'
+
+  # UI Messages
+  # See http://docs.fineuploader.com/branch/master/api/options-ui.html#scaling
+  # failureText: 'Failed to scale' # Exact same as above, so we comment it out!
+
+text:
+  # Core messages
+  # See http://docs.fineuploader.com/branch/master/api/options.html#text
+  defaultResponseError: 'अपलोड असफलता का कारण अज्ञात'
+
+  # UI messages
+  # See http://docs.fineuploader.com/branch/master/api/options-ui.html#text
+  failUpload: 'अपलोड असफल'
+  formatProgress: '{total_size} का {percent}%'
+  paused: 'ठहरा'
+  waitingForResponse: 'प्रगति पर...'
+
+deleteFile:
+  # UI messages
+  # See http://docs.fineuploader.com/branch/master/api/options-ui.html#deleteFile
+  confirmMessage: 'वाकई {filename} को मिटाएं?'
+  deletingFailedText: 'मिटाना असफ़ल'
+  deletingStatusText: 'मिटाना प्रगति पर...'
+
+retry:
+  # UI messages
+  # See http://docs.fineuploader.com/branch/master/api/options-ui.html#retry
+  autoRetryNote: 'पुनः प्रयास {retryNum}/{maxAuto} ...'
+
+paste:
+  # UI messages
+  # See http://docs.fineuploader.com/branch/master/api/options-ui.html#paste
+  namePromptMessage: 'इस छवि का नाम रखें'

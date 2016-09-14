@@ -13,7 +13,7 @@ class TenantsController < ApplicationController
   end
 
   def destroy
-    @tenant = ActsAsTenant.current_tenant
+    @tenant = current_tenant
     authorize @tenant
 
     @tenant.destroy

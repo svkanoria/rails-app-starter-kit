@@ -52,7 +52,8 @@ angular.module('QBEditorProvider', [])
           var editorHtml =
             '<selectize class="filter-value" '
               + 'ng-model="' + ngModelExpr + '"'
-              + 'options="' + selectizeOptionsStr + '">' +
+              + 'options="' + selectizeOptionsStr + '"'
+              + 'skip-translation="' + !!column.selectizeSkipTranslation + '">' +
             '</selectize>';
 
           return editorHtml;

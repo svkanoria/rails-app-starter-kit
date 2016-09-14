@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <h2><%= t '.send_instructions' %></h2>
+
+      <%= bootstrap_form_for resource, as: resource_name,
+                             url: password_path(resource_name),
+                             html: { method: :post } do |f| %>
+
+        <div class="form-inputs">
+          <%= f.email_field :email, autofocus: true %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit t('.send_instructions'),
+                       class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+
+      <%= render 'users/shared/links' %>
+    </div>
+  </div>
+</div>

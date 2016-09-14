@@ -1,11 +1,16 @@
 <div class="row" ng-init="actionEdit()">
   <div class="col-sm-6 col-sm-offset-3">
-    <h2>User #{{user.id}} - Edit</h2>
+    <h2>
+      <span translate="User"></span> #{{user.id}} -
+      <span translate="Edit"></span>
+    </h2>
 
-    <form role="form" novalidate fb-errors="userErrors" confirm-dirty-form>
+    <form name="admin_edit_user_form" role="form" novalidate
+          fb-errors="userErrors" confirm-dirty-form>
+
       <div class="form-inputs">
         <div class="form-group">
-          <label>Email</label><br/>
+          <label translate="Email"></label><br/>
           {{user.email}}
         </div>
 
@@ -16,9 +21,8 @@
       </div>
 
       <div class="form-actions">
-        <button class="btn btn-primary" ng-click="actionUpdate()">
-          Update
-        </button>
+        <button class="btn btn-primary" ng-click="actionUpdate()"
+                translate="Update User"></button>
       </div>
     </form>
   </div>

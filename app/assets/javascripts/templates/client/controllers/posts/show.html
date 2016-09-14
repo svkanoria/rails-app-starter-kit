@@ -1,10 +1,10 @@
 <div ng-init="actionShow()">
-  <h2>Post #{{post.id}}</h2>
+  <h2><span translate="Post"></span> #{{post.id}}</h2>
 
   <p class="post">
     {{post.message}}
   </p>
 
   <a ui-sref="app.posts.edit({ id: post.id })" class="btn btn-primary"
-     ng-if="authSvc.currentUserIs(post.user_id)">Edit</a>
+     ng-if="authSvc.currentUserIs(post.user_id)" translate="Edit Post"></a>
 </div>

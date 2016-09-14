@@ -9,14 +9,29 @@
  *   // Display a flash message now
  *   Flash.now.push('some-Bootstrap-alert-context', 'some-text-or-HTML-msg');
  *
- * The flash message can be a HTML (although still supplied as a string), and
- * even better, can contain Angular directives! Any directives are compiled in
+ *   // Display a *localized* flash message at the next state/route/location
+ *   // change. Looks up a translation for 'some_translation_id', and if not
+ *   // found, falls back on 'some-fallback-text-or-HTML'.
+ *   Flash.push('some-Bootstrap-alert-context', 'some-fallback-text-or-HTML',
+ *     'some_translation_id');
+ *
+ *   // Display a *localized* flash message at the next state/route/location
+ *   // change. Looks up a translation for 'flash.some_translation_id' (note
+ *   // that if the translation id starts with a '.', it is first prefixed with
+ *   // 'flash' to obtain an "absolute" id.
+ *   Flash.push('some-Bootstrap-alert-context', 'some-fallback-text-or-HTML',
+ *     '.some_translation_id');
+ *
+ *   // Similarly, localization is available for Flash.now.
+ *
+ * The flash message can be HTML (although still supplied as a string), and
+ * better still, can contain Angular directives! Any directives are compiled in
  * the same scope as the 'flash-alert' directive used to render the message.
  */
-angular.module('Flash', [])
+angular.module('Flash', ['I18n'])
   .factory('Flash', [
-    '$rootScope', '$timeout',
-    function ($rootScope, $timeout) {
+    '$rootScope', '$timeout', 'I18n',
+    function ($rootScope, $timeout, I18n) {
       function Flash () {
         var items = [];
 
@@ -29,17 +44,32 @@ angular.module('Flash', [])
          * Beware that it keeps only the most recent item!
          * TODO Remove hard-coded Angular flash message limit
          *
+         * If a 'translationId' is supplied, then a translation retrieval is
+         * attempted via angular-translate's '$translate' service. If the id
+         * starts with a '.', it is prefixed with the string 'flash' to obtain
+         * an "absolute" id first. 'value' is then used as the fallback in case
+         * no translation is found.
+         *
          * @param key {string} - The key to insert.
          * @param value {string} - The value to insert.
+         * @param [translationId] {string} - The translation id.
          */
-        this.push = function (key, value) {
-          if (items.length === 1) {
-            $timeout(function () {
-              items.shift();
-            }, 300);
-          }
+        this.push = function (key, value, translationId) {
+          var adjValue = null;
 
-          items.push({ key: key, value: value });
+          I18n.t(translationId, 'flash', value).then(function (result) {
+            adjValue = result;
+          }, function (rejection) {
+            adjValue = rejection || value;
+          })['finally'](function () {
+            if (items.length === 1) {
+              $timeout(function () {
+                items.shift();
+              }, 300);
+            }
+
+            items.push({ key: key, value: adjValue });
+          });
         };
 
         this.concat = function (itemArray) {
@@ -83,10 +113,10 @@ angular.module('Flash', [])
 
       $rootScope.$on(eventName, function (event, args) {
         // Push any server side flash messages (available through the
-        // ServerFlash global variable), into the flash.
-        if (ServerFlash) {
-          for (var key in ServerFlash) {
-            flash.push(FLASH_KEY_MAP[key] || key, ServerFlash[key]);
+        // `Static.server_flash` global variable property), into the flash.
+        if (Static.server_flash) {
+          for (var key in Static.server_flash) {
+            flash.now.push(FLASH_KEY_MAP[key] || key, Static.server_flash[key]);
           }
         }
 
@@ -95,14 +125,14 @@ angular.module('Flash', [])
           flash.now.concat(flash.getItems());
           flash.clear();
 
-          if (ServerFlash) {
-            ServerFlash = null;
+          if (Static.server_flash) {
+            Static.server_flash = null;
           }
         }
       });
 
-      // Returns the service object, which in this case, it very neatly the
-      // the Flash object itself.
+      // Returns the service object, which in this case, is very neatly the
+      // Flash object itself.
       return flash;
     }])
 

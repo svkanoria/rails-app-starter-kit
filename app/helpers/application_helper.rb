@@ -1,7 +1,7 @@
 module ApplicationHelper
   # Tenant details (if any) to be passed to the client-side JS code.
   def tenant_json
-    if (current_tenant = ActsAsTenant.current_tenant)
+    if current_tenant
       { id: current_tenant.id,
         subdomain: current_tenant.subdomain }.to_json
     end
@@ -15,6 +15,15 @@ module ApplicationHelper
         email: current_user.email,
         roles: current_user.roles.pluck(:name) }.to_json
     end
+  end
+
+  # A partial or full dictionary of FineUploader messages; needed to override
+  # the defaults (for localization).
+  def fine_uploader_messages_json
+    translations = File.expand_path(
+        "../../../public/locales/fine_uploader_opts.#{locale}.yml", __FILE__)
+
+    YAML::load(File.read(translations)).to_json
   end
 
   # Maps Rails flash keys to Bootstrap alert types.

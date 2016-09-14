@@ -56,6 +56,7 @@ class User < ActiveRecord::Base
   validates :authentication_token, uniqueness: true
   validate :email_in_sign_up_whitelist
 
+  after_initialize :populate_locale_on_new
   before_save :ensure_authentication_token
 
   has_many :authentications, dependent: :destroy
@@ -150,11 +151,19 @@ class User < ActiveRecord::Base
 
   private
 
+  def populate_locale_on_new
+    self.locale = I18n.locale if self.new_record?
+  end
+
   def email_in_sign_up_whitelist
     whitelist = AppSettings.get(:security, :sign_up_whitelist)
 
-    if whitelist.present? && !email.end_with?(*whitelist.split(/\s*,\s*/))
-      errors.add(:email, :not_in_sign_up_whitelist)
+    if whitelist.present?
+      whitelist_items = whitelist.split(/\s*,\s*/).delete_if(&:blank?)
+
+      unless email.end_with?(*whitelist_items)
+        errors.add(:email, :not_in_sign_up_whitelist)
+      end
     end
   end
 

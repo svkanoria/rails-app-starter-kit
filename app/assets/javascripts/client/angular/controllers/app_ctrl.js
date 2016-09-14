@@ -16,11 +16,12 @@ angular.module('AppCtrl', ['AuthSvc', 'PleaseWait', 'RouteUtils'])
 
       // For the attachment library directive declared in the Rails application
       // layout.
+
       $scope.uploaderOptions = {
-        debug: CommonInfo.env == 'development',
+        debug: Static.env == 'development',
         request: {
-          endpoint: CommonInfo.aws_s3_bucket + '.s3.amazonaws.com',
-          accessKey: CommonInfo.aws_access_key_id
+          endpoint: Static.aws_s3_bucket + '.s3.amazonaws.com',
+          accessKey: Static.aws_access_key_id
         },
         signature: {
           endpoint: '/fine_uploader/s3_signature'
@@ -33,15 +34,9 @@ angular.module('AppCtrl', ['AuthSvc', 'PleaseWait', 'RouteUtils'])
         },
         objectProperties: {
           key: function (id) {
-            var prefix = '';
-
-            prefix += (Tenant)
-              ? 'tenants/' + Tenant.id
-              : 'sys';
-
-            prefix += (AuthSvc.currentUser())
-              ? '/uploads/users/' + AuthSvc.currentUser().id
-              : '/uploads/common';
+            var prefix = (AuthSvc.currentUser())
+              ? 'uploads/users/' + AuthSvc.currentUser().id
+              : 'uploads/common';
 
             // 'getUuid' and 'getName' are part of the FineUploader API
             return prefix + '/' + this.getUuid(id) + '_' + this.getName(id);
@@ -57,4 +52,7 @@ angular.module('AppCtrl', ['AuthSvc', 'PleaseWait', 'RouteUtils'])
           enabled: true
         }
       };
+
+      // Localize FineUploader
+      _.extend($scope.uploaderOptions, Static.fine_uploader_messages || {});
     }]);

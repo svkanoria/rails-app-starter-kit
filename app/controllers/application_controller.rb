@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token, if: :valid_app_access_token?
 
   before_action :require_tenant_if_subdomain,
+                :set_locale,
                 :authenticate_user_from_token,
                 :set_sign_in_redirect,
                 :force_sign_in_if_required
@@ -25,6 +26,14 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :deny_access
 
   public
+
+  # Whether the current locale is the default locale.
+  #
+  # @return [true, false]
+  def is_default_locale?
+    I18n.locale == I18n.default_locale
+  end
+  helper_method :is_default_locale?
 
   # Renders a JSON error for any failed operation for any reason, as follows:
   #   { error: 'Some error message' }
@@ -74,9 +83,20 @@ class ApplicationController < ActionController::Base
   def require_tenant_if_subdomain
     subdomain = request.subdomain
 
-    if subdomain.present? && subdomain != 'www' && !ActsAsTenant.current_tenant
+    if subdomain.present? && subdomain != 'www' && !current_tenant
       raise ActiveRecord::RecordNotFound
     end
+  end
+
+  # Sets the locale from the URL.
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
+
+  # Automatically adds the current locale to the hash of parameters sent to
+  # Rails' 'url_for' method, so that URL helpers take i18n into account.
+  def default_url_options
+    { locale: is_default_locale? ? nil : I18n.locale }
   end
 
   # Authenticates a user from the email and authentication supplied via the
@@ -94,23 +114,29 @@ class ApplicationController < ActionController::Base
   end
 
   # Sets where Devise should redirect on sign-in.
-  # Works in conjunction with the 'authLinks' directive.
+  # Works in conjunction with the 'authentication-links' directive.
   def set_sign_in_redirect
-    if (hash = params[:return_to]).present?
-      session[:user_return_to] =
-          "#{request.protocol}#{request.host_with_port}#{hash}"
+    if (url = params[:return_to]).present?
+      session[:user_return_to] = url
     end
   end
 
+  # Sets where Devise should redirect on sign-out.
+  def after_sign_out_path_for (resource_or_scope)
+    localized_root_url
+  end
+
   # Forces users to sign in to access the application, iff an app admin has
-  # configured the app to do.
+  # configured the app to do so.
   #
   # Unfortunately, upon sign-in the user will be redirected to the root page,
   # i.e. the hash portion of the URL will be ignored. This is a limitation of
   # keeping a server view based authentication UI, despite having an SPA. For
   # now, we'll just learn to live with it!
   def force_sign_in_if_required
-    authenticate_user! if AppSettings.get(:security, :force_sign_in)
+    if current_tenant && AppSettings.get(:security, :force_sign_in)
+      authenticate_user!
+    end
   end
 
   # Responds with a 401 (:unauthorized) HTTP status code.

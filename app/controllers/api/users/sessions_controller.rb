@@ -6,6 +6,12 @@ module Api
 
       def create
         if (user_params = params[:user])[:provider]
+          if AppSettings.get(:security, :disable_3rd_party_sign_in)
+            render_op_error 'api.users', :third_party_sign_in_disabled
+
+            return
+          end
+
           self.resource = User.from_omniauth(
               user_params.merge(info: { email: user_params[:email] }))
 

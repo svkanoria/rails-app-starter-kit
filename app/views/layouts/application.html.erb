@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html ng-app="App">
 <head>
-  <base href="/">
+  <% if is_default_locale? %>
+    <base href="/">
+  <% else %>
+    <base href="/<%= I18n.locale %>/">
+  <% end %>
 
   <title>Rails App Starter Kit</title>
 

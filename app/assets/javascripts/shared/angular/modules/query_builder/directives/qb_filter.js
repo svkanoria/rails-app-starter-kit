@@ -5,6 +5,7 @@ angular.module('QBFilter', ['QBEditorProvider'])
     function ($compile, QBEditor) {
       return {
         restrict: 'E',
+        require: '^queryBuilder',
         templateUrl: 'shared/directives/qb_filter.html',
 
         scope: {
@@ -12,13 +13,10 @@ angular.module('QBFilter', ['QBEditorProvider'])
           model: '='
         },
 
-        link: function (scope, element, attrs) {
+        link: function (scope, element, attrs, queryBuilder) {
           //////////////////
           // Helper Stuff //
           //////////////////
-
-          // Default comparison operators
-          var DEFAULT_OPS = ['contains', '=', '<', '<=', '>', '>=', 'range'];
 
           // Column type based refinements to DEFAULT_OPS.
           // Add more rules as and when more column types are supported.
@@ -40,15 +38,14 @@ angular.module('QBFilter', ['QBEditorProvider'])
            * @throws An error if no column found by the given name.
            */
           function getColumn (columnName) {
-            for (var i = 0; i < scope.qbOptions.columns.length; ++i) {
-              var column = scope.qbOptions.columns[i];
+            var column =
+              _.findWhere(scope.qbOptions.columns, { name: columnName });
 
-              if (column.name === columnName) {
-                return column;
-              }
+            if (column) {
+              return column;
+            } else {
+              throw 'Column ' + columnName + ' not found';
             }
-
-            throw 'Column ' + columnName + ' not found';
           }
 
           /**
@@ -65,13 +62,17 @@ angular.module('QBFilter', ['QBEditorProvider'])
 
             if (rules) {
               if (rules.only) {
-                return rules.only;
+                return _.filter(queryBuilder.defaultOps, function (op) {
+                  return _.contains(rules.only, op.name);
+                });
               } else if (rules.except) {
-                return _.difference(DEFAULT_OPS, rules.except);
+                return _.filter(queryBuilder.defaultOps, function (op) {
+                  return !_.contains(rules.except, op.name);
+                });
               }
             }
 
-            return DEFAULT_OPS;
+            return queryBuilder.defaultOps;
           }
 
           /**
@@ -101,7 +102,7 @@ angular.module('QBFilter', ['QBEditorProvider'])
           // Procedural Stuff //
           //////////////////////
 
-          scope.ops = DEFAULT_OPS;
+          scope.ops = queryBuilder.defaultOps;
 
           if (!scope.model.values) {
             scope.model.values = [];
@@ -112,14 +113,14 @@ angular.module('QBFilter', ['QBEditorProvider'])
 
             // If the new ops list does not contain the currently selected op,
             // un-select the current op, else ngOptions acts up!
-            if (scope.model.op && !_.contains(ops, scope.model.op)) {
+            if (scope.model.op && !_.findWhere(ops, { name: scope.model.op })) {
               scope.model.op = null;
             }
 
             scope.ops = ops;
 
             if (!scope.model.op) {
-              scope.model.op = scope.ops[0];
+              scope.model.op = scope.ops[0].name;
             }
           });
 

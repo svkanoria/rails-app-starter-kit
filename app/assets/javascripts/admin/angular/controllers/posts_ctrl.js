@@ -1,7 +1,7 @@
-angular.module('PostsCtrl', ['Flash', 'Post'])
+angular.module('PostsCtrl', ['I18n', 'Flash', 'Post'])
   .controller('PostsCtrl', [
-    '$scope', 'Flash', 'Post',
-    function($scope, Flash, Post) {
+    '$scope', 'I18n', 'Flash', 'Post',
+    function($scope, I18n, Flash, Post) {
       /**
        * The 'index' action.
        */
@@ -9,7 +9,7 @@ angular.module('PostsCtrl', ['Flash', 'Post'])
         $scope.dataTableOptions = {
           serverSide: true,
           ajax: {
-            url: '/admin/posts.json',
+            url: I18n.l('/admin/:locale/posts.json'),
             // Just add the query builder filters to all AJAX requests sent by
             // the data table!
             data: function (d) {
@@ -21,7 +21,9 @@ angular.module('PostsCtrl', ['Flash', 'Post'])
           columns: [
             { data: 'id',
               render: function (data, type, row, meta) {
-                return '<a href="/posts/' + data + '">' + data + '</a>';
+                var postUrl = I18n.l('/:locale/posts/' + data);
+
+                return '<a href="' + postUrl + '">' + data + '</a>';
               }
             },
             { data: 'message' },
@@ -50,30 +52,39 @@ angular.module('PostsCtrl', ['Flash', 'Post'])
           edit: {
             icon: 'glyphicon-pencil',
             link: function (rowId) {
-              return '/posts/' + rowId + '/edit';
+              return I18n.l('/:locale/posts/' + rowId + '/edit');
             }
           },
           delete: {
             icon: 'glyphicon-remove',
             action: function (rowId) {
-              if (!window.confirm('Really delete post #' + rowId + '?')) return;
+              I18n.confirm('Really delete post #' + rowId + '?',
+                'really_delete_post_id', { id: rowId }
+              ).then(function () {
+                $scope.pleaseWaitSvc.request();
+                // When performing an operation on a single row, unselect all
+                // rows to avoid any ambiguity about the scope of the operation.
+                $scope.dataTableSelectedRows.length = 0;
 
-              $scope.pleaseWaitSvc.request();
-              // When performing an operation on a single row, unselect all rows
-              // to avoid any ambiguity about the scope of the operation.
-              $scope.dataTableSelectedRows.length = 0;
+                Post.remove({ postId: rowId }, null,
+                  function (response) {
+                    $scope.pleaseWaitSvc.release();
+                    Flash.now.push('success', 'Post deleted.', 'post_deleted');
 
-              Post.remove({ postId: rowId }, null,
-                function (response) {
-                  $scope.pleaseWaitSvc.release();
-                  Flash.now.push('success', 'Post deleted.');
+                    $scope.dataTableInstance.ajax.reload();
+                  }, function (failureResponse) {
+                    $scope.pleaseWaitSvc.release();
 
-                  $scope.dataTableInstance.ajax.reload();
-                }, function (failureResponse) {
-                  $scope.pleaseWaitSvc.release();
-                  Flash.now.push('danger',
-                    failureResponse.data.error || 'Error deleting post.');
-                });
+                    if (failureResponse.data.error) {
+                      // We assume messages from the server are localized, so we
+                      // don't need to provide a translation id.
+                      Flash.now.push('danger', failureResponse.data.error);
+                    } else {
+                      Flash.now.push('danger', 'Error deleting post.',
+                        'error_deleting_post');
+                    }
+                  });
+              });
             }
           }
         };
@@ -86,23 +97,33 @@ angular.module('PostsCtrl', ['Flash', 'Post'])
           deleteAll: {
             name: 'Delete all',
             action: function () {
-              if (!window.confirm('Really delete selected posts?')) return;
+              I18n.confirm('Really delete posts?',
+                'really_delete_posts').then(function () {
 
-              $scope.pleaseWaitSvc.request();
+                $scope.pleaseWaitSvc.request();
 
-              Post.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
-                function (response) {
-                  $scope.pleaseWaitSvc.release();
-                  Flash.now.push('success', 'Posts deleted.');
+                Post.batch_destroy({}, { ids: $scope.dataTableSelectedRows },
+                  function (response) {
+                    $scope.pleaseWaitSvc.release();
+                    Flash.now.push('success', 'Posts deleted.',
+                      'posts_deleted');
 
-                  $scope.dataTableInstance.ajax.reload(); // Reload table data
-                  $scope.dataTableSelectedRows.length = 0;
-                },
-                function (failureResponse) {
-                  $scope.pleaseWaitSvc.release();
-                  Flash.now.push('danger',
-                    failureResponse.data.error || 'Error deleting posts.');
-                });
+                    $scope.dataTableInstance.ajax.reload(); // Reload table data
+                    $scope.dataTableSelectedRows.length = 0;
+                  },
+                  function (failureResponse) {
+                    $scope.pleaseWaitSvc.release();
+
+                    if (failureResponse.data.error) {
+                      // We assume messages from the server are localized, so we
+                      // don't need to provide a translation id.
+                      Flash.now.push('danger', failureResponse.data.error);
+                    } else {
+                      Flash.now.push('danger', 'Error deleting posts.',
+                        'error_deleting_posts');
+                    }
+                  });
+              });
             }
           }
         };

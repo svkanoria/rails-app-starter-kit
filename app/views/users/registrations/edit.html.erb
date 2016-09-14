@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <h2>
+        <%= t 'views.resources.edit',
+              model: t("activerecord.models.#{resource_name}") %>
+      </h2>
+
+      <%= bootstrap_form_for resource, as: resource_name,
+                             url: registration_path(resource_name),
+                             html: { method: :put } do |f| %>
+
+        <div class="form-inputs">
+          <%= f.email_field :email, autofocus: true %>
+
+          <% if devise_mapping.confirmable? &&
+            resource.pending_reconfirmation? %>
+
+            <p>
+              Currently awaiting confirmation for:
+              <%= resource.unconfirmed_email %>
+            </p>
+          <% end %>
+
+          <%= f.password_field :password, autocomplete: 'off',
+                               help: t('activerecord.help.user.password_update') %>
+
+          <%= f.password_field :password_confirmation, autocomplete: 'off' %>
+
+          <% if f.object.encrypted_password.present? %>
+            <%= f.password_field :current_password, autocomplete: 'off' %>
+          <% end %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+
+      <h3><%= t '.cancel_my_account' %></h3>
+
+      <p>
+        <%= t '.unhappy' %>
+        <%= button_to t('.cancel_my_account'), registration_path(resource_name),
+                      data: { confirm: t('.cancel_my_account_confirmation') },
+                      method: :delete, class: 'btn btn-danger' %>
+      </p>
+    </div>
+  </div>
+</div>

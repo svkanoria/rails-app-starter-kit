@@ -1,11 +1,14 @@
 // Manages the Post resource on the server.
-angular.module('Post', ['ArrayMetadataResponseAdapter'])
+angular.module('Post', ['I18n', 'ArrayMetadataResponseAdapter'])
   .factory('Post', [
-    '$resource', 'ArrayMetadataResponseAdapter',
-    function($resource, ArrayMetadataResponseAdapter) {
+    '$resource', 'I18n', 'ArrayMetadataResponseAdapter',
+    function($resource, I18n, ArrayMetadataResponseAdapter) {
       return $resource(
-        '/posts/:collectionAction/:postId/:memberAction.json',
-        { postId: '@id' },
+        '/:locale/posts/:collectionAction/:postId/:memberAction.json',
+        {
+          postId: '@id',
+          locale: function () { return I18n.getLocale(); }
+        },
         // Extra methods for compatibility with Rails, and our data format
         {
           query: ArrayMetadataResponseAdapter.adaptToArray(

@@ -32,11 +32,17 @@
 //= require underscore/underscore
 //= require underscore.string/dist/underscore.string
 //= require moment/moment
+//= require moment_locale_hi
 //= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker
 //= require selectize/dist/js/standalone/selectize
 //= require datatables.net/js/jquery.dataTables
 //= require datatables-responsive/js/dataTables.responsive
-//= require angular-modal-service/dst/angular-modal-service
+// Directly using the minified version for angular-modal-service, for the only
+// reason that using the non-minified version causes Chrome to throw a 'Failed
+// to parse SourceMap'.
+//= require angular-modal-service/dst/angular-modal-service.min
+//= require angular-translate/angular-translate
+//= require angular-translate-loader-url/angular-translate-loader-url
 //
 // Files shared between client and admin apps
 //= require_tree ../shared

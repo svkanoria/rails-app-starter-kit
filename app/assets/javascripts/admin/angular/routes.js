@@ -92,10 +92,13 @@ app.config([
           initialData: ['$stateParams', function ($stateParams) {
             return $stateParams.category;
           }],
-          initialData2: ['$stateParams', '$http',
-            function ($stateParams, $http) {
-              return $http.get('/admin/app_settings.json?category=' +
-                $stateParams.category);
+          initialData2: ['$stateParams', '$http', 'I18n',
+            function ($stateParams, $http, I18n) {
+              var localizedUrl =
+                I18n.l('/admin/:locale/app_settings.json?category=' +
+                  $stateParams.category);
+
+              return $http.get(localizedUrl);
             }]
         }
       })

@@ -25,7 +25,7 @@
  *
  * For columns of type 'select', we use the excellent Selectize jQuery plugin
  * instead of the standard, rather basic HTML select. In the column definition,
- * you must provide a 'selectizeOptions' attribute, containing at a minimum the
+ * you must provide a 'selectizeOptions' property, containing at a minimum the
  * the options available for selection:
  *
  *   selectizeOptions: {
@@ -35,7 +35,15 @@
  *
  * 'selectizeOptions' can contain ANY option that Selectize accepts. This lets
  * you configure Selectize on a per column basis, to exactly suit your needs.
- * See http://brianreavis.github.io/selectize.js/ for more information.
+ * See http://selectize.github.io/selectize.js/ for more information.
+ *
+ * By default, our implementation of Selectize looks for translations for all
+ * options provided up-front (see the selectize directive docs for a detailed
+ * understanding). If you do not need or want this to happen, you can skip the
+ * performance overhead that comes with translation, by providing the following
+ * property in the column definition:
+ *
+ *   selectizeSkipTranslation: true
  *
  * Presently we do not support custom operators. However, we will do so in
  * future.
@@ -51,21 +59,49 @@
  * also serves to restore filters from some saved state. At the very least, it
  * must be an empty array.
  */
-angular.module('QueryBuilderDirective', [])
+angular.module('QueryBuilderDirective', ['I18n'])
   .directive('queryBuilder', [
-    function () {
+    '$q', 'I18n',
+    function ($q, I18n) {
       return {
         restrict: 'E',
         templateUrl: 'shared/directives/query_builder.html',
         replace: true,
-        require: 'form',
+        require: ['queryBuilder', 'form'],
+        controller: 'QueryBuilderCtrl',
 
         scope: {
           options: '=',
           filters: '='
         },
 
-        link: function (scope, element, attrs, form) {
+        link: function (scope, element, attrs, ctrls) {
+          var queryBuilder = ctrls[0];
+          var form = ctrls[1];
+          
+          scope.translationComplete = false;
+
+          function translateItems (items, translationPath) {
+            return I18n.ts({
+              items: items,
+              idExtractor: '.name',
+              translationPath: translationPath,
+              success: function (item, result) {
+                item.label = result;
+              }
+            });
+          }
+
+          var promise1 = translateItems(scope.options.columns,
+            'query_builder.columns');
+
+          var promise2 = translateItems(queryBuilder.defaultOps,
+            'query_builder.operators');
+
+          $q.all([promise1, promise2]).then(function () {
+            scope.translationComplete = true;
+          });
+
           // For use in the template
           scope.form = form;
 
@@ -137,4 +173,18 @@ angular.module('QueryBuilderDirective', [])
           }
         }
       };
+    }])
+
+  .controller('QueryBuilderCtrl', [
+    function () {
+      // Default comparison operators
+      this.defaultOps = [
+        { name: 'contains', label: 'contains' },
+        { name: '=', label: '=' },
+        { name: '<', label: '<' },
+        { name: '<=', label: '<=' },
+        { name: '>', label: '>' },
+        { name: '>=', label: '>=' },
+        { name: 'range', label: 'range' }
+      ];
     }]);

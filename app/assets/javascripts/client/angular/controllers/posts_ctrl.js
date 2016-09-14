@@ -1,7 +1,10 @@
-angular.module('PostsCtrl', ['Flash', 'Post', 'AttachmentLibrarySvc'])
+angular.module('PostsCtrl', ['I18n', 'Flash', 'Post', 'AttachmentLibrarySvc'])
   .controller('PostsCtrl', [
-    '$scope', '$state', 'Flash', 'Post', 'AttachmentLibrarySvc', 'initialData',
-    function ($scope, $state, Flash, Post, AttachmentLibrarySvc, initialData) {
+    '$scope', '$state', 'I18n', 'Flash', 'Post', 'AttachmentLibrarySvc',
+    'initialData',
+    function ($scope, $state, I18n, Flash, Post, AttachmentLibrarySvc,
+              initialData) {
+      
       /**
        * The 'index' action.
        */
@@ -61,7 +64,7 @@ angular.module('PostsCtrl', ['Flash', 'Post', 'AttachmentLibrarySvc'])
 
         $scope.post.$save(function (response) {
           $scope.pleaseWaitSvc.release();
-          Flash.push('success', 'Post created.');
+          Flash.push('success', 'Post created.', 'post_created');
 
           $scope.navConfirmationSvc.setConfirmNav(false);
           $state.go('app.posts.index');
@@ -90,7 +93,7 @@ angular.module('PostsCtrl', ['Flash', 'Post', 'AttachmentLibrarySvc'])
 
         $scope.post.$update(function (response) {
           $scope.pleaseWaitSvc.release();
-          Flash.push('success', 'Post updated!!');
+          Flash.push('success', 'Post updated.', 'post_updated');
 
           $scope.navConfirmationSvc.setConfirmNav(false);
           $state.go('app.posts.index');
@@ -104,20 +107,28 @@ angular.module('PostsCtrl', ['Flash', 'Post', 'AttachmentLibrarySvc'])
        * The 'destroy' action.
        */
       $scope.actionDestroy = function () {
-        if (!window.confirm('Really delete this post?')) return;
+        I18n.confirm('Really delete post?',
+          'really_delete_post').then(function () {
 
-        $scope.pleaseWaitSvc.request();
+          $scope.pleaseWaitSvc.request();
 
-        $scope.post.$delete(function (response) {
-          $scope.pleaseWaitSvc.release();
-          Flash.push('success', 'Post deleted.');
+          $scope.post.$delete(function (response) {
+            $scope.pleaseWaitSvc.release();
+            Flash.push('success', 'Post deleted.', 'post_deleted');
 
-          $scope.navConfirmationSvc.setConfirmNav(false);
-          $state.go('app.posts.index');
-        }, function (failureResponse) {
-          $scope.pleaseWaitSvc.release();
-          Flash.push('danger',
-            failureResponse.data.error || 'Error deleting post.');
+            $scope.navConfirmationSvc.setConfirmNav(false);
+            $state.go('app.posts.index');
+          }, function (failureResponse) {
+            $scope.pleaseWaitSvc.release();
+            if (failureResponse.data.error) {
+              // We assume messages from the server are localized, so we don't
+              // need to provide a translation id.
+              Flash.push('danger', failureResponse.data.error);
+            } else {
+              Flash.push('danger', 'Error deleting post.',
+                'error_deleting_post');
+            }
+          });
         });
       };
     }]);

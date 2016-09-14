@@ -1,5 +1,5 @@
 <div ng-init="actionIndex()">
-  <h2>Users</h2>
+  <h2 translate="Users"></h2>
 
   <query-builder options="queryBuilderOptions"
                  filters="queryBuilderFilters"></query-builder>
@@ -16,10 +16,11 @@
       <th>Roles</th>
       <th>Created At</th>
       <th>Confirmed At</th>
-      <th class="dt-head-center">Actions</th>
+      <th class="dt-head-center"
+          translation-id="data_table.columns.actions">Actions</th>
     </tr>
     </thead>
   </table>
 
-  <a href="#/users/new" class="btn btn-primary">New User</a>
+  <a ui-sref="app.users.new" class="btn btn-primary" translate="New User"></a>
 </div>
