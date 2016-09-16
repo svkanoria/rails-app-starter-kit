@@ -97,8 +97,8 @@
  */
 angular.module('DataTable', ['I18n'])
   .directive('datatable', [
-    '$compile', '$q', 'I18n',
-    function ($compile, $q, I18n) {
+    '$compile', '$q', '$timeout', 'I18n',
+    function ($compile, $q, $timeout, I18n) {
       /**
        * Instructs the data table to use the current locale, if set.
        *
@@ -678,6 +678,13 @@ angular.module('DataTable', ['I18n'])
             if (scope.selectedRows !== undefined) {
               addBulkSelectionToolbar(scope, element);
             }
+
+            // We need this timeout. Calling '$apply()' synchronously causes
+            // a duplicate digest, when no locale is set (i.e. when the locale
+            // file does not have to be fetched from the server.
+            $timeout(function () {
+              scope.$apply();
+            });
           });
 
           translateTableHeadFoots(scope, element).then(function () {
