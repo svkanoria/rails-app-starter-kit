@@ -678,8 +678,6 @@ angular.module('DataTable', ['I18n'])
             if (scope.selectedRows !== undefined) {
               addBulkSelectionToolbar(scope, element);
             }
-
-            scope.$apply();
           });
 
           translateTableHeadFoots(scope, element).then(function () {
