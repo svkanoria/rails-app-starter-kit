@@ -10,7 +10,7 @@ Rails.application.routes.draw do
                  omniauth_callbacks: 'users/omniauth_callbacks'
              }
 
-  scope ':locale', locale: /en|hi/ do
+  scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do
     # We define a route inside the locale scope that just saves the current
     # locale in the session (for later recall), and continues with OmniAuth as
     # normal.
@@ -65,7 +65,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    scope ':locale', locale: /en|hi/ do
+    scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do
       resources :posts, only: [:index, :destroy] do
         collection do
           post 'batch_destroy'
@@ -81,13 +81,13 @@ Rails.application.routes.draw do
       resource :app_settings, only: [:show, :update]
     end
 
-    get '/:locale' => 'home#index', as: :localized_root
+    get '/(:locale)' => 'home#index', as: :localized_root
     root 'home#index'
   end
 
   get '/i18n/translations' => 'i18n#translations'
 
-  get '/:locale' => 'home#index', as: :localized_root
+  get '/(:locale)' => 'home#index', as: :localized_root
   root 'home#index'
 
   # Priority is based on order of creation: first created => highest priority.

@@ -47,6 +47,10 @@ app.config([
   function (I18nProvider, QBEditorProvider, AttachmentViewerProvider) {
     I18nProvider.setLocale(Static.locale);
 
+    if (Static.locale === 'en') {
+      I18nProvider.setLocaleUrlParam(null);
+    }
+
     QBEditorProvider.addEditorFactory({
       createEditorHtml: function (column, op) {
         if (column.type === 'date') {

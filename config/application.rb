@@ -95,14 +95,14 @@ module RailsAppStarterKit
       # have some '.', and we don't want to rewrite them.
       rewrite %r{^(.*\..*)$}, '$1'
 
-      # Ignore all requests to '/user*', since these correspond to Devise views
-      # that are rendered by the server, and not by Angular.
-      rewrite %r{^(/?\w*)/users(.*)$}, '$1/users$2'
-
       # Ignore all requests sent by the FineUploader library to the FineUploader
       # controller. Even though these are AJAX requests, they probably have no
       # '.', and hence sneak through the first rewrite rule above.
-      rewrite %r{^(/?\w*)/fine_uploader(.*)$}, '$1/fine_uploader$2'
+      rewrite %r{^/fine_uploader(.*)$}, '$1/fine_uploader$2'
+
+      # Ignore all requests to '/user*', since these correspond to Devise views
+      # that are rendered by the server, and not by Angular.
+      rewrite %r{^(/?\w*)/users(.*)$}, '$1/users$2'
 
       # Ignore all API calls
       rewrite %r{^/admin(/?\w*)/api/(.*)$}, '/admin/$1/api/$2'

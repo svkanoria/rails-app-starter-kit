@@ -24,6 +24,14 @@ class ApplicationController < ActionController::Base
 
   public
 
+  # Whether the current locale is the default locale.
+  #
+  # @return [true, false]
+  def is_default_locale?
+    I18n.locale == I18n.default_locale
+  end
+  helper_method :is_default_locale?
+
   # Renders a JSON error for any failed operation for any reason, as follows:
   #   { error: 'Some error message' }
   #
@@ -73,7 +81,7 @@ class ApplicationController < ActionController::Base
   # Automatically adds the current locale to the hash of parameters sent to
   # Rails' 'url_for' method, so that URL helpers take i18n into account.
   def default_url_options (options = {})
-    options.merge({ locale: I18n.locale })
+    options.merge({ locale: (I18n.locale == I18n.default_locale) ? nil : I18n.locale })
   end
 
   # Authenticates a user from the email and authentication supplied via the

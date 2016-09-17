@@ -48,6 +48,7 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
       $translateProvider.useSanitizeValueStrategy('escapeParameters');
 
       var locale = null;
+      var localeUrlParam = null;
 
       /**
        * Sets the locale.
@@ -55,7 +56,7 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
        * @param locale_ {string} - The locale to set. Example: 'en', 'de'.
        */
       function setLocale (locale_) {
-        locale = locale_;
+        locale = localeUrlParam = locale_;
 
         if (locale) {
           $translateProvider.useUrlLoader('/i18n/translations.json');
@@ -75,6 +76,20 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
       }
 
       /**
+       * Sets the string used to localize URLs.
+       *
+       * By default, the locale itself it used. However, sometimes you might
+       * need to customize it. For example, if the locale is the default one,
+       * your design may require that URLs contain no explicit locale.
+       *
+       * @param localeUrlParam_ {string} - The string to use for localizing
+       * URLs.
+       */
+      function setLocaleUrlParam (localeUrlParam_) {
+        localeUrlParam = localeUrlParam_;
+      }
+
+      /**
        * Localizes the given URL string, by replacing the first (if any)
        * instance of the substring ':locale' with the actual (if any) current
        * locale.
@@ -89,6 +104,10 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
        * This is useful for constructing localized server URLs, and for cases
        * where using UI Router's states or state-to-URL conversion tools is not
        * a solution, or is not possible.
+       *
+       * It is possible to override the actual replacement string used, as the
+       * locale itself may not always be suitable (see 'setLocaleUrlParam' for
+       * details).
        *
        * Note that for constructing localized URLs in views, we also provide a
        * 'l-href' directive, which itself uses this function.
@@ -112,8 +131,8 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
        * @returns {string} The localized URL.
        */
       function l (url) {
-        return (locale)
-          ? url.replace(':locale', locale)
+        return (localeUrlParam)
+          ? url.replace(':locale', localeUrlParam)
           : url.replace(/:locale\/?/, '');
       }
 
@@ -335,6 +354,7 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
       return {
         setLocale: setLocale,
         getLocale: getLocale,
+        setLocaleUrlParam: setLocaleUrlParam,
         l: l,
 
         $get: serviceFactory
