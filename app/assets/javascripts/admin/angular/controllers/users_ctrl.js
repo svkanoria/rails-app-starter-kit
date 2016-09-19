@@ -58,10 +58,10 @@ angular.module('UsersCtrl', ['I18n', 'Flash', 'User'])
                   : $filter('translate')('Pending');
               }
             },
-            // An example of bypassing the datatable 'row-ops' functionality,
-            // and instead manually setting up some row operations. Why have we
-            // done this? To show you its easily possible. Why would you do it?
-            // If the standard 'row ops' functionality doesn't support what you
+            // An example of bypassing the data table `row-ops` functionality,
+            // and instead manually setting up some row operations. Why we have
+            // done this: To show you its easily possible. Why you would do it:
+            // If the standard `row-ops` functionality doesn't support what you
             // want to do.
             //
             // Also see the corresponding Angular view at
@@ -98,7 +98,7 @@ angular.module('UsersCtrl', ['I18n', 'Flash', 'User'])
         };
 
         // The 'raw' data table instance.
-        // This is populated by the 'datatable' directive.
+        // This is populated by the `datatable` directive.
         $scope.dataTableInstance = null;
 
         // To enable row selection
@@ -216,7 +216,7 @@ angular.module('UsersCtrl', ['I18n', 'Flash', 'User'])
       /**
        * The 'create' action.
        * If there are validation errors on the server side, then populates the
-       * 'userErrors' scope variable with these errors.
+       * `userErrors` scope variable with these errors.
        */
       $scope.actionCreate = function () {
         $scope.pleaseWaitSvc.request();
@@ -245,7 +245,7 @@ angular.module('UsersCtrl', ['I18n', 'Flash', 'User'])
       /**
        * The 'update' action.
        * If there are validation errors on the server side, then populates the
-       * 'userErrors' scope variable with these errors.
+       * `userErrors` scope variable with these errors.
        */
       $scope.actionUpdate = function () {
         $scope.pleaseWaitSvc.request();

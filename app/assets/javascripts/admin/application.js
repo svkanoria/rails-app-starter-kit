@@ -6,7 +6,7 @@
 // jQuery from vendor
 //= require jquery/dist/jquery
 // Still need this from above though, for unobtrusive Javascript such as
-// <a ... 'data-method="delete"'></a> to work.
+// `<a ... 'data-method="delete"'></a>` to work.
 //= require jquery_ujs
 // jQuery UI from vendor (only the stuff that we need, and stuff that does not
 // conflict with Bootstrap). Add more files as required.

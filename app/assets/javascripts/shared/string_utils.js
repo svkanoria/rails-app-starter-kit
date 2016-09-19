@@ -6,7 +6,7 @@ var StringUtils = (function () {
    * However, even if one of them is null or undefined, the concatenation
    * completely goes bust, and null or undefined is returned respectively.
    *
-   * @param strArray {string[]} - The strings to concatenate.
+   * @param {string[]} strArray - The strings to concatenate.
    *
    * @returns {?string} The concatenated string.
    */

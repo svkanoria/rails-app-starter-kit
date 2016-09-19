@@ -57,7 +57,7 @@ angular.module('PostsCtrl', ['I18n', 'Flash', 'Post', 'AttachmentLibrarySvc'])
       /**
        * The 'create' action.
        * If there are validation errors on the server side, then populates the
-       * 'postErrors' scope variable with these errors.
+       * `postErrors` scope variable with these errors.
        */
       $scope.actionCreate = function () {
         $scope.pleaseWaitSvc.request();
@@ -86,7 +86,7 @@ angular.module('PostsCtrl', ['I18n', 'Flash', 'Post', 'AttachmentLibrarySvc'])
       /**
        * The 'update' action.
        * If there are validation errors on the server side, then populates the
-       * 'postErrors' scope variable with these errors.
+       * `postErrors` scope variable with these errors.
        */
       $scope.actionUpdate = function () {
         $scope.pleaseWaitSvc.request();

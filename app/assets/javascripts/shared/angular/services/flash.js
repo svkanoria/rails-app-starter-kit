@@ -22,11 +22,11 @@
  *   Flash.push('some-Bootstrap-alert-context', 'some-fallback-text-or-HTML',
  *     '.some_translation_id');
  *
- *   // Similarly, localization is available for Flash.now.
+ *   // Similarly, localization is available for `Flash.now`.
  *
  * The flash message can be HTML (although still supplied as a string), and
  * better still, can contain Angular directives! Any directives are compiled in
- * the same scope as the 'flash-alert' directive used to render the message.
+ * the same scope as the `flash-alert` directive used to render the message.
  */
 angular.module('Flash', ['I18n'])
   .factory('Flash', [
@@ -44,15 +44,15 @@ angular.module('Flash', ['I18n'])
          * Beware that it keeps only the most recent item!
          * TODO Remove hard-coded Angular flash message limit
          *
-         * If a 'translationId' is supplied, then a translation retrieval is
-         * attempted via angular-translate's '$translate' service. If the id
+         * If a `translationId` is supplied, then a translation retrieval is
+         * attempted via angular-translate's `$translate` service. If the id
          * starts with a '.', it is prefixed with the string 'flash' to obtain
-         * an "absolute" id first. 'value' is then used as the fallback in case
+         * an "absolute" id first. `value` is then used as the fallback in case
          * no translation is found.
          *
-         * @param key {string} - The key to insert.
-         * @param value {string} - The value to insert.
-         * @param [translationId] {string} - The translation id.
+         * @param {string} key - The key to insert.
+         * @param {string} value - The value to insert.
+         * @param {string} [translationId] - The translation id.
          */
         this.push = function (key, value, translationId) {
           var adjValue = null;
@@ -132,7 +132,7 @@ angular.module('Flash', ['I18n'])
       });
 
       // Returns the service object, which in this case, is very neatly the
-      // Flash object itself.
+      // `Flash` object itself.
       return flash;
     }])
 

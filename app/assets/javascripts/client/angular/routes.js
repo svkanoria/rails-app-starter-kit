@@ -1,6 +1,6 @@
 /*
  * Angular application routes.
- * Uses the 'app' variable defined in app.js, so must be loaded after it.
+ * Uses the `app` variable defined in app.js, so must be loaded after it.
  */
 app.config([
   '$stateProvider', '$locationProvider', '$urlRouterProvider', 'ROUTE_UTILS',
@@ -15,7 +15,7 @@ app.config([
 
     $stateProvider
       // App routes
-      // The 'top level' view corresponding to AppCtrl
+      // The 'top level' view corresponding to `AppCtrl`
       .state('app', {
         abstract: true,
         url: '',

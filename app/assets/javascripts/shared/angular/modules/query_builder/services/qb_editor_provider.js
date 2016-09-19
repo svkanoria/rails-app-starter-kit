@@ -1,5 +1,5 @@
 /*
- * To create editors for qb-filters.
+ * To create editors for `qb-filters`.
  * Can be configured by adding user-defined editor factories.
  *
  * Configuration:
@@ -9,11 +9,11 @@
  *         // Return some suitable HTML.
  *         // This may contain Angular directives, since it is compiled before
  *         // being added to the DOM.
- *         // The 'model' and 'column' variables are exposed on the scope, for
+ *         // The `model` and `column` variables are exposed on the scope, for
  *         // access to the data required to set up an editor. Note that
- *         // 'column' is also passed into this function as an argument, and is
- *         // as defined in the 'options' attribute passed to the
- *         // 'query-builder' directive.
+ *         // `column` is also passed into this function as an argument, and is
+ *         // as defined in the `options` attribute passed to the
+ *         // `query-builder` directive.
  *       }
  *     });
  *
@@ -26,13 +26,13 @@ angular.module('QBEditorProvider', [])
   .provider('QBEditor', [
     function () {
       /**
-       * Creates a 'select' element based editor.
+       * Creates a `select` element based editor.
        *
-       * @param column {Object} - The column.
-       * @param op {string} - The operator.
+       * @param {Object} column - The column.
+       * @param {string} op - The operator.
        *
        * @returns {string} The editor HTML. It may contain Angular directives,
-       * since it is compiled before being added to the DOM.
+       *   since it is compiled before being added to the DOM.
        */
       var SELECT_EDITOR_HTML = function (column, op) {
         if (column.type === 'select') {
@@ -61,13 +61,13 @@ angular.module('QBEditorProvider', [])
       };
 
       /**
-       * Creates an 'input type="xxx"' element based editor.
+       * Creates an `input type="xxx"` element based editor.
        *
-       * @param column {Object} - The column.
-       * @param op {string} - The operator.
+       * @param {Object} column - The column.
+       * @param {string} op - The operator.
        *
        * @returns {string} The editor HTML. It may contain Angular directives,
-       * since it is compiled before being added to the DOM.
+       *   since it is compiled before being added to the DOM.
        */
       var INPUT_TYPE_EDITOR_HTML = function (column, op) {
         var editorHtml = '';
@@ -91,10 +91,10 @@ angular.module('QBEditorProvider', [])
        * The order of addition is important, since editor creation is tried in
        * the same order.
        *
-       * @param factory {{createEditorHtml: function(string, string)}} - Where
-       * the function must:
-       * * accept a column type and an operator
-       * * return a string containing the editor's HTML, or null
+       * @param {{createEditorHtml: function(string, string)}} factory - Where
+       *   the function must:
+       *   * accept a column type and an operator
+       *   * return a string containing the editor's HTML, or null
        */
       var addEditorFactory = function (factory) {
         editorFactories.push(factory);
@@ -105,8 +105,8 @@ angular.module('QBEditorProvider', [])
        * Falls back on a default editor if the user defined factories (tried in
        * order of their addition) fail.
        *
-       * @param column {Object} - The column.
-       * @param op {string} - The operator.
+       * @param {Object} column - The column.
+       * @param {string} op - The operator.
        *
        * @returns {string} The editor HTML.
        */

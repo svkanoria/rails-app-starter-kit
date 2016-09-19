@@ -17,8 +17,8 @@ angular.module('NavConfirmationSvc', [])
       /**
        * Sets whether to ask for user confirmation before navigating away.
        *
-       * @param value {boolean|string} - True or a confirmation message when
-       * confirmation is required, false otherwise.
+       * @param {boolean|string} value - True or a confirmation message when
+       *   confirmation is required, false otherwise.
        */
       function setConfirmNav (value) {
         confirmNav = value;
@@ -36,7 +36,7 @@ angular.module('NavConfirmationSvc', [])
        * If required, prompts the user for confirmation and returns whether
        * to navigate away or not.
        *
-       * Used in RouteUtilsConst.onAppRun. Ideally, this will not need to be
+       * Used in `RouteUtilsConst.onAppRun`. Ideally, this will not need to be
        * called manually anywhere else.
        *
        * @returns {boolean} Whether to navigate away or not.

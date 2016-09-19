@@ -24,16 +24,16 @@
  *   }]);
  *
  * Usage:
- *   // Retrieve the current locale anywhere in your code, using the 'I18n'
+ *   // Retrieve the current locale anywhere in your code, using the `I18n`
  *   // service.
  *   I18n.getLocale();
  *
- *   // Localize a URL: Done using the 'l' function; see its documentation
+ *   // Localize a URL: Done using the `l` function; see its documentation
  *
- *   // Perform translations: See documentation for the 't' and 'ts' functions
+ *   // Perform translations: See documentation for the `t` and `ts` functions
  *
- *   // Pop up an internationalized 'window.confirm' dialog: See documentation
- *   // for the 'confirm' function.
+ *   // Pop up an internationalized `window.confirm` dialog: See documentation
+ *   // for the `confirm` function.
  */
 angular.module('I18nProvider', ['pascalprecht.translate'])
   .provider('I18n', [
@@ -53,7 +53,7 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
       /**
        * Sets the locale.
        *
-       * @param locale_ {string} - The locale to set. Example: 'en', 'de'.
+       * @param {string} locale_ - The locale to set. Example: 'en', 'de'.
        */
       function setLocale (locale_) {
         locale = localeUrlParam = locale_;
@@ -82,8 +82,8 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
        * need to customize it. For example, if the locale is the default one,
        * your design may require that URLs contain no explicit locale.
        *
-       * @param localeUrlParam_ {string} - The string to use for localizing
-       * URLs.
+       * @param {string} localeUrlParam_ - The string to use for localizing
+       *   URLs.
        */
       function setLocaleUrlParam (localeUrlParam_) {
         localeUrlParam = localeUrlParam_;
@@ -92,11 +92,11 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
       /**
        * Gets the string used to localize URLs.
        *
-       * Depending on your design, both this function as well as 'getLocale'
+       * Depending on your design, both this function as well as `getLocale`
        * should be used as appropriate whenever you need to manually construct
        * localized URLs.
        *
-       * Remember that if this isn't set otherwise via 'setLocaleUrlParam', it
+       * Remember that if this isn't set otherwise via `setLocaleUrlParam`, it
        * just remains the same as the actual locale.
        *
        * @returns {?string}
@@ -112,7 +112,7 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
        *
        * If the current locale is null, then it removes the ':locale' and any
        * trailing slash altogether. This behaviour is carefully designed to be
-       * consistent with how Angular's own ngResource service rewrites dynamic
+       * consistent with how Angular's own `ngResource` service handles dynamic
        * URLs.
        *
        * Always returns a new string.
@@ -122,11 +122,11 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
        * a solution, or is not possible.
        *
        * It is possible to override the actual replacement string used, as the
-       * locale itself may not always be suitable (see 'setLocaleUrlParam' for
+       * locale itself may not always be suitable (see `setLocaleUrlParam` for
        * details).
        *
        * Note that for constructing localized URLs in views, we also provide a
-       * 'l-href' directive, which itself uses this function.
+       * `l-href` directive, which itself uses this function.
        *
        * Usage:
        *   // Assuming the current locale is 'en', this returns
@@ -142,7 +142,7 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
        *   I18n.l(':locale/posts.json'); // 'posts.json'
        *   I18n.l('/:locale/posts.json'); // '/posts.json'
        *
-       * @param url {string} - The URL to localize.
+       * @param {string} url - The URL to localize.
        *
        * @returns {string} The localized URL.
        */
@@ -159,29 +159,29 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
           /**
            * A function for translating an item.
            *
-           * Builds on angular-translate's '$translate' service, by adding a
-           * concept of 'relative' and 'absolute' translation ids. This turns
+           * Builds on angular-translate's `$translate` service, by adding a
+           * concept of "relative" and "absolute" translation ids. This turns
            * out to be a surprisingly useful concept.
            *
            * An id starting with a '.' is considered relative, and is appended
-           * to the 'translationPath' to yield an absolute translation id. One
+           * to the `translationPath` to yield an absolute translation id. One
            * not starting with '.' is absolute anyway. This absolute id is used
            * to find a translation.
            *
            * If found, the returned promise is resolved with the result. If not
-           * then if a 'defaultValue' is provided, the promise is resolved with
+           * then if a `defaultValue` is provided, the promise is resolved with
            * it, else the promise is rejected with the translation id used. In
-           * the edge case that a null 'id' is passed, the promise is rejected
-           * with null, and the '$translate' service is not even called.
+           * the edge case that a null `id` is passed, the promise is rejected
+           * with null, and the `$translate` service is not even called.
            *
-           * @param {String} id - The 'relative' or 'absolute' translation id.
-           * @param {String} [translationPath] - The path to prepend to any
-           * relative id.
-           * @param {String} [defaultValue] - The default value to use in case
-           * no translation is found.
+           * @param {string} id - The "relative" or "absolute" translation id.
+           * @param {string} [translationPath] - The path to prepend to any
+           *   relative id.
+           * @param {string} [defaultValue] - The default value to use in case
+           *   no translation is found.
            * @param {Object} [vars] - A map containing values for the variables
-           * (if any) to be interpolated. Note that interpolation is only done
-           * on successful translation, and *not* if the default value is used.
+           *   (if any) to be interpolated. Note that interpolation only happens
+           *   on successful translation, and not if the default value is used.
            *
            * @returns {Promise}
            */
@@ -212,34 +212,34 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
           /**
            * A function for translating a collection of items.
            *
-           * Builds on angular-translate's '$translate' service, and handles a
+           * Builds on angular-translate's `$translate` service, and handles a
            * wide variety of use cases.
            *
            * Performs the following steps:
            * 1. Takes an array of "things" to be translated
            * 1. Immediately returns a promise that is never rejected, and only
            *    resolves once all translations have been attempted.
-           * 1. If 'skipTranslation' is true, immediately resolves the promise
+           * 1. If `skipTranslation` is true, immediately resolves the promise
            *    and then does nothing else.
-           * 1. For each thing, extracts a translation id using an 'extractor':
+           * 1. For each thing, extracts a translation id using an "extractor":
            *   * If the extractor is:
            *     * null: The thing itself is the translation id
            *     * a string: The thing contains a property of this name, whose
            *       value is the transaction id. The extractor may start with a
            *       '.'. This is a marker, to denote that the extracted value is
-           *       to be treated as a 'relative' id.
+           *       to be treated as a "relative" id.
            *
            *       Furthermore, if the thing contains the property
-           *       'translation_id', then the value of this property supersedes
+           *       `translation_id`, then the value of this property supersedes
            *       the value of the property denoted by the extractor.
            *     * a function: The function must accept an item (and optionally
            *       an index), and return a translation id.
            * 1. Once the translation id has been computed, if it is a relative
            *    one (i.e. starts with a '.'), then it is appended to the
-           *    'translationPath' to yield an absolute translation id.
+           *    `translationPath` to yield an absolute translation id.
            * 1. Attempts to retrieve a translation for the translation id. Then:
-           *    * On success, calls success(thing, result_string)
-           *    * On failure, calls failure(thing, translation_id_used)
+           *    * On success, calls `success(thing, result_string)`
+           *    * On failure, calls `failure(thing, translation_id_used)`
            *
            * @param {Object} opts - A hash of options, in the following format:
            *   {
@@ -316,26 +316,26 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
           }
 
           /**
-           * Pops up an internationalized 'window.confirm' dialog.
+           * Pops up an internationalized `window.confirm` dialog.
            *
            * No argument is mandatory. These are the defaults:
-           * * If no 'message' is supplied, it defaults to 'Are you sure?'
-           * * If no 'translationId' is supplied, it defaults to
+           * * If no `message` is supplied, it defaults to 'Are you sure?'
+           * * If no `translationId` is supplied, it defaults to
            *   'confirm_dialog.are_you_sure?' *iff no message is supplied*!
            *   Otherwise, it remains undefined.
            *
-           * Translations for the message can be provided via 'translationId'.
-           * If the translation id begins with '.', then 'confirm_dialog.' is
+           * Translations for the message can be provided via `translationId`.
+           * If the translation id begins with '.', then 'confirm_dialog' is
            * prepended to it.
            *
-           * @param {String} [message] - The confirmatory message.
-           * @param {String} [translationId] - The translation id
+           * @param {string} [message] - The confirmatory message.
+           * @param {string} [translationId] - The translation id.
            * @param {Object} [vars] - A map containing values for the variables
-           * (if any) to be interpolated. Note that interpolation is only done
-           * on successful translation, and *not* if 'message' is used.
+           *   (if any) to be interpolated. Note that interpolation only happens
+           *   on successful translation, and not if `message` is used.
            *
            * @returns {Promise} A promise that resolves if 'OK' was pressed and
-           * rejects if 'Cancel' was pressed.
+           *   rejects if 'Cancel' was pressed.
            */
           function confirm (message, translationId, vars) {
             var adjMessage = message || 'Are you sure?';

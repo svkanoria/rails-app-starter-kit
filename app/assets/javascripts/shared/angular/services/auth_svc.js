@@ -1,7 +1,7 @@
 /*
  * Authentication and authorization service.
  *
- * Retrieves signed in user data from the global 'CurrentUser' variable set on
+ * Retrieves signed in user data from the global `CurrentUser` variable set on
  * the server side.
  *
  * Authentication occurs via the 'devise' gem, whose workflow is deliberately
@@ -21,7 +21,7 @@ angular.module('AuthSvc', [])
       /**
        * Gets the currently signed in user's details, if any.
        *
-       * @returns {?Object} Signed in user details, or null.
+       * @returns {?Object}
        */
       var currentUser = function () {
         return Static.current_user;
@@ -32,7 +32,7 @@ angular.module('AuthSvc', [])
        * given user object or user id.
        * Equality is determined solely on the basis of id comparison.
        *
-       * @param userOrId {Object|number} - A user object, or id.
+       * @param {Object|number} userOrId - A user object, or id.
        *
        * @returns {boolean}
        */
@@ -52,7 +52,7 @@ angular.module('AuthSvc', [])
        * Returns whether the currently signed in user (if any) has one of the
        * given role(s).
        *
-       * @param role {string|string[]} - A role, or array of roles.
+       * @param {string|string[]} role - A role, or array of roles.
        *
        * @returns {boolean}
        */
@@ -74,11 +74,11 @@ angular.module('AuthSvc', [])
        * Requires a user to be signed in, and to possibly have one of the given
        * role(s), in order to access certain routes.
        *
-       * Requires no server round-trip, so prefer this over 'requireServerAuth'
+       * Requires no server round-trip, so prefer this over `requireServerAuth`
        * whenever possible.
        *
-       * Can be used in conjunction with 'requireServerAuth' to redirect to the
-       * sign in page if required. Left to itself, 'requireServerAuth' does not
+       * Can be used in conjunction with `requireServerAuth` to redirect to the
+       * sign in page if required. Left to itself, `requireServerAuth` does not
        * do so.
        *
        * Usage:
@@ -93,10 +93,10 @@ angular.module('AuthSvc', [])
        *     }
        *   });
        *
-       * @param [role] {string|string[]} - The role(s) to allow, if any.
+       * @param {string|string[]} [role] - The role(s) to allow, if any.
        *
        * @returns {Object} A promise that resolves only if a user is signed in
-       * and, in case 'role' is non-empty, has one of the given role(s).
+       *   and, in case `role` is non-empty, has one of the given role(s).
        */
       var requireSignIn = function (role) {
         var deferred = $q.defer();
@@ -135,15 +135,15 @@ angular.module('AuthSvc', [])
        *     }
        *   });
        *
-       * @param serverRoute {string} - The server route to hit, in a format
-       * compatible with $routeProvider.
-       * @param [routeParams] {Object} - A hash of parameters to concretize the
-       * route, by replacing named groups with real values.
+       * @param {string} serverRoute - The server route to hit, in a format
+       *   compatible with `$routeProvider`.
+       * @param {Object} [routeParams] - A hash of parameters to concretize the
+       *   route, by replacing named groups with real values.
        *
        * @returns {Object} A promise that resolves only if the server responds
-       * with a non-error status code. Resolves with the response returned from
-       * the server; this may obviate the need for another request to fetch the
-       * data.
+       *   with a non-error status code. Resolves with the response returned
+       *   from the server; this may obviate the need for another request to
+       *   fetch the data.
        */
       var requireServerAuth = function (serverRoute, routeParams) {
         var deferred = $q.defer();
@@ -175,11 +175,11 @@ angular.module('AuthSvc', [])
 
       /*
        * Concretizes a route by replacing any named groups with real values as
-       * found in 'routeParams'.
+       * found in `routeParams`.
        *
-       * @param route {string} - The route, in a format compatible with
-       * $routeProvider.
-       * @param routeParams {Object} - A hash of parameters.
+       * @param {string} route - The route, in a format compatible with
+       *   $routeProvider.
+       * @param {Object} routeParams - A hash of parameters.
        *
        * @returns {string} The concretized route.
        */

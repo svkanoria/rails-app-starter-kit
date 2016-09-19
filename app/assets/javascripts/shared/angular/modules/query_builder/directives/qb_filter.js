@@ -1,4 +1,4 @@
-// The directive for a single filter in a query-builder.
+// The directive for a single filter in a `query-builder`.
 angular.module('QBFilter', ['QBEditorProvider'])
   .directive('qbFilter', [
     '$compile', 'QBEditor',
@@ -9,7 +9,7 @@ angular.module('QBFilter', ['QBEditorProvider'])
         templateUrl: 'shared/directives/qb_filter.html',
 
         scope: {
-          qbOptions: '=', // The options passed to query-builder
+          qbOptions: '=', // The options passed to `query-builder`
           model: '='
         },
 
@@ -18,7 +18,7 @@ angular.module('QBFilter', ['QBEditorProvider'])
           // Helper Stuff //
           //////////////////
 
-          // Column type based refinements to DEFAULT_OPS.
+          // Column type based refinements to `DEFAULT_OPS`.
           // Add more rules as and when more column types are supported.
           var ALLOWED_OPS = {
             date: { except: ['contains'] },
@@ -29,9 +29,9 @@ angular.module('QBFilter', ['QBEditorProvider'])
           var editorCache = {};
 
           /**
-           * Returns a column from qbOptions, given its name.
+           * Returns a column from `qbOptions`, given its name.
            *
-           * @param columnName {string} - A column name.
+           * @param {string} columnName - A column name.
            *
            * @returns {Object} The column.
            *
@@ -51,11 +51,11 @@ angular.module('QBFilter', ['QBEditorProvider'])
           /**
            * Returns a list of allowed operators, given a column type.
            *
-           * @param columnType {string} - A column type.
+           * @param {string} columnType - A column type.
            *
            * @returns {string[]} The array of allowed operators, or the entire
-           * DEFAULT_OPS if no refinement rules have been specified via
-           * ALLOWED_OPS.
+           *   `DEFAULT_OPS` if no refinement rules have been specified via
+           *   `ALLOWED_OPS`.
            */
           function getAllowedOps (columnType) {
             var rules = ALLOWED_OPS[columnType];
@@ -77,11 +77,11 @@ angular.module('QBFilter', ['QBEditorProvider'])
 
           /**
            * Sets the value editor, based on:
-           * * The column (from qbOptions) selected
+           * * The column (from `qbOptions`) selected
            * * The operator selected
            *
-           * @param column {Object} - A column.
-           * @param op {string} - An operator.
+           * @param {Object} column - A column.
+           * @param {string} op - An operator.
            */
           function setEditor (column, op) {
             var editorContainer = $(element).find('.filter-values');
@@ -112,7 +112,7 @@ angular.module('QBFilter', ['QBEditorProvider'])
             var ops = getAllowedOps(getColumn(value).type);
 
             // If the new ops list does not contain the currently selected op,
-            // un-select the current op, else ngOptions acts up!
+            // un-select the current op, else `ngOptions` acts up!
             if (scope.model.op && !_.findWhere(ops, { name: scope.model.op })) {
               scope.model.op = null;
             }
@@ -132,9 +132,9 @@ angular.module('QBFilter', ['QBEditorProvider'])
               }
 
               if (newValue[0] && newValue[1]) {
-                // Expose this filter's qbOptions column on the scope, for
+                // Expose this filter's `qbOptions` column on the scope, for
                 // editors to use if they require (for example, for the list of
-                // options for a select tag).
+                // options for a `select` tag).
                 scope.column = getColumn(newValue[0]);
 
                 // Load the value for the editor coming in

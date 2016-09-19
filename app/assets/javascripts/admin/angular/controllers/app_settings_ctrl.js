@@ -9,10 +9,10 @@
  *   category called 'outgoing_email', create a template file called
  *   'outgoing_email.html'.
  * * In the above-mentioned template file, be sure to include something like a
- *   'submit' button, which when clicked, calls 'updateSettings()' to update
+ *   'submit' button, which when clicked, calls `updateSettings()` to update
  *   the server. Also note that any validation errors from the server are made
- *   available on the 'settingsErrors' scope variable.
- * * Insert the appropriate entry into the 'categories' scope variable below
+ *   available on the `settingsErrors` scope variable.
+ * * Insert the appropriate entry into the `categories` scope variable below
  */
 angular.module('AppSettingsCtrl', ['I18n', 'Flash'])
   .controller('AppSettingsCtrl', [

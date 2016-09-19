@@ -1,5 +1,5 @@
 /*
- * To create concrete viewers for the "abstract" attachment-viewer directive.
+ * To create concrete viewers for the "abstract" `attachment-viewer` directive.
  * Can be configured by adding user-defined viewer factories.
  *
  * Configuration:
@@ -24,10 +24,10 @@ angular.module('AttachmentViewerProvider', [])
       /**
        * Creates a default viewer.
        *
-       * @param attachment {object} - The attachment.
+       * @param {Object} attachment - The attachment.
        *
        * @returns {string} The viewer HTML. It may contain Angular directives,
-       * since it is compiled before being added to the DOM.
+       *   since it is compiled before being added to the DOM.
        */
       function DEFAULT_VIEWER_HTML (attachment) {
         var viewerHtml = '';
@@ -53,11 +53,11 @@ angular.module('AttachmentViewerProvider', [])
        * The order of addition is important, since viewer creation is tried in
        * the same order.
        *
-       * @param factory {{createViewerHtml: function(object)}} - Where the
-       * function must:
-       * * accept an attachment object containing various useful details about
-       *   the attachment
-       * * return a string containing the viewer's HTML, or null
+       * @param {{createViewerHtml: function(object)}} factory - Where the
+       *   function must:
+       *   * accept an attachment object, containing some useful details about
+       *     the attachment
+       *   * return a string containing the viewer's HTML, or null
        */
       function addViewerFactory (factory) {
         viewerFactories.push(factory);
@@ -68,7 +68,7 @@ angular.module('AttachmentViewerProvider', [])
        * Falls back on a default viewer if the user defined factories (tried in
        * order of their addition) fail.
        *
-       * @param attachment {object} - The attachment.
+       * @param {Object} attachment - The attachment.
        *
        * @returns {string} The viewer HTML.
        */

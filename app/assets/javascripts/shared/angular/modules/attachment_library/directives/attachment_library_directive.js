@@ -6,18 +6,18 @@
  *   </attachment-library>
  *
  * The uploader options are passed to the uploader directive.
- * We provide one uploader (which we then use by default): The 'fine-uploader'
+ * We provide one uploader (which we then use by default): The `fine-uploader`
  * directive. However, you can create your own uploader directive if you wish.
  *
  * To create your own uploader, refer to fine_uploader.js for guidance.
  * In particular, take care to do the following:
  * * Modify this directive's template to use your uploader instead:
  *   /app/assets/javascripts/templates/shared/directives/attachment_library.html
- * * Have your uploader call the following methods at appropriate times:
- *   * AttachmentLibrarySvc.emitUploadSuccessful(): Upon any successful upload
- *   * AttachmentLibrarySvc.setUploadsInProgress(): To keep the service updated
+ * * Have your uploader call the following functions at appropriate times:
+ *   * `AttachmentLibrarySvc.emitUploadSuccessful`: Upon any successful upload
+ *   * `AttachmentLibrarySvc.setUploadsInProgress`: To keep the service updated
  *     on whether any uploads are currently in progress
- *   * AttachmentLibrarySvc.incrementAlertCount(): To keep the service updated
+ *   * `AttachmentLibrarySvc.incrementAlertCount`: To keep the service updated
  *     on how many (if any) alert messages are currently pending user action
  */
 angular.module('AttachmentLibraryDirective', ['AttachmentLibrarySvc'])

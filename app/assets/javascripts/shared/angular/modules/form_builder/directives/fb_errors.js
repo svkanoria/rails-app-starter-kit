@@ -1,8 +1,8 @@
 /*
  * A directive for integrating Angular forms with server-side validation.
  *
- * Usage:
- *   <form ... fb-errors='errorObject'> ...
+ * Usage: ('!' indicates the attribute is watched for changes)
+ *   <form ... !fb-errors='errorObject'> ...
  *
  * The error object must contain the validation errors from the server in the
  * following format:
@@ -13,13 +13,13 @@
  *       :
  *   }
  *
- * where field1, field2 etc. must correspond to the names of the form fields.
+ * where `field1`, `field2` etc. must correspond to the form field names.
  * This object may be null or empty.
  *
- * Note that although this directive adds the appropriate ng-invalid classes,
+ * Note that although this directive adds the appropriate 'ng-invalid' classes,
  * it does not display the actual error messages. This can be done either via
- * the 'fb-field' directive for creating form fields (which integrates
- * automatically with 'fb-errors'), or it can be done manually by adding this
+ * the `fb-field` directive for creating form fields (which integrates
+ * automatically with `fb-errors`), or it can be done manually by adding this
  * snippet of code below an input named, say, 'field1':
  *
  *   <span ng-show="errorObject['field1']">
@@ -44,8 +44,8 @@ angular.module('FBErrors', [])
             /**
              * Updates the form with errors given as a JSON object.
              *
-             * @param form {Object} - The form controller.
-             * @param errors {Object} - The errors, provided as follows:
+             * @param {Object} form - The form controller.
+             * @param {Object} errors - The errors, provided as follows:
              *   {
              *     field1: ['error msg 1', 'error msg 2', ...],
              *     field2: ['...'],
@@ -80,9 +80,9 @@ angular.module('FBErrors', [])
              * Each time the form field's errors are updated, this listener is
              * called back with the latest errors, if any.
              *
-             * @param fieldName {string} - The form field name.
-             * @param listener {Function} - A function accepting one argument -
-             * the latest errors.
+             * @param {string} fieldName - The form field name.
+             * @param {Function} listener - A function accepting one argument -
+             *   the latest errors.
              */
             this.addListener = function (fieldName, listener) {
               ObjectUtils.pushToProperty(listeners, fieldName, listener);
@@ -91,8 +91,8 @@ angular.module('FBErrors', [])
             /**
              * Removes (i.e. de-registers) an error update listener.
              *
-             * @param fieldName {string} - The form field name.
-             * @param listener {Function} - A listener added via 'addListener'.
+             * @param {string} fieldName - The form field name.
+             * @param {Function} listener - A listener added via `addListener`.
              */
             this.removeListener = function (fieldName, listener) {
               if (listeners[fieldName]) {

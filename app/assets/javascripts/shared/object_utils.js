@@ -7,9 +7,9 @@ var ObjectUtils = (function () {
    * this just makes the object property hold an array of all the values you
    * push into it.
    *
-   * @param obj {Object} - The object.
-   * @param property {string} - The object property.
-   * @param value {Object} - The value to push into the property.
+   * @param {Object} obj  - The object.
+   * @param {string} property - The object property.
+   * @param {Object} value - The value to push into the property.
    */
   function pushToProperty (obj, property, value) {
     var values = (obj[property]) ? obj[property] : (obj[property] = []);

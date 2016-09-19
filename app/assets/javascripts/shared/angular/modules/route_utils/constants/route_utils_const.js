@@ -1,12 +1,12 @@
 /*
- * Helpers for use while configuring routes with $stateProvider.
- * Merely inject into the app.config(...) block.
+ * Helpers for use while configuring routes with `$stateProvider`.
+ * Merely inject into the `app.config(...)` block.
  */
 angular.module('RouteUtilsConst', [])
   .constant('ROUTE_UTILS', function () {
     /**
-     * Use within the 'resolve' property of a route.
-     * See comments for namesake in AuthSvc service.
+     * Use within the `resolve` property of a route.
+     * See comments for namesake in `AuthSvc` service.
      *
      * Usage:
      *   when('/some-route', {
@@ -14,7 +14,7 @@ angular.module('RouteUtilsConst', [])
      *     resolve: { someProperty: requireSignIn(optionalRoleOrRoles) }
      *   })
      *
-     * @param [roles] {string|string[]} - The role(s) to allow, if any.
+     * @param {string|string[]} [roles] - The role(s) to allow, if any.
      */
     var requireSignIn = function (roles) {
       return ['AuthSvc', function (AuthSvc) {
@@ -23,8 +23,8 @@ angular.module('RouteUtilsConst', [])
     };
 
     /**
-     * Use within the 'resolve' property of a route.
-     * See comments for namesake in AuthSvc service.
+     * Use within the `resolve` property of a route.
+     * See comments for namesake in `AuthSvc` service.
      *
      * Usage:
      *   when('/some-route', {
@@ -32,8 +32,8 @@ angular.module('RouteUtilsConst', [])
      *     resolve: { someProperty: requireServerAuth(serverRoute) }
      *   })
      *
-     * @param serverRoute {string} - The server route to hit. It can contain a
-     * ':locale' substring; this is replaced by the current locale, if any.
+     * @param {string} serverRoute - The server route to hit. It can contain a
+     *   ':locale' substring; this is replaced by the current locale, if any.
      */
     var requireServerAuth = function (serverRoute) {
       return ['$stateParams', 'I18n', 'AuthSvc',
@@ -46,7 +46,7 @@ angular.module('RouteUtilsConst', [])
 
     /**
      * Sets up logic for handling route change errors, and also for hiding the
-     * please-wait directive on route change.
+     * `please-wait` directive on route change.
      *
      * Usage:
      *   app.run([
@@ -74,9 +74,9 @@ angular.module('RouteUtilsConst', [])
         });
 
         /*
-         * Works in conjunction with 'requireSignIn' and 'requireServerAuth'.
-         * If their promises do not resolve, we catch the $stateChangeError that
-         * results, and redirect to the sign-in page.
+         * Works in conjunction with `requireSignIn` and `requireServerAuth`.
+         * If their promises do not resolve, we catch the `$stateChangeError`
+         * that results, and redirect to the sign in page.
          *
          * Also hides the 'Please Wait...' indicator requested above.
          */

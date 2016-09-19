@@ -2,19 +2,19 @@
  * A directive for the Selectize jQuery plugin.
  * See http://brianreavis.github.io/selectize.js/.
  *
- * Usage:
+ * Usage: ('!' indicates the attribute is watched for changes)
  *   <selectize ?options="Object expr"
  *              ?skip-translation="boolean expr"
- *              ng-model="Object expr">
+ *              !ng-model="Object expr">
  *   </selectize>
  *
  *   Translations for option labels can be provided via translation ids
  *   following format: 'selectize.[elem-name.]opt-value', where
- *   * elem-name = the 'name' attribute on the selectize element (optional)
+ *   * elem-name = the `name` attribute on the `selectize` element (optional)
  *   * opt-value = the contents of the value field of the option (required)
  *
  *   It is possible to override the translation id, either partially or fully,
- *   on a per-option basis, by specifying a 'translation_id' property within an
+ *   on a per-option basis, by specifying a `translation_id` property within an
  *   option entry. If the value of the property begins with a '.', it replaces
  *   only the 'opt-value' portion, otherwise it overrides it completely.
  *
@@ -26,7 +26,7 @@
  *   In some cases, such as if you have a large number of options up-front, or
  *   do not need localization at all, you can prevent the performance overhead
  *   that comes with translation, by specifying the property
- *   'skip-translation="true"'.
+ *   `skip-translation="true"`.
  */
 angular.module('Selectize', ['I18n'])
   .directive('selectize', [
@@ -37,10 +37,10 @@ angular.module('Selectize', ['I18n'])
        * strings), is item-wise equal to the selected items as exposed by the
        * Selectize API.
        *
-       * @param items {string[]} - The array of selected items, as exposed by
-       * the 'items' property of the Selectize API.
-       * @param model {object|object[]} - The model as given to the 'ng-model'
-       * attribute.
+       * @param {string[]} items - The array of selected items, as exposed by
+       *   the `items` property of the Selectize API.
+       * @param {Object|Object[]} model - The model as given to the `ng-model`
+       *   attribute.
        *
        * @returns {true|false}
        */

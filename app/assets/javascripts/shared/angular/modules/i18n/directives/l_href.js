@@ -1,8 +1,8 @@
 /*
  * A directive for localizing URLs.
  *
- * For more information, see the documentation for the 'l' method in
- * 'I18nProvider'.
+ * For more information, see the documentation for the `l` method in
+ * `I18nProvider`.
  *
  * Usage:
  *   <a l-href="some/:locale/izable/url">...</a>

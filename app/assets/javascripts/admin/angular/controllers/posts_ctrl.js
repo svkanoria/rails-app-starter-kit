@@ -44,7 +44,7 @@ angular.module('PostsCtrl', ['I18n', 'Flash', 'Post'])
         };
 
         // The 'raw' data table instance.
-        // This is populated by the 'datatable' directive.
+        // This is populated by the `datatable` directive.
         $scope.dataTableInstance = null;
 
         // For operations on a single row
@@ -136,7 +136,7 @@ angular.module('PostsCtrl', ['I18n', 'Flash', 'Post'])
         $scope.queryBuilderOptions = {
           columns: [
             { name: 'message', label: 'Message', type: 'text' },
-            // See query-builder for why 'id' column has type 'text'
+            // See `query-builder` for why 'id' column has type 'text'
             { name: 'id', label: 'ID', type: 'text' },
             { name: 'created_at', label: 'Created At', type: 'date' }
           ],
