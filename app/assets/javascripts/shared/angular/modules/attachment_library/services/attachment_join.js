@@ -7,6 +7,6 @@ angular.module('AttachmentJoin', ['I18n'])
         '/:locale/attachment_joins/:collectionAction/:attachmentJoinId/:memberAction.json',
         {
           attachmentJoinId: '@id',
-          locale: function () { return I18n.getLocale(); }
+          locale: I18n.getLocaleUrlParam // Note: Passed as a function!
         });
     }]);

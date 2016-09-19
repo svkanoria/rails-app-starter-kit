@@ -90,6 +90,22 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
       }
 
       /**
+       * Gets the string used to localize URLs.
+       *
+       * Depending on your design, both this function as well as 'getLocale'
+       * should be used as appropriate whenever you need to manually construct
+       * localized URLs.
+       *
+       * Remember that if this isn't set otherwise via 'setLocaleUrlParam', it
+       * just remains the same as the actual locale.
+       *
+       * @returns {?string}
+       */
+      function getLocaleUrlParam () {
+        return localeUrlParam;
+      }
+
+      /**
        * Localizes the given URL string, by replacing the first (if any)
        * instance of the substring ':locale' with the actual (if any) current
        * locale.
@@ -343,6 +359,7 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
           // Return the service object
           return {
             getLocale: getLocale,
+            getLocaleUrlParam: getLocaleUrlParam,
             l: l,
             t: t,
             ts: ts,
@@ -355,6 +372,7 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
         setLocale: setLocale,
         getLocale: getLocale,
         setLocaleUrlParam: setLocaleUrlParam,
+        getLocaleUrlParam: getLocaleUrlParam,
         l: l,
 
         $get: serviceFactory

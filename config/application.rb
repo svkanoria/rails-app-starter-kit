@@ -110,8 +110,16 @@ module RailsAppStarterKit
 
       # Rewrite all other requests to the admin and main ('client') apps to the
       # root, thus leaving the responsibility of in-app routing to Angular.
-      rewrite %r{^/admin(/?\w*)(.*)$}, '/admin/$1'
-      rewrite %r{^(/?\w*)(.*)$}, '$1/'
+
+      # Can't use `I18n.available_locales.` like we do in config/routes.rb, as
+      # it does not yet seem to be fully initialized!
+      locales_regex = %w(en hi).join('|')
+
+      rewrite %r{^/admin(/?(#{locales_regex}))(.*)$}, '/admin/$1'
+      rewrite %r{^(/?(#{locales_regex}))(.*)$}, '$1/'
+
+      rewrite %r{^/admin(.*)$}, '/admin'
+      rewrite %r{^(.*)$}, '/'
     end
   end
 end

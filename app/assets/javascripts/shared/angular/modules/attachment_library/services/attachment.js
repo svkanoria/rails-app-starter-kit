@@ -7,7 +7,7 @@ angular.module('Attachment', ['I18n'])
         '/:locale/attachments/:collectionAction/:attachmentId/:memberAction.json',
         {
           attachmentId: '@id',
-          locale: function () { return I18n.getLocale(); }
+          locale: I18n.getLocaleUrlParam // Note: Passed as a function!
         },
         // Extra methods for compatibility with Rails, and our data format
         {
