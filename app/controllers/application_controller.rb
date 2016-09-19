@@ -112,7 +112,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Forces users to sign in to access the application, iff an app admin has
-  # configured the app to do.
+  # configured the app to do so.
   #
   # Unfortunately, upon sign-in the user will be redirected to the root page,
   # i.e. the hash portion of the URL will be ignored. This is a limitation of
