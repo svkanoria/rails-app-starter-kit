@@ -30,8 +30,8 @@
  */
 angular.module('Selectize', ['I18n'])
   .directive('selectize', [
-    '$q', 'I18n',
-    function ($q, I18n) {
+    'I18n',
+    function (I18n) {
       /**
        * Returns whether the model, when massaged (converted to an array of
        * strings), is item-wise equal to the selected items as exposed by the

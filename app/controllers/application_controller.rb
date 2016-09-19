@@ -81,11 +81,7 @@ class ApplicationController < ActionController::Base
   # Automatically adds the current locale to the hash of parameters sent to
   # Rails' 'url_for' method, so that URL helpers take i18n into account.
   def default_url_options
-    if is_default_locale?
-      {}
-    else
-      { locale: I18n.locale }
-    end
+    { locale: is_default_locale? ? nil : I18n.locale }
   end
 
   # Authenticates a user from the email and authentication supplied via the
