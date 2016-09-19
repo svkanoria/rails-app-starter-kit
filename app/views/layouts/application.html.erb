@@ -37,7 +37,7 @@
 
   <%= render 'layouts/shared/global_js_vars' %>
 
-  <% if !Rails.application.secrets.jw_player_account_token %>
+  <% if Rails.application.secrets.jw_player_account_token %>
     <script src="//jwpsrv.com/library/<%= Rails.application.secrets.jw_player_account_token %>.js">
     </script>
   <% end %>
