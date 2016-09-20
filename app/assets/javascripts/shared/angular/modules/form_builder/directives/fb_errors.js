@@ -34,7 +34,7 @@ angular.module('FBErrors', [])
         require: ['fbErrors', 'form'],
 
         scope: {
-          fbErrors: '='
+          fbErrors: '<'
         },
 
         controller: [

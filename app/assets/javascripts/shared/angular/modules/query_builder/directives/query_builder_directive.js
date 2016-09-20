@@ -71,8 +71,8 @@ angular.module('QueryBuilderDirective', ['I18n'])
         controller: 'QueryBuilderCtrl',
 
         scope: {
-          options: '=',
-          filters: '='
+          options: '<',
+          filters: '<'
         },
 
         link: function (scope, element, attrs, ctrls) {

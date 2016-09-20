@@ -25,7 +25,7 @@ angular.module('JWPlayer', [])
         restrict: 'A',
 
         scope: {
-          options: '='
+          options: '<'
         },
 
         link: function (scope, element, attrs) {

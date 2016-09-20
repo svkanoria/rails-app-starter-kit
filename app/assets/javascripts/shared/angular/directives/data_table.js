@@ -646,12 +646,12 @@ angular.module('DataTable', ['I18n'])
         restrict: 'A',
 
         scope: {
-          options: '=',
-          instance: '=',
-          rowOps:'=',
-          selectedRows: '=',
-          bulkOps: '=',
-          expandedRowInfo: '='
+          options: '<?',
+          instance: '=?',
+          rowOps:'<?',
+          selectedRows: '<?',
+          bulkOps: '<?',
+          expandedRowInfo: '<?'
         },
 
         link: function (scope, element, attrs) {

@@ -1,8 +1,8 @@
 /*
  * A directive to view published Google Docs documents.
  *
- * Usage:
- *   <g-docs-viewer url="String expr"></g-docs-viewer>
+ * Usage: ('!' indicates the attribute is watched for changes)
+ *   <g-docs-viewer !url="String expr"></g-docs-viewer>
  */
 angular.module('GDocsViewer', [])
   .directive('gDocsViewer', [
@@ -13,7 +13,7 @@ angular.module('GDocsViewer', [])
         templateUrl: 'shared/directives/g_docs_viewer.html',
 
         scope: {
-          url: '='
+          url: '<'
         },
 
         link: function (scope, element, attrs) {

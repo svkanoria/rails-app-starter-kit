@@ -9,7 +9,7 @@ angular.module('FineUploader', ['AttachmentLibrarySvc'])
         replace: true,
 
         scope: {
-          options: '='
+          options: '<'
         },
 
         link: function (scope, element, attrs) {

@@ -41,7 +41,7 @@ angular.module('AttachmentDrop', [
         replace: true,
 
         scope: {
-          attachments: '=',
+          attachments: '<',
           count: '@?'
         },
 

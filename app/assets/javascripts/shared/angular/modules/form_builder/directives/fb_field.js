@@ -63,7 +63,7 @@ angular.module('FBField', ['I18n'])
           labelTranslationId: '@',
           hint: '@',
           hintTranslationId: '@',
-          required: '=',
+          required: '<?',
           ngModel: '='
         },
 

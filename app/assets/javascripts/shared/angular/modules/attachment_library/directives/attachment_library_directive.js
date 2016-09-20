@@ -30,7 +30,7 @@ angular.module('AttachmentLibraryDirective', ['AttachmentLibrarySvc'])
         replace: true,
 
         scope: {
-          uploaderOptions: '='
+          uploaderOptions: '<'
         },
 
         link: function (scope, element, attrs) {

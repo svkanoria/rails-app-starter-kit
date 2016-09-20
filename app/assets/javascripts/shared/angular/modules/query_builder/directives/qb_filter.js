@@ -9,7 +9,7 @@ angular.module('QBFilter', ['QBEditorProvider'])
         templateUrl: 'shared/directives/qb_filter.html',
 
         scope: {
-          qbOptions: '=', // The options passed to `query-builder`
+          qbOptions: '<', // The options passed to `query-builder`
           model: '='
         },
 
