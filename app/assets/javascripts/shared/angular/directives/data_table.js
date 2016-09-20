@@ -5,24 +5,24 @@
  * be 'data-table', but because of the special treatment of 'data-' attributes
  * in HTML, we have named it 'datatable'.
  *
- * Usage:
+ * Usage: ('!' indicates the attribute is watched for changes)
  *   <table datatable
  *          ?options="Object expr",
  *          ?instance="Empty expr"
  *          ?row-ops="Object expr"
- *          ?selected-rows="Array expr"
+ *          !?selected-rows="Array expr"
  *          ?bulk-ops="Object expr"
  *          ?expanded-row-info="Function expr">
  *     :
  *   </table>
  *
- * The 'instance' expression is populated with the underlying 'raw' data table.
+ * The `instance` expression is populated with the underlying 'raw' data table.
  * This exposes the entire DataTables functionality to the controller. Using it
  * for readonly operations without side effects is perfectly safe, but
  * otherwise, use with care!
  *
  * Custom row operations (such as edit/delete), to be carried out on a single
- * row, can be defined via the 'row-ops' attribute, as follows:
+ * row, can be defined via the `row-ops` attribute, as follows:
  *
  *   {
  *     rowOpKey1: {
@@ -36,14 +36,14 @@
  *
  * The icon provided must be a Glyphicon, for now.
  * TODO Remove datatable directive's dependency on Glyphicons
- * Either 'link' or 'action' must be provided, but not both.
+ * Either `link` or `action` must be provided, but not both.
  *
- * The 'selected-rows' expression, when provided, enables row selection, and is
+ * The `selected-rows` expression, when provided, enables row selection, and is
  * 2-way bound with the currently selected rows. Row selection has certain
- * requirements: see 'addRowSelectionUI' documentation below.
+ * requirements: see `addRowSelectionUI` documentation below.
  *
  * Custom bulk operations (such as bulk delete), to be carried out on currently
- * selected rows, can be defined via the 'bulk-ops' attribute, as follows:
+ * selected rows, can be defined via the `bulk-ops` attribute, as follows:
  *
  *   {
  *     bulkOpKey1: {
@@ -55,11 +55,11 @@
  *      :
  *   }
  *
- * The 'expanded-row-info' expression, when provided, enables each row to expand
+ * The `expanded-row-info` expression, when provided, enables each row to expand
  * and show any custom information desired. The expression must evaluate to
  * a function, as follows:
  *
- *   function someName (data) { // where 'data' is the row data object
+ *   function someName (data) { // where `data` is the row data object
  *     // The returned HTML can also contain directives. These directives are
  *     // compiled using a newly constructed scope, with just one property, viz.
  *     // 'data', that contains the row data.
@@ -75,7 +75,7 @@
  *     "some-table-id-or-'data_table'.columns.data-prop-of-column-or-def"
  *
  *   These can also be overridden. For a complete understanding of the rules of
- *   construction, see the 'translateTableHeadFoots' function documentation.
+ *   construction, see the `translateTableHeadFoots` function documentation.
  *   
  * Messages:
  *   The following translation ids are available:
@@ -91,7 +91,7 @@
  *   defined by you, the programmer. Such an id is constructed for each one.
  *
  *   It is possible to override the translation id, either partially or fully,
- *   on a per-bulk-op basis, by specifying a 'translation_id' property as shown
+ *   on a per-bulk-op basis, by specifying a `translation_id` property as shown
  *   further up. If the value of the property begins with a '.', it replaces
  *   only the 'key-in-object...' portion, otherwise it overrides it completely.
  */
@@ -122,7 +122,7 @@ angular.module('DataTable', ['I18n'])
       /**
        * Enables table cells to contain directives.
        * This addresses the common use case of the programmer wanting to use
-       * directives within the column definition 'render' property.
+       * directives within the column definition `render` property.
        *
        * @param {Object} scope - The scope passed to the link function.
        */
@@ -140,9 +140,9 @@ angular.module('DataTable', ['I18n'])
       /**
        * Optimizes for display on small screens.
        * Uses the following logic:
-       * * If the table element has the class 'responsive', then leave alone
-       * * If the options provided specify 'scrollX = false', then leave alone
-       * * Else, set 'scrollX = true' to enable horizontal scrolling
+       * * If the `table` element has the class 'responsive', then leave alone
+       * * If the options provided specify `scrollX = false`, then leave alone
+       * * Else, set `scrollX = true` to enable horizontal scrolling
        *
        * @param {Object} scope - The scope passed to the link function.
        * @param {Object} element - The element passed to the link function.
@@ -159,7 +159,7 @@ angular.module('DataTable', ['I18n'])
 
       /**
        * Appends a 'row ops' column to the datatable.
-       * This is done iff the 'row-ops' attribute is provided to the directive.
+       * This is done iff the `row-ops` attribute is provided to the directive.
        *
        * @param {Object} scope - The scope passed to the link function.
        * @param {Object} element - The element passed to the link function.
@@ -180,20 +180,20 @@ angular.module('DataTable', ['I18n'])
         element.find('thead > tr').append(th);
         element.find('tfoot > tr').append(th);
 
-        // Add a corresponding row ops column to the data table options
+        // Add a corresponding 'row ops' column to the data table options
 
         /**
-         * Perform a row operation (if found) defined within 'scope.rowOps'.
+         * Perform a row operation (if found) defined within `scope.rowOps`.
          *
          * ALERT: Attached to the parent scope. Why? Because:
-         * * It is called by the ng-click directive in the last column, and...
+         * * It is called by the `ng-click` directive in the last column, and...
          * * We compile all directives in data table rows in the parent scope
-         *   (see function 'enableDirectivesInCells' for more)
+         *   (see function `enableDirectivesInCells` for more)
          *
-         * TODO Don't attach __performRowOp to the parent scope - bad practice!
+         * TODO Don't set `__performRowOp` on the parent scope - bad practice!
          *
-         * @param rowOpKey - The key of the operation in the 'scope.rowOps'
-         *   hash.
+         * @param {string} rowOpKey - The key of the operation in the
+         *   `scope.rowOps` hash.
          */
         scope.$parent.__performRowOp = function (rowOpKey, rowId) {
           var rowOp = scope.rowOps[rowOpKey];
@@ -289,7 +289,7 @@ angular.module('DataTable', ['I18n'])
        * Supports both client- and server-side processing.
        *
        * Be aware that:
-       * 1. The server must set the DT_RowId property on the rows it returns
+       * 1. The server must set the `DT_RowId` property on the rows it returns
        * 1. Selections persist across paging, sorting and filtering operations
        * 1. The 'select all' checkbox in the table header only targets currently
        *    visible rows.
@@ -448,11 +448,11 @@ angular.module('DataTable', ['I18n'])
         _.extend(bulkOps, scope.bulkOps);
 
         /**
-         * Perform a bulk operation (if found) defined within 'scope.bulkOps',
+         * Perform a bulk operation (if found) defined within `scope.bulkOps`,
          * on all currently selected rows.
          *
-         * @param bulkOpKey - The key of the operation in the 'scope.bulkOps'
-         *   hash.
+         * @param {string} bulkOpKey - The key of the operation in the
+         *   `scope.bulkOps` hash.
          */
         scope.performBulkOp = function (bulkOpKey) {
           var bulkOp = bulkOps[bulkOpKey];
@@ -509,7 +509,7 @@ angular.module('DataTable', ['I18n'])
 
       /**
        * Adds row expansion functionality.
-       * This is done iff the 'expanded-row-info' attribute is provided to the
+       * This is done iff the `expanded-row-info` attribute is provided to the
        * directive.
        *
        * @param {Object} scope - The scope passed to the link function.
@@ -570,15 +570,15 @@ angular.module('DataTable', ['I18n'])
       /**
        * Translates column names within headers and footers.
        *
-       * This is a helper function called by 'translateTableHeadFoots'.
+       * This is a helper function called by `translateTableHeadFoots`.
        *
        * @param {Object[]} elements - A collection of elements (given via a
        * jQuery selector) to attempt translating.
        * @param {Object} options - The data table's config options passed via
-       * the 'options' property on this directive's scope.
-       * @param {string} [tableId] - The id of the underlying 'table' element
+       * the `options` property on this directive's scope.
+       * @param {string} [tableId] - The id of the underlying `table` element
        *
-       * @returns {Promise} A promise, as returned by the 'I18n.ts' function.
+       * @returns {Promise} A promise, as returned by the `I18n.ts` function.
        */
       function translateColNameElems (elements, options, tableId) {
         return I18n.ts({
@@ -609,17 +609,17 @@ angular.module('DataTable', ['I18n'])
       }
 
       /**
-       * Translates column names present in the underlying 'table' element's
+       * Translates column names present in the underlying `table` element's
        * headers and footers.
        *
-       * Translation ids are computed from the 'columns' or 'columnDefs'
+       * Translation ids are computed from the `columns` or `columnDefs`
        * properties in the data table configuration options, whenever possible,
        * as follows:
        *
        *   "some-table-id-or-'data_table'.columns.data-prop-of-column-or-def"
        *
-       * To override or set these explicitly, add a 'translation-id' attribute
-       * on each desired 'th' element within 'thead' or 'tfoot'. If this begins
+       * To override or set these explicitly, add a `translation-id` attribute
+       * on each desired `th` element within `thead` or `tfoot`. If this begins
        * with a '.', only the 'data-prop...' part is replaced. Else, the entire
        * translation id is replaced.
        *
@@ -679,7 +679,7 @@ angular.module('DataTable', ['I18n'])
               addBulkSelectionToolbar(scope, element);
             }
 
-            // We need this timeout. Calling '$apply()' synchronously causes
+            // We need this timeout. Calling `$apply()` synchronously causes
             // a duplicate digest, when no locale is set (i.e. when the locale
             // file does not have to be fetched from the server.
             $timeout(function () {

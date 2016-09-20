@@ -36,10 +36,10 @@ angular.module('AttachmentEditorCtrl', ['Flash', 'RouteUtils', 'Attachment',
       };
 
       // Close the modal if the user navigates away.
-      // Calling '$scope.close()' caused an exception, probably because some
+      // Calling `$scope.close()` caused an exception, probably because some
       // promise initiated by angular-modal-service could not be resolved once
       // the current controller was "unloaded". However, trial and error shows
-      // that leaving out 'close(null, ...)' seems to work fine.
+      // that leaving out `close(null, ...)` seems to work fine.
       // TODO Hide any open modals automatically if the user navigates away
       $rootScope.$on('$stateChangeSuccess', function () {
         $element.modal('hide');

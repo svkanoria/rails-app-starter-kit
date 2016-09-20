@@ -6,12 +6,12 @@ angular.module('DateTimePicker', ['I18n', 'DateTimeQuicker'])
   /*
    * A directive for selecting dates and/or times.
    *
-   * Usage:
-   *   <date-time-picker ng-model="String expr"
+   * Usage: ('!' indicates the attribute is watched for changes)
+   *   <date-time-picker !ng-model="String expr"
    *                     ?options="Object expr">
    *   </date-time-picker>
    *
-   * The ng-model expression must evaluate to one of the following:
+   * The `ng-model` expression must evaluate to one of the following:
    * * A string in ISO 8601 format. Example: '2015-04-15T12:11:17.139Z'
    * * Just the date portion of the above string. Example: '2015-04-15'
    * * Just the time portion of the above string. Example: 'T12:11:17.139Z'
@@ -47,7 +47,7 @@ angular.module('DateTimePicker', ['I18n', 'DateTimeQuicker'])
           var initialized = false;
 
           // Integrate an instance of date-time-quicker, to provide useful
-          // shortcuts or 'macros' for entering dates and times.
+          // shortcuts or "macros" for entering dates and times.
           instance.on('dp.show', function () {
             var dateTimeQuickerHtml =
               $('<date-time-quicker></date-time-quicker>');
@@ -62,7 +62,7 @@ angular.module('DateTimePicker', ['I18n', 'DateTimeQuicker'])
           // 1. Updating the model. This is best achieved by the convoluted
           //    method of blurring and re-focusing the input field.
           // 2. Causing the enclosing form (if any) to submit. This is achieved
-          //    by triggering a 'click' on the form's input[type=submit]. Again
+          //    by triggering 'click' on the form's `input[type=submit]`. Again
           //    convoluted, but this ensures that submission is processed via
           //    the regular Angular channels, and nothing is bypassed.
           instance.on('keydown', function (event) {
@@ -138,7 +138,7 @@ angular.module('DateTimePicker', ['I18n', 'DateTimeQuicker'])
       }
     }])
 
-  // Controller for the date-time-picker directive.
+  // Controller for the `date-time-picker` directive.
   .controller('DateTimePickerCtrl', [
     '$scope',
     function ($scope) {
@@ -151,7 +151,7 @@ angular.module('DateTimePicker', ['I18n', 'DateTimeQuicker'])
       /**
        * Returns the format (if any) provided in the options.
        *
-       * @returns {?String} The format.
+       * @returns {?string} The format.
        */
       this.format = function () {
         return ($scope.options) ? $scope.options['format'] : null;
@@ -164,9 +164,9 @@ angular.module('DateTimePicker', ['I18n', 'DateTimeQuicker'])
        * the server, based on which the server decides the type of comparison:
        * date only, time only or both.
        *
-       * @param [format] {String} - The format.
+       * @param {string} [format] - The format.
        *
-       * @returns {number} 1 => date only, 2 => time only, 3 => both
+       * @returns {number} 1 => date only, 2 => time only, 3 => both.
        */
       this.granularity = function (format) {
         if (!format) return 3;

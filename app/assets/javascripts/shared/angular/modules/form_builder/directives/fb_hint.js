@@ -1,8 +1,8 @@
 /*
- * A directive for providing an input hint within an 'fb-field'.
+ * A directive for providing an input hint within an `fb-field`.
  *
- * For usage instructions, see the 'fb-field' directive. This is not meant for
- * use independent of 'fb-field'.
+ * For usage instructions, see the `fb-field` directive. This is not meant for
+ * use independent of `fb-field`.
  */
 angular.module('FBHint', [])
   .directive('fbHint', [

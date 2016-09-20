@@ -4,10 +4,10 @@ angular.module('DateFilters', [])
     function () {
       /**
        * Formats a date.
-       * Calls moment().format() from the Moment.js library.
+       * Calls `moment().format()` from the Moment.js library.
        *
-       * @param value {string|Date} - The string or date object to format.
-       * @param [format='lll'] {string} - The format, compatible with Moment.js.
+       * @param {string|Date} value - The string or date object to format.
+       * @param {string} [format='lll'] - The format, compatible with Moment.js.
        *
        * @returns {string} The formatted date.
        */

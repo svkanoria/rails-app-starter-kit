@@ -15,7 +15,7 @@ angular.module('AttachmentViewer', ['AttachmentViewerProvider'])
           /**
            * Sets the concrete viewer.
            *
-           * @param attachment {object} - The attachment.
+           * @param {Object} attachment - The attachment.
            */
           function setViewer (attachment) {
             var viewerContainer = $(element).children().first();

@@ -6,7 +6,7 @@
  *                  filters="Object expr">
  *   </query-builder>
  *
- * The 'options' attribute must be as follows:
+ * The `options` attribute must be as follows:
  *
  *   {
  *     columns: [
@@ -25,7 +25,7 @@
  *
  * For columns of type 'select', we use the excellent Selectize jQuery plugin
  * instead of the standard, rather basic HTML select. In the column definition,
- * you must provide a 'selectizeOptions' property, containing at a minimum the
+ * you must provide a `selectizeOptions` property, containing at a minimum the
  * the options available for selection:
  *
  *   selectizeOptions: {
@@ -33,7 +33,7 @@
  *       :
  *   }
  *
- * 'selectizeOptions' can contain ANY option that Selectize accepts. This lets
+ * `selectizeOptions` can contain ANY option that Selectize accepts. This lets
  * you configure Selectize on a per column basis, to exactly suit your needs.
  * See http://selectize.github.io/selectize.js/ for more information.
  *
@@ -49,7 +49,7 @@
  * future.
  * TODO Support custom operators
  *
- * The 'filters' attribute must be as follows:
+ * The `filters` attribute must be as follows:
  *   [
  *     { column: 'some-column-name', values: [val1, ...], op: 'some-op' },
  *       :
@@ -109,7 +109,7 @@ angular.module('QueryBuilderDirective', ['I18n'])
             scope.filters = [];
           }
 
-          // Dummy id for ng-repeat to track by
+          // Dummy id for `ng-repeat` to track by
           var nextFilterId = 0;
 
           if (scope.filters.length > 0) {
@@ -123,14 +123,14 @@ angular.module('QueryBuilderDirective', ['I18n'])
           /**
            * Adds a filter.
            *
-           * @param [column] {string} - The initial column to choose, if any.
+           * @param {string} [column] - The initial column to choose, if any.
            */
           scope.addFilter = function (column) {
             scope.filters.push({
               _id: nextFilterId++,
               column: column || scope.options.columns[0].name
 
-              // Let qb-filter decide what to set as 'values' and 'op'
+              // Let `qb-filter` decide what to set as `values` and `op`
             });
 
             form.$setDirty();
@@ -139,7 +139,7 @@ angular.module('QueryBuilderDirective', ['I18n'])
           /**
            * Removes the filter at an index.
            *
-           * @param index {number} - The index of the filter to remove.
+           * @param {number} index - The index of the filter to remove.
            */
           scope.removeFilter = function (index) {
             scope.filters.splice(index, 1);
@@ -148,7 +148,7 @@ angular.module('QueryBuilderDirective', ['I18n'])
           };
 
           /**
-           * Merely calls the 'options.onSubmit' callback, if provided.
+           * Merely calls the `options.onSubmit` callback, if provided.
            *
            * The callback must do the real work of using the created filter to
            * display some data.

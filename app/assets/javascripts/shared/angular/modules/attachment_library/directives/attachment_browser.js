@@ -1,4 +1,4 @@
-// The attachment browser, for use within the attachment-library directive.
+// The attachment browser, for use within the `attachment-library` directive.
 angular.module('AttachmentBrowser', [
   'angularModalService', 'I18n', 'Flash', 'PleaseWait', 'DataTable',
   'QueryBuilder', 'Attachment', 'AttachmentLibrarySvc', 'AttachmentEditorCtrl'])
@@ -15,8 +15,8 @@ angular.module('AttachmentBrowser', [
         scope: {},
 
         link: {
-          // The various options for the child directives (query-builder and
-          // datatable) must be set during pre-link. By post-link, it will be
+          // The various options for the child directives (`query-builder` and
+          // `datatable`) must be set during pre-link. By post-link, it will be
           // too late, as the children will be linked already.
           pre: function (scope, element, attrs) {
             //////////////////
@@ -46,17 +46,17 @@ angular.module('AttachmentBrowser', [
              * The easiest way would have been to do an AJAX reload, to get the
              * latest usage counts, but would need a trip to the server.
              *
-             * Update: It so happens that the 'draw' function in the DataTables
+             * Update: It so happens that the `draw` function in the DataTables
              * API (which we rely on to draw the data table after updating its
              * data) also triggers a server request, so we're back to square
              * one! However, we keep the extra work intact, in the hope that
              * DataTables will fix this issue some day soon - after all, its
-             * '.ajax.reload()' call already does the same thing as '.draw()'!!
+             * `.ajax.reload()` call already does the same thing as `.draw()`!!
              *
              * @param {number[]} attachmentIds - The ids of the attachments for
-             * which to updated usage counts.
+             *   which to updated usage counts.
              * @param {number} usageCountDelta - The amount to adjust the usage
-             * counts by (should generally be 1 or -1).
+             *   counts by (should generally be 1 or -1).
              */
             function updateUsageCounts (attachmentIds, usageCountDelta) {
               if (scope.dataTableInstance) {
@@ -102,7 +102,7 @@ angular.module('AttachmentBrowser', [
                 },
                 { data: 'joins_count' }
               ],
-              // Ensure table element has an id for this to work!
+              // Ensure `table` element has an id for this to work!
               stateSave: true,
               // Save/load the query builder state along with the table state
               stateSaveParams: function (settings, data) {
@@ -112,7 +112,7 @@ angular.module('AttachmentBrowser', [
                 scope.queryBuilderFilters = data.filters;
               },
               createdRow: function (row, data, dataIndex) {
-                // The attachment-drop directive only accepts draggables with
+                // The `attachment-drop` directive only accepts draggables with
                 // this class.
                 $(row).addClass('droppable-attachment');
 
@@ -135,7 +135,7 @@ angular.module('AttachmentBrowser', [
             };
 
             // The 'raw' data table instance.
-            // This is populated by the 'datatable' directive.
+            // This is populated by the `datatable` directive.
             scope.dataTableInstance = null;
 
             // For operations on a single row
@@ -154,7 +154,7 @@ angular.module('AttachmentBrowser', [
                       attachment: rowData
                     }
                   }).then(function(modal) {
-                    // It's a Bootstrap element, use 'modal' to show it
+                    // It's a Bootstrap element, use `modal` to show it
                     modal.element.modal();
                   });
                 }
@@ -258,8 +258,9 @@ angular.module('AttachmentBrowser', [
             $rootScope.$on('attachment_library.upload_successful', function () {
               if (scope.dataTableInstance) {
                 // Reorder by last created, to ensure latest upload is visible.
-                // Due to the extra row selection column added by the datatable
-                // directive, the created_at column is shifted over to index 3.
+                // Because of the additional row selection column added by the
+                // `datatable` directive, the 'created_at' column gets shifted
+                // over to index 3.
                 scope.dataTableInstance.order([3, 'desc']);
 
                 scope.dataTableInstance.ajax.reload();

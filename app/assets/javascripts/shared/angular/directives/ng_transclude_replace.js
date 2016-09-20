@@ -1,6 +1,6 @@
 /*
- * A drop-in replacement for the 'ng-transclude' directive that replaces the
- * '<... ng-transclude>' element completely, rather than nest the transcluded
+ * A drop-in replacement for the `ng-transclude` directive that replaces the
+ * `<... ng-transclude>` element completely, rather than nest the transcluded
  * content within it.
  *
  * Taken largely from Angular's code, with changes made where necessary. See:

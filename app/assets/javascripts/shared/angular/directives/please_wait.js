@@ -7,8 +7,8 @@ angular.module('PleaseWait', [])
   /*
    * The directive that shows/hides the indicator.
    * This directive is provided for convenience. It is not required to use it.
-   * You merely need to show/hide an element based on whether the 'getCounter'
-   * method of 'PleaseWaitSvc' is greater than zero or not.
+   * You merely need to show/hide an element based on whether the `getCounter`
+   * method of `PleaseWaitSvc` is greater than zero or not.
    *
    * Usage:
    *   <please-wait></please-wait>
@@ -28,16 +28,16 @@ angular.module('PleaseWait', [])
     }])
 
   /*
-   * A service backing the 'please-wait' directive.
+   * A service backing the `please-wait` directive.
    *
    * Usage:
    *   To ask for the 'Please Wait...' indicator to be shown, invoke the
-   *   'request' method.
+   *   `request` method.
    *
-   *   When you no longer need the indicator to be shown, invoke the 'release'
+   *   When you no longer need the indicator to be shown, invoke the `release`
    *   method.
    *
-   *   To ensure the indicator is hidden, invoke the 'releaseAll' method.
+   *   To ensure the indicator is hidden, invoke the `releaseAll` method.
    */
   .factory('PleaseWaitSvc', [
     '$timeout',

@@ -3,8 +3,8 @@ var ArrayUtils = (function () {
   /**
    * Removes an item from an array.
    *
-   * @param array {Object[]} - The array.
-   * @param item {Object} - The item to remove.
+   * @param {Object[]} array - The array.
+   * @param {Object} item - The item to remove.
    *
    * @returns {number} The removed item's index (or -1 if nothing removed).
    */

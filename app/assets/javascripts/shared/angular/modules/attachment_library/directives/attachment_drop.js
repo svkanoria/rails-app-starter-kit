@@ -4,15 +4,15 @@
  * * Attaching attachments via drag/drop from the attachment browser
  * * Detaching attachments from a server resource
  *
- * Usage:
- *   <attachment-drop attachments="Object expr"
+ * Usage: ('!' indicates the attribute is watched for changes)
+ *   <attachment-drop !attachments="Object expr"
  *                    attachment-owner-id="some id"
  *                    attachment-owner-type="some server model class"
  *                    role="some role"
  *                    ?count="number expr">
  *   </attachment-drop>
  *
- * The 'attachments' attribute must be provided in the following format:
+ * The `attachments` attribute must be provided in the following format:
  *
  *   {
  *     role1: [
@@ -23,11 +23,11 @@
  *       :
  *   }
  *
- * where 'join_id' is the id of the join table entry linking attachments to
+ * where `join_id` is the id of the join table entry linking attachments to
  * attachment owners.
  *
- * The 'role' attribute narrows the focus of the directive to just one role
- * within the 'attachments' object. Thus, note that you need one directive per
+ * The `role` attribute narrows the focus of the directive to just one role
+ * within the `attachments` object. Thus, note that you need one directive per
  * role.
  */
 angular.module('AttachmentDrop', [
@@ -58,7 +58,7 @@ angular.module('AttachmentDrop', [
            * is reached. See /app/models/concerns/acts_as_attachment_owner.rb -
            * it is possible to cap the number of attachments for a given role.
            *
-           * The 'count' attribute to this directive can and should be used to
+           * The `count` attribute to this directive can and should be used to
            * reflect any cap set at the server end.
            */
           function computeCountRemaining () {
@@ -72,8 +72,8 @@ angular.module('AttachmentDrop', [
           /**
            * Detaches an attachment from a server resource.
            *
-           * @param index {number} - The index of the attachment in
-           *   scope.roleAttachments
+           * @param {number} index - The index of the attachment in
+           *   `scope.roleAttachments`.
            */
           scope.detachAttachmentAt = function (index) {
             var attachment = scope.roleAttachments[index];

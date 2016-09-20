@@ -11,7 +11,7 @@ angular.module('AttachmentLibrarySvc', [])
       /**
        * Gets visibility.
        *
-       * See also the documentation for setVisible.
+       * See also the documentation for `setVisible`.
        *
        * @returns {boolean} Whether visible or not.
        */
@@ -22,7 +22,7 @@ angular.module('AttachmentLibrarySvc', [])
       /**
        * Sets visibility.
        *
-       * The invisibility is 'weak', in the sense that if there are uploads
+       * The invisibility is "weak", in the sense that if there are uploads
        * pending or progress alerts unacknowledged, these will continue to be
        * visible.
        *
@@ -91,7 +91,7 @@ angular.module('AttachmentLibrarySvc', [])
       };
 
       /**
-       * Emits the 'attachment_library.upload_successful' event on $rootScope
+       * Emits the 'attachment_library.upload_successful' event on `$rootScope`
        * to announce a successful upload.
        *
        * Listeners such as the attachment browser, can then update themselves
@@ -104,7 +104,7 @@ angular.module('AttachmentLibrarySvc', [])
       };
 
       /**
-       * Emits the 'attachment_library.attachment_updated' event on $rootScope
+       * Emits the 'attachment_library.attachment_updated' event on `$rootScope`
        * with the details of the attachment that was updated.
        *
        * Listeners such as the attachment browser and attachment drop, can then
@@ -117,8 +117,8 @@ angular.module('AttachmentLibrarySvc', [])
       };
 
       /**
-       * Emits the 'attachment_library.attachments_deleted' event on $rootScope
-       * with the ids of the attachments that were deleted.
+       * Emits the 'attachment_library.attachments_deleted' event on
+       * `$rootScope` with the ids of the attachments that were deleted.
        *
        * Listeners such as the attachment browser and attachment drop, can then
        * update themselves accordingly.
@@ -131,8 +131,9 @@ angular.module('AttachmentLibrarySvc', [])
       };
 
       /**
-       * Emits the 'attachment_library.attachments_attached' event on $rootScope
-       * with the ids of the attachments that were attached (to some model).
+       * Emits the 'attachment_library.attachments_attached' event on
+       * `$rootScope` with the ids of the attachments that were attached (to
+       * some model).
        *
        * Listeners such as the attachment browser (which shows how many times an
        * attachment has been attached, i.e. "used") can then update themselves
@@ -146,8 +147,9 @@ angular.module('AttachmentLibrarySvc', [])
       };
 
       /**
-       * Emits the 'attachment_library.attachments_detached' event on $rootScope
-       * with the ids of the attachments that were detached (from some model).
+       * Emits the 'attachment_library.attachments_detached' event on
+       * `$rootScope` with the ids of the attachments that were detached (from
+       * some model).
        *
        * Listeners such as the attachment browser (which shows how many times an
        * attachment has been attached, i.e. "used") can then update themselves
@@ -184,7 +186,7 @@ angular.module('AttachmentLibrarySvc', [])
     function ($rootScope, AttachmentLibrarySvc) {
       // Hide by default.
       // To force show the library in some view, the view's controller should
-      // call setVisible(true).
+      // call `setVisible(true)`.
       $rootScope.$on('$stateChangeSuccess', function () {
         AttachmentLibrarySvc.setVisible(false);
       });

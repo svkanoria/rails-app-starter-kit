@@ -1,6 +1,6 @@
 /*
  * The 'top level' controller.
- * Conceptually, this is much like the ApplicationController in Rails.
+ * Conceptually, this is much like the `ApplicationController` in Rails.
  * Anything added to its scope will be available to all other controllers, and
  * subsequently views.
  */
@@ -38,7 +38,7 @@ angular.module('AppCtrl', ['AuthSvc', 'PleaseWait', 'RouteUtils'])
               ? 'uploads/users/' + AuthSvc.currentUser().id
               : 'uploads/common';
 
-            // 'getUuid' and 'getName' are part of the FineUploader API
+            // `getUuid` and `getName` are part of the FineUploader API
             return prefix + '/' + this.getUuid(id) + '_' + this.getName(id);
           }
         },

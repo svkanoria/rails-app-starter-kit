@@ -28,10 +28,10 @@ angular.module('ArrayMetadataResponseAdapter', [])
        * Here, the standard $resource fails, as it needs a plain array.
        * Use this method to adapt the response to an array format, while still
        * keeping intact the metadata for further use. This metadata can be
-       * retrieved through the $metadata property of the final result.
+       * retrieved through the `$metadata` property of the final result.
        *
        * Usage:
-       *   In the $resource file, do something like this:
+       *   In the resource file, do something like this:
        *
        *   angular.module('SomeModule', ['ngResource', 'ResourceUtils']).
        *     factory('SomeResource', [
@@ -51,11 +51,11 @@ angular.module('ArrayMetadataResponseAdapter', [])
        *           });
        *       }]);
        *
-       * @param {String} arrayKey - The response property containing the items.
-       * @param {String} metadataKey - The response property containing the
-       * metadata.
+       * @param {string} arrayKey - The response property containing the items.
+       * @param {string} metadataKey - The response property containing the
+       *   metadata.
        * @param {Object} opts - The properties you would have normally assigned
-       * directly to the $resource method.
+       *   directly to the $resource method.
        *
        * @returns {Object} The above opts, extended as required.
        */
@@ -70,18 +70,18 @@ angular.module('ArrayMetadataResponseAdapter', [])
       };
 
       /**
-       * Extracts out the array from a 'wrapped' array response.
-       * Called by 'adaptToArray'.
+       * Extracts out the array from a "wrapped" array response.
+       * Called by `adaptToArray`.
        *
        * Can be used directly for more fine-grained control.
-       * However, the 'adaptToArray' method can successfully handle most cases.
+       * However, the `adaptToArray` method can successfully handle most cases.
        *
-       * @param {String} arrayKey - The response property containing the items.
-       * @param {String} metadataKey - The response property containing the
-       * metadata.
+       * @param {string} arrayKey - The response property containing the items.
+       * @param {string} metadataKey - The response property containing the
+       *   metadata.
        *
        * @returns {Function} A function that can be assigned to the
-       * 'transformResponse' property of a $resource method.
+       *   `transformResponse` property of a `$resource` method.
        */
       var extractArray = function (arrayKey, metadataKey) {
         arrayKey = arrayKey || 'items';
@@ -99,10 +99,10 @@ angular.module('ArrayMetadataResponseAdapter', [])
 
       /**
        * Passes through the metadata for further use.
-       * Called by 'adaptToArray'.
+       * Called by `adaptToArray`.
        *
        * Can be used directly for more fine-grained control.
-       * However, the 'adaptToArray' method can successfully handle most cases.
+       * However, the `adaptToArray` method can successfully handle most cases.
        *
        * @returns {Function} A function that can be used as follows:
        *   some_method: {
