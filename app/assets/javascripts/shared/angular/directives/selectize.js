@@ -65,8 +65,8 @@ angular.module('Selectize', ['I18n'])
         require: '^ngModel',
 
         scope: {
-          options: '=?',
-          skipTranslation: '=?',
+          options: '<?',
+          skipTranslation: '<?',
           ngModel: '='
         },
 

@@ -8,7 +8,7 @@ angular.module('AttachmentViewer', ['AttachmentViewerProvider'])
         templateUrl: 'shared/directives/attachment_viewer.html',
 
         scope: {
-          attachment: '='
+          attachment: '<'
         },
 
         link: function (scope, element, attrs) {

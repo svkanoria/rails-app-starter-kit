@@ -98,7 +98,7 @@ module RailsAppStarterKit
       # Ignore all requests sent by the FineUploader library to the FineUploader
       # controller. Even though these are AJAX requests, they probably have no
       # '.', and hence sneak through the first rewrite rule above.
-      rewrite %r{^/fine_uploader(.*)$}, '$1/fine_uploader$2'
+      rewrite %r{^/fine_uploader(.*)$}, '/fine_uploader$1'
 
       # Ignore all requests to '/user*', since these correspond to Devise views
       # that are rendered by the server, and not by Angular.

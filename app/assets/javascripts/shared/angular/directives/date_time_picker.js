@@ -27,7 +27,7 @@ angular.module('DateTimePicker', ['I18n', 'DateTimeQuicker'])
         controller: 'DateTimePickerCtrl',
 
         scope: {
-          options: '=',
+          options: '<?',
           ngModel: '=' // Needed only for use by date-time-quicker
         },
 
