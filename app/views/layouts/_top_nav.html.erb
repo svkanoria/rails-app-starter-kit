@@ -19,6 +19,10 @@
         <li><a href="posts" translate="Posts"></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li>
+          <locale-switcher></locale-switcher>
+        </li>
+
         <authentication-links>
           <li ng-if="authSvc.hasRole('admin')" ng-cloak>
             <%# Note the "_self" target. This is needed to force Angular to
