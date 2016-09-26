@@ -1,36 +1,41 @@
 /*
- * Locale switcher component.
+ * Locale switcher directive.
  *
  * Usage:
  *   // Within a Bootstrap nav bar, as follows:
  *   <nav class="nav-bar..." ...>
  *      :
- *     <locale-switcher><locale-switcher>
+ *     <li>
+ *       <locale-switcher><locale-switcher>
+ *     </li>
  *      :
  *   </nav>
  */
 angular.module('LocaleSwitcher', ['I18n', 'angularModalService'])
-  .component('localeSwitcher', {
-    templateUrl: 'shared/directives/locale_switcher.html',
-    controller: 'LocaleSwitcherCtrl'
-  })
-
-  // Component controller
-  .controller('LocaleSwitcherCtrl', [
+  .directive('localeSwitcher', [
     'I18n', 'ModalService',
     function (I18n, ModalService) {
-      this.currentLocaleName =
-        I18n.getAvailableLocales()[I18n.getLocale()].name;
+      return {
+        restrict: 'E',
+        templateUrl: 'shared/directives/locale_switcher.html',
+        replace: true,
+        scope: {},
 
-      this.showModal = function () {
-        ModalService.showModal({
-          templateUrl: 'shared/directives/locale_switcher_modal.html',
-          controller: 'LocaleSwitcherModalCtrl'
-        }).then(function(modal) {
-          // It's a Bootstrap element, use `modal` to show it
-          modal.element.modal();
-        });
-      }
+        link: function (scope, element, attrs) {
+          scope.currentLocaleName =
+            I18n.getAvailableLocales()[I18n.getLocale()].name;
+
+          scope.showModal = function () {
+            ModalService.showModal({
+              templateUrl: 'shared/directives/locale_switcher_modal.html',
+              controller: 'LocaleSwitcherModalCtrl'
+            }).then(function (modal) {
+              // It's a Bootstrap element, use `modal` to show it
+              modal.element.modal();
+            });
+          };
+        }
+      };
     }])
 
   // Locale switcher modal controller
@@ -39,25 +44,10 @@ angular.module('LocaleSwitcher', ['I18n', 'angularModalService'])
     function ($scope, $element, $location, I18n, close) {
       $scope.availableLocales = I18n.getAvailableLocales();
 
-      $scope.relocalizeCurrentUrl = function (locale) {
-        var currentAbsUrl = $location.absUrl();
-        var currentLocale = I18n.getLocale();
-        var endLocaleRegExp = new RegExp('/' + currentLocale + '$');
-        var midLocaleRegExp = new RegExp('/' + currentLocale + '/');
-        var newUrl = null;
+      $scope.relocalizeCurrentUrl = function (newLocale) {
+        var delocalizedUrl = I18n.dl($location.absUrl(), $location.url());
 
-        if (endLocaleRegExp.test(currentAbsUrl)) {
-          newUrl = currentAbsUrl.replace(endLocaleRegExp, '/:locale');
-        } else if (midLocaleRegExp.test(currentAbsUrl)) {
-          newUrl = currentAbsUrl.replace(midLocaleRegExp, '/:locale/');
-        } else {
-          var currentUrl = $location.url();
-          var localeAddIndex = currentAbsUrl.length - currentUrl.length;
-
-          newUrl = _.insert(currentAbsUrl, localeAddIndex, '/:locale');
-        }
-
-        return I18n.l(newUrl, locale);
+        return I18n.l(delocalizedUrl, newLocale);
       };
 
       $scope.close = function () {

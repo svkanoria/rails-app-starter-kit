@@ -10,8 +10,8 @@
  */
 angular.module('AuthenticationLinks', ['I18n', 'AuthSvc'])
   .directive('authenticationLinks', [
-    '$location', 'AuthSvc',
-    function ($location, AuthSvc) {
+    '$location', 'I18n', 'AuthSvc',
+    function ($location, I18n, AuthSvc) {
       return {
         restrict: 'EA',
         templateUrl: 'shared/directives/authentication_links.html',
@@ -23,7 +23,8 @@ angular.module('AuthenticationLinks', ['I18n', 'AuthSvc'])
           scope.currentUser = AuthSvc.currentUser();
 
           scope.$on('$locationChangeSuccess', function () {
-            scope.signInRedirectUrl = $location.absUrl();
+            scope.signInRedirectUrl =
+              I18n.dl($location.absUrl(), $location.url());
           });
         }
       };

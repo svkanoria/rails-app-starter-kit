@@ -1,12 +1,13 @@
 module ApplicationHelper
-  # Currently signed in user details (if any) to be passed to the client-side
-  # JS code.
-  def current_user_json
-    if current_user
-      { id: current_user.id,
-        email: current_user.email,
-        roles: current_user.roles.pluck(:name) }.to_json
-    end
+  # Available locales, as desired by Angular code.
+  def available_locales_json (locales)
+    locales.inject({}) do |acc_hash, locale|
+      info = { name: I18nUtils::LOCALE_NAMES[locale] }
+      info[:url] = nil if locale == I18n.default_locale
+
+      acc_hash[locale] = info
+      acc_hash
+    end.to_json
   end
 
   # A partial or full dictionary of FineUploader messages; needed to override
@@ -16,6 +17,16 @@ module ApplicationHelper
         "../../../public/locales/fine_uploader_opts.#{locale}.yml", __FILE__)
 
     YAML::load(File.read(translations)).to_json
+  end
+
+  # Currently signed in user (if any) details to be passed to the client-side
+  # JS code.
+  def current_user_json
+    if current_user
+      { id: current_user.id,
+        email: current_user.email,
+        roles: current_user.roles.pluck(:name) }.to_json
+    end
   end
 
   # Maps Rails flash keys to Bootstrap alert types.

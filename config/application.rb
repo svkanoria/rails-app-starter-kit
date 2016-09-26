@@ -94,7 +94,7 @@ module RailsAppStarterKit
       # Useful regex to use in rewriting rules.
       # Can't use `I18n.available_locales.` like we do in config/routes.rb, as
       # it does not yet seem to be fully initialized!
-      locales_regex = %w(en hi).join('|')
+      locales_regex = %w(/en /hi).join('|')
 
       # Ignore all requests with a '.' anywhere. Assets and AJAX requests have
       # a '.' somewhere, and since we don't want to rewrite them, this works as
@@ -108,11 +108,12 @@ module RailsAppStarterKit
 
       # Ignore all requests to '/user*', since these correspond to Devise views
       # that are rendered by the server, and not by Angular.
-      rewrite %r{^(/?(#{locales_regex}))/users(.*)$}, '$1/users$2'
+      rewrite %r{^(/?(#{locales_regex}))/users(.*)$}, '$1/users$3'
+      rewrite %r{^/users(.*)$}, '/users$1'
 
       # Ignore all API calls
-      rewrite %r{^/admin(/?(#{locales_regex}))/api/(.*)$}, '/admin/$1/api/$2'
-      rewrite %r{^(/?(#{locales_regex}))/api/(.*)$}, '$1/api/$2'
+      rewrite %r{^/admin(/?(#{locales_regex}))/api/(.*)$}, '/admin/$1/api/$3'
+      rewrite %r{^(/?(#{locales_regex}))/api/(.*)$}, '$1/api/$3'
 
       # Rewrite all other requests to the admin and main ('client') apps to the
       # root, thus leaving the responsibility of in-app routing to Angular.

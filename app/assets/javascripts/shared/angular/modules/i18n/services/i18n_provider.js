@@ -23,6 +23,9 @@
  *   // Also, set the available locales. This is needed to populate the locale
  *   // switcher, and to configure localized URL construction. For details, see
  *   // the documentation for `setAvailableLocales`.
+ *   //
+ *   // Similar to the locale, the available locales can also be "seeded" from
+ *   // the server.
  *   app.config(['I18nProvider', function (I18nProvider) {
  *     I18nProvider.setLocale(someLocaleSeededByServer);
  *
@@ -191,6 +194,37 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
         return (param && param !== '')
           ? url.replace(':locale', param)
           : url.replace(/:locale\/?/, '');
+      }
+
+      /**
+       * De-localizes the given absolute URL, by replacing the first (if any)
+       * instance of the locale with ':locale'. If the URL does not contain an
+       * explicit locale, then inserts ':locale' in the absolute URL at index
+       * `absoluteUrl.length - relativeUrl.length`.
+       *
+       * @param {string} absoluteUrl - The absolute URL to de-localize.
+       * @param {string} relativeUrl - The relative URL to use to determine the
+       *   insertion index of ':locale' when it cannot be inferred implicitly.
+       *
+       * @returns {string} The de-localized URL.
+       */
+      function dl (absoluteUrl, relativeUrl) {
+        var currentLocale = getLocale();
+        var endLocaleRegExp = new RegExp('/' + currentLocale + '$');
+        var midLocaleRegExp = new RegExp('/' + currentLocale + '/');
+        var delocalizedUrl = null;
+
+        if (endLocaleRegExp.test(absoluteUrl)) {
+          delocalizedUrl = absoluteUrl.replace(endLocaleRegExp, '/:locale');
+        } else if (midLocaleRegExp.test(absoluteUrl)) {
+          delocalizedUrl = absoluteUrl.replace(midLocaleRegExp, '/:locale/');
+        } else {
+          var localeAddIndex = absoluteUrl.length - relativeUrl.length;
+
+          delocalizedUrl = _.insert(absoluteUrl, localeAddIndex, '/:locale');
+        }
+
+        return delocalizedUrl;
       }
 
       // The service factory
@@ -403,6 +437,7 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
             getLocaleUrlParam: getLocaleUrlParam,
             getAvailableLocales: getAvailableLocales,
             l: l,
+            dl: dl,
             t: t,
             ts: ts,
             confirm: confirm
@@ -417,6 +452,7 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
         setAvailableLocales: setAvailableLocales,
         getAvailableLocales: getAvailableLocales,
         l: l,
+        dl: dl,
 
         $get: serviceFactory
       };

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
                  omniauth_callbacks: 'users/omniauth_callbacks'
              }
 
-  scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do
+  scope '(:locale)', locale: /#{I18nUtils.avail_locales.join('|')}/ do
     # We define a route inside the locale scope that just saves the current
     # locale in the session (for later recall), and continues with OmniAuth as
     # normal.
@@ -65,7 +65,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do
+    scope '(:locale)', locale: /#{I18nUtils.admin_avail_locales.join('|')}/ do
       resources :posts, only: [:index, :destroy] do
         collection do
           post 'batch_destroy'

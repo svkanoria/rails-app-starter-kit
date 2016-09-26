@@ -46,11 +46,7 @@ app.config([
   'I18nProvider', 'QBEditorProvider', 'AttachmentViewerProvider',
   function (I18nProvider, QBEditorProvider, AttachmentViewerProvider) {
     I18nProvider.setLocale(Static.locale);
-
-    I18nProvider.setAvailableLocales({
-      en: { name: 'English', url: null },
-      hi: { name: 'हिन्दी' }
-    });
+    I18nProvider.setAvailableLocales(Static.available_locales);
 
     QBEditorProvider.addEditorFactory({
       createEditorHtml: function (column, op) {

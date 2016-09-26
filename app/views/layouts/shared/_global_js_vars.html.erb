@@ -15,7 +15,7 @@
     fine_uploader_messages: <%= raw fine_uploader_messages_json %>
   };
 
-  <%# Add the currently signed in user's details, if any %>
+  <%# Include the currently signed in user's (if any) details %>
   <% if (c = current_user_json) %>
     Static.current_user = <%= raw c %>;
   <% else %>

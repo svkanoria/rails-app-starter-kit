@@ -30,5 +30,9 @@
   <%= render 'layouts/admin/footer' %>
 
   <%= render 'layouts/shared/global_js_vars' %>
+
+  <script type="application/javascript">
+    Static.available_locales = <%= raw available_locales_json(I18nUtils.admin_avail_locales) %>;
+  </script>
 </body>
 </html>

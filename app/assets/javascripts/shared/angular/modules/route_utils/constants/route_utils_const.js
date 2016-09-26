@@ -97,8 +97,13 @@ angular.module('RouteUtilsConst', [])
             } else {
               switch (rejection) {
                 case 'NOT_SIGNED_IN':
-                  var signInRedirectUrl =
+                  var signInRedirectAbsUrl =
                     $state.href(to.name, toParams, { absolute: true });
+
+                  var signInRedirectRelUrl = $state.href(to.name, toParams);
+
+                  var signInRedirectUrl =
+                    I18n.dl(signInRedirectAbsUrl, signInRedirectRelUrl);
 
                   $window.location.href =
                     I18n.l('/:locale/users/sign_in?return_to='

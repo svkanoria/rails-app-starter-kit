@@ -234,11 +234,6 @@ hi:
               rejected_by_filter_because:
                 not_an_image: 'अटॅचमेंट एक छवि होनी चाहिए'
 
-  # Common view related strings
-  views:
-    resources:
-      edit: '%{model} परिवर्तन'
-
   users:
     confirmations:
       new:
@@ -271,9 +266,22 @@ hi:
       new:
         resend_instructions: 'अनलॉक निर्देश पुन: भेजें'
 
+  layouts:
+    shared:
+      locale_switcher_modal:
+        select_language: 'भाषा चुनें (Select Language)'
+
+  # Common strings
+
+  views:
+    resources:
+      edit: '%{model} परिवर्तन'
+
   providers:
     facebook: 'Facebook'
     google_oauth2: 'Google'
+
+  app_name: 'Rails App Starter Kit'
 
   # Error messages for the 'render_op_error' method (see ApplicationController)
   op_errors:
