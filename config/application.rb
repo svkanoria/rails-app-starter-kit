@@ -91,8 +91,14 @@ module RailsAppStarterKit
     # server. Otherwise there is confusion between the two, resulting in broken
     # navigation.
     config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
-      # Ignore all requests with a '.' anywhere. Assets and AJAX requests all
-      # have some '.', and we don't want to rewrite them.
+      # Useful regex to use in rewriting rules.
+      # Can't use `I18n.available_locales.` like we do in config/routes.rb, as
+      # it does not yet seem to be fully initialized!
+      locales_regex = %w(en hi).join('|')
+
+      # Ignore all requests with a '.' anywhere. Assets and AJAX requests have
+      # a '.' somewhere, and since we don't want to rewrite them, this works as
+      # an easy catch-all!
       rewrite %r{^(.*\..*)$}, '$1'
 
       # Ignore all requests sent by the FineUploader library to the FineUploader
@@ -102,18 +108,14 @@ module RailsAppStarterKit
 
       # Ignore all requests to '/user*', since these correspond to Devise views
       # that are rendered by the server, and not by Angular.
-      rewrite %r{^(/?\w*)/users(.*)$}, '$1/users$2'
+      rewrite %r{^(/?(#{locales_regex}))/users(.*)$}, '$1/users$2'
 
       # Ignore all API calls
-      rewrite %r{^/admin(/?\w*)/api/(.*)$}, '/admin/$1/api/$2'
-      rewrite %r{^(/?\w*)/api/(.*)$}, '$1/api/$2'
+      rewrite %r{^/admin(/?(#{locales_regex}))/api/(.*)$}, '/admin/$1/api/$2'
+      rewrite %r{^(/?(#{locales_regex}))/api/(.*)$}, '$1/api/$2'
 
       # Rewrite all other requests to the admin and main ('client') apps to the
       # root, thus leaving the responsibility of in-app routing to Angular.
-
-      # Can't use `I18n.available_locales.` like we do in config/routes.rb, as
-      # it does not yet seem to be fully initialized!
-      locales_regex = %w(en hi).join('|')
 
       rewrite %r{^/admin(/?(#{locales_regex}))(.*)$}, '/admin/$1'
       rewrite %r{^(/?(#{locales_regex}))(.*)$}, '$1/'
