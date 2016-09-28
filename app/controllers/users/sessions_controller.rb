@@ -6,26 +6,18 @@
 class Users::SessionsController < Devise::SessionsController
 # before_filter :configure_sign_in_params, only: [:create]
 
+  # MY NOTE: Added this line on our own
+  before_action :set_sign_in_redirect, only: [:new]
+
   # GET /resource/sign_in
   # def new
   #   super
   # end
 
   # POST /resource/sign_in
-  def create
-    if session[:user_return_to]
-      url_param = (I18n.locale == I18n.default_locale) ? '' : I18n.locale
-
-      localized_return_to = (url_param.present?) ?
-          session[:user_return_to].gsub(/:locale\/?/, "#{url_param}/") :
-          session[:user_return_to].gsub(/:locale\/?/, '')
-
-
-      session[:user_return_to] = localized_return_to
-    end
-
-    super
-  end
+  # def create
+  #   super
+  # end
 
   # DELETE /resource/sign_out
   # def destroy
@@ -38,4 +30,13 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.for(:sign_in) << :attribute
   # end
+
+  # MY NOTE: Added this method on our own.
+  # Sets where Devise should redirect on sign-in.
+  # Works in conjunction with the 'authentication-links' directive.
+  def set_sign_in_redirect
+    if (url = params[:return_to]).present?
+      session[:user_return_to] = url
+    end
+  end
 end

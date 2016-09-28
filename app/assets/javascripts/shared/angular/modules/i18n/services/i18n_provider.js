@@ -58,6 +58,7 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
 
       var locale = null;
       var availableLocales = null;
+      var localeSwitchUrlBuilder = null;
 
       /**
        * Sets the locale.
@@ -225,6 +226,37 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
         }
 
         return delocalizedUrl;
+      }
+
+      /**
+       * Sets the locale switch URL builder function.
+       *
+       * The locale switch URL builder function knows how to build a locale
+       * switch URL (i.e. a URL for conducting a locale switch). Typically, it
+       * would build and return a URL to some server endpoint that performs the
+       * locale switch.
+       *
+       * You may ask: Why not navigate directly to the new locale? Because the
+       * server might want to do some stuff, like updating the user's preferred
+       * locale etc.
+       *
+       * @param {function} builder - A function accepting two arguments: a new
+       *   locale as a string, and a new URL that denotes the current page, but
+       *   in the new locale. This can be very handy in constructing the locale
+       *   switch URL. The function should then return the locale switch URL as
+       *   a string.
+       */
+      function setLocaleSwitchUrlBuilder (builder) {
+        localeSwitchUrlBuilder = builder;
+      }
+
+      /**
+       * Gets the locale switch URL builder function.
+       *
+       * @returns {?function}
+       */
+      function getLocaleSwitchUrlBuilder () {
+        return localeSwitchUrlBuilder;
       }
 
       // The service factory
@@ -438,6 +470,7 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
             getAvailableLocales: getAvailableLocales,
             l: l,
             dl: dl,
+            getLocaleSwitchUrlBuilder: getLocaleSwitchUrlBuilder,
             t: t,
             ts: ts,
             confirm: confirm
@@ -453,6 +486,8 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
         getAvailableLocales: getAvailableLocales,
         l: l,
         dl: dl,
+        setLocaleSwitchUrlBuilder: setLocaleSwitchUrlBuilder,
+        getLocaleSwitchUrlBuilder: getLocaleSwitchUrlBuilder,
 
         $get: serviceFactory
       };

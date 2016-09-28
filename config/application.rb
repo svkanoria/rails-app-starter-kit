@@ -106,6 +106,9 @@ module RailsAppStarterKit
       # '.', and hence sneak through the first rewrite rule above.
       rewrite %r{^/fine_uploader(.*)$}, '/fine_uploader$1'
 
+      # Ignore all requests to `I18nController`, because of the way it works.
+      rewrite %r{^/i18n(.*)$}, '/i18n$1'
+
       # Ignore all requests to '/user*', since these correspond to Devise views
       # that are rendered by the server, and not by Angular.
       rewrite %r{^(/?(#{locales_regex}))/users(.*)$}, '$1/users$3'

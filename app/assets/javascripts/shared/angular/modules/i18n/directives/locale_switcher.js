@@ -10,6 +10,14 @@
  *     </li>
  *      :
  *   </nav>
+ *
+ * The locale switcher is a link that causes a modal to open up, with all
+ * available locale options. Clicking on an option redirects to a URL that
+ * conducts the locale switch. By default, clicking navigates directly to the
+ * new locale. However, you might have your own workflow for conducting the
+ * switch - such as have the server do some stuff like updating the user's
+ * preferred locale. This is easily possible to do. See the documentation for
+ * `I18n.setLocaleSwitcherUrlBuilder` for details.
  */
 angular.module('LocaleSwitcher', ['I18n', 'angularModalService'])
   .directive('localeSwitcher', [
@@ -46,8 +54,13 @@ angular.module('LocaleSwitcher', ['I18n', 'angularModalService'])
 
       $scope.relocalizeCurrentUrl = function (newLocale) {
         var delocalizedUrl = I18n.dl($location.absUrl(), $location.url());
+        var relocalizedUrl = I18n.l(delocalizedUrl, newLocale);
 
-        return I18n.l(delocalizedUrl, newLocale);
+        var localeSwitchUrlBuilder = I18n.getLocaleSwitchUrlBuilder();
+        
+        return (localeSwitchUrlBuilder)
+          ? localeSwitchUrlBuilder(newLocale, relocalizedUrl)
+          : relocalizedUrl;
       };
 
       $scope.close = function () {
