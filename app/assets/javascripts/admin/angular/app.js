@@ -44,10 +44,7 @@ app.config([
   'I18nProvider', 'QBEditorProvider',
   function (I18nProvider, QBEditorProvider) {
     I18nProvider.setLocale(Static.locale);
-
-    if (Static.locale === 'en') {
-      I18nProvider.setLocaleUrlParam(null);
-    }
+    I18nProvider.setAvailableLocales(Static.available_locales);
 
     QBEditorProvider.addEditorFactory({
       createEditorHtml: function (column, op) {

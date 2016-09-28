@@ -17,10 +17,19 @@
  *   // form of a JS variable, which can then be retrieved by the Angular code.
  *   //
  *   // Thus, switching locales needs to require a complete reload of the page.
- *   // This obviates the need for any $watches on the locale, and also gives
+ *   // This obviates the need for any `$watch`es on the locale, and also gives
  *   // the server more control over handling locales.
+ *   //
+ *   // Also, set the available locales. This is needed to populate the locale
+ *   // switcher, and to configure localized URL construction. For details, see
+ *   // the documentation for `setAvailableLocales`.
+ *   //
+ *   // Similar to the locale, the available locales can also be "seeded" from
+ *   // the server.
  *   app.config(['I18nProvider', function (I18nProvider) {
  *     I18nProvider.setLocale(someLocaleSeededByServer);
+ *
+ *     I18nProvider.setAvailableLocales(availableLocales);
  *   }]);
  *
  * Usage:
@@ -48,7 +57,7 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
       $translateProvider.useSanitizeValueStrategy('escapeParameters');
 
       var locale = null;
-      var localeUrlParam = null;
+      var availableLocales = null;
 
       /**
        * Sets the locale.
@@ -56,7 +65,7 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
        * @param {string} locale_ - The locale to set. Example: 'en', 'de'.
        */
       function setLocale (locale_) {
-        locale = localeUrlParam = locale_;
+        locale = locale_;
 
         if (locale) {
           $translateProvider.useUrlLoader('/i18n/translations.json');
@@ -76,39 +85,60 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
       }
 
       /**
-       * Sets the string used to localize URLs.
-       *
-       * By default, the locale itself it used. However, sometimes you might
-       * need to customize it. For example, if the locale is the default one,
-       * your design may require that URLs contain no explicit locale.
-       *
-       * @param {string} localeUrlParam_ - The string to use for localizing
-       *   URLs.
-       */
-      function setLocaleUrlParam (localeUrlParam_) {
-        localeUrlParam = localeUrlParam_;
-      }
-
-      /**
-       * Gets the string used to localize URLs.
+       * Gets the string to be used to localize URLs.
        *
        * Depending on your design, both this function as well as `getLocale`
        * should be used as appropriate whenever you need to manually construct
        * localized URLs.
        *
-       * Remember that if this isn't set otherwise via `setLocaleUrlParam`, it
-       * just remains the same as the actual locale.
+       * @param {string} [locale] - The locale to get the URL param for. If no
+       *   no locale is given, the current locale is used.
        *
        * @returns {?string}
        */
-      function getLocaleUrlParam () {
-        return localeUrlParam;
+      function getLocaleUrlParam (locale) {
+        var adjLocale = locale || getLocale();
+
+        return (_.has(availableLocales[adjLocale], 'url'))
+          ? availableLocales[adjLocale].url
+          : adjLocale;
+      }
+
+      /**
+       * Sets available locales.
+       *
+       * @param {Object<string, Object>} availableLocales_ - The available
+       *   locales, formatted in the following format (? indicates optional):
+       *
+       *     {
+       *       en: { name: 'English', ?url: null },
+       *       hi: { name: 'Hindi' },
+       *       :
+       *     }
+       *
+       *   Provide the 'url' property for only those locales, whose localized
+       *   URLs need to contain a locale fragment that differs from the locale
+       *   itself. For example, depending on your design, you may require that
+       *   for the default locale, the URLs need not contain an explicit locale
+       *   (such as for 'en' above, where `null` indicates no explicit locale).
+       */
+      function setAvailableLocales (availableLocales_) {
+        availableLocales = availableLocales_;
+      }
+
+      /**
+       * Gets available locales.
+       *
+       * @returns {Object<string, Object>}
+       */
+      function getAvailableLocales () {
+        return availableLocales;
       }
 
       /**
        * Localizes the given URL string, by replacing the first (if any)
-       * instance of the substring ':locale' with the actual (if any) current
-       * locale.
+       * instance of the substring ':locale' with the given (if any), or else
+       * the current (if any) locale.
        *
        * If the current locale is null, then it removes the ':locale' and any
        * trailing slash altogether. This behaviour is carefully designed to be
@@ -122,10 +152,10 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
        * a solution, or is not possible.
        *
        * It is possible to override the actual replacement string used, as the
-       * locale itself may not always be suitable (see `setLocaleUrlParam` for
-       * details).
+       * locale itself may not always be appropriate (see `setAvailableLocales`
+       * for details).
        *
-       * Note that for constructing localized URLs in views, we also provide a
+       * Note that for constructing localized URLs in views, we also provide an
        * `l-href` directive, which itself uses this function.
        *
        * Usage:
@@ -142,14 +172,59 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
        *   I18n.l(':locale/posts.json'); // 'posts.json'
        *   I18n.l('/:locale/posts.json'); // '/posts.json'
        *
+       *   // Assuming the current locale is 'en', but we have configured via
+       *   // `setAvailableLocales` as follows:
+       *   //
+       *   //   I18n.setAvailableLocales({
+       *   //     en: { name: 'English', url: null } // Note the `null` here!
+       *   //      :
+       *   //   });
+       *   I18n.l(':locale/posts.json'); // 'posts.json' (no explicit locale)
+       *   I18n.l('/:locale/posts.json'); // '/posts.json' (no explicit locale)
+       *
        * @param {string} url - The URL to localize.
+       * @param {string} [locale] - The locale to use to localize the URL. If
+       *   no locale is given, the current locale is used.
        *
        * @returns {string} The localized URL.
        */
-      function l (url) {
-        return (localeUrlParam)
-          ? url.replace(':locale', localeUrlParam)
+      function l (url, locale) {
+        var param = getLocaleUrlParam(locale);
+
+        return (param && param !== '')
+          ? url.replace(':locale', param)
           : url.replace(/:locale\/?/, '');
+      }
+
+      /**
+       * De-localizes the given absolute URL, by replacing the first (if any)
+       * instance of the locale with ':locale'. If the URL does not contain an
+       * explicit locale, then inserts ':locale' in the absolute URL at index
+       * `absoluteUrl.length - relativeUrl.length`.
+       *
+       * @param {string} absoluteUrl - The absolute URL to de-localize.
+       * @param {string} relativeUrl - The relative URL to use to determine the
+       *   insertion index of ':locale' when it cannot be inferred implicitly.
+       *
+       * @returns {string} The de-localized URL.
+       */
+      function dl (absoluteUrl, relativeUrl) {
+        var currentLocale = getLocale();
+        var endLocaleRegExp = new RegExp('/' + currentLocale + '$');
+        var midLocaleRegExp = new RegExp('/' + currentLocale + '/');
+        var delocalizedUrl = null;
+
+        if (endLocaleRegExp.test(absoluteUrl)) {
+          delocalizedUrl = absoluteUrl.replace(endLocaleRegExp, '/:locale');
+        } else if (midLocaleRegExp.test(absoluteUrl)) {
+          delocalizedUrl = absoluteUrl.replace(midLocaleRegExp, '/:locale/');
+        } else {
+          var localeAddIndex = absoluteUrl.length - relativeUrl.length;
+
+          delocalizedUrl = _.insert(absoluteUrl, localeAddIndex, '/:locale');
+        }
+
+        return delocalizedUrl;
       }
 
       // The service factory
@@ -360,7 +435,9 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
           return {
             getLocale: getLocale,
             getLocaleUrlParam: getLocaleUrlParam,
+            getAvailableLocales: getAvailableLocales,
             l: l,
+            dl: dl,
             t: t,
             ts: ts,
             confirm: confirm
@@ -371,9 +448,11 @@ angular.module('I18nProvider', ['pascalprecht.translate'])
       return {
         setLocale: setLocale,
         getLocale: getLocale,
-        setLocaleUrlParam: setLocaleUrlParam,
         getLocaleUrlParam: getLocaleUrlParam,
+        setAvailableLocales: setAvailableLocales,
+        getAvailableLocales: getAvailableLocales,
         l: l,
+        dl: dl,
 
         $get: serviceFactory
       };

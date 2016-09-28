@@ -4,5 +4,6 @@ angular.module('I18n', [
   'I18nProvider',
 
   // Directives
-  'LHref'
+  'LHref',
+  'LocaleSwitcher'
 ]);

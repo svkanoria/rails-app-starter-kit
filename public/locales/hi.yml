@@ -48,6 +48,9 @@ date_time_quicker:
   start: 'प्रारंभ'
   end: 'अंत'
 
+locale_switcher:
+  select_language: 'भाषा चुनें (Select Language)'
+
 query_builder:
   add_filter: 'फ़िल्टर जोडें'
   apply_filters: 'फ़िल्टर लाघु करें'

@@ -7,7 +7,7 @@ angular.module('User', ['I18n'])
         '/admin/:locale/users/:collectionAction/:userId/:memberAction.json',
         {
           userId: '@id',
-          locale: function () { return I18n.getLocale(); }
+          locale: I18n.getLocaleUrlParam()
         },
         // Extra methods for compatibility with Rails, and our data format
         {

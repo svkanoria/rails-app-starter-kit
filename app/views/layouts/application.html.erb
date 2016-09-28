@@ -37,6 +37,10 @@
 
   <%= render 'layouts/shared/global_js_vars' %>
 
+  <script type="application/javascript">
+    Static.available_locales = <%= raw available_locales_json(I18nUtils.avail_locales) %>;
+  </script>
+
   <% if Rails.application.secrets.jw_player_account_token %>
     <script src="//jwpsrv.com/library/<%= Rails.application.secrets.jw_player_account_token %>.js">
     </script>

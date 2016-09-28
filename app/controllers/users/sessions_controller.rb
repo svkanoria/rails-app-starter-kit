@@ -14,9 +14,20 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    if session[:user_return_to]
+      url_param = (I18n.locale == I18n.default_locale) ? '' : I18n.locale
+
+      localized_return_to = (url_param.present?) ?
+          session[:user_return_to].gsub(/:locale\/?/, "#{url_param}/") :
+          session[:user_return_to].gsub(/:locale\/?/, '')
+
+
+      session[:user_return_to] = localized_return_to
+    end
+
+    super
+  end
 
   # DELETE /resource/sign_out
   # def destroy

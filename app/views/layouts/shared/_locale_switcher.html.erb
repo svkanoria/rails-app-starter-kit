@@ -1,0 +1,15 @@
+<%# Locale switcher for server generated views.
+  # A server counterpart to the `locale-switcher` directive.
+  #
+  # Required for the Devise views, and any other future server views. For
+  # instance, if the admin app is swapped out for a non-Angular non-SPA app,
+  # this switcher can conveniently be used for switching locales.
+  #
+  # The design and working is set to match the `locale-switcher` directive.
+  # Also, remember to render the 'locale_switcher_modal' partial soon before
+  # the `</body>` closing tag, for the corresponding modal to be popped up.
+  #%>
+<a href="#locale-switcher-modal" data-toggle="modal">
+  <span class="glyphicon glyphicon-globe"></span>
+  <%= I18nUtils::LOCALE_NAMES[I18n.locale] %>
+</a>

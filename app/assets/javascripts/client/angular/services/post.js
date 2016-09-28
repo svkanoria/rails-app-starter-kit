@@ -7,7 +7,7 @@ angular.module('Post', ['I18n', 'ArrayMetadataResponseAdapter'])
         '/:locale/posts/:collectionAction/:postId/:memberAction.json',
         {
           postId: '@id',
-          locale: function () { return I18n.getLocale(); }
+          locale: I18n.getLocaleUrlParam()
         },
         // Extra methods for compatibility with Rails, and our data format
         {

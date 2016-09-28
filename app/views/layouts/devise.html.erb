@@ -23,9 +23,16 @@
   </div>
 
   <div id="devise-top">
-    <%= link_to 'Rails App Starter Kit', localized_root_path %>
+    <%= link_to t('app_name'), localized_root_path %>
+  </div>
+
+  <div id="devise-top2">
+    <%= render 'layouts/shared/locale_switcher' %>
   </div>
 
   <%= yield %>
+
+  <%= render 'layouts/shared/locale_switcher_modal',
+             available_locales: I18nUtils.avail_locales %>
 </body>
 </html>

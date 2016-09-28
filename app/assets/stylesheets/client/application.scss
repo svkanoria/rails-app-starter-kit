@@ -22,10 +22,12 @@
 // Imported first, so that variables can be used in any other styling file.
 @import "../shared/variables";
 
+// Styles for the Devise layout
+@import "devise";
+
 // General styles (layout, header, footer, components etc.)
 @import "../shared/layout";
 @import "../shared/animations";
-@import "../shared/devise";
 
 // Styles for Angular directives
 @import "../shared/directives/flash_alerts";
