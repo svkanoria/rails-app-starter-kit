@@ -65,12 +65,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  # MY NOTE: To redirect to the referrer upon sign up. However, note that if
+  # awaiting confirmation, `after_inactive_sign_up_path_for` is used instead.
+  def after_sign_up_path_for(resource)
+    after_sign_in_path_for(resource)
+  end
 
   # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  # MY NOTE: Mandatorily overridden along with `after_sign_up_path_for`. Also,
+  # this work to retain the locale when redirecting upon (inactive) sign up.
+  def after_inactive_sign_up_path_for(resource)
+    localized_root_path
+  end
 end

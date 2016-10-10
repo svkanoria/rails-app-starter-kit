@@ -20,7 +20,6 @@ class ApplicationController < ActionController::Base
   before_action :require_tenant_if_subdomain,
                 :set_locale,
                 :authenticate_user_from_token,
-                :set_sign_in_redirect,
                 :force_sign_in_if_required
 
   rescue_from Pundit::NotAuthorizedError, with: :deny_access
@@ -90,7 +89,9 @@ class ApplicationController < ActionController::Base
 
   # Sets the locale from the URL.
   def set_locale
-    I18n.locale = params[:locale] || I18n.default_locale
+    I18n.locale = params[:locale] ||
+        current_user.try(:locale) ||
+        I18n.default_locale
   end
 
   # Automatically adds the current locale to the hash of parameters sent to
@@ -114,11 +115,14 @@ class ApplicationController < ActionController::Base
   end
 
   # Sets where Devise should redirect on sign-in.
-  # Works in conjunction with the 'authentication-links' directive.
-  def set_sign_in_redirect
-    if (url = params[:return_to]).present?
-      session[:user_return_to] = url
-    end
+  def after_sign_in_path_for (resource_or_scope)
+    path = session[:user_return_to] || localized_root_url
+
+    url_param = (I18n.locale == I18n.default_locale) ? '' : I18n.locale
+
+    url_param.present? ?
+        path.gsub(/:locale\/?/, "#{url_param}/") :
+        path.gsub(/:locale\/?/, '')
   end
 
   # Sets where Devise should redirect on sign-out.

@@ -1,0 +1,17 @@
+hi:
+  devise:
+    mailer:
+      hello: 'नमस्ते'
+      confirmation_instructions:
+        welcome: 'वेलकम'
+        instructions: 'आप निम्नलिखित लिंक द्वारा अपने अकाउंट की पुष्टि कर सकते हैं:'
+        confirm_my_account: 'अकाउंट की पुष्टि करें'
+      reset_password_instructions:
+        instructions: "किसी ने आपके पासवर्ड को बदलने के लिए एक लिंक का अनुरोध किया है। अगर आपने
+          यह अनुरोध नहीं किया, तो कृपया ध्यान न दें। जब तक आप लिंक को क्लिक कर के पासवर्ड नहीं बदलेंगे,
+          वह बदलेगा नहीं।"
+        change_my_password: 'पासवर्ड बदलें'
+      unlock_instructions:
+        instructions: 'आपका अकाउंट अत्यधिक असफल साइन इन प्रयास के कारण लॉक कर दिया गया है।
+          निम्नलिखित लिंक द्वारा अनलॉक करें।'
+        unlock_my_account: 'अकाउंट अनलॉक करें'

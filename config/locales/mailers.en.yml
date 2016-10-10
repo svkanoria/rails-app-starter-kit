@@ -1,0 +1,27 @@
+# Mailer translations (including Devise mailers).
+# However, Devise mailer subject translations are excluded. These can be found
+# in the 'devise.XX.yml' file (Devise provides subject translations, but oddly
+# enough no email body translations out of the box).
+
+en:
+  devise:
+    mailer:
+      hello: 'Hello'
+      confirmation_instructions:
+        welcome: 'Welcome'
+        instructions: 'You can confirm your account email through the link
+          below.'
+        confirm_my_account: 'Confirm my account'
+      reset_password_instructions:
+        instructions: "Someone has requested a link to change your password. You
+          can do this through the link below. If you didn't request this, please
+          ignore this email. Your password won't change until you access the
+          link and create a new one."
+        change_my_password: 'Change my password'
+      unlock_instructions:
+        instructions: 'Your account has been locked due to an excessive number
+          of unsuccessful sign in attempts. Click the link below to unlock your
+          account.'
+        unlock_my_account: 'Unlock my account'
+
+

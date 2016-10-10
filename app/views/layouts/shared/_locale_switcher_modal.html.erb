@@ -22,8 +22,12 @@
               each do |locale, name| %>
 
             <li>
-              <%= link_to name, url_for(params.merge(
-                  locale: (locale == I18n.default_locale) ? nil : locale)) %>
+              <%= link_to name, switch_locale_path(
+                  locale: locale,
+                  return_to: url_for(
+                      params.merge(locale: (locale == I18n.default_locale) ?
+                          nil : locale))
+              ) %>
             </li>
           <% end %>
         </ul>

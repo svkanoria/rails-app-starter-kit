@@ -12,7 +12,9 @@ class SendDeviseNotificationJob < ActiveJob::Base
     ActsAsTenant.with_tenant(tenant) do
       user = User.find(user_id)
 
-      user.orig_send_devise_notification(notification_str.to_sym, *args)
+      I18n.with_locale (user.locale || I18n.default_locale) do
+        user.orig_send_devise_notification(notification_str.to_sym, *args)
+      end
     end
   end
 end

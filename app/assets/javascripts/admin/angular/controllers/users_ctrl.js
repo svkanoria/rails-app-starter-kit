@@ -223,7 +223,7 @@ angular.module('UsersCtrl', ['I18n', 'Flash', 'User'])
 
         $scope.user.$save(function (response) {
           $scope.pleaseWaitSvc.release();
-          Flash.push('success', 'User created.');
+          Flash.push('success', 'User created.', 'user_created');
 
           $scope.navConfirmationSvc.setConfirmNav(false);
           $state.go('app.users.index');
@@ -252,7 +252,7 @@ angular.module('UsersCtrl', ['I18n', 'Flash', 'User'])
 
         $scope.user.$update(function (response) {
           $scope.pleaseWaitSvc.release();
-          Flash.push('success', 'User updated.');
+          Flash.push('success', 'User updated.', 'user_updated');
 
           $scope.navConfirmationSvc.setConfirmNav(false);
           $state.go('app.users.index');
